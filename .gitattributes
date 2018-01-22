@@ -1,0 +1,12 @@
+# Default Line Endings
+* text=auto
+
+# MSBuild Files
+*.sln        text eol=crlf
+*.csproj     text eol=crlf
+*.props      text eol=crlf
+#*.targets    text eol=crlf
+*.cs         text eol=crlf
+
+# Text Documents
+*.md text

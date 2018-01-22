@@ -1,0 +1,56 @@
+# OS-Specific Files
+##############################
+## Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+## macOS
+.DS_Store
+.Spotlight-V100
+.Trashes
+.AppleDB
+
+## Linux
+*~
+.Trash-*
+
+# IDE-Specific Files
+##############################
+## Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+## MonoDevelop
+*.userprefs
+*.usertasks
+*.pidb
+*.resources
+test-results/
+
+## JetBrains Rider
+.idea/
+*.sln.iml
+
+# Misc. Files
+##############################
+## Build Directories
+[Bb]uild
+[Bb]in
+[Oo]bj
+[Dd]ebug
+[Rr]elease
+[Aa]ny[Cc][Pp][Uu]

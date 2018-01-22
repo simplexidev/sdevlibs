@@ -1,0 +1,19 @@
+﻿<!--| Project:  LibUISharp.csproj                  |
+    | Assembly: LibUISharp.dll                     |
+    | Guid: {F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD} |-->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup> <!-- Framework/C# Versions -->
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <Import Project="../LibUISharp.Build.props" />
+  <ItemGroup> <!-- Compiled Source Code -->
+    <Compile Include="src/*.cs" />
+    <Compile Include="src/Drawing/*.cs" />
+    <Compile Include="src/Drawing/Text/*.cs" />
+    <Compile Include="src/Internal/*.cs" />
+    <Compile Include="src/Internal/UI/*.cs" />
+  </ItemGroup>
+  <Import Project="../LibUISharp.Build.LibUI.props" />
+  <Import Project="../LibUISharp.Build.Packaging.props" />
+</Project>

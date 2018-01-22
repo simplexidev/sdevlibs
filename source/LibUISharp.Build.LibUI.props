@@ -1,0 +1,19 @@
+<Project>
+  <Choose> <!-- OS-Specific PackageReferences -->
+    <When Condition="'$(IsWindows)'=='true'">
+      <ItemGroup>
+        <PackageReference Include="LibUISharp.Native.Windows" Version="0.1.0-alpha-*" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(IsMacOS)'=='true'">
+      <ItemGroup>
+        <PackageReference Include="LibUISharp.Native.MacOS" Version="0.1.0-alpha-*" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(IsLinux)'=='true'">
+      <ItemGroup>
+        <PackageReference Include="LibUISharp.Native.Linux" Version="0.1.0-alpha-*" />
+      </ItemGroup>
+    </When>
+  </Choose>
+</Project>

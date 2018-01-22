@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup> <!-- Package Information -->
+    <PackageId>$(MSBuildProjectName)</PackageId>
+    <Description>LibUI Bindings for .NET Core (C#)</Description>
+    <PackageTags>libui;ui;netcore;netstandard</PackageTags>
+    <PackageReleaseNotes>Version $(VersionPrefix)-$(VersionSuffix)</PackageReleaseNotes>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageProjectUrl>https://github.com/tom-corwin/LibUISharp</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/tom-corwin/LibUISharp</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+</Project>
