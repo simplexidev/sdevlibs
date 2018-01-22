@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup> <!-- General Properties -->
+    <Platform>AnyCPU</Platform>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <PropertyGroup> <!-- Assembly Information -->
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+    <Authors>Thomas Corwin, et al.</Authors>
+    <Copyright>2018 (c) Thomas Corwin</Copyright>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>alpha-1</VersionSuffix>
+  </PropertyGroup>
+  <Choose> <!-- Configuration-Specific Properties -->
+    <When Condition="'$(ConfigurationGroup)'=='Debug'">
+      <PropertyGroup>
+        <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+        <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
+        <Optimize Condition="'$(Optimize)'==''">false</Optimize>
+        <DebugType Condition="'$(DebugType)'==''">full</DebugType>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(ConfigurationGroup)'=='Release'">
+      <PropertyGroup>
+        <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
+        <Optimize Condition="'$(Optimize)'==''">true</Optimize>
+        <DebugType Condition="'$(DebugType)'==''">pdbonly</DebugType>
+        <DefineConstants>TRACE</DefineConstants>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Core'"> <!-- Operating System Detection (Windows, MacOS, Linux) -->
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))'=='true'">true</IsWindows>
+    <IsMacOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'=='true'">true</IsMacOS>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'=='true'">true</IsLinux>
+    <IsUnix Condition="'$(IsMacOS)'=='true' OR '$(IsLinux)'=='true'">true</IsUnix>
+    <CurrentOS Condition="'$(IsWindows)'=='true'">Windows</CurrentOS>
+    <CurrentOS Condition="'$(IsUnix)'=='true'">Unix</CurrentOS>
+  </PropertyGroup>
+</Project>
