@@ -1,10 +1,11 @@
-@ECHO OFF
+@ECHO ON
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Build libui
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :: Set external/libui as CWD and apply patches to libui.
 cd external\libui
+echo Applying nowintable.diff... 
 git apply --ignore-whitespace --whitespace=nowarn nowintable.diff
 ::TODO: git apply -- ../LibUISharp.Native.Windows.diff
 
