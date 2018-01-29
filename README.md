@@ -5,6 +5,8 @@
 
 LibUISharp is a library containing bindings for [libui](https://github/andlabs/libui), written in C# using .NET Core.
 
+**Please Note:** This repository is currently building for the branch `utflib-and-attrstr` in `libui`.
+
 ## Features
 
 LibUISharp allows you to create a native GUI application running .NET Core. Please note, that LibUI is in alpha development, so the native library, thus the c# library, may not be stable. This library (LibUISharp) has not been tested, yet.
@@ -30,7 +32,7 @@ LibUISharp will be available as a NuGet package once finished.
 
 ## Building From Source
 
-At the moment, I do not have any scripts to build libui or LibUISharp, so it has to be done manually.
+At the moment, the provided build scripts are not finished or just an empty file. Please use the following steps to build LibUISharp and its dependency, libui.
 
 ### Prerequisites
 
@@ -41,8 +43,9 @@ Prerequisites may differ depending on platform and/or the library to be built.
 | Windows 7/8.1/10 | .NET Core 2.0 SDK          | CMake 3.1.0+</br>Visual Studio 2013+                                         |
 | Mac OS X         | .NET Core 2.0 SDK          | CMake 3.1.0+</br><sup>*You must also be able to build Cocoa programs.*</sup> |
 | Linux            | .NET Core 2.0 SDK          | CMake 3.1.0+                                                                 |
+### Building LibUISharp.Native (libui)
+
 
 ***The rest of this file is a WIP, and should not be considered accurate or complete in any way.***
 
 <hr></hr>
-
