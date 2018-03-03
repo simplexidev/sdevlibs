@@ -1,3 +1,0 @@
-[submodule "external/libui"]
-	path = external/libui
-	url = https://github.com/tom-corwin/libui.git
