@@ -2,7 +2,7 @@
 
 ## Copyrights
 
-Copyright (c) 2017 Thomas Corwin
+Copyright &copy; 2017 Thomas Corwin
 
 ## License Terms (MIT License)
 

@@ -1,19 +1,91 @@
 ﻿<!--| Project:  LibUISharp.csproj                  |
     | Assembly: LibUISharp.dll                     |
     | Guid: {F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD} |-->
-<Project Sdk="Microsoft.NET.Sdk">
+<Project>
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup> <!-- Framework/C# Versions -->
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
+    <Platform>AnyCPU</Platform>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputPath>..\..\build\$(MSBuildProjectName)\bin</OutputPath>
+    <IntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj</IntermediateOutputPath>
   </PropertyGroup>
-  <Import Project="../LibUISharp.Build.props" />
-  <ItemGroup> <!-- Compiled Source Code -->
-    <Compile Include="src/*.cs" />
-    <Compile Include="src/Drawing/*.cs" />
-    <Compile Include="src/Drawing/Text/*.cs" />
-    <Compile Include="src/Internal/*.cs" />
-    <Compile Include="src/Internal/UI/*.cs" />
+  <PropertyGroup> <!-- Assembly Information -->
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+    <Authors>Thomas Corwin, et al.</Authors>
+    <Copyright>2018 (c) Thomas Corwin</Copyright>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>alpha-1</VersionSuffix>
+  </PropertyGroup>
+  <Choose> <!-- Configuration-Specific Properties -->
+    <When Condition="'$(ConfigurationGroup)'=='Debug'">
+      <PropertyGroup>
+        <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+        <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
+        <Optimize Condition="'$(Optimize)'==''">false</Optimize>
+        <DebugType Condition="'$(DebugType)'==''">full</DebugType>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(ConfigurationGroup)'=='Release'">
+      <PropertyGroup>
+        <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
+        <Optimize Condition="'$(Optimize)'==''">true</Optimize>
+        <DebugType Condition="'$(DebugType)'==''">pdbonly</DebugType>
+        <DefineConstants>TRACE</DefineConstants>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="src/**/*.cs" />
   </ItemGroup>
-  <Import Project="../LibUISharp.Build.LibUI.props" />
-  <Import Project="../LibUISharp.Build.Packaging.props" />
+  <ItemGroup>
+    <Folder Include="src\LibUISharp\Drawing\" />
+  </ItemGroup>
+  <PropertyGroup> <!-- Package Information -->
+    <PackageId>$(MSBuildProjectName)</PackageId>
+    <Description>LibUI Bindings for .NET Core (C#)</Description>
+    <PackageTags>libui;ui;netcore;netstandard</PackageTags>
+    <PackageReleaseNotes>Version $(VersionPrefix)-$(VersionSuffix)</PackageReleaseNotes>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageProjectUrl>https://github.com/tom-corwin/LibUISharp</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/tom-corwin/LibUISharp</RepositoryUrl>
+  </PropertyGroup>
+  <!--<Choose>
+    <When Condition="'$(IsWindows)'=='true'">
+      <ItemGroup>
+        <PackageReference Include="LibUISharp.Native.Windows" Version="0.1.0-alpha-*" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(IsMacOS)'=='true'">
+      <ItemGroup>
+        <PackageReference Include="LibUISharp.Native.MacOS" Version="0.1.0-alpha-*" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(IsLinux)'=='true'">
+      <ItemGroup>
+        <PackageReference Include="LibUISharp.Native.Linux" Version="0.1.0-alpha-*" />
+      </ItemGroup>
+    </When>
+  </Choose>-->
+  <!--<PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Core'">
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))'=='true'">true</IsWindows>
+    <IsMacOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'=='true'">true</IsMacOS>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'=='true'">true</IsLinux>
+    <IsUnix Condition="'$(IsMacOS)'=='true' OR '$(IsLinux)'=='true'">true</IsUnix>
+    <CurrentOS Condition="'$(IsWindows)'=='true'">Windows</CurrentOS>
+    <CurrentOS Condition="'$(IsUnix)'=='true'">Unix</CurrentOS>
+  </PropertyGroup>-->
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 </Project>
