@@ -159,7 +159,7 @@ namespace LibUISharp.Internal
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiNewSearchEntry();
             #endregion
-            #region Label
+            #region uiLabel
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiLabelText(IntPtr label);
             [DllImport(LibUI, CallingConvention = Cdecl)]
@@ -197,31 +197,27 @@ namespace LibUISharp.Internal
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiNewGroup(IntPtr title);
             #endregion
-            #region Spinbox
+            #region uiSpinbox
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern int uiSpinboxValue(IntPtr spinBox);
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern void uiSpinboxSetValue(IntPtr spinBox, int value);
             [DllImport(LibUI, CallingConvention = Cdecl)]
-            public static extern void uiSpinboxOnChanged(IntPtr spinBox, uiSpinBoxOnChangedDelegate spinBoxOnChanged, IntPtr data);
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate void uiSpinBoxOnChangedDelegate(IntPtr spinBox, IntPtr data);
+            public static extern void uiSpinboxOnChanged(IntPtr spinBox, OnValueChangedEventHandler f, IntPtr data);
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiNewSpinbox(int min, int max);
             #endregion
-            #region Slider
+            #region uiSlider
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern int uiSliderValue(IntPtr slider);
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern void uiSliderSetValue(IntPtr slider, int value);
             [DllImport(LibUI, CallingConvention = Cdecl)]
-            public static extern void uiSliderOnChanged(IntPtr slider, uiSliderOnChangedDelegate sliderOnChanged, IntPtr data);
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate void uiSliderOnChangedDelegate(IntPtr slider, IntPtr data);
+            public static extern void uiSliderOnChanged(IntPtr slider, OnValueChangedEventHandler f, IntPtr data);
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiNewSlider(int min, int max);
             #endregion
-            #region ProgressBar
+            #region uiProgressBar
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern int uiProgressBarValue(IntPtr progressBar);
             [DllImport(LibUI, CallingConvention = Cdecl)]

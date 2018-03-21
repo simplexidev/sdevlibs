@@ -23,5 +23,8 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void OnTextChangedEventHandler(IntPtr entry, IntPtr data);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void OnValueChangedEventHandler(IntPtr spinBox, IntPtr data);
     }
 }

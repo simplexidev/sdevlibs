@@ -186,16 +186,43 @@ namespace LibUISharp.Internal
         public static ControlSafeHandle NewSearchBox() => new ControlSafeHandle(NativeMethods.uiNewSearchEntry());
         #endregion
         #region Label [uiLabel]
+        public static string LabelGetText(ControlSafeHandle label) => UTF8Helper.ToUTF8Str(NativeMethods.uiLabelText(label.DangerousGetHandle()));
+        public static void LabelSetText(ControlSafeHandle label, string text)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
+            NativeMethods.uiLabelSetText(label.DangerousGetHandle(), strPtr);
+            Marshal.FreeHGlobal(strPtr);
+        }
+        public static ControlSafeHandle NewLabel(string text)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
+            ControlSafeHandle safeHandle = new ControlSafeHandle(NativeMethods.uiNewLabel(strPtr));
+            Marshal.FreeHGlobal(strPtr);
+            return safeHandle;
+        }
         #endregion
         #region TabControl/TabPage [uiTab]
         #endregion
         #region GroupBox [uiGroup]
         #endregion
         #region SpinBox [uiSpinbox]
+        public static int SpinBoxGetValue(ControlSafeHandle spinbox) => NativeMethods.uiSpinboxValue(spinbox.DangerousGetHandle());
+        public static void SpinBoxSetValue(ControlSafeHandle spinbox, int val) => NativeMethods.uiSpinboxSetValue(spinbox.DangerousGetHandle(), val);
+        public static void SpinBoxOnValueChanged(ControlSafeHandle spinbox, OnValueChangedEventHandler handler, IntPtr data) => NativeMethods.uiSpinboxOnChanged(spinbox.DangerousGetHandle(), handler, data);
+        public static void SpinBoxOnValueChanged(ControlSafeHandle spinbox, OnValueChangedEventHandler handler) => SpinBoxOnValueChanged(spinbox, handler, IntPtr.Zero);
+        public static ControlSafeHandle NewSpinBox(int min, int max) => new ControlSafeHandle(NativeMethods.uiNewSpinbox(min, max));
         #endregion
         #region Slider [uiSlider]
+        public static int SliderGetValue(ControlSafeHandle spinbox) => NativeMethods.uiSliderValue(spinbox.DangerousGetHandle());
+        public static void SliderSetValue(ControlSafeHandle spinbox, int val) => NativeMethods.uiSliderSetValue(spinbox.DangerousGetHandle(), val);
+        public static void SliderOnValueChanged(ControlSafeHandle spinbox, OnValueChangedEventHandler handler, IntPtr data) => NativeMethods.uiSliderOnChanged(spinbox.DangerousGetHandle(), handler, data);
+        public static void SliderOnValueChanged(ControlSafeHandle spinbox, OnValueChangedEventHandler handler) => SliderOnValueChanged(spinbox, handler, IntPtr.Zero);
+        public static ControlSafeHandle NewSlider(int min, int max) => new ControlSafeHandle(NativeMethods.uiNewSlider(min, max));
         #endregion
         #region ProgressBar [uiProgressBar]
+        public static int ProgressBarGetValue(ControlSafeHandle progressbar) => NativeMethods.uiProgressBarValue(progressbar.DangerousGetHandle());
+        public static void ProgressBarSetValue(ControlSafeHandle progressbar, int val) => NativeMethods.uiProgressBarSetValue(progressbar.DangerousGetHandle(), val);
+        public static ControlSafeHandle NewProgressBar() => new ControlSafeHandle(NativeMethods.uiNewProgressBar());
         #endregion
         #region Separator/HSeparator/VSeparator [uiSeparator/uiHorizontalSeparator/uiVerticalSeparator]
         #endregion
