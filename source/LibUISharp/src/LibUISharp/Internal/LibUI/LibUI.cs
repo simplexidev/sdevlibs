@@ -225,6 +225,15 @@ namespace LibUISharp.Internal
         public static ControlSafeHandle NewProgressBar() => new ControlSafeHandle(NativeMethods.uiNewProgressBar());
         #endregion
         #region Separator/HSeparator/VSeparator [uiSeparator/uiHorizontalSeparator/uiVerticalSeparator]
+        public static ControlSafeHandle NewSeparator(Orientation orientation)
+        {
+            if (orientation == Orientation.Horizontal)
+                return new ControlSafeHandle(NativeMethods.uiNewHorizontalSeparator());
+            else if (orientation == Orientation.Vertical)
+                return new ControlSafeHandle(NativeMethods.uiNewVerticalSeparator());
+            else
+                throw new ArgumentOutOfRangeException("orientation");
+        }
         #endregion
         #region ComboBox [uiCombobox]
         #endregion

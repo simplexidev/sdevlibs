@@ -225,7 +225,7 @@ namespace LibUISharp.Internal
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiNewProgressBar();
             #endregion
-            #region HorizontalSeparator/VerticalSeparator
+            #region uiHorizontalSeparator/uiVerticalSeparator
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiNewHorizontalSeparator();
             [DllImport(LibUI, CallingConvention = Cdecl)]
@@ -273,7 +273,7 @@ namespace LibUISharp.Internal
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiNewRadioButtons();
             #endregion
-            #region DateTimePicker/DatePicker/TimePicker
+            #region uiDateTimePicker/uiDatePicker/uiTimePicker
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiNewDateTimePicker();
             [DllImport(LibUI, CallingConvention = Cdecl)]
@@ -329,7 +329,7 @@ namespace LibUISharp.Internal
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiNewMenu(IntPtr name);
             #endregion
-            #region OpenFile/SaveFile/MsgBox
+            #region uiOpenFile/uiSaveFile/uiMsgBox
             [DllImport(LibUI, CallingConvention = Cdecl)]
             public static extern IntPtr uiOpenFile(IntPtr parent);
             [DllImport(LibUI, CallingConvention = Cdecl)]
