@@ -7,7 +7,7 @@ namespace LibUISharp.Controls
     {
         protected Panel(Orientation orientation = Orientation.Horizontal)
         {
-            Handle = LibUI.NewPanel(orientation);
+            Handle = LibUIAPI.NewPanel(orientation);
             Orientation = orientation;
         }
 
@@ -15,8 +15,8 @@ namespace LibUISharp.Controls
 
         public bool Padding
         {
-            get => LibUI.PanelGetPadding(Handle);
-            set => LibUI.PanelSetPadding(Handle, value);
+            get => LibUIAPI.PanelGetPadding(Handle);
+            set => LibUIAPI.PanelSetPadding(Handle, value);
         }
     }
 
@@ -36,7 +36,7 @@ namespace LibUISharp.Controls
 
         public override bool Remove(Control item)
         {
-            LibUI.PanelDelete(Owner.Handle, item.Index);
+            LibUIAPI.PanelDelete(Owner.Handle, item.Index);
             return base.Remove(item);
         }
 
@@ -47,7 +47,7 @@ namespace LibUISharp.Controls
             if (Contains(child))
                 throw new InvalidOperationException("cannot add the same control.");
             if(child == null) return;
-            LibUI.PanelAppend(Owner.Handle, child.Handle, stretches);
+            LibUIAPI.PanelAppend(Owner.Handle, child.Handle, stretches);
             base.Add(child);
         }
     }

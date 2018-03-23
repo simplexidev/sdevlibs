@@ -9,7 +9,7 @@ namespace LibUISharp.Controls
 
         public SpinBox(int min, int max)
         {
-            Handle = LibUI.NewSpinBox(min, max);
+            Handle = LibUIAPI.NewSpinBox(min, max);
             MinimumValue = min;
             MaximumValue = max;
             InitializeEvents();
@@ -24,14 +24,14 @@ namespace LibUISharp.Controls
         {
             get
             {
-                _value = LibUI.SpinBoxGetValue(Handle);
+                _value = LibUIAPI.SpinBoxGetValue(Handle);
                 return _value;
             }
             set
             {
                 if (_value != value)
                 {
-                    LibUI.SpinBoxSetValue(Handle, value);
+                    LibUIAPI.SpinBoxSetValue(Handle, value);
                     _value = value;
                 }
             }
@@ -39,6 +39,6 @@ namespace LibUISharp.Controls
 
         protected virtual void OnValueChanged(EventArgs e) => ValueChanged?.Invoke(this, e);
 
-        protected sealed override void InitializeEvents() => LibUI.SpinBoxOnValueChanged(Handle, (spinbox, data) => { OnValueChanged(EventArgs.Empty); });
+        protected sealed override void InitializeEvents() => LibUIAPI.SpinBoxOnValueChanged(Handle, (spinbox, data) => { OnValueChanged(EventArgs.Empty); });
     }
 }

@@ -13,11 +13,11 @@ namespace LibUISharp.Controls
             if (!(this is MultilineTextBox))
             {
                 if (this is PasswordBox)
-                    Handle = LibUI.NewPasswordBox();
+                    Handle = LibUIAPI.NewPasswordBox();
                 else if (this is SearchBox)
-                    Handle = LibUI.NewSearchBox();
+                    Handle = LibUIAPI.NewSearchBox();
                 else
-                    Handle = LibUI.NewTextBox();
+                    Handle = LibUIAPI.NewTextBox();
                 InitializeEvents();
             }
             else
@@ -31,9 +31,9 @@ namespace LibUISharp.Controls
             get
             {
                 if (this is MultilineTextBox)
-                    text = LibUI.MultilineTextBoxGetText(Handle);
+                    text = LibUIAPI.MultilineTextBoxGetText(Handle);
                 else
-                    text = LibUI.TextBoxGetText(Handle);
+                    text = LibUIAPI.TextBoxGetText(Handle);
                 return text;
             }
             set
@@ -41,9 +41,9 @@ namespace LibUISharp.Controls
                 if (text != value)
                 {
                     if (this is MultilineTextBox)
-                        LibUI.MultilineTextBoxSetText(Handle, value);
+                        LibUIAPI.MultilineTextBoxSetText(Handle, value);
                     else
-                        LibUI.TextBoxSetText(Handle, value);
+                        LibUIAPI.TextBoxSetText(Handle, value);
                     text = value;
                 }
             }
@@ -54,9 +54,9 @@ namespace LibUISharp.Controls
             get
             {
                 if (this is MultilineTextBox)
-                    readOnly = LibUI.MultilineTextBoxGetReadOnly(Handle);
+                    readOnly = LibUIAPI.MultilineTextBoxGetReadOnly(Handle);
                 else
-                    readOnly = LibUI.TextBoxGetReadOnly(Handle);
+                    readOnly = LibUIAPI.TextBoxGetReadOnly(Handle);
                 return readOnly;
             }
             set
@@ -64,9 +64,9 @@ namespace LibUISharp.Controls
                 if (readOnly != value)
                 {
                     if (this is MultilineTextBox)
-                        LibUI.MultilineTextBoxSetReadOnly(Handle, value);
+                        LibUIAPI.MultilineTextBoxSetReadOnly(Handle, value);
                     else
-                        LibUI.TextBoxSetReadOnly(Handle, value);
+                        LibUIAPI.TextBoxSetReadOnly(Handle, value);
                     readOnly = value;
                 }
             }
@@ -75,9 +75,9 @@ namespace LibUISharp.Controls
         protected override void InitializeEvents()
         {
             if (this is MultilineTextBox)
-                LibUI.MultilineTextBoxOnTextChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); });
+                LibUIAPI.MultilineTextBoxOnTextChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); });
             else
-                LibUI.TextBoxOnTextChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); });
+                LibUIAPI.TextBoxOnTextChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); });
         }
 
         protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
@@ -100,15 +100,15 @@ namespace LibUISharp.Controls
         public MultilineTextBox(bool wordWrap = true)
         {
             if (wordWrap)
-                Handle = LibUI.NewMultilineTextBox();
+                Handle = LibUIAPI.NewMultilineTextBox();
             else
-                Handle = LibUI.NewNonWrappingMultilineTextBox();
+                Handle = LibUIAPI.NewNonWrappingMultilineTextBox();
             WordWrap = wordWrap;
             InitializeEvents();
         }
 
         public bool WordWrap { get; }
 
-        public void Append(params string[] lines) => LibUI.MultilineTextBoxAppend(Handle, lines);
+        public void Append(params string[] lines) => LibUIAPI.MultilineTextBoxAppend(Handle, lines);
     }
 }

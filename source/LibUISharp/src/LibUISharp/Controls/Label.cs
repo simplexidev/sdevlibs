@@ -8,7 +8,7 @@ namespace LibUISharp.Controls
 
         public Label(string text)
         {
-            Handle = LibUI.NewLabel(text);
+            Handle = LibUIAPI.NewLabel(text);
             this.text = text;
         }
 
@@ -16,14 +16,14 @@ namespace LibUISharp.Controls
         {
             get
             {
-                text = LibUI.LabelGetText(Handle);
+                text = LibUIAPI.LabelGetText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    LibUI.LabelSetText(Handle, value);
+                    LibUIAPI.LabelSetText(Handle, value);
                     text = value;
                 }
             }

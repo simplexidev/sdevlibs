@@ -7,11 +7,11 @@ namespace LibUISharp.Controls
         public DateTimePicker()
         {
             if (this is DatePicker)
-                Handle = LibUI.NewDatePicker();
+                Handle = LibUIAPI.NewDatePicker();
             else if (this is TimePicker)
-                Handle = LibUI.NewTimePicker();
+                Handle = LibUIAPI.NewTimePicker();
             else
-                Handle = LibUI.NewDateTimePicker();
+                Handle = LibUIAPI.NewDateTimePicker();
         }
     }
 

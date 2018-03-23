@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using LibUISharp.Controls;
-using LibUISharp.Internal;
+
+using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
@@ -9,7 +10,7 @@ namespace LibUISharp
     {
         private static object _lock = new object();
         private static bool created;
-        private static LibUI.InitOptions Options = new LibUI.InitOptions(UIntPtr.Zero);
+        private static uiInitOptions Options = new uiInitOptions(UIntPtr.Zero);
         private int exitCode;
 
         public Application()
@@ -51,7 +52,7 @@ namespace LibUISharp
             try
             {
                 QueueMain(action);
-                LibUI.Main();
+                uiMain();
             }
             catch (Exception)
             {
@@ -64,26 +65,28 @@ namespace LibUISharp
         {
             lock (_lock)
             {
-                LibUI.QueueMain(data => { action?.Invoke(); });
+                uiQueueMain(data => { action?.Invoke(); });
             }
         }
 
-        private void Steps() => LibUI.MainSteps();
+        private void Steps() => uiMainSteps();
 
-        private bool Step(bool wait) => LibUI.MainStep(wait);
+        private bool Step(bool wait) => uiMainStep(wait);
 
-        public void Dispose() => LibUI.UnInitialize();
+        public void Dispose() => uiUnInit();
 
-        public void Exit() => LibUI.Exit();
+        public void Exit() => uiQuit();
 
         private void InitializeComponent()
         {
-            LibUI.ConsoleWindow(false);
-            LibUI.Initialize(ref Options);
+#if WINDOWS
+            WindowsNT.ConsoleWindow(false);
+#endif
+            uiInit(ref Options);
         }
 
         private void InitializeEvents() =>
-            LibUI.OnExit(data =>
+            uiOnShouldQuit(data =>
             {
                 CancelEventArgs args = new CancelEventArgs();
                 OnExit?.Invoke(this, args);

@@ -6,7 +6,7 @@ namespace LibUISharp.Controls
     {
         protected Separator(Orientation orientation)
         {
-            Handle = LibUI.NewSeparator(orientation);
+            Handle = LibUIAPI.NewSeparator(orientation);
             Orientation = orientation;
         }
 

@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
 
+using static LibUISharp.Internal.LibUI;
+
 namespace LibUISharp.Controls
 {
     public class Window : Control
@@ -18,7 +20,7 @@ namespace LibUISharp.Controls
         { 
             if (string.IsNullOrEmpty(title))
                 title = "LibUI";
-            Handle = LibUI.NewWindow(title, width, height, hasMenuBar);
+            Handle = uiNewWindow(title, width, height, hasMenuBar);
             WindowCache.Add(Handle, this);
             this.title = title;
             InitializeEvents();
@@ -34,7 +36,7 @@ namespace LibUISharp.Controls
         {
             get
             {
-                title = LibUI.WindowGetTitle(Handle);
+                title = uiWindowTitle(Handle);
                 return title;
             }
             set
@@ -45,15 +47,15 @@ namespace LibUISharp.Controls
                         title = "LibUI";
                     else
                         title = value;
-                    LibUI.WindowSetTitle(Handle, title);
+                    uiWindowSetTitle(Handle, title);
                 }
             }
         }
 
         public Size Size
         {
-            get => LibUI.WindowGetSize(Handle);
-            set => LibUI.WindowSetSize(Handle, value);
+            get => uiWindowContentSize(Handle);
+            set => uiWindowSetContentSize(Handle, value);
         }
 
         public int Width => Size.Width;
@@ -61,20 +63,20 @@ namespace LibUISharp.Controls
 
         public bool Margins
         {
-            get => LibUI.WindowGetMargins(Handle);
-            set => LibUI.WindowSetMargins(Handle, value);
+            get => uiWindowMargined(Handle);
+            set => uiWindowSetMargined(Handle, value);
         }
 
         public bool Fullscreen
         {
-            get => LibUI.WindowGetFullscreen(Handle);
-            set => LibUI.WindowSetFullscreen(Handle, value);
+            get => uiWindowFullscreen(Handle);
+            set => uiWindowSetFullscreen(Handle, value);
         }
 
         public bool Borderless
         {
-            get => LibUI.WindowGetBorderless(Handle);
-            set => LibUI.WindowSetBorderless(Handle, value);
+            get => uiWindowBorderless(Handle);
+            set => uiWindowSetBorderless(Handle, value);
         }
   
         public Control Child
@@ -85,8 +87,8 @@ namespace LibUISharp.Controls
                 if (!Handle.IsInvalid)
                 {
                     if (value == null)
-                        LibUI.WindowSetChild(Handle, new ControlSafeHandle());
-                    LibUI.WindowSetChild(Handle, value.Handle);
+                        uiWindowSetChild(Handle, new ControlSafeHandle());
+                    uiWindowSetChild(Handle, value.Handle);
                 }
                 child = value;
             }
@@ -97,7 +99,7 @@ namespace LibUISharp.Controls
             if (Handle.IsInvalid)
                 throw new TypeInitializationException(nameof(Window), new InvalidComObjectException());
 
-            LibUI.WindowOnClosing(Handle, (window, data) =>
+            uiWindowOnClosing(Handle, (window, data) =>
             {
                 CancelEventArgs args = new CancelEventArgs();
                 OnClosing(args);
@@ -112,7 +114,7 @@ namespace LibUISharp.Controls
                 return !cancel;
             });
 
-            LibUI.WindowOnSizeChanged(Handle, (window, data) => { OnResize(EventArgs.Empty); });
+            uiWindowOnContentSizeChanged(Handle, (window, data) => { OnResize(EventArgs.Empty); });
         }
 
         protected sealed override void InitializeComponent() { }

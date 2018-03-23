@@ -1,4 +1,5 @@
 # Contributing to LibUISharp
+
 For starters, thank you for taking the time to contribute to this project. We try to create a stable project, fix bugs and add features continuously, and without your help, it wouldn't be possible.
 
 ## Getting started
@@ -21,11 +22,11 @@ When you're done, submit a pull request and for one of the maintainers to check 
 
 ### Tests
 
-This needs done, and I'm working on it. (But anyone is more than welcome to help with this, since I have little knowlege of `mstest`.)
+This needs done, and I'm working on it. (But anyone is more than welcome to help with this, since I have little knowledge of `mstest`.)
 
 ### Documentation
 
-I'm working on documentation, but the general rule of thumb is to write it as you code it. (which I'm no good at :P).
+I'm working on writing documentation after I finish the code, but the general rule of thumb is to write it as you code it. 
 
 ## Code of Conduct
 
@@ -84,7 +85,7 @@ further defined and clarified by project maintainers.
 ### Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project owner at [tacorwin@outlook.com](mailto:tacorwin@outlook.com). All
+reported by contacting the project owner \([tom-corwin](https://github.com/tom-corwin)\). All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using LibUISharp.Internal;
+using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -25,28 +26,28 @@ namespace LibUISharp.Controls
 
         public virtual bool Enabled
         {
-            get => LibUI.ControlEnabled(Handle);
+            get => uiControlEnabled(Handle);
             set
             {
                 if (enabled == value) return;
                 if (value)
-                    LibUI.ControlEnable(Handle);
+                    uiControlEnable(Handle);
                 else
-                    LibUI.ControlDisable(Handle);
+                    uiControlDisable(Handle);
                 enabled = value;
             }
         }
 
         public virtual bool Visible
         {
-            get => LibUI.ControlVisible(Handle);
+            get => uiControlVisible(Handle);
             set
             {
                 if (visible == value) return;
                 if (value)
-                    LibUI.ControlShow(Handle);
+                    uiControlShow(Handle);
                 else
-                    LibUI.ControlHide(Handle);
+                    uiControlHide(Handle);
                 visible = value;
             }
         }
@@ -56,7 +57,7 @@ namespace LibUISharp.Controls
             get
             {
                 if (!Handle.IsInvalid)
-                    return LibUI.ControlTopLevel(Handle);
+                    return uiControlTopLevel(Handle);
                 return false;
             }
             //TODO: set { }
@@ -67,14 +68,14 @@ namespace LibUISharp.Controls
             get
             {
                 if (!Handle.IsInvalid)
-                    return LibUI.ControlEnabledToUser(Handle);
+                    return uiControlEnabledToUser(Handle);
                 throw new InvalidOperationException();
             }
         }
         
         public Control Parent { get; internal set; }
         public int Index { get; protected internal set; }
-        protected internal ControlSafeHandle Handle { get; set; }
+        internal ControlSafeHandle Handle { get; set; }
 
         public virtual void Enable() => Enabled = true;
         public virtual void Disable() => Enabled = false;

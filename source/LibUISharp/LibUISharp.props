@@ -1,0 +1,57 @@
+<Project>
+  <PropertyGroup>
+    <IntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj</IntermediateOutputPath>
+    <OutputPath>..\..\build\$(MSBuildProjectName)\bin</OutputPath>
+    <Platform>AnyCPU</Platform>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+    <Authors>Thomas Corwin, et al.</Authors>
+    <Copyright>2018 (c) Thomas Corwin</Copyright>
+    <VersionPrefix>0.3.5</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(ConfigurationGroup)'=='Debug'">
+      <PropertyGroup>
+        <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+        <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
+        <Optimize Condition="'$(Optimize)'==''">false</Optimize>
+        <DebugType Condition="'$(DebugType)'==''">full</DebugType>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(ConfigurationGroup)'=='Release'">
+      <PropertyGroup>
+        <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
+        <Optimize Condition="'$(Optimize)'==''">true</Optimize>
+        <DebugType Condition="'$(DebugType)'==''">pdbonly</DebugType>
+        <DefineConstants>TRACE</DefineConstants>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <PropertyGroup>
+    <PackageId>$(MSBuildProjectName)</PackageId>
+    <Description>LibUI Bindings for .NET Core (C#)</Description>
+    <PackageTags>libui;ui;netcore;netstandard</PackageTags>
+    <PackageReleaseNotes>Version $(VersionPrefix)-$(VersionSuffix)</PackageReleaseNotes>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageProjectUrl>https://github.com/tom-corwin/LibUISharp</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/tom-corwin/LibUISharp</RepositoryUrl>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Core'">
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+  </PropertyGroup>
+</Project>

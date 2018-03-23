@@ -9,7 +9,7 @@ namespace LibUISharp.Controls
 
         public Button(string text)
         {
-            Handle = LibUI.NewButton(text);
+            Handle = LibUIAPI.NewButton(text);
             this.text = text;
             InitializeEvents();
         }
@@ -20,21 +20,21 @@ namespace LibUISharp.Controls
         {
             get
             {
-                text = LibUI.ButtonGetText(Handle);
+                text = LibUIAPI.ButtonGetText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    LibUI.WindowSetTitle(Handle, text);
+                    LibUIAPI.WindowSetTitle(Handle, text);
                     text = value;
                 }
             }
         }
 
         protected sealed override void InitializeEvents() =>
-            LibUI.ButtonOnClick(Handle, (button, data) => { OnClick(EventArgs.Empty); });
+            LibUIAPI.ButtonOnClick(Handle, (button, data) => { OnClick(EventArgs.Empty); });
 
         protected virtual void OnClick(EventArgs e) => Click?.Invoke(this, e);
     }

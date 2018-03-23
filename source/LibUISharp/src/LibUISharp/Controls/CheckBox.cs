@@ -10,7 +10,7 @@ namespace LibUISharp.Controls
 
         public CheckBox(string text)
         {
-            Handle = LibUI.NewCheckBox(text);
+            Handle = LibUIAPI.NewCheckBox(text);
             this.text = text;
             InitializeEvents();
         }
@@ -21,14 +21,14 @@ namespace LibUISharp.Controls
         {
             get
             {
-                text = LibUI.CheckBoxGetText(Handle);
+                text = LibUIAPI.CheckBoxGetText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    LibUI.CheckBoxSetText(Handle, text);
+                    LibUIAPI.CheckBoxSetText(Handle, text);
                     text = value;
                 }
             }
@@ -38,20 +38,20 @@ namespace LibUISharp.Controls
         {
             get
             {
-                _checked = LibUI.CheckBoxGetChecked(Handle);
+                _checked = LibUIAPI.CheckBoxGetChecked(Handle);
                 return _checked;
             }
             set
             {
                 if (_checked != value)
                 {
-                    LibUI.CheckBoxSetChecked(Handle, value);
+                    LibUIAPI.CheckBoxSetChecked(Handle, value);
                     _checked = value;
                 }
             }
         }
 
-        protected sealed override void InitializeEvents() => LibUI.CheckBoxOnCheckedChanged(Handle, (checkbox, data) => { OnCheckedChanged(EventArgs.Empty); });
+        protected sealed override void InitializeEvents() => LibUIAPI.CheckBoxOnCheckedChanged(Handle, (checkbox, data) => { OnCheckedChanged(EventArgs.Empty); });
 
         protected virtual void OnCheckedChanged(EventArgs e) => CheckedChanged?.Invoke(this, e);
     }

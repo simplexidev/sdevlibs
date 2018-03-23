@@ -6,20 +6,20 @@ namespace LibUISharp.Controls
     {
         private int _value;
 
-        public ProgressBar() => Handle = LibUI.NewProgressBar();
+        public ProgressBar() => Handle = LibUIAPI.NewProgressBar();
         
         public int Value
         {
             get
             {
-                _value = LibUI.ProgressBarGetValue(Handle);
+                _value = LibUIAPI.ProgressBarGetValue(Handle);
                 return _value;
             }
             set
             {
                 if (_value != value)
                 {
-                    LibUI.ProgressBarSetValue(Handle, value);
+                    LibUIAPI.ProgressBarSetValue(Handle, value);
                     _value = value;
                 }
             }

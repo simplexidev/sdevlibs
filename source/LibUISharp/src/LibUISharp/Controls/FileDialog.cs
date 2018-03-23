@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using LibUISharp.Internal;
+using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -14,9 +14,9 @@ namespace LibUISharp.Controls
         public bool Show()
         {
             if (this is SaveFileDialog)
-                Path = LibUI.SaveFile(Parent.Handle);
+                Path = uiSaveFile(Parent.Handle);
             else if (this is OpenFileDialog)
-                Path = LibUI.OpenFile(Parent.Handle);
+                Path = uiOpenFile(Parent.Handle);
 
             if (string.IsNullOrEmpty(Path))
                 return false;
