@@ -1,4 +1,4 @@
-﻿using LibUISharp.Internal;
+﻿using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -7,11 +7,11 @@ namespace LibUISharp.Controls
         public DateTimePicker()
         {
             if (this is DatePicker)
-                Handle = LibUIAPI.NewDatePicker();
+                Handle = uiNewDatePicker();
             else if (this is TimePicker)
-                Handle = LibUIAPI.NewTimePicker();
+                Handle = uiNewTimePicker();
             else
-                Handle = LibUIAPI.NewDateTimePicker();
+                Handle = uiNewDateTimePicker();
         }
     }
 

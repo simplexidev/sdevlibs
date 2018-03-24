@@ -1,5 +1,5 @@
 ﻿using System;
-using LibUISharp.Internal;
+using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -9,7 +9,7 @@ namespace LibUISharp.Controls
 
         public Button(string text)
         {
-            Handle = LibUIAPI.NewButton(text);
+            Handle = uiNewButton(text);
             this.text = text;
             InitializeEvents();
         }
@@ -20,21 +20,21 @@ namespace LibUISharp.Controls
         {
             get
             {
-                text = LibUIAPI.ButtonGetText(Handle);
+                text = uiButtonText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    LibUIAPI.WindowSetTitle(Handle, text);
+                    uiButtonSetText(Handle, text);
                     text = value;
                 }
             }
         }
 
         protected sealed override void InitializeEvents() =>
-            LibUIAPI.ButtonOnClick(Handle, (button, data) => { OnClick(EventArgs.Empty); });
+            uiButtonOnClick(Handle, (button, data) => { OnClick(EventArgs.Empty); });
 
         protected virtual void OnClick(EventArgs e) => Click?.Invoke(this, e);
     }

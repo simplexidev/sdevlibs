@@ -1,5 +1,6 @@
 ﻿using System;
-using LibUISharp.Internal;
+
+using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -7,7 +8,17 @@ namespace LibUISharp.Controls
     {
         protected Panel(Orientation orientation = Orientation.Horizontal)
         {
-            Handle = LibUIAPI.NewPanel(orientation);
+            switch (orientation)
+            {
+                case Orientation.Horizontal:
+                    Handle = uiNewHorizontalBox();
+                    break;
+                case Orientation.Vertical:
+                    Handle = uiNewVerticalBox();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("orientation");
+            }
             Orientation = orientation;
         }
 
@@ -15,8 +26,8 @@ namespace LibUISharp.Controls
 
         public bool Padding
         {
-            get => LibUIAPI.PanelGetPadding(Handle);
-            set => LibUIAPI.PanelSetPadding(Handle, value);
+            get => uiBoxPadded(Handle);
+            set => uiBoxSetPadded(Handle, value);
         }
     }
 
@@ -27,7 +38,7 @@ namespace LibUISharp.Controls
 
     public sealed class VPanel : Panel
     {
-        public VPanel() : base(Orientation.Horizontal) { }
+        public VPanel() : base(Orientation.Vertical) { }
     }
     
     public class PanelItemCollection : ControlCollection<Panel>
@@ -36,7 +47,7 @@ namespace LibUISharp.Controls
 
         public override bool Remove(Control item)
         {
-            LibUIAPI.PanelDelete(Owner.Handle, item.Index);
+            uiBoxDelete(Owner.Handle, item.Index);
             return base.Remove(item);
         }
 
@@ -47,7 +58,7 @@ namespace LibUISharp.Controls
             if (Contains(child))
                 throw new InvalidOperationException("cannot add the same control.");
             if(child == null) return;
-            LibUIAPI.PanelAppend(Owner.Handle, child.Handle, stretches);
+            uiBoxAppend(Owner.Handle, child.Handle, stretches);
             base.Add(child);
         }
     }

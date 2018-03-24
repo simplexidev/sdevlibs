@@ -45,8 +45,5 @@
   <ItemGroup>
     <None Include="ref\*.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LibUISharp.Native\LibUISharp.Native.csproj" />
-  </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 </Project>
