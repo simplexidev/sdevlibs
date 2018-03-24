@@ -6,7 +6,7 @@
     <BaseIntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj</BaseIntermediateOutputPath>
   </PropertyGroup>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
-  <Import Project="$(MSBuildProjectName).props" />
+  <Import Project="LibUISharp.props" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
@@ -23,6 +23,9 @@
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Internal\*.cs" />
     <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.cs" />
+    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Delegates.cs" />
+    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Enums.cs" />
+    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Structs.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(IsWindows)' == 'true'">
     <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Windows.cs" />

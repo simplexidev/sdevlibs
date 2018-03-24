@@ -1,10 +1,13 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace LibUISharp.Native
+namespace LibUISharp.Internal
 {
-    internal static partial class NativeMethods
+    internal static partial class LibUI
     {
+        public static class MacOS
+        {
 
+        }
     }
 }
