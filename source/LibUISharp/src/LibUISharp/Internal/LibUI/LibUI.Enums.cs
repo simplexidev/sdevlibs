@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 
 namespace LibUISharp.Internal
 {
@@ -31,21 +30,21 @@ namespace LibUISharp.Internal
             uiDrawBrushTypeImage
         }
 
-        public enum uiDrawLineCap : int
+        public enum uiDrawLineCap : uint
         {
             uiDrawLineCapFlat,
             uiDrawLineCapRound,
             uiDrawLineCapSquare,
         }
 
-        public enum uiDrawLineJoin : int
+        public enum uiDrawLineJoin : uint
         {
             uiDrawLineJoinMiter,
             uiDrawLineJoinRound,
             uiDrawLineJoinBevel
         }
 
-        public enum uiDrawFillMode : int
+        public enum uiDrawFillMode : uint
         {
             uiDrawFillModeWinding,
             uiDrawFillModeAlternate

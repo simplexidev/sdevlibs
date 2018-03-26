@@ -1,5 +1,6 @@
 ﻿using System;
-using LibUISharp.Internal;
+
+using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -10,25 +11,25 @@ namespace LibUISharp.Controls
 
         public CheckBox(string text)
         {
-            Handle = LibUIAPI.NewCheckBox(text);
+            Handle = uiNewCheckbox(text);
             this.text = text;
             InitializeEvents();
         }
 
-        public event EventHandler CheckedChanged;
+        public event EventHandler Toggled;
         
         public string Text
         {
             get
             {
-                text = LibUIAPI.CheckBoxGetText(Handle);
+                text = uiCheckboxText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    LibUIAPI.CheckBoxSetText(Handle, text);
+                    uiCheckboxSetText(Handle, text);
                     text = value;
                 }
             }
@@ -38,21 +39,21 @@ namespace LibUISharp.Controls
         {
             get
             {
-                _checked = LibUIAPI.CheckBoxGetChecked(Handle);
+                _checked = uiCheckboxChecked(Handle);
                 return _checked;
             }
             set
             {
                 if (_checked != value)
                 {
-                    LibUIAPI.CheckBoxSetChecked(Handle, value);
+                    uiCheckboxSetChecked(Handle, value);
                     _checked = value;
                 }
             }
         }
 
-        protected sealed override void InitializeEvents() => LibUIAPI.CheckBoxOnCheckedChanged(Handle, (checkbox, data) => { OnCheckedChanged(EventArgs.Empty); });
+        protected sealed override void InitializeEvents() => uiCheckboxOnToggled(Handle, (checkbox, data) => { OnToggled(EventArgs.Empty); });
 
-        protected virtual void OnCheckedChanged(EventArgs e) => CheckedChanged?.Invoke(this, e);
+        protected virtual void OnToggled(EventArgs e) => Toggled?.Invoke(this, e);
     }
 }

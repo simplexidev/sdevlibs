@@ -26,7 +26,7 @@ namespace LibUISharp.Internal
         #region General
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiInit")]
         private static extern IntPtr uiInit_(ref uiInitOptions options);
-        public static void uiInit(uiInitOptions options)
+        public static void uiInit(ref uiInitOptions options)
         {
             IntPtr errPtr = uiInit_(ref options);
             string errStr = UTF8Helper.ToUTF8Str(errPtr);
@@ -70,121 +70,121 @@ namespace LibUISharp.Internal
         #endregion
         #region uiControl
         [DllImport(LibUIRef, CallingConvention = Cdecl, SetLastError = true)]
-        public static extern void uiControlDestroy(IntPtr control);
-        public static void uiControlDestroy(ControlSafeHandle control) => uiControlDestroy(control.DangerousGetHandle());
+        public static extern void uiControlDestroy(IntPtr c);
+        public static void uiControlDestroy(ControlSafeHandle c) => uiControlDestroy(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern UIntPtr uiControlHandle(IntPtr control);
+        public static extern UIntPtr uiControlHandle(IntPtr c);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiControlParent(IntPtr control);
-        public static ControlSafeHandle uiControlParent(ControlSafeHandle control) => new ControlSafeHandle(uiControlParent(control.DangerousGetHandle()));
+        public static extern IntPtr uiControlParent(IntPtr c);
+        public static ControlSafeHandle uiControlParent(ControlSafeHandle c) => new ControlSafeHandle(uiControlParent(c.DangerousGetHandle()));
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiControlSetParent(IntPtr control, IntPtr parent);
-        public static void uiControlSetParent(ControlSafeHandle control, ControlSafeHandle parent) => uiControlSetParent(control.DangerousGetHandle(), parent.DangerousGetHandle());
+        public static extern void uiControlSetParent(IntPtr c, IntPtr parent);
+        public static void uiControlSetParent(ControlSafeHandle c, ControlSafeHandle parent) => uiControlSetParent(c.DangerousGetHandle(), parent.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiControlTopLevel(IntPtr control);
-        public static bool uiControlTopLevel(ControlSafeHandle control) => uiControlTopLevel(control.DangerousGetHandle());
+        public static extern bool uiControlTopLevel(IntPtr c);
+        public static bool uiControlTopLevel(ControlSafeHandle c) => uiControlTopLevel(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiControlVisible(IntPtr control);
-        public static bool uiControlVisible(ControlSafeHandle control) => uiControlVisible(control.DangerousGetHandle());
+        public static extern bool uiControlVisible(IntPtr c);
+        public static bool uiControlVisible(ControlSafeHandle c) => uiControlVisible(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiControlShow(IntPtr control);
-        public static void uiControlShow(ControlSafeHandle control) => uiControlShow(control.DangerousGetHandle());
+        public static extern void uiControlShow(IntPtr c);
+        public static void uiControlShow(ControlSafeHandle c) => uiControlShow(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiControlHide(IntPtr control);
-        public static void uiControlHide(ControlSafeHandle control) => uiControlHide(control.DangerousGetHandle());
+        public static extern void uiControlHide(IntPtr c);
+        public static void uiControlHide(ControlSafeHandle c) => uiControlHide(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiControlEnabled(IntPtr control);
-        public static bool uiControlEnabled(ControlSafeHandle control) => uiControlEnabled(control.DangerousGetHandle());
+        public static extern bool uiControlEnabled(IntPtr c);
+        public static bool uiControlEnabled(ControlSafeHandle c) => uiControlEnabled(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiControlEnable(IntPtr control);
-        public static void uiControlEnable(ControlSafeHandle control) => uiControlEnable(control.DangerousGetHandle());
+        public static extern void uiControlEnable(IntPtr c);
+        public static void uiControlEnable(ControlSafeHandle c) => uiControlEnable(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiControlDisable(IntPtr control);
-        public static void uiControlDisable(ControlSafeHandle control) => uiControlDisable(control.DangerousGetHandle());
+        public static extern void uiControlDisable(IntPtr c);
+        public static void uiControlDisable(ControlSafeHandle c) => uiControlDisable(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiControlVerifySetParent(IntPtr control, IntPtr parent);
-        public static void uiControlVerifySetParent(ControlSafeHandle control, ControlSafeHandle parent) => uiControlVerifySetParent(control.DangerousGetHandle(), parent.DangerousGetHandle());
+        public static extern void uiControlVerifySetParent(IntPtr c, IntPtr parent);
+        public static void uiControlVerifySetParent(ControlSafeHandle c, ControlSafeHandle parent) => uiControlVerifySetParent(c.DangerousGetHandle(), parent.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiControlEnabledToUser(IntPtr control);
-        public static bool uiControlEnabledToUser(ControlSafeHandle control) => uiControlEnabledToUser(control.DangerousGetHandle());
+        public static extern bool uiControlEnabledToUser(IntPtr c);
+        public static bool uiControlEnabledToUser(ControlSafeHandle c) => uiControlEnabledToUser(c.DangerousGetHandle());
         #endregion
         #region uiWindow
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiWindowTitle(IntPtr window);
-        public static string uiWindowTitle(ControlSafeHandle window) => UTF8Helper.ToUTF8Str(uiWindowTitle(window.DangerousGetHandle()));
+        public static extern IntPtr uiWindowTitle(IntPtr w);
+        public static string uiWindowTitle(ControlSafeHandle w) => UTF8Helper.ToUTF8Str(uiWindowTitle(w.DangerousGetHandle()));
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiWindowSetTitle(IntPtr window, IntPtr title);
-        public static void uiWindowSetTitle(ControlSafeHandle window, string title)
+        public static extern void uiWindowSetTitle(IntPtr w, IntPtr title);
+        public static void uiWindowSetTitle(ControlSafeHandle w, string title)
         {
             IntPtr strPtr = UTF8Helper.ToUTF8Ptr(title);
-            uiWindowSetTitle(window.DangerousGetHandle(), strPtr);
+            uiWindowSetTitle(w.DangerousGetHandle(), strPtr);
             Marshal.FreeHGlobal(strPtr);
         }
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiWindowContentSize(IntPtr window, out int width, out int height);
-        public static void uiWindowContentSize(ControlSafeHandle window, out int width, out int height) => uiWindowContentSize(window.DangerousGetHandle(), out width, out height);
-        public static Size uiWindowContentSize(ControlSafeHandle window)
+        public static extern void uiWindowContentSize(IntPtr w, out int width, out int height);
+        public static void uiWindowContentSize(ControlSafeHandle w, out int width, out int height) => uiWindowContentSize(w.DangerousGetHandle(), out width, out height);
+        public static Size uiWindowContentSize(ControlSafeHandle w)
         {
-            uiWindowContentSize(window, out int w, out int h);
-            return new Size(w, h);
+            uiWindowContentSize(w, out int width, out int height);
+            return new Size(width, height);
         }
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiWindowSetContentSize(IntPtr window, int width, int height);
-        public static void uiWindowSetContentSize(ControlSafeHandle window, int width, int height) => uiWindowSetContentSize(window.DangerousGetHandle(), width, height);
-        public static void uiWindowSetContentSize(ControlSafeHandle window, Size size) => uiWindowSetContentSize(window, size.Width, size.Height);
+        public static extern void uiWindowSetContentSize(IntPtr w, int width, int height);
+        public static void uiWindowSetContentSize(ControlSafeHandle w, int width, int height) => uiWindowSetContentSize(w.DangerousGetHandle(), width, height);
+        public static void uiWindowSetContentSize(ControlSafeHandle w, Size size) => uiWindowSetContentSize(w, size.Width, size.Height);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiWindowFullscreen(IntPtr window);
-        public static bool uiWindowFullscreen(ControlSafeHandle window) => uiWindowFullscreen(window.DangerousGetHandle());
+        public static extern bool uiWindowFullscreen(IntPtr w);
+        public static bool uiWindowFullscreen(ControlSafeHandle w) => uiWindowFullscreen(w.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiWindowSetFullscreen(IntPtr window, bool fullscreen);
-        public static void uiWindowSetFullscreen(ControlSafeHandle window, bool fullscreen) => uiWindowSetFullscreen(window.DangerousGetHandle(), fullscreen);
+        public static extern void uiWindowSetFullscreen(IntPtr w, bool fullscreen);
+        public static void uiWindowSetFullscreen(ControlSafeHandle w, bool fullscreen) => uiWindowSetFullscreen(w.DangerousGetHandle(), fullscreen);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiWindowOnContentSizeChanged(IntPtr window, uiOnContentSizeChangedHandler f, IntPtr data);
-        public static void uiWindowOnContentSizeChanged(ControlSafeHandle window, uiOnContentSizeChangedHandler handler, IntPtr data) => uiWindowOnContentSizeChanged(window.DangerousGetHandle(), handler, data);
-        public static void uiWindowOnContentSizeChanged(ControlSafeHandle window, uiOnContentSizeChangedHandler handler) => uiWindowOnContentSizeChanged(window, handler, IntPtr.Zero);
+        public static extern void uiWindowOnContentSizeChanged(IntPtr w, uiOnContentSizeChangedHandler f, IntPtr data);
+        public static void uiWindowOnContentSizeChanged(ControlSafeHandle w, uiOnContentSizeChangedHandler handler, IntPtr data) => uiWindowOnContentSizeChanged(w.DangerousGetHandle(), handler, data);
+        public static void uiWindowOnContentSizeChanged(ControlSafeHandle w, uiOnContentSizeChangedHandler handler) => uiWindowOnContentSizeChanged(w, handler, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiWindowOnClosing(IntPtr window, uiOnClosingHandler f, IntPtr data);
-        public static void uiWindowOnClosing(ControlSafeHandle window, uiOnClosingHandler handler, IntPtr data) => uiWindowOnClosing(window.DangerousGetHandle(), handler, data);
-        public static void uiWindowOnClosing(ControlSafeHandle window, uiOnClosingHandler handler) => uiWindowOnClosing(window, handler, IntPtr.Zero);
+        public static extern void uiWindowOnClosing(IntPtr w, uiOnClosingHandler f, IntPtr data);
+        public static void uiWindowOnClosing(ControlSafeHandle w, uiOnClosingHandler handler, IntPtr data) => uiWindowOnClosing(w.DangerousGetHandle(), handler, data);
+        public static void uiWindowOnClosing(ControlSafeHandle w, uiOnClosingHandler handler) => uiWindowOnClosing(w, handler, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiWindowBorderless(IntPtr window);
-        public static bool uiWindowBorderless(ControlSafeHandle window) => uiWindowBorderless(window.DangerousGetHandle());
+        public static extern bool uiWindowBorderless(IntPtr w);
+        public static bool uiWindowBorderless(ControlSafeHandle w) => uiWindowBorderless(w.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiWindowSetBorderless(IntPtr window, bool borderless);
-        public static void uiWindowSetBorderless(ControlSafeHandle window, bool borderless) => uiWindowSetBorderless(window.DangerousGetHandle(), borderless);
+        public static extern void uiWindowSetBorderless(IntPtr w, bool borderless);
+        public static void uiWindowSetBorderless(ControlSafeHandle w, bool borderless) => uiWindowSetBorderless(w.DangerousGetHandle(), borderless);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiWindowSetChild(IntPtr window, IntPtr child);
-        public static void uiWindowSetChild(ControlSafeHandle window, ControlSafeHandle child) => uiWindowSetChild(window.DangerousGetHandle(), child.DangerousGetHandle());
+        public static extern void uiWindowSetChild(IntPtr w, IntPtr child);
+        public static void uiWindowSetChild(ControlSafeHandle w, ControlSafeHandle child) => uiWindowSetChild(w.DangerousGetHandle(), child.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiWindowMargined(IntPtr window);
-        public static bool uiWindowMargined(ControlSafeHandle window) => uiWindowMargined(window.DangerousGetHandle());
+        public static extern bool uiWindowMargined(IntPtr w);
+        public static bool uiWindowMargined(ControlSafeHandle w) => uiWindowMargined(w.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiWindowSetMargined(IntPtr window, bool margined);
-        public static void uiWindowSetMargined(ControlSafeHandle window, bool margined) => uiWindowSetMargined(window.DangerousGetHandle(), margined);
+        public static extern void uiWindowSetMargined(IntPtr w, bool margined);
+        public static void uiWindowSetMargined(ControlSafeHandle w, bool margined) => uiWindowSetMargined(w.DangerousGetHandle(), margined);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewWindow(IntPtr title, int width, int height, bool hasMenubar);
@@ -199,22 +199,22 @@ namespace LibUISharp.Internal
         #endregion
         #region uiButton
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiButtonText(IntPtr button);
-        public static string uiButtonText(ControlSafeHandle button) => UTF8Helper.ToUTF8Str(uiButtonText(button.DangerousGetHandle()));
+        public static extern IntPtr uiButtonText(IntPtr b);
+        public static string uiButtonText(ControlSafeHandle b) => UTF8Helper.ToUTF8Str(uiButtonText(b.DangerousGetHandle()));
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiButtonSetText(IntPtr button, IntPtr text);
-        public static void uiButtonSetText(ControlSafeHandle button, string text)
+        public static extern void uiButtonSetText(IntPtr b, IntPtr text);
+        public static void uiButtonSetText(ControlSafeHandle b, string text)
         {
             IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiButtonSetText(button.DangerousGetHandle(), strPtr);
+            uiButtonSetText(b.DangerousGetHandle(), strPtr);
             Marshal.FreeHGlobal(strPtr);
         }
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiButtonOnClicked(IntPtr button, uiOnClickHandler f, IntPtr data);
-        public static void uiButtonOnClicked(ControlSafeHandle button, uiOnClickedHandler handler, IntPtr data) => uiButtonOnClicked(button.DangerousGetHandle(), handler, data);
-        public static void uiButtonOnClicked(ControlSafeHandle button, uiOnClickedHandler handler) => uiButtonOnClicked(button, handler, IntPtr.Zero);
+        public static extern void uiButtonOnClicked(IntPtr b, uiOnClickedHandler f, IntPtr data);
+        public static void uiButtonOnClicked(ControlSafeHandle b, uiOnClickedHandler handler, IntPtr data) => uiButtonOnClicked(b.DangerousGetHandle(), handler, data);
+        public static void uiButtonOnClicked(ControlSafeHandle b, uiOnClickedHandler handler) => uiButtonOnClicked(b, handler, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewButton(IntPtr text);
@@ -228,20 +228,20 @@ namespace LibUISharp.Internal
         #endregion
         #region uiBox/uiHorizontalBox/uiVerticalBox
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiBoxAppend(IntPtr parent, IntPtr child, bool stretchy);
-        public static void uiBoxAppend(ControlSafeHandle parent, ControlSafeHandle child, bool stretches) => uiBoxAppend(parent.DangerousGetHandle(), child.DangerousGetHandle(), stretches);
+        public static extern void uiBoxAppend(IntPtr b, IntPtr child, bool stretchy);
+        public static void uiBoxAppend(ControlSafeHandle b, ControlSafeHandle child, bool stretchy) => uiBoxAppend(b.DangerousGetHandle(), child.DangerousGetHandle(), stretchy);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiBoxDelete(IntPtr parent, int index);
-        public static void uiBoxDelete(ControlSafeHandle parent, int index) => uiBoxDelete(parent.DangerousGetHandle(), index);
+        public static extern void uiBoxDelete(IntPtr b, int index);
+        public static void uiBoxDelete(ControlSafeHandle b, int index) => uiBoxDelete(b.DangerousGetHandle(), index);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiBoxPadded(IntPtr box);
-        public static bool uiBoxPadded(ControlSafeHandle panel) => uiBoxPadded(panel.DangerousGetHandle());
+        public static extern bool uiBoxPadded(IntPtr b);
+        public static bool uiBoxPadded(ControlSafeHandle b) => uiBoxPadded(b.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiBoxSetPadded(IntPtr box, bool padded);
-        public static void uiBoxSetPadded(ControlSafeHandle panel, bool padding) => uiBoxSetPadded(panel.DangerousGetHandle(), padding);
+        public static extern void uiBoxSetPadded(IntPtr b, bool padded);
+        public static void uiBoxSetPadded(ControlSafeHandle b, bool padded) => uiBoxSetPadded(b.DangerousGetHandle(), padded);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewHorizontalBox")]
         public static extern IntPtr uiNewHorizontalBox_();
@@ -251,32 +251,33 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewVerticalBox_();
         public static ControlSafeHandle uiNewVerticalBox() => new ControlSafeHandle(uiNewVerticalBox_());
         #endregion
+
         #region uiCheckbox
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiCheckboxText(IntPtr checkBox);
-        public static string uiCheckboxText(ControlSafeHandle checkbox) => UTF8Helper.ToUTF8Str(uiCheckboxText(checkbox.DangerousGetHandle()));
+        public static extern IntPtr uiCheckboxText(IntPtr c);
+        public static string uiCheckboxText(ControlSafeHandle c) => UTF8Helper.ToUTF8Str(uiCheckboxText(c.DangerousGetHandle()));
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiCheckboxSetText(IntPtr checkBox, IntPtr text);
-        public static void uiCheckboxSetText(ControlSafeHandle checkbox, string text)
+        public static extern void uiCheckboxSetText(IntPtr c, IntPtr text);
+        public static void uiCheckboxSetText(ControlSafeHandle c, string text)
         {
             IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiCheckboxSetText(checkbox.DangerousGetHandle(), strPtr);
+            uiCheckboxSetText(c.DangerousGetHandle(), strPtr);
             Marshal.FreeHGlobal(strPtr);
         }
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiCheckboxOnToggled(IntPtr checkBox, uiOnToggledHandler f, IntPtr data);
-        public static void uiCheckboxOnToggled(ControlSafeHandle checkbox, uiOnToggledHandler handler, IntPtr data) => uiCheckboxOnToggled(checkbox.DangerousGetHandle(), handler, data);
-        public static void uiCheckboxOnToggled(ControlSafeHandle checkbox, uiOnToggledHandler handler) => uiCheckboxOnToggled(checkbox, handler, IntPtr.Zero);
+        public static extern void uiCheckboxOnToggled(IntPtr c, uiOnToggledHandler f, IntPtr data);
+        public static void uiCheckboxOnToggled(ControlSafeHandle c, uiOnToggledHandler handler, IntPtr data) => uiCheckboxOnToggled(c.DangerousGetHandle(), handler, data);
+        public static void uiCheckboxOnToggled(ControlSafeHandle c, uiOnToggledHandler handler) => uiCheckboxOnToggled(c, handler, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiCheckboxChecked(IntPtr checkBox);
-        public static bool uiCheckboxChecked(ControlSafeHandle checkbox) => uiCheckboxChecked(checkbox.DangerousGetHandle());
+        public static extern bool uiCheckboxChecked(IntPtr c);
+        public static bool uiCheckboxChecked(ControlSafeHandle c) => uiCheckboxChecked(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiCheckboxSetChecked(IntPtr checkBox, bool check);
-        public static void uiCheckboxSetChecked(ControlSafeHandle checkbox, bool checked_) => uiCheckboxSetChecked(checkbox.DangerousGetHandle(), checked_);
+        public static extern void uiCheckboxSetChecked(IntPtr c, bool @checked);
+        public static void uiCheckboxSetChecked(ControlSafeHandle c, bool @checked) => uiCheckboxSetChecked(c.DangerousGetHandle(), @checked);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewCheckbox(IntPtr text);
@@ -288,6 +289,7 @@ namespace LibUISharp.Internal
             return safeHandle;
         }
         #endregion
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         #region uiEntry
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiEntryText(IntPtr entry);
@@ -438,7 +440,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiComboboxSetSelected(IntPtr comboBox, int n);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiComboboxOnSelected(IntPtr comboBox, uiOnValueSelectedDelegate comboBoxOnSelected, IntPtr data);
+        public static extern void uiComboboxOnSelected(IntPtr comboBox, uiOnValueSelectedHandler comboBoxOnSelected, IntPtr data);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewCombobox();
         #endregion
@@ -462,7 +464,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiRadioButtonsSetSelected(IntPtr radioButton, int index);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiRadioButtonsOnSelected(IntPtr radioButton, uiOnValueSelectedSelected radioButtonOnSelected, IntPtr data);
+        public static extern void uiRadioButtonsOnSelected(IntPtr radioButton, uiOnValueSelectedHandler radioButtonOnSelected, IntPtr data);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewRadioButtons();
         #endregion
@@ -769,13 +771,13 @@ namespace LibUISharp.Internal
         public static extern void UIDrawTextLayoutLineByteRange(IntPtr tl, int line, out IntPtr start, out IntPtr end);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiColorButtonColor(IntPtr button, out double red, out double green, out double blue, out double alpha);
+        public static extern void uiColorButtonColor(IntPtr b, out double red, out double green, out double blue, out double alpha);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiColorButtonSetColor(IntPtr button, double red, double green, double blue, double alpha);
+        public static extern void uiColorButtonSetColor(IntPtr b, double red, double green, double blue, double alpha);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiColorButtonOnChanged(IntPtr button, uiColorButtonOnChangedDelegate colorButtonOnChanged, IntPtr data);
+        public static extern void uiColorButtonOnChanged(IntPtr b, uiColorButtonOnChangedDelegate colorButtonOnChanged, IntPtr data);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void uiColorButtonOnChangedDelegate(IntPtr button, IntPtr data);
+        public delegate void uiColorButtonOnChangedDelegate(IntPtr b, IntPtr data);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewColorButton();
 

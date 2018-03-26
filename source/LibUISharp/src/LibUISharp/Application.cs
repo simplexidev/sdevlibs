@@ -6,6 +6,7 @@ using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
+
     public sealed class Application : IDisposable
     {
         private static object _lock = new object();

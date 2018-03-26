@@ -22,7 +22,7 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiOnValueChangedHandler(IntPtr spinBox, IntPtr data);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void uiOnValueSelectedSelected(IntPtr comboBox, IntPtr data);
+        public delegate void uiOnValueSelectedHandler(IntPtr comboBox, IntPtr data);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiMenuItemOnClickedHandler(IntPtr menuItem, IntPtr window, IntPtr data);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
