@@ -1,4 +1,4 @@
-﻿using LibUISharp.Internal;
+﻿using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -8,7 +8,7 @@ namespace LibUISharp.Controls
 
         public Label(string text)
         {
-            Handle = LibUIAPI.NewLabel(text);
+            Handle = uiNewLabel(text);
             this.text = text;
         }
 
@@ -16,14 +16,14 @@ namespace LibUISharp.Controls
         {
             get
             {
-                text = LibUIAPI.LabelGetText(Handle);
+                text = uiLabelText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    LibUIAPI.LabelSetText(Handle, value);
+                    uiLabelSetText(Handle, value);
                     text = value;
                 }
             }

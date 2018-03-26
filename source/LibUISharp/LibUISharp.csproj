@@ -19,7 +19,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src\LibUISharp\*.cs" />
-    <Compile Include="src\LibUISharp\Controls\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Internal\*.cs" />
     <Compile Include="src\GlobalSuppressions.cs" />

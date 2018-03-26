@@ -1,4 +1,5 @@
-﻿using LibUISharp.Internal;
+﻿using System;
+using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -6,7 +7,17 @@ namespace LibUISharp.Controls
     {
         protected Separator(Orientation orientation)
         {
-            Handle = LibUIAPI.NewSeparator(orientation);
+            switch (orientation)
+            {
+                case Orientation.Horizontal:
+                    Handle = uiNewHorizontalSeparator();
+                    break;
+                case Orientation.Vertical:
+                    Handle = uiNewVerticalSeparator();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("orientation");
+            }
             Orientation = orientation;
         }
 

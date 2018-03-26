@@ -1,4 +1,4 @@
-﻿using LibUISharp.Internal;
+﻿using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -6,20 +6,20 @@ namespace LibUISharp.Controls
     {
         private int _value;
 
-        public ProgressBar() => Handle = LibUIAPI.NewProgressBar();
+        public ProgressBar() => Handle = uiNewProgressBar();
         
         public int Value
         {
             get
             {
-                _value = LibUIAPI.ProgressBarGetValue(Handle);
+                _value = uiProgressBarValue(Handle);
                 return _value;
             }
             set
             {
                 if (_value != value)
                 {
-                    LibUIAPI.ProgressBarSetValue(Handle, value);
+                    uiProgressBarSetValue(Handle, value);
                     _value = value;
                 }
             }

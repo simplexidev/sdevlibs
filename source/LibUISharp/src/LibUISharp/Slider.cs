@@ -1,5 +1,5 @@
 ﻿using System;
-using LibUISharp.Internal;
+using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Controls
 {
@@ -9,7 +9,7 @@ namespace LibUISharp.Controls
 
         public Slider(int min, int max)
         {
-            Handle = LibUIAPI.NewSlider(min, max);
+            Handle = uiNewSlider(min, max);
             MinimumValue = min;
             MaximumValue = max;
             InitializeEvents();
@@ -24,14 +24,14 @@ namespace LibUISharp.Controls
         {
             get
             {
-                _value = LibUIAPI.SliderGetValue(Handle);
+                _value = uiSliderValue(Handle);
                 return _value;
             }
             set
             {
                 if (_value != value)
                 {
-                    LibUIAPI.SliderSetValue(Handle, value);
+                    uiSliderSetValue(Handle, value);
                     _value = value;
                 }
             }
@@ -39,6 +39,6 @@ namespace LibUISharp.Controls
 
         protected virtual void OnValueChanged(EventArgs e) => ValueChanged?.Invoke(this, e);
 
-        protected sealed override void InitializeEvents() => LibUIAPI.SliderOnValueChanged(Handle, (slider, data) => { OnValueChanged(EventArgs.Empty); });
+        protected sealed override void InitializeEvents() => uiSliderOnChanged(Handle, (slider, data) => { OnValueChanged(EventArgs.Empty); });
     }
 }
