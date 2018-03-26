@@ -1,4 +1,4 @@
-﻿namespace LibUISharp.Controls
+﻿namespace LibUISharp
 {
     public enum Orientation
     {

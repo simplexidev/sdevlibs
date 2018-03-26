@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     public class TextChangedEventArgs : EventArgs
     {

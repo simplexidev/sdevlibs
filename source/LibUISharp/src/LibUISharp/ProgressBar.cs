@@ -1,6 +1,6 @@
 ﻿using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     public class ProgressBar : Control
     {

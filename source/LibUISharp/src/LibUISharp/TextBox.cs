@@ -1,27 +1,27 @@
 ﻿using System;
 using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
-    public class Entry : Control
+    public class TextBox : Control
     {
         private string text;
         private bool readOnly;
 
-        public Entry()
+        public TextBox()
         {
-            if (!(this is MultilineEntry))
+            if (!(this is MultilineTextBox))
             {
-                if (this is PasswordEntry)
+                if (this is PasswordTextBox)
                     Handle = uiNewPasswordEntry();
-                else if (this is SearchEntry)
+                else if (this is SearchTextBox)
                     Handle = uiNewSearchEntry();
                 else
                     Handle = uiNewEntry();
                 InitializeEvents();
             }
             else
-                throw new TypeInitializationException("LibUISharp.Controls.MultilineEntry", new InvalidOperationException());
+                throw new TypeInitializationException("LibUISharp.Controls.MultilineTextBox", new InvalidOperationException());
         }
 
         public event EventHandler<TextChangedEventArgs> TextChanged;
@@ -30,7 +30,7 @@ namespace LibUISharp.Controls
         {
             get
             {
-                if (this is MultilineEntry)
+                if (this is MultilineTextBox)
                     text = uiMultilineEntryText(Handle);
                 else
                     text = uiEntryText(Handle);
@@ -40,7 +40,7 @@ namespace LibUISharp.Controls
             {
                 if (text != value)
                 {
-                    if (this is MultilineEntry)
+                    if (this is MultilineTextBox)
                         uiMultilineEntrySetText(Handle, value);
                     else
                         uiEntrySetText(Handle, value);
@@ -53,7 +53,7 @@ namespace LibUISharp.Controls
         {
             get
             {
-                if (this is MultilineEntry)
+                if (this is MultilineTextBox)
                     readOnly = uiMultilineEntryReadOnly(Handle);
                 else
                     readOnly = uiEntryReadOnly(Handle);
@@ -63,7 +63,7 @@ namespace LibUISharp.Controls
             {
                 if (readOnly != value)
                 {
-                    if (this is MultilineEntry)
+                    if (this is MultilineTextBox)
                         uiMultilineEntrySetReadOnly(Handle, value);
                     else
                         uiEntrySetReadOnly(Handle, value);
@@ -74,7 +74,7 @@ namespace LibUISharp.Controls
 
         protected override void InitializeEvents()
         {
-            if (this is MultilineEntry)
+            if (this is MultilineTextBox)
                 uiMultilineEntryOnChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); });
             else
                 uiEntryOnChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); });
@@ -83,21 +83,21 @@ namespace LibUISharp.Controls
         protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
     }
 
-    public class PasswordEntry : Entry
+    public class PasswordTextBox : TextBox
     {
-        public PasswordEntry() : base() { }
+        public PasswordTextBox() : base() { }
     }
 
-    public class SearchEntry : Entry
+    public class SearchTextBox : TextBox
     {
-        public SearchEntry() : base() { }
+        public SearchTextBox() : base() { }
     }
 
-    public class MultilineEntry : Entry
+    public class MultilineTextBox : TextBox
     {
-        private MultilineEntry() { }
+        private MultilineTextBox() { }
 
-        public MultilineEntry(bool wordWrap = true)
+        public MultilineTextBox(bool wordWrap = true)
         {
             if (wordWrap)
                 Handle = uiNewMultilineEntry();

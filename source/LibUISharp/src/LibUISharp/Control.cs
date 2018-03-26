@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using LibUISharp.Internal;
 using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     //TODO: uiControlVerifySetParent(IntPtr,IntPtr) => VerifyParent(Control)
     public abstract class Control : IControl

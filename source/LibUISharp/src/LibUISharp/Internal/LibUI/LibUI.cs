@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 namespace LibUISharp.Internal
 {
     //TODO: uiTab helper methods.
+    //TODO: uiTab class (Tab/TabPage)
     //TODO: uiGroup helper methods.
     //TODO: uiRadioButtons helper methods.
     //TODO: uiMenuItem helper methods.
@@ -464,7 +465,7 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewCombobox_();
         public static ControlSafeHandle uiNewCombobox() => new ControlSafeHandle(uiNewCombobox_());
         #endregion
-        #region EditableComboBox
+        #region uiEditableComboBox
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiEditableComboboxAppend(IntPtr c, IntPtr text);
         public static void uiEditableComboboxAppend(ControlSafeHandle c, string text)
@@ -497,8 +498,7 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewEditableCombobox_();
         public static ControlSafeHandle uiNewEditableCombobox() => new ControlSafeHandle(uiNewEditableCombobox_());
         #endregion
-        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        #region RadioButtons
+        #region uiRadioButtons
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiRadioButtonsAppend(IntPtr r, IntPtr text);
         public static void uiRadioButttonsAppend(ControlSafeHandle r, string text)
@@ -510,12 +510,20 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern int uiRadioButtonsSelected(IntPtr r);
+        public static int uiRadioButtonsSelected(ControlSafeHandle r) => uiRadioButtonsSelected(r.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiRadioButtonsSetSelected(IntPtr r, int n);
+        public static void uiRadioButtonsSetSelected(ControlSafeHandle r, int n) => uiRadioButtonsSetSelected(r.DangerousGetHandle(), n);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiRadioButtonsOnSelected(IntPtr r, uiOnValueSelectedHandler rOnSelected, IntPtr data);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewRadioButtons();
+        public static extern void uiRadioButtonsOnSelected(IntPtr r, uiOnValueSelectedHandler f, IntPtr data);
+        public static void uiRadioButtonsOnSelected(ControlSafeHandle r, uiOnValueSelectedHandler f, IntPtr data) => uiRadioButtonsOnSelected(r.DangerousGetHandle(), f, data);
+        public static void uiRadioButtonsOnSelected(ControlSafeHandle r, uiOnValueSelectedHandler f) => uiRadioButtonsOnSelected(r, f, IntPtr.Zero);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewRadioButtons")]
+        public static extern IntPtr uiNewRadioButtons_();
+        public static ControlSafeHandle uiNewRadioButtons() => new ControlSafeHandle(uiNewRadioButtons_());
         #endregion
         #region uiDateTimePicker/uiDatePicker/uiTimePicker
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewDateTimePicker")]
@@ -570,6 +578,7 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewNonWrappingMultilineEntry_();
         public static ControlSafeHandle uiNewNonWrappingMultilineEntry() => new ControlSafeHandle(uiNewNonWrappingMultilineEntry_());
         #endregion
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         #region MenuItem
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiMenuItemEnable(IntPtr menuItem);
@@ -644,7 +653,7 @@ namespace LibUISharp.Internal
 
         public const double uiDrawDefaultMiterLimit = 10.0;
 
-        #region Drawing (uDrawPath, uiDrawMatrix, uiDraw* methods)
+        #region Drawing (uDrawPath, uiDrawMatrix, misc. uiDraw* methods)
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiDrawNewPath(uiDrawFillMode fillMode);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]

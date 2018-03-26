@@ -1,7 +1,7 @@
 ﻿using System;
 using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     public abstract class Separator : Control
     {

@@ -7,7 +7,7 @@ using LibUISharp.Internal;
 
 using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     public class Window : Control
     {
