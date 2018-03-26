@@ -6,8 +6,6 @@ namespace LibUISharp.Internal
 {
     //TODO: uiTab helper methods.
     //TODO: uiGroup helper methods.
-    //TODO: uiCombobox helper methods.
-    //TODO: uiEditableCombobox helper methods.
     //TODO: uiRadioButtons helper methods.
     //TODO: uiMenuItem helper methods.
     //TODO: uiMenu helper methods.
@@ -157,13 +155,13 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiWindowOnContentSizeChanged(IntPtr w, uiOnContentSizeChangedHandler f, IntPtr data);
-        public static void uiWindowOnContentSizeChanged(ControlSafeHandle w, uiOnContentSizeChangedHandler handler, IntPtr data) => uiWindowOnContentSizeChanged(w.DangerousGetHandle(), handler, data);
-        public static void uiWindowOnContentSizeChanged(ControlSafeHandle w, uiOnContentSizeChangedHandler handler) => uiWindowOnContentSizeChanged(w, handler, IntPtr.Zero);
+        public static void uiWindowOnContentSizeChanged(ControlSafeHandle w, uiOnContentSizeChangedHandler f, IntPtr data) => uiWindowOnContentSizeChanged(w.DangerousGetHandle(), f, data);
+        public static void uiWindowOnContentSizeChanged(ControlSafeHandle w, uiOnContentSizeChangedHandler f) => uiWindowOnContentSizeChanged(w, f, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiWindowOnClosing(IntPtr w, uiOnClosingHandler f, IntPtr data);
-        public static void uiWindowOnClosing(ControlSafeHandle w, uiOnClosingHandler handler, IntPtr data) => uiWindowOnClosing(w.DangerousGetHandle(), handler, data);
-        public static void uiWindowOnClosing(ControlSafeHandle w, uiOnClosingHandler handler) => uiWindowOnClosing(w, handler, IntPtr.Zero);
+        public static void uiWindowOnClosing(ControlSafeHandle w, uiOnClosingHandler f, IntPtr data) => uiWindowOnClosing(w.DangerousGetHandle(), f, data);
+        public static void uiWindowOnClosing(ControlSafeHandle w, uiOnClosingHandler f) => uiWindowOnClosing(w, f, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern bool uiWindowBorderless(IntPtr w);
@@ -212,8 +210,8 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiButtonOnClicked(IntPtr b, uiOnClickedHandler f, IntPtr data);
-        public static void uiButtonOnClicked(ControlSafeHandle b, uiOnClickedHandler handler, IntPtr data) => uiButtonOnClicked(b.DangerousGetHandle(), handler, data);
-        public static void uiButtonOnClicked(ControlSafeHandle b, uiOnClickedHandler handler) => uiButtonOnClicked(b, handler, IntPtr.Zero);
+        public static void uiButtonOnClicked(ControlSafeHandle b, uiOnClickedHandler f, IntPtr data) => uiButtonOnClicked(b.DangerousGetHandle(), f, data);
+        public static void uiButtonOnClicked(ControlSafeHandle b, uiOnClickedHandler f) => uiButtonOnClicked(b, f, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewButton(IntPtr text);
@@ -225,7 +223,7 @@ namespace LibUISharp.Internal
             return safeHandle;
         }
         #endregion
-        #region uiBox/uiHorizontalBox/uiVerticalBox
+        #region uiBox
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiBoxAppend(IntPtr b, IntPtr child, bool stretchy);
         public static void uiBoxAppend(ControlSafeHandle b, ControlSafeHandle child, bool stretchy) => uiBoxAppend(b.DangerousGetHandle(), child.DangerousGetHandle(), stretchy);
@@ -267,8 +265,8 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiCheckboxOnToggled(IntPtr c, uiOnToggledHandler f, IntPtr data);
-        public static void uiCheckboxOnToggled(ControlSafeHandle c, uiOnToggledHandler handler, IntPtr data) => uiCheckboxOnToggled(c.DangerousGetHandle(), handler, data);
-        public static void uiCheckboxOnToggled(ControlSafeHandle c, uiOnToggledHandler handler) => uiCheckboxOnToggled(c, handler, IntPtr.Zero);
+        public static void uiCheckboxOnToggled(ControlSafeHandle c, uiOnToggledHandler f, IntPtr data) => uiCheckboxOnToggled(c.DangerousGetHandle(), f, data);
+        public static void uiCheckboxOnToggled(ControlSafeHandle c, uiOnToggledHandler f) => uiCheckboxOnToggled(c, f, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern bool uiCheckboxChecked(IntPtr c);
@@ -294,7 +292,7 @@ namespace LibUISharp.Internal
         public static string uiEntryText(ControlSafeHandle e) => UTF8Helper.ToUTF8Str(uiEntryText(e.DangerousGetHandle()));
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiEntrySetText(IntPtr entry, IntPtr text);
+        public static extern void uiEntrySetText(IntPtr e, IntPtr text);
         public static void uiEntrySetText(ControlSafeHandle e, string text)
         {
             IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
@@ -304,8 +302,8 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiEntryOnChanged(IntPtr e, uiOnTextChangedHandler f, IntPtr data);
-        public static void uiEntryOnChanged(ControlSafeHandle e, uiOnTextChangedHandler handler, IntPtr data) => uiEntryOnChanged(e.DangerousGetHandle(), handler, data);
-        public static void uiEntryOnChanged(ControlSafeHandle e, uiOnTextChangedHandler handler) => uiEntryOnChanged(e, handler, IntPtr.Zero);
+        public static void uiEntryOnChanged(ControlSafeHandle e, uiOnTextChangedHandler f, IntPtr data) => uiEntryOnChanged(e.DangerousGetHandle(), f, data);
+        public static void uiEntryOnChanged(ControlSafeHandle e, uiOnTextChangedHandler f) => uiEntryOnChanged(e, f, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern bool uiEntryReadOnly(IntPtr e);
@@ -392,8 +390,8 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiSpinboxOnChanged(IntPtr s, uiOnValueChangedHandler f, IntPtr data);
-        public static void uiSpinboxOnChanged(ControlSafeHandle s, uiOnValueChangedHandler handler, IntPtr data) => uiSpinboxOnChanged(s.DangerousGetHandle(), handler, data);
-        public static void uiSpinboxOnChanged(ControlSafeHandle s, uiOnValueChangedHandler handler) => uiSpinboxOnChanged(s, handler, IntPtr.Zero);
+        public static void uiSpinboxOnChanged(ControlSafeHandle s, uiOnValueChangedHandler f, IntPtr data) => uiSpinboxOnChanged(s.DangerousGetHandle(), f, data);
+        public static void uiSpinboxOnChanged(ControlSafeHandle s, uiOnValueChangedHandler f) => uiSpinboxOnChanged(s, f, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewSpinbox")]
         public static extern IntPtr uiNewSpinbox_(int min, int max);
@@ -410,8 +408,8 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiSliderOnChanged(IntPtr s, uiOnValueChangedHandler f, IntPtr data);
-        public static void uiSliderOnChanged(ControlSafeHandle s, uiOnValueChangedHandler handler, IntPtr data) => uiSliderOnChanged(s.DangerousGetHandle(), handler, data);
-        public static void uiSliderOnChanged(ControlSafeHandle s, uiOnValueChangedHandler handler) => uiSliderOnChanged(s, handler, IntPtr.Zero);
+        public static void uiSliderOnChanged(ControlSafeHandle s, uiOnValueChangedHandler f, IntPtr data) => uiSliderOnChanged(s.DangerousGetHandle(), f, data);
+        public static void uiSliderOnChanged(ControlSafeHandle s, uiOnValueChangedHandler f) => uiSliderOnChanged(s, f, IntPtr.Zero);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewSlider")]
         public static extern IntPtr uiNewSlider_(int min, int max);
@@ -430,7 +428,7 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewProgressBar_();
         public static ControlSafeHandle uiNewProgressBar() => new ControlSafeHandle(uiNewProgressBar_());
         #endregion
-        #region uiHorizontalSeparator/uiVerticalSeparator
+        #region uiSeparator
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewHorizontalSeparator")]
         public static extern IntPtr uiNewHorizontalSeparator_();
         public static ControlSafeHandle uiNewHorizontalSeparator() => new ControlSafeHandle(uiNewHorizontalSeparator_());
@@ -439,40 +437,83 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewVerticalSeparator_();
         public static ControlSafeHandle uiNewVerticalSeparator() => new ControlSafeHandle(uiNewVerticalSeparator_());
         #endregion
-        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        #region ComboBox
+        #region uiCombobox
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiComboboxAppend(IntPtr comboBox, IntPtr text);
+        public static extern void uiComboboxAppend(IntPtr c, IntPtr text);
+        public static void uiComboboxAppend(ControlSafeHandle c, string text)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
+            uiComboboxAppend(c.DangerousGetHandle(), strPtr);
+            Marshal.FreeHGlobal(strPtr);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern int uiComboboxSelected(IntPtr comboBox);
+        public static extern int uiComboboxSelected(IntPtr c);
+        public static int uiComboboxSelected(ControlSafeHandle c) => uiComboboxSelected(c.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiComboboxSetSelected(IntPtr comboBox, int n);
+        public static extern void uiComboboxSetSelected(IntPtr c, int n);
+        public static void uiComboboxSetSelected(ControlSafeHandle c, int n) => uiComboboxSetSelected(c.DangerousGetHandle(), n);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiComboboxOnSelected(IntPtr comboBox, uiOnValueSelectedHandler comboBoxOnSelected, IntPtr data);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewCombobox();
+        public static extern void uiComboboxOnSelected(IntPtr c, uiOnValueSelectedHandler f, IntPtr data);
+        public static void uiComboboxOnSelected(ControlSafeHandle c, uiOnValueSelectedHandler f, IntPtr data) => uiComboboxOnSelected(c.DangerousGetHandle(), f, data);
+        public static void uiComboboxOnSelected(ControlSafeHandle c, uiOnValueSelectedHandler f) => uiComboboxOnSelected(c, f, IntPtr.Zero);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewCombobox")]
+        public static extern IntPtr uiNewCombobox_();
+        public static ControlSafeHandle uiNewCombobox() => new ControlSafeHandle(uiNewCombobox_());
         #endregion
         #region EditableComboBox
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiEditableComboboxAppend(IntPtr comboBox, IntPtr text);
+        public static extern void uiEditableComboboxAppend(IntPtr c, IntPtr text);
+        public static void uiEditableComboboxAppend(ControlSafeHandle c, string text)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
+            uiEditableComboboxAppend(c.DangerousGetHandle(), strPtr);
+            Marshal.FreeHGlobal(strPtr);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiEditableComboboxText(IntPtr comboBox);
+        public static string uiEditableComboboxText(ControlSafeHandle c) => UTF8Helper.ToUTF8Str(uiEditableComboboxText(c.DangerousGetHandle()));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiEditableComboboxSetText(IntPtr comboBox, IntPtr text);
+        public static extern void uiEditableComboboxSetText(IntPtr c, IntPtr text);
+        public static void uiEditableComboboxSetText(ControlSafeHandle c, string text)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
+            uiEditableComboboxSetText(c.DangerousGetHandle(), strPtr);
+            Marshal.FreeHGlobal(strPtr);
+
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiEditableComboboxOnChanged(IntPtr comboBox, uiOnTextChangedHandler editableComboBoxOnChanged, IntPtr data);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewEditableCombobox();
+        public static extern void uiEditableComboboxOnChanged(IntPtr c, uiOnTextChangedHandler f, IntPtr data);
+        public static void uiEditableComboboxOnChanged(ControlSafeHandle c, uiOnTextChangedHandler f, IntPtr data) => uiEditableComboboxOnChanged(c.DangerousGetHandle(), f, data);
+        public static void uiEditableComboboxOnChanged(ControlSafeHandle c, uiOnTextChangedHandler f) => uiEditableComboboxOnChanged(c, f);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewEditableCombobox")]
+        public static extern IntPtr uiNewEditableCombobox_();
+        public static ControlSafeHandle uiNewEditableCombobox() => new ControlSafeHandle(uiNewEditableCombobox_());
         #endregion
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         #region RadioButtons
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiRadioButtonsAppend(IntPtr radioButton, IntPtr text);
+        public static extern void uiRadioButtonsAppend(IntPtr r, IntPtr text);
+        public static void uiRadioButttonsAppend(ControlSafeHandle r, string text)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
+            uiRadioButtonsAppend(r.DangerousGetHandle(), strPtr);
+            Marshal.FreeHGlobal(strPtr);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern int uiRadioButtonsSelected(IntPtr radioButton);
+        public static extern int uiRadioButtonsSelected(IntPtr r);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiRadioButtonsSetSelected(IntPtr radioButton, int index);
+        public static extern void uiRadioButtonsSetSelected(IntPtr r, int n);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiRadioButtonsOnSelected(IntPtr radioButton, uiOnValueSelectedHandler radioButtonOnSelected, IntPtr data);
+        public static extern void uiRadioButtonsOnSelected(IntPtr r, uiOnValueSelectedHandler rOnSelected, IntPtr data);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewRadioButtons();
         #endregion
@@ -480,46 +521,48 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewDateTimePicker")]
         public static extern IntPtr uiNewDateTimePicker_();
         public static ControlSafeHandle uiNewDateTimePicker() => new ControlSafeHandle(uiNewDateTimePicker_());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewDatePicker")]
         public static extern IntPtr uiNewDatePicker_();
         public static ControlSafeHandle uiNewDatePicker() => new ControlSafeHandle(uiNewDatePicker_());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewTimePicker")]
         public static extern IntPtr uiNewTimePicker_();
         public static ControlSafeHandle uiNewTimePicker() => new ControlSafeHandle(uiNewTimePicker_());
         #endregion
         #region uiMultilineEntry
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiMultilineEntryText(IntPtr entry);
-        public static string uiMultilineEntryText(ControlSafeHandle textbox) => UTF8Helper.ToUTF8Str(uiMultilineEntryText(textbox.DangerousGetHandle()));
+        public static extern IntPtr uiMultilineEntryText(IntPtr e);
+        public static string uiMultilineEntryText(ControlSafeHandle e) => UTF8Helper.ToUTF8Str(uiMultilineEntryText(e.DangerousGetHandle()));
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMultilineEntrySetText(IntPtr entry, IntPtr text);
-        public static void uiMultilineEntrySetText(ControlSafeHandle textbox, string text)
+        public static extern void uiMultilineEntrySetText(IntPtr e, IntPtr text);
+        public static void uiMultilineEntrySetText(ControlSafeHandle e, string text)
         {
             IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiMultilineEntrySetText(textbox.DangerousGetHandle(), strPtr);
+            uiMultilineEntrySetText(e.DangerousGetHandle(), strPtr);
             Marshal.FreeHGlobal(strPtr);
         }
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMultilineEntryAppend(IntPtr entry, IntPtr text);
-        public static void uiMultilineEntryAppend(ControlSafeHandle textbox, params string[] lines)
+        public static extern void uiMultilineEntryAppend(IntPtr e, IntPtr text);
+        public static void uiMultilineEntryAppend(ControlSafeHandle e, params string[] lines)
         {
             foreach (string s in lines)
             {
                 IntPtr strPtr = UTF8Helper.ToUTF8Ptr(s);
-                uiMultilineEntryAppend(textbox.DangerousGetHandle(), strPtr);
+                uiMultilineEntryAppend(e.DangerousGetHandle(), strPtr);
                 Marshal.FreeHGlobal(strPtr);
             }
         }
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMultilineEntryOnChanged(IntPtr entry, uiOnTextChangedHandler f, IntPtr data);
-        public static void uiMultilineEntryOnChanged(ControlSafeHandle textbox, uiOnTextChangedHandler handler, IntPtr data) => uiMultilineEntryOnChanged(textbox.DangerousGetHandle(), handler, data);
-        public static void uiMultilineEntryOnChanged(ControlSafeHandle textbox, uiOnTextChangedHandler handler) => uiMultilineEntryOnChanged(textbox, handler, IntPtr.Zero);
+        public static extern void uiMultilineEntryOnChanged(IntPtr e, uiOnTextChangedHandler f, IntPtr data);
+        public static void uiMultilineEntryOnChanged(ControlSafeHandle e, uiOnTextChangedHandler f, IntPtr data) => uiMultilineEntryOnChanged(e.DangerousGetHandle(), f, data);
+        public static void uiMultilineEntryOnChanged(ControlSafeHandle e, uiOnTextChangedHandler f) => uiMultilineEntryOnChanged(e, f, IntPtr.Zero);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiMultilineEntryReadOnly(IntPtr entry);
-        public static bool uiMultilineEntryReadOnly(ControlSafeHandle textbox) => uiMultilineEntryReadOnly(textbox.DangerousGetHandle());
+        public static extern bool uiMultilineEntryReadOnly(IntPtr e);
+        public static bool uiMultilineEntryReadOnly(ControlSafeHandle e) => uiMultilineEntryReadOnly(e.DangerousGetHandle());
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMultilineEntrySetReadOnly(IntPtr entry, bool isReadOnly);
-        public static void uiMultilineEntrySetReadOnly(ControlSafeHandle textbox, bool readOnly) => uiMultilineEntrySetReadOnly(textbox.DangerousGetHandle(), readOnly);
+        public static extern void uiMultilineEntrySetReadOnly(IntPtr e, bool isReadOnly);
+        public static void uiMultilineEntrySetReadOnly(ControlSafeHandle e, bool readOnly) => uiMultilineEntrySetReadOnly(e.DangerousGetHandle(), readOnly);
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewMultilineEntry")]
         public static extern IntPtr uiNewMultilineEntry_();
         public static ControlSafeHandle uiNewMultilineEntry() => new ControlSafeHandle(uiNewMultilineEntry_());
@@ -582,6 +625,7 @@ namespace LibUISharp.Internal
         private static extern void uiMsgBoxError(IntPtr parent, IntPtr title, IntPtr description);
         #endregion
 
+        #region uiArea
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAreaSetSize(IntPtr area, int width, int height);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -596,9 +640,11 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewArea(uiAreaHandler ah);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewScrollingArea(uiAreaHandler ah, int width, int height);
+        #endregion
 
         public const double uiDrawDefaultMiterLimit = 10.0;
 
+        #region Drawing (uDrawPath, uiDrawMatrix, uiDraw* methods)
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiDrawNewPath(uiDrawFillMode fillMode);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -659,7 +705,9 @@ namespace LibUISharp.Internal
         public static extern void uiDrawSave(IntPtr context);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawRestore(IntPtr context);
+        #endregion
 
+        #region uiAttribute
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFreeAttribute(IntPtr a);
 
@@ -704,9 +752,11 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewUnderlineColorAttribute(uiUnderlineColor u, double r, double g, double b, double a);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAttributeUnderline(IntPtr a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha);
+        #endregion
 
         //TODO: public class uiOpenTypeFeatures
 
+        #region uiOpenTypeFeatures
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate uiForEach uiOpenTypeFeaturesForEachFunc(IntPtr otf, byte a, byte b, byte c, byte d, uint value, IntPtr data);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -728,9 +778,11 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewFeaturesAttribute(IntPtr otf);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiAttributeFeatures(IntPtr a);
+        #endregion
 
         //TODO: public class uiAttributedString
 
+        #region uiAttributedString
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate uiForEach uiAttributedStringForEachAttributeFunc(IntPtr s, IntPtr a, UIntPtr start, UIntPtr end, IntPtr data);
 
@@ -758,11 +810,13 @@ namespace LibUISharp.Internal
         public static extern UIntPtr uiAttributedStringByteIndexToGrapheme(IntPtr s, UIntPtr pos);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern UIntPtr uiAttributedStringGraphemeToByteIndex(IntPtr s, UIntPtr pos);
+        #endregion
 
         //TODO: public class uiFontDescriptor
 
         //TODO: public class uiDrawTextLayout
 
+        #region uiDrawTextLayout
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiDrawNewTextLayout(uiDrawTextLayoutParams param);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -775,6 +829,7 @@ namespace LibUISharp.Internal
         public static extern int uiDrawTextLayoutNumLines(IntPtr tl);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void UIDrawTextLayoutLineByteRange(IntPtr tl, int line, out IntPtr start, out IntPtr end);
+        #endregion
 
         #region uiColorButton
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
