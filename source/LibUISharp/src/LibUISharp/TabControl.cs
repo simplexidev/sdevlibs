@@ -12,8 +12,8 @@ namespace LibUISharp
     public class TabPage : Control
     {
         protected Control child;
-        private bool beforeAdd = true;
-        private bool allowMargins;
+        private bool uninitialized = true;
+        private bool margins;
 
         public TabPage(string name) => Name = name;
 
@@ -38,32 +38,32 @@ namespace LibUISharp
             }
         }
 
-        public bool AllowMargins
+        public bool Margins
         {
             get
             {
                 if (Parent != null && Parent.Handle.IsInvalid)
                 {
-                    allowMargins = uiTabMargined(Parent.Handle, Index);
-                    beforeAdd = false;
+                    margins = uiTabMargined(Parent.Handle, Index);
+                    uninitialized = false;
                 }
-                return allowMargins;
+                return margins;
             }
             set
             {
-                if (allowMargins != value)
+                if (margins != value)
                 {
                     if (Parent != null && Parent.Handle.IsInvalid)
                         uiTabSetMargined(Parent.Handle, Index, value);
-                    allowMargins = value;
+                    margins = value;
                 }
             }
         }
 
         protected internal override void DelayRender()
         {
-            if (beforeAdd && allowMargins)
-                uiTabSetMargined(Parent.Handle, Index, allowMargins);
+            if (uninitialized && margins)
+                uiTabSetMargined(Parent.Handle, Index, margins);
         }
     }
 

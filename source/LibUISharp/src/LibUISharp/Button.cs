@@ -33,8 +33,7 @@ namespace LibUISharp
             }
         }
 
-        protected sealed override void InitializeEvents() =>
-            uiButtonOnClicked(Handle, (button, data) => { OnClick(EventArgs.Empty); });
+        protected sealed override void InitializeEvents() => uiButtonOnClicked(Handle, (button, data) => { OnClick(EventArgs.Empty); });
 
         protected virtual void OnClick(EventArgs e) => Click?.Invoke(this, e);
     }

@@ -5,7 +5,7 @@ namespace LibUISharp
 {
     public class SpinBox : Control
     {
-        private int _value;
+        private int value;
 
         public SpinBox(int min, int max)
         {
@@ -24,15 +24,15 @@ namespace LibUISharp
         {
             get
             {
-                _value = uiSpinboxValue(Handle);
-                return _value;
+                value = uiSpinboxValue(Handle);
+                return value;
             }
             set
             {
-                if (_value != value)
+                if (this.value != value)
                 {
                     uiSpinboxSetValue(Handle, value);
-                    _value = value;
+                    this.value = value;
                 }
             }
         }

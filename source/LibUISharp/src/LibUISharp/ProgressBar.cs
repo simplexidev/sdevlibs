@@ -4,7 +4,7 @@ namespace LibUISharp
 {
     public class ProgressBar : Control
     {
-        private int _value;
+        private int value;
 
         public ProgressBar() => Handle = uiNewProgressBar();
         
@@ -12,15 +12,15 @@ namespace LibUISharp
         {
             get
             {
-                _value = uiProgressBarValue(Handle);
-                return _value;
+                value = uiProgressBarValue(Handle);
+                return value;
             }
             set
             {
-                if (_value != value)
+                if (this.value != value)
                 {
                     uiProgressBarSetValue(Handle, value);
-                    _value = value;
+                    this.value = value;
                 }
             }
         }

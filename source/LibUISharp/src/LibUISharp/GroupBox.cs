@@ -7,30 +7,55 @@ namespace LibUISharp
 {
     public class GroupBox : Control
     {
+        private string title;
+        private bool margins;
+        private Control child;
+
         public GroupBox(string title) => Handle = uiNewGroup(title);
 
         public string Title
         {
-            get => uiGroupTitle(Handle);
-            set => uiGroupSetTitle(Handle, value);
-        }
-
-        public bool AllowMargins
-        {
-            get => uiGroupMargined(Handle);
-            set => uiGroupSetMargined(Handle, value);
-        }
-
-        private Control _child;
-        public Control Child
-        {
-            get => _child;
+            get
+            {
+                title = uiGroupTitle(Handle);
+                return title;
+            }
             set
             {
-                if (_child != value)
+                if (title != value)
+                {
+                    uiGroupSetTitle(Handle, value);
+                    title = value;
+                }
+            }
+        }
+
+        public bool Margins
+        {
+            get
+            {
+                margins = uiGroupMargined(Handle);
+                return margins;
+            }
+            set
+            {
+                if (margins != value)
+                {
+                    uiGroupSetMargined(Handle, value);
+                    margins = value;
+                }
+            }
+        }
+        
+        public Control Child
+        {
+            get => child;
+            set
+            {
+                if (child != value)
                 {
                     uiGroupSetChild(Handle, value?.Handle ?? new ControlSafeHandle(IntPtr.Zero));
-                    _child = value;
+                    child = value;
                 }
             }
         }

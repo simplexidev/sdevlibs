@@ -6,6 +6,8 @@ namespace LibUISharp
 {
     public class RadioButtonGroup : Control
     {
+        private int index;
+
         public RadioButtonGroup()
         {
             Handle = uiNewRadioButtons();
@@ -14,7 +16,6 @@ namespace LibUISharp
 
         public event EventHandler Selected;
 
-        private int index;
         public int SelectedIndex
         {
             get

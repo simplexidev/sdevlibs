@@ -5,7 +5,7 @@ namespace LibUISharp
 {
     public class Slider : Control
     {
-        private int _value;
+        private int value;
 
         public Slider(int min, int max)
         {
@@ -24,15 +24,15 @@ namespace LibUISharp
         {
             get
             {
-                _value = uiSliderValue(Handle);
-                return _value;
+                value = uiSliderValue(Handle);
+                return value;
             }
             set
             {
-                if (_value != value)
+                if (this.value != value)
                 {
                     uiSliderSetValue(Handle, value);
-                    _value = value;
+                    this.value = value;
                 }
             }
         }

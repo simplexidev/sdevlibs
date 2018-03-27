@@ -12,12 +12,13 @@ namespace LibUISharp
     public class Window : Control
     {
         private Control child;
+        private bool margins, fullscreen, borderless;
         private Size size;
         private string title;
         private static readonly Dictionary<ControlSafeHandle, Window> WindowCache = new Dictionary<ControlSafeHandle, Window>();
 
         public Window(int width = 500, int height = 300, string title = null, bool hasMenuBar = false)
-        { 
+        {
             if (string.IsNullOrEmpty(title))
                 title = "LibUI";
             Handle = uiNewWindow(title, width, height, hasMenuBar);
@@ -63,22 +64,55 @@ namespace LibUISharp
 
         public bool Margins
         {
-            get => uiWindowMargined(Handle);
-            set => uiWindowSetMargined(Handle, value);
+            get
+            {
+                margins = uiWindowMargined(Handle);
+                return margins;
+            }
+            set
+            {
+                if (margins != value)
+                {
+                    uiWindowSetMargined(Handle, value);
+                    margins = value;
+                }
+            }
         }
 
         public bool Fullscreen
         {
-            get => uiWindowFullscreen(Handle);
-            set => uiWindowSetFullscreen(Handle, value);
+            get
+            {
+                fullscreen = uiWindowFullscreen(Handle);
+                return fullscreen;
+            }
+            set
+            {
+                if (fullscreen != value)
+                {
+                    uiWindowSetFullscreen(Handle, value);
+                    fullscreen = value;
+                }
+            }
         }
 
         public bool Borderless
         {
-            get => uiWindowBorderless(Handle);
-            set => uiWindowSetBorderless(Handle, value);
+            get
+            {
+                borderless = uiWindowBorderless(Handle);
+                return borderless;
+            }
+            set
+            {
+                if (borderless != value)
+                {
+                    uiWindowSetBorderless(Handle, value);
+                    borderless = value;
+                }
+            }
         }
-  
+
         public Control Child
         {
             get => child;

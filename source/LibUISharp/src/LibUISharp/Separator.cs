@@ -33,5 +33,4 @@ namespace LibUISharp
     {
         public VSeparator() : base(Orientation.Vertical) { }
     }
-
 }
