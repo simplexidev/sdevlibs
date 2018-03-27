@@ -10,6 +10,7 @@ namespace LibUISharp.Internal
     //TODO: uiOpenTypeFeatures helper methods.
     //TODO: uiAttributedString helper methods.
     //TODO: uiDrawTextLayout helper methods.
+    //TODO: uiFontButton helper methods.
     //TODO: uiForm helper methods.
     //TODO: uiGrid helper methods.
     internal static partial class LibUI
@@ -924,6 +925,17 @@ namespace LibUISharp.Internal
         public static extern int uiDrawTextLayoutNumLines(IntPtr tl);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void UIDrawTextLayoutLineByteRange(IntPtr tl, int line, out IntPtr start, out IntPtr end);
+        #endregion
+
+        #region uiFontButton
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern void uiFontButtonFont(IntPtr b, uiFontDescriptor desc);
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern void uiFontButtonOnChanged(IntPtr b, uiFontDescriptor desc);
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern IntPtr uiNewFontButton();
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern void uiFreeFontButtonFont(uiFontDescriptor desc);
         #endregion
 
         #region uiColorButton
