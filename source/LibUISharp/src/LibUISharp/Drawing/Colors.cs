@@ -3,7 +3,8 @@ namespace LibUISharp.Drawing
     public static class Colors
     {
         // This list is based on https://www.w3schools.com/colors/colors_hex.asp.
-        // Please keep this in order with the above list.
+        // Please keep this in order with the above list, and for now, all entries
+        // that have alternative spellings (i.e.: keep both Gray and Grey).
 
         public static readonly Color Transparent = new Color(0x00000000);
         public static readonly Color Black = new Color(0xFF000000);

@@ -18,10 +18,10 @@
     <DefineConstants Condition="'$(IsMacOS)' == 'true'">$(DefineConstants);MACOS</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Internal\*.cs" />
-    <Compile Include="src\GlobalSuppressions.cs" />
     <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.cs" />
     <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Delegates.cs" />
     <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Enums.cs" />

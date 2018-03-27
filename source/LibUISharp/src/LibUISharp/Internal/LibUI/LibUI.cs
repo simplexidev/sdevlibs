@@ -4,10 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.Internal
 {
-    //TODO: uiTab helper methods.
-    //TODO: uiTab class (Tab/TabPage)
     //TODO: uiGroup helper methods.
-    //TODO: uiRadioButtons helper methods.
     //TODO: uiMenuItem helper methods.
     //TODO: uiMenu helper methods.
     internal static partial class LibUI
@@ -353,18 +350,41 @@ namespace LibUISharp.Internal
         #region uiTab
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiTabAppend(IntPtr t, IntPtr name, IntPtr c);
+        public static void uiTabAppend(ControlSafeHandle t, string name, ControlSafeHandle c)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
+            uiTabAppend(t.DangerousGetHandle(), strPtr, c.DangerousGetHandle());
+            Marshal.FreeHGlobal(strPtr);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiTabInsertAt(IntPtr t, IntPtr name, int before, IntPtr c);
+        public static void uiTabInsertAt(ControlSafeHandle t, string name, int before, ControlSafeHandle c)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
+            uiTabInsertAt(t.DangerousGetHandle(), strPtr, before, c.DangerousGetHandle());
+            Marshal.FreeHGlobal(strPtr);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiTabDelete(IntPtr t, int index);
+        public static void uiTabDelete(ControlSafeHandle t, int index) => uiTabDelete(t.DangerousGetHandle(), index);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern int uiTabNumPages(IntPtr t);
+        public static int uiTabNumPages(ControlSafeHandle t) => uiTabNumPages(t.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern bool uiTabMargined(IntPtr t, int page);
+        public static bool uiTabMargined(ControlSafeHandle t, int page) => uiTabMargined(t.DangerousGetHandle(), page);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiTabSetMargined(IntPtr t, int page, bool margined);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewTab();
+        public static void uiTabSetMargined(ControlSafeHandle t, int page, bool margined) => uiTabSetMargined(t.DangerousGetHandle(), page, margined);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewTab")]
+        public static extern IntPtr uiNewTab_();
+        public static ControlSafeHandle uiNewTab() => new ControlSafeHandle(uiNewTab_());
         #endregion
         #region uiGroup
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -501,7 +521,7 @@ namespace LibUISharp.Internal
         #region uiRadioButtons
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiRadioButtonsAppend(IntPtr r, IntPtr text);
-        public static void uiRadioButttonsAppend(ControlSafeHandle r, string text)
+        public static void uiRadioButtonsAppend(ControlSafeHandle r, string text)
         {
             IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
             uiRadioButtonsAppend(r.DangerousGetHandle(), strPtr);
@@ -542,6 +562,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiMultilineEntryText(IntPtr e);
         public static string uiMultilineEntryText(ControlSafeHandle e) => UTF8Helper.ToUTF8Str(uiMultilineEntryText(e.DangerousGetHandle()));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiMultilineEntrySetText(IntPtr e, IntPtr text);
         public static void uiMultilineEntrySetText(ControlSafeHandle e, string text)
@@ -550,6 +571,7 @@ namespace LibUISharp.Internal
             uiMultilineEntrySetText(e.DangerousGetHandle(), strPtr);
             Marshal.FreeHGlobal(strPtr);
         }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiMultilineEntryAppend(IntPtr e, IntPtr text);
         public static void uiMultilineEntryAppend(ControlSafeHandle e, params string[] lines)
@@ -561,19 +583,24 @@ namespace LibUISharp.Internal
                 Marshal.FreeHGlobal(strPtr);
             }
         }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiMultilineEntryOnChanged(IntPtr e, uiOnTextChangedHandler f, IntPtr data);
         public static void uiMultilineEntryOnChanged(ControlSafeHandle e, uiOnTextChangedHandler f, IntPtr data) => uiMultilineEntryOnChanged(e.DangerousGetHandle(), f, data);
         public static void uiMultilineEntryOnChanged(ControlSafeHandle e, uiOnTextChangedHandler f) => uiMultilineEntryOnChanged(e, f, IntPtr.Zero);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern bool uiMultilineEntryReadOnly(IntPtr e);
         public static bool uiMultilineEntryReadOnly(ControlSafeHandle e) => uiMultilineEntryReadOnly(e.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMultilineEntrySetReadOnly(IntPtr e, bool isReadOnly);
-        public static void uiMultilineEntrySetReadOnly(ControlSafeHandle e, bool readOnly) => uiMultilineEntrySetReadOnly(e.DangerousGetHandle(), readOnly);
+        public static extern void uiMultilineEntrySetReadOnly(IntPtr e, bool @readonly);
+        public static void uiMultilineEntrySetReadOnly(ControlSafeHandle e, bool @readonly) => uiMultilineEntrySetReadOnly(e.DangerousGetHandle(), @readonly);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewMultilineEntry")]
         public static extern IntPtr uiNewMultilineEntry_();
         public static ControlSafeHandle uiNewMultilineEntry() => new ControlSafeHandle(uiNewMultilineEntry_());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewNonWrappingMultilineEntry")]
         public static extern IntPtr uiNewNonWrappingMultilineEntry_();
         public static ControlSafeHandle uiNewNonWrappingMultilineEntry() => new ControlSafeHandle(uiNewNonWrappingMultilineEntry_());
