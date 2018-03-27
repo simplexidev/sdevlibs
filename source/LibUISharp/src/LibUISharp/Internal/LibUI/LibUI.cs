@@ -883,14 +883,26 @@ namespace LibUISharp.Internal
         #region uiColorButton
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiColorButtonColor(IntPtr b, out double red, out double green, out double blue, out double alpha);
+        public static void uiColorButtonColor(ControlSafeHandle b, out double red, out double green, out double blue, out double alpha) => uiColorButtonColor(b.DangerousGetHandle(), out red, out blue, out green, out alpha);
+        public static Color uiColorButtonColor(ControlSafeHandle b)
+        {
+            uiColorButtonColor(b, out double red, out double green, out double blue, out double alpha);
+            return new Color(red, green, blue, alpha);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiColorButtonSetColor(IntPtr b, double red, double green, double blue, double alpha);
+        public static void uiColorButtonSetColor(ControlSafeHandle b, double red, double green, double blue, double alpha) => uiColorButtonSetColor(b.DangerousGetHandle(), red, green, blue, alpha);
+        public static void uiColorButtonSetColor(ControlSafeHandle b, Color color) => uiColorButtonSetColor(b, color.R, color.G, color.B, color.A);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiColorButtonOnChanged(IntPtr b, uiColorButtonOnChangedDelegate colorButtonOnChanged, IntPtr data);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void uiColorButtonOnChangedDelegate(IntPtr b, IntPtr data);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewColorButton();
+        public static extern void uiColorButtonOnChanged(IntPtr b, uiOnValueChangedHandler f, IntPtr data);
+        public static void uiColorButtonOnChanged(ControlSafeHandle b, uiOnValueChangedHandler f, IntPtr data) => uiColorButtonOnChanged(b.DangerousGetHandle(), f, data);
+        public static void uiColorButtonOnChanged(ControlSafeHandle b, uiOnValueChangedHandler f) => uiColorButtonOnChanged(b, f, IntPtr.Zero);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewColorButton")]
+        public static extern IntPtr uiNewColorButton_();
+        public static ControlSafeHandle uiNewColorButton() => new ControlSafeHandle(uiNewColorButton_());
         #endregion
 
         #region uiForm
