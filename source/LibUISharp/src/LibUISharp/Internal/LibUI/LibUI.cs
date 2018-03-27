@@ -4,8 +4,6 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.Internal
 {
-    //TODO: uiMenuItem helper methods.
-    //TODO: uiMenu helper methods.
     //TODO: uiArea helper methods.
     //TODO: uiDraw helper methods.
     //TODO: uiAttribute helper methods.
@@ -636,31 +634,72 @@ namespace LibUISharp.Internal
         #endregion
         #region uiMenuItem
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMenuItemEnable(IntPtr menuItem);
+        public static extern void uiMenuItemEnable(IntPtr m);
+        public static void uiMenuItemEnable(ControlSafeHandle m) => uiMenuItemEnable(m.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMenuItemDisable(IntPtr menuItem);
+        public static extern void uiMenuItemDisable(IntPtr m);
+        public static void uiMenuItemDisable(ControlSafeHandle m) => uiMenuItemDisable(m.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMenuItemOnClicked(IntPtr menuItem, uiMenuItemOnClickedHandler menuItemOnClicked, IntPtr data);
+        public static extern void uiMenuItemOnClicked(IntPtr m, uiMenuItemOnClickedHandler f, IntPtr data);
+        public static void uiMenuItemOnClicked(ControlSafeHandle m, uiMenuItemOnClickedHandler f, IntPtr data) => uiMenuItemOnClicked(m.DangerousGetHandle(), f, data);
+        public static void uiMenuItemOnClicked(ControlSafeHandle m, uiMenuItemOnClickedHandler f) => uiMenuItemOnClicked(m, f, IntPtr.Zero);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiMenuItemChecked(IntPtr menuItem);
+        public static extern bool uiMenuItemChecked(IntPtr m);
+        public static bool uiMenuItemChecked(ControlSafeHandle m) => uiMenuItemChecked(m.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMenuItemSetChecked(IntPtr menuItem, bool isChecked);
+        public static extern void uiMenuItemSetChecked(IntPtr m, bool @checked);
+        public static void uiMenuItemSetChecked(ControlSafeHandle m, bool @checked) => uiMenuItemSetChecked(m.DangerousGetHandle(), @checked);
         #endregion
         #region uiMenu
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiMenuAppendItem(IntPtr menu, IntPtr name);
+        public static extern IntPtr uiMenuAppendItem(IntPtr m, IntPtr name);
+        public static ControlSafeHandle uiMenuAppendItem(ControlSafeHandle m, string name)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
+            ControlSafeHandle safeHandle = new ControlSafeHandle(uiMenuAppendItem(m.DangerousGetHandle(), strPtr));
+            Marshal.FreeHGlobal(strPtr);
+            return safeHandle;
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiMenuAppendCheckItem(IntPtr menu, IntPtr name);
+        public static extern IntPtr uiMenuAppendCheckItem(IntPtr m, IntPtr name);
+        public static ControlSafeHandle uiMenuAppendCheckItem(ControlSafeHandle m, string name)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
+            ControlSafeHandle safeHandle = new ControlSafeHandle(uiMenuAppendCheckItem(m.DangerousGetHandle(), strPtr));
+            Marshal.FreeHGlobal(strPtr);
+            return safeHandle;
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiMenuAppendQuitItem(IntPtr menu);
+        public static extern IntPtr uiMenuAppendQuitItem(IntPtr m);
+        public static ControlSafeHandle uiMenuAppendQuitItem(ControlSafeHandle m) => new ControlSafeHandle(uiMenuAppendQuitItem(m.DangerousGetHandle()));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiMenuAppendPreferencesItem(IntPtr menu);
+        public static extern IntPtr uiMenuAppendPreferencesItem(IntPtr m);
+        public static ControlSafeHandle uiMenuAppendPreferencesItem(ControlSafeHandle m) => new ControlSafeHandle(uiMenuAppendPreferencesItem(m.DangerousGetHandle()));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiMenuAppendAboutItem(IntPtr menu);
+        public static extern IntPtr uiMenuAppendAboutItem(IntPtr m);
+        public static ControlSafeHandle uiMenuAppendAboutItem(ControlSafeHandle m) => new ControlSafeHandle(uiMenuAppendAboutItem(m.DangerousGetHandle()));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiMenuAppendSeparator(IntPtr menu);
+        public static extern void uiMenuAppendSeparator(IntPtr m);
+        public static void uiMenuAppendSeparator(ControlSafeHandle m) => uiMenuAppendSeparator(m.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewMenu(IntPtr name);
+        public static ControlSafeHandle uiNewMenu(string name)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
+            ControlSafeHandle safeHandle = new ControlSafeHandle(uiNewMenu(strPtr));
+            Marshal.FreeHGlobal(strPtr);
+            return safeHandle;
+        }
         #endregion
         #region uiOpenFile/uiSaveFile/uiMsgBox
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
