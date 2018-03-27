@@ -6,6 +6,14 @@ namespace LibUISharp.Internal
 {
     //TODO: uiMenuItem helper methods.
     //TODO: uiMenu helper methods.
+    //TODO: uiArea helper methods.
+    //TODO: uiDraw helper methods.
+    //TODO: uiAttribute helper methods.
+    //TODO: uiOpenTypeFeatures helper methods.
+    //TODO: uiAttributedString helper methods.
+    //TODO: uiDrawTextLayout helper methods.
+    //TODO: uiForm helper methods.
+    //TODO: uiGrid helper methods.
     internal static partial class LibUI
     {
 #if WINDOWS
@@ -626,8 +634,7 @@ namespace LibUISharp.Internal
         public static extern IntPtr uiNewNonWrappingMultilineEntry_();
         public static ControlSafeHandle uiNewNonWrappingMultilineEntry() => new ControlSafeHandle(uiNewNonWrappingMultilineEntry_());
         #endregion
-        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        #region MenuItem
+        #region uiMenuItem
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiMenuItemEnable(IntPtr menuItem);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -639,7 +646,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiMenuItemSetChecked(IntPtr menuItem, bool isChecked);
         #endregion
-        #region Menu
+        #region uiMenu
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiMenuAppendItem(IntPtr menu, IntPtr name);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
