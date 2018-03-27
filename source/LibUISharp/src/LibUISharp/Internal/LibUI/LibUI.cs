@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.Internal
 {
-    //TODO: uiGroup helper methods.
     //TODO: uiMenuItem helper methods.
     //TODO: uiMenu helper methods.
     internal static partial class LibUI
@@ -389,16 +388,38 @@ namespace LibUISharp.Internal
         #region uiGroup
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiGroupTitle(IntPtr g);
+        public static string uiGroupTitle(ControlSafeHandle g) => UTF8Helper.ToUTF8Str(uiGroupTitle(g.DangerousGetHandle()));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiGroupSetTitle(IntPtr g, IntPtr title);
+        public static void uiGroupSetTitle(ControlSafeHandle g, string title)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(title);
+            uiGroupSetTitle(g.DangerousGetHandle(), strPtr);
+            Marshal.FreeHGlobal(strPtr);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiGroupSetChild(IntPtr g, IntPtr child);
+        public static void uiGroupSetChild(ControlSafeHandle g, ControlSafeHandle child) => uiGroupSetChild(g.DangerousGetHandle(), child.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern bool uiGroupMargined(IntPtr g);
+        public static bool uiGroupMargined(ControlSafeHandle g) => uiGroupMargined(g.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiGroupSetMargined(IntPtr g, bool margined);
+        public static void uiGroupSetMargined(ControlSafeHandle g, bool margined) => uiGroupSetMargined(g.DangerousGetHandle(), margined);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewGroup(IntPtr title);
+        public static ControlSafeHandle uiNewGroup(string title)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(title);
+            ControlSafeHandle safeHandle = new ControlSafeHandle(uiNewGroup(strPtr));
+            Marshal.FreeHGlobal(strPtr);
+            return safeHandle;
+        }
         #endregion
         #region uiSpinbox
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -790,8 +811,6 @@ namespace LibUISharp.Internal
         public static extern void uiAttributeUnderline(IntPtr a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha);
         #endregion
 
-        //TODO: public class uiOpenTypeFeatures
-
         #region uiOpenTypeFeatures
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate uiForEach uiOpenTypeFeaturesForEachFunc(IntPtr otf, byte a, byte b, byte c, byte d, uint value, IntPtr data);
@@ -815,8 +834,6 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiAttributeFeatures(IntPtr a);
         #endregion
-
-        //TODO: public class uiAttributedString
 
         #region uiAttributedString
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -847,10 +864,6 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern UIntPtr uiAttributedStringGraphemeToByteIndex(IntPtr s, UIntPtr pos);
         #endregion
-
-        //TODO: public class uiFontDescriptor
-
-        //TODO: public class uiDrawTextLayout
 
         #region uiDrawTextLayout
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
