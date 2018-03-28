@@ -53,6 +53,6 @@ namespace LibUISharp.Drawing
 
         public static bool operator ==(Color left, Color right) => left.Equals(right);
         public static bool operator !=(Color left, Color right) => !(left == right);
-        //TODO: public static explicit operator SolidBrush(Color color) => new SolidBrush(color);
+        public static explicit operator SolidBrush(Color color) => new SolidBrush(color);
     }
 }

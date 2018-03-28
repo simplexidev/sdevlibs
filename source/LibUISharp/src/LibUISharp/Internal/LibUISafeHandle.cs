@@ -28,9 +28,23 @@ namespace LibUISharp.Internal
 
         protected override bool ReleaseHandle()
         {
-            uiControlDestroy(this);
+            uiControlDestroy(handle);
             handle = IntPtr.Zero;
             return Marshal.GetLastWin32Error() == 0;
+        }
+    }
+
+    internal sealed class PathSafeHandle : LibUISafeHandle
+    {
+        public PathSafeHandle() : this(IntPtr.Zero) { }
+        public PathSafeHandle(IntPtr ptr) : base(ptr) { }
+
+        protected override bool ReleaseHandle()
+        {
+            uiDrawFreePath(handle);
+            handle = IntPtr.Zero;
+            // return Marshal.GetLastWin32Error() == 0;
+            return true;
         }
     }
 }

@@ -83,6 +83,15 @@ namespace LibUISharp.Internal
             public double G;
             public double B;
             public double A;
+
+            public static explicit operator uiDrawBrushGradientStop(GradientStop gs) => new uiDrawBrushGradientStop()
+            {
+                Pos = gs.Position,
+                R = gs.Color.R,
+                G = gs.Color.G,
+                B = gs.Color.B,
+                A = gs.Color.A
+            };
         }
 
         [StructLayout(LayoutKind.Sequential)]

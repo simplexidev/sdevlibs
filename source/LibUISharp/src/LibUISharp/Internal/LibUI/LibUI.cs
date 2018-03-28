@@ -69,7 +69,6 @@ namespace LibUISharp.Internal
         #region uiControl
         [DllImport(LibUIRef, CallingConvention = Cdecl, SetLastError = true)]
         public static extern void uiControlDestroy(IntPtr c);
-        public static void uiControlDestroy(ControlSafeHandle c) => uiControlDestroy(c.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern UIntPtr uiControlHandle(IntPtr c);
@@ -758,31 +757,41 @@ namespace LibUISharp.Internal
 
         public const double uiDrawDefaultMiterLimit = 10.0;
 
-        #region Drawing (uDrawPath, uiDrawMatrix, misc. uiDraw* methods)
+        #region uiDrawPath
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiDrawNewPath(uiDrawFillMode fillMode);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiDrawFreePath(IntPtr path);
+        public static PathSafeHandle uiDrawNewPath(FillMode fillMode) => new PathSafeHandle(uiDrawNewPath((uiDrawFillMode)fillMode));
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiDrawPathNewFigure(IntPtr path, double x, double y);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiDrawPathNewFigureWithArc(IntPtr path, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiDrawPathLineTo(IntPtr path, double x, double y);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiDrawPathArcTo(IntPtr path, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiDrawPathBezierTo(IntPtr path, double c1x, double c1y, double c2x, double c2y, double endX, double endY);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiDrawPathCloseFigure(IntPtr path);
+        public static extern void uiDrawFreePath(IntPtr p);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiDrawPathAddRectangle(IntPtr path, double x, double y, double width, double height);
+        public static extern void uiDrawPathNewFigure(IntPtr p, double x, double y);
+        public static void uiDrawPathNewFigure(PathSafeHandle p, double x, double y) => uiDrawPathNewFigure(p.DangerousGetHandle(), x, y);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiDrawPathEnd(IntPtr path);
+        public static extern void uiDrawPathNewFigureWithArc(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
+        public static void uiDrawPathNewFigureWithArc(PathSafeHandle p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => uiDrawPathNewFigureWithArc(p.DangerousGetHandle(), xCenter, yCenter, radius, startAngle, sweep, negative);
 
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern void uiDrawPathLineTo(IntPtr p, double x, double y);
+        public static void uiDrawPathLineTo(PathSafeHandle p, double x, double y) => uiDrawPathLineTo(p.DangerousGetHandle(), x, y);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern void uiDrawPathArcTo(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern void uiDrawPathBezierTo(IntPtr p, double c1x, double c1y, double c2x, double c2y, double endX, double endY);
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern void uiDrawPathCloseFigure(IntPtr p);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern void uiDrawPathAddRectangle(IntPtr p, double x, double y, double width, double height);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
+        public static extern void uiDrawPathEnd(IntPtr p);
+        #endregion
+
+        #region Drawing (uiDrawMatrix, misc. uiDraw* methods)
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawStroke(IntPtr context, IntPtr path, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParam);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
