@@ -1,3 +1,4 @@
+using LibUISharp.Drawing;
 using System;
 using System.Runtime.InteropServices;
 
@@ -11,20 +12,16 @@ namespace LibUISharp.Internal
             public uiInitOptions(UIntPtr size) => Size = size;
             public UIntPtr Size;
         }
-        [StructLayout(LayoutKind.Sequential)]
-        internal class uiAreaHandler
-        {
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public uiDrawHandler Draw;
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public uiMouseEventHandler MouseEvent;
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public uiMouseCrossedHandler MouseCrossed;
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public uiDragBrokenHandler DragBroken;
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public uiKeyEventHandler KeyEvent;
-        }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal class uiAreaHandler
+    {
+        public IntPtr Draw;
+        public IntPtr MouseEvent;
+        public IntPtr MouseCrossed;
+        public IntPtr DragBroken;
+        public IntPtr KeyEvent;
+    }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct uiAreaDrawParams
@@ -39,6 +36,10 @@ namespace LibUISharp.Internal
             public double ClipY;
             public double ClipWidth;
             public double ClipHeight;
+
+
+            public static explicit operator DrawEventArgs(uiAreaDrawParams p) =>
+                new DrawEventArgs(new Context(new ControlSafeHandle(p.Context)), new RectangleD(p.ClipX, p.ClipY, p.ClipWidth, p.ClipHeight), new SizeD(p.AreaWidth, p.AreaHeight));
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -130,6 +131,9 @@ namespace LibUISharp.Internal
             public uiModifiers Modifiers;
 
             public ulong Held1To64;
+
+            public static explicit operator MouseEventArgs(uiAreaMouseEvent e) =>
+                new MouseEventArgs(new PointD(e.X, e.Y), new SizeD(e.AreaWidth, e.AreaHeight), e.Up, e.Down, e.Count, (KeyModifierFlags)e.Modifiers, e.Held1To64);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -140,6 +144,21 @@ namespace LibUISharp.Internal
             public uiModifiers Modifier;
             public uiModifiers Modifiers;
             public bool Up;
+
+            public static explicit operator KeyEventArgs(uiAreaKeyEvent e)
+            {
+                KeyModifierFlags m = 0;
+                if (e.Modifiers.HasFlag(uiModifiers.uiModifierCtrl) || e.Modifiers.HasFlag(uiModifiers.uiModifierCtrl))
+                    m |= KeyModifierFlags.Ctrl;
+                if (e.Modifiers.HasFlag(uiModifiers.uiModifierAlt) || e.Modifiers.HasFlag(uiModifiers.uiModifierAlt))
+                    m |= KeyModifierFlags.Alt;
+                if (e.Modifiers.HasFlag(uiModifiers.uiModifierShift) || e.Modifiers.HasFlag(uiModifiers.uiModifierShift))
+                    m |= KeyModifierFlags.Shift;
+                if (e.Modifiers.HasFlag(uiModifiers.uiModifierSuper) || e.Modifiers.HasFlag(uiModifiers.uiModifierSuper))
+                    m |= KeyModifierFlags.Super;
+
+                return new KeyEventArgs(e.Key, (KeyExtension)e.ExtKey, m, e.Up);
+            }
         }
     }
 }

@@ -132,8 +132,7 @@ namespace LibUISharp.Internal
             uiModifierShift = 1 << 2,
             uiModifierSuper = 1 << 3
         }
-
-        // uiExtKey => LibUISharp.Drawing.ExtensionKey
+        
         public enum uiExtKey : uint
         {
             uiExtKeyEscape = 1,

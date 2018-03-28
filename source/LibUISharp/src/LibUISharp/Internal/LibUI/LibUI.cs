@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.Internal
 {
-    //TODO: uiArea helper methods.
     //TODO: uiDraw helper methods.
     //TODO: uiAttribute helper methods.
     //TODO: uiOpenTypeFeatures helper methods.
@@ -729,19 +728,32 @@ namespace LibUISharp.Internal
 
         #region uiArea
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiAreaSetSize(IntPtr area, int width, int height);
+        public static extern void uiAreaSetSize(IntPtr a, int width, int height);
+        public static void uiAreaSetSize(ControlSafeHandle a, int width, int height) => uiAreaSetSize(a.DangerousGetHandle(), width, height);
+        public static void uiAreaSetSize(ControlSafeHandle a, Size size) => uiAreaSetSize(a, size.Width, size.Height);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiAreaQueueReDrawAll(IntPtr area);
+        public static extern void uiAreaQueueReDrawAll(IntPtr a);
+        public static void uiAreaQueueReDrawAll(ControlSafeHandle a) => uiAreaQueueReDrawAll(a.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAreaScrollTo(IntPtr area, double x, double y, double width, double height);
+        public static void uiAreaScrollTo(ControlSafeHandle a, double x, double y, double width, double height) => uiAreaScrollTo(a.DangerousGetHandle(), x, y, width, height);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAreaBeginUserWindowMove(IntPtr area);
+        public static void uiAreaBeginUserWindowMove(ControlSafeHandle a) => uiAreaBeginUserWindowMove(a.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAreaBeginUserWindowResize(IntPtr area, uiWindowResizeEdge edge);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewArea(uiAreaHandler ah);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewScrollingArea(uiAreaHandler ah, int width, int height);
+        public static void uiAreaBeginUserWindowResize(ControlSafeHandle a, WindowEdge edge) => uiAreaBeginUserWindowResize(a.DangerousGetHandle(), (uiWindowResizeEdge)edge);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewArea")]
+        public static extern IntPtr uiNewArea_(uiAreaHandler ah);
+        public static ControlSafeHandle uiNewArea(uiAreaHandler ah) => new ControlSafeHandle(uiNewArea_(ah));
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewScrollingArea")]
+        public static extern IntPtr uiNewScrollingArea_(uiAreaHandler ah, int width, int height);
+        public static ControlSafeHandle uiNewScrollingArea(uiAreaHandler ah, int width, int height) => new ControlSafeHandle(uiNewScrollingArea_(ah, width, height));
         #endregion
 
         public const double uiDrawDefaultMiterLimit = 10.0;
@@ -992,12 +1004,10 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiGridAppend(IntPtr grid, IntPtr child, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
         public static void uiGridAppend(ControlSafeHandle g, ControlSafeHandle c, int left, int top, int xspan, int yspan, int hexpand, Alignment halign, int vexpand, Alignment valign) => uiGridAppend(g.DangerousGetHandle(), c.DangerousGetHandle(), left, top, xspan, yspan, hexpand, (uiAlign)halign, vexpand, (uiAlign)valign);
-        public static void uiGridAppend(ControlSafeHandle g, ControlSafeHandle c, Point location, Size span, Size expand, Alignment halign, Alignment valign) => uiGridAppend(g, c, location.X, location.Y, span.Width, span.Height, expand.Height, halign, expand.Width, valign);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiGridInsertAt(IntPtr grid, IntPtr child, IntPtr existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
         public static void uiGridInsertAt(ControlSafeHandle g, ControlSafeHandle c, ControlSafeHandle existing, RelativeAlignment at, int xspan, int yspan, int hexpand, Alignment halign, int vexpand, Alignment valign) => uiGridInsertAt(g.DangerousGetHandle(), c.DangerousGetHandle(), existing.DangerousGetHandle(), (uiAt)at, xspan, yspan, hexpand, (uiAlign)halign, vexpand, (uiAlign)valign);
-        public static void uiGridInsertAt(ControlSafeHandle g, ControlSafeHandle c, ControlSafeHandle existing, RelativeAlignment at, Size span, Size expand, Alignment halign, Alignment valign) => uiGridInsertAt(g, c, existing, at, span.Width, span.Height, expand.Width, halign, expand.Height, valign);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern bool uiGridPadded(IntPtr grid);

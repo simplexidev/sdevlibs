@@ -49,5 +49,8 @@
   <ItemGroup>
     <None Include="ref\*.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="src\LibUISharp\Drawing\Area.cs" />
+  </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 </Project>
