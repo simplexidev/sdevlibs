@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using LibUISharp.Internal;
-
 using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
+    // uiMenu
     public class MenuStrip : Control
     {
         public MenuStrip(string name)
@@ -87,6 +87,7 @@ namespace LibUISharp
         public void AddSeparator() => uiMenuAppendSeparator(Handle);
     }
 
+    // uiMenuItem
     public class MenuStripItem : Control
     {
         private bool enabled;

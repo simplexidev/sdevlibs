@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-
 using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp

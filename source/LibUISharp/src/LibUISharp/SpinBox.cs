@@ -3,6 +3,7 @@ using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
+    // uiSpinbox
     public class SpinBox : Control
     {
         private int value;

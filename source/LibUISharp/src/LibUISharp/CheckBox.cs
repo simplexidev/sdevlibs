@@ -1,9 +1,9 @@
 ﻿using System;
-
 using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
+    // uiCheckbox
     public class CheckBox : Control
     {
         private string text;

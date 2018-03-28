@@ -1,10 +1,10 @@
 ﻿using System;
 using LibUISharp.Internal;
-
 using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
+    // uiGroup
     public class GroupBox : Control
     {
         private string title;

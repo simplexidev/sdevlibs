@@ -2,6 +2,7 @@
 
 namespace LibUISharp
 {
+    // uiProgressBar
     public class ProgressBar : Control
     {
         private int value;

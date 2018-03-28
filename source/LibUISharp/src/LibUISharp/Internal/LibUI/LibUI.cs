@@ -11,8 +11,6 @@ namespace LibUISharp.Internal
     //TODO: uiAttributedString helper methods.
     //TODO: uiDrawTextLayout helper methods.
     //TODO: uiFontButton helper methods.
-    //TODO: uiForm helper methods.
-    //TODO: uiGrid helper methods.
     internal static partial class LibUI
     {
 #if WINDOWS
@@ -965,28 +963,53 @@ namespace LibUISharp.Internal
 
         #region uiForm
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiFormAppend(IntPtr form, IntPtr label, IntPtr child, bool stretchy);
+        public static extern void uiFormAppend(IntPtr f, IntPtr label, IntPtr c, bool stretchy);
+        public static void uiFormAppend(ControlSafeHandle f, string label, ControlSafeHandle c, bool stretchy)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(label);
+            uiFormAppend(c.DangerousGetHandle(), strPtr, c.DangerousGetHandle(), stretchy);
+            Marshal.FreeHGlobal(strPtr);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiFormDelete(IntPtr form, int index);
+        public static extern void uiFormDelete(IntPtr f, int index);
+        public static void uiFormDelete(ControlSafeHandle f, int index) => uiFormDelete(f.DangerousGetHandle(), index);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern bool uiFormPadded(IntPtr form);
+        public static extern bool uiFormPadded(IntPtr f);
+        public static bool uiFormPadded(ControlSafeHandle f) => uiFormPadded(f.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiFormSetPadded(IntPtr form, bool padded);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewForm();
+        public static extern void uiFormSetPadded(IntPtr f, bool padded);
+        public static void uiFormSetPadded(ControlSafeHandle f, bool padded) => uiFormSetPadded(f.DangerousGetHandle(), padded);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewForm")]
+        public static extern IntPtr uiNewForm_();
+        public static ControlSafeHandle uiNewForm() => new ControlSafeHandle(uiNewForm_());
         #endregion
 
         #region uiGrid
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiGridAppend(IntPtr grid, IntPtr child, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
+        public static void uiGridAppend(ControlSafeHandle g, ControlSafeHandle c, int left, int top, int xspan, int yspan, int hexpand, Alignment halign, int vexpand, Alignment valign) => uiGridAppend(g.DangerousGetHandle(), c.DangerousGetHandle(), left, top, xspan, yspan, hexpand, (uiAlign)halign, vexpand, (uiAlign)valign);
+        public static void uiGridAppend(ControlSafeHandle g, ControlSafeHandle c, Point location, Size span, Size expand, Alignment halign, Alignment valign) => uiGridAppend(g, c, location.X, location.Y, span.Width, span.Height, expand.Height, halign, expand.Width, valign);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiGridInsertAt(IntPtr grid, IntPtr child, IntPtr existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
+        public static void uiGridInsertAt(ControlSafeHandle g, ControlSafeHandle c, ControlSafeHandle existing, RelativeAlignment at, int xspan, int yspan, int hexpand, Alignment halign, int vexpand, Alignment valign) => uiGridInsertAt(g.DangerousGetHandle(), c.DangerousGetHandle(), existing.DangerousGetHandle(), (uiAt)at, xspan, yspan, hexpand, (uiAlign)halign, vexpand, (uiAlign)valign);
+        public static void uiGridInsertAt(ControlSafeHandle g, ControlSafeHandle c, ControlSafeHandle existing, RelativeAlignment at, Size span, Size expand, Alignment halign, Alignment valign) => uiGridInsertAt(g, c, existing, at, span.Width, span.Height, expand.Width, halign, expand.Height, valign);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern bool uiGridPadded(IntPtr grid);
+        public static bool uiGridPadded(ControlSafeHandle g) => uiGridPadded(g.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiGridSetPadded(IntPtr grid, bool padded);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewGrid();
+        public static void uiGridSetPadded(ControlSafeHandle g, bool padded) => uiGridSetPadded(g.DangerousGetHandle(), padded);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewGrid")]
+        public static extern IntPtr uiNewGrid_();
+        public static ControlSafeHandle uiNewGrid() => new ControlSafeHandle(uiNewGrid_());
         #endregion
     }
 }

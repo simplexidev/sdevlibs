@@ -3,6 +3,7 @@ using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
+    // uiEntry
     public class TextBox : Control
     {
         private string text;
@@ -93,6 +94,7 @@ namespace LibUISharp
         public SearchTextBox() : base() { }
     }
 
+    // uiMultilineEntry
     public class MultilineTextBox : TextBox
     {
         private MultilineTextBox() { }

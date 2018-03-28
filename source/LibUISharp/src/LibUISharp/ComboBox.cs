@@ -1,5 +1,4 @@
 ﻿using System;
-
 using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
@@ -36,6 +35,7 @@ namespace LibUISharp
         }
     }
 
+    // uiCombobox
     public class ComboBox : ComboBoxBase
     {
         public ComboBox() : base() =>  InitializeEvents();
@@ -65,6 +65,7 @@ namespace LibUISharp
         protected sealed override void InitializeEvents() => uiComboboxOnSelected(Handle, (c, data) => { OnSelected(EventArgs.Empty); });
     }
 
+    // uiEditableCombobox
     public class EditableComboBox : ComboBoxBase
     {
         public EditableComboBox() : base() => InitializeEvents();

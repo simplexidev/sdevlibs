@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LibUISharp.Drawing;
-
 using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp
+namespace LibUISharp.Drawing
 {
+    // uiColorButton
     public class ColorPicker : Control
     {
         private Color color;

@@ -24,6 +24,7 @@ namespace LibUISharp
         }
     }
 
+    // uiSaveFile
     public class SaveFileDialog : FileDialog
     {
         public SaveFileDialog(Window parent = null) : base(parent) { }
@@ -31,6 +32,7 @@ namespace LibUISharp
         public Stream OpenFile() => File.OpenWrite(Path);
     }
 
+    // uiOpenFile
     public class OpenFileDialog : FileDialog
     {
         public OpenFileDialog(Window parent = null) : base(parent) { }

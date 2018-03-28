@@ -3,6 +3,7 @@ using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
+    // uiSeparator
     public abstract class Separator : Control
     {
         protected Separator(Orientation orientation)

@@ -4,11 +4,11 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
-
 using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
+    // uiWindow
     public class Window : Control
     {
         private Control child;

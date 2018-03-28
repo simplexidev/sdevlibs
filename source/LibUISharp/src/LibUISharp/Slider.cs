@@ -3,6 +3,7 @@ using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
+    // uiSlider
     public class Slider : Control
     {
         private int value;
