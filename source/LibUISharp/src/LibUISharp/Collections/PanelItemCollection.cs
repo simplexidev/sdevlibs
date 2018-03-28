@@ -1,5 +1,4 @@
 ﻿using System;
-using LibUISharp.Collections;
 using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Collections

@@ -92,7 +92,7 @@ namespace LibUISharp
         protected virtual void Destroy()
         {
             if (!Handle.IsInvalid)
-                Handle.Close();
+                Handle.Dispose();
             ControlCache.Remove(Handle);
         }
         
@@ -105,8 +105,6 @@ namespace LibUISharp
                 disposed = true;
             }
         }
-
-        ~Control() => Dispose(false);
         
         public virtual void Dispose()
         {
