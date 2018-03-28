@@ -29,7 +29,7 @@ LibUISharp allows you to create a native GUI application running .NET Core. Plea
 * MenuStrip/MenuStripItem
 * OpenFileDialog/SaveFileDialog
 * MessageBox
-* Area/ScrollableArea
+* Surface/ScrollableSurface
 * FontPicker
 * ColorPicker
 * Form
