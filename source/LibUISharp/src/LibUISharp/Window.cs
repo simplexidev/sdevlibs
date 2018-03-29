@@ -55,8 +55,12 @@ namespace LibUISharp
 
         public Size Size
         {
-            get => uiWindowContentSize(Handle);
-            set => uiWindowSetContentSize(Handle, value);
+            get
+            {
+                uiWindowContentSize(Handle, out int w, out int h);
+                return new Size(w, h);
+            }
+            set => uiWindowSetContentSize(Handle, value.Width, value.Height);
         }
 
         public int Width => Size.Width;

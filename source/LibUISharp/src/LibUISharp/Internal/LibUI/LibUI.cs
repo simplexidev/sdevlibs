@@ -20,8 +20,7 @@ namespace LibUISharp.Internal
         private const string LibUIRef = "libui.dylib";
 #endif
         private const CallingConvention Cdecl = CallingConvention.Cdecl;
-
-        #region General
+        
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiInit")]
         private static extern IntPtr uiInit_(ref uiInitOptions options);
         public static void uiInit(ref uiInitOptions options)
@@ -65,7 +64,6 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFreeText(IntPtr text);
-        #endregion
         #region uiControl
         [DllImport(LibUIRef, CallingConvention = Cdecl, SetLastError = true)]
         public static extern void uiControlDestroy(IntPtr c);
@@ -134,16 +132,10 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiWindowContentSize(IntPtr w, out int width, out int height);
         public static void uiWindowContentSize(ControlSafeHandle w, out int width, out int height) => uiWindowContentSize(w.DangerousGetHandle(), out width, out height);
-        public static Size uiWindowContentSize(ControlSafeHandle w)
-        {
-            uiWindowContentSize(w, out int width, out int height);
-            return new Size(width, height);
-        }
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiWindowSetContentSize(IntPtr w, int width, int height);
         public static void uiWindowSetContentSize(ControlSafeHandle w, int width, int height) => uiWindowSetContentSize(w.DangerousGetHandle(), width, height);
-        public static void uiWindowSetContentSize(ControlSafeHandle w, Size size) => uiWindowSetContentSize(w, size.Width, size.Height);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern bool uiWindowFullscreen(IntPtr w);
@@ -192,7 +184,6 @@ namespace LibUISharp.Internal
             Marshal.FreeHGlobal(strPtr);
             return safeHandle;
         }
-        public static ControlSafeHandle uiNewWindow(string title, Size size, bool hasMenuBar) => uiNewWindow(title, size.Width, size.Height, hasMenuBar);
         #endregion
         #region uiButton
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -709,27 +700,31 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiMsgBox(IntPtr parent, IntPtr title, IntPtr description);
-        public static void uiMsgBox(ControlSafeHandle parent, string title, string description, bool error)
+        public static void uiMsgBox(ControlSafeHandle parent, string title, string description)
         {
             IntPtr titlePtr = UTF8Helper.ToUTF8Ptr(title);
             IntPtr descrPtr = UTF8Helper.ToUTF8Ptr(description);
-            if (!error)
-                uiMsgBox(parent.DangerousGetHandle(), titlePtr, descrPtr);
-            else
-                uiMsgBoxError(parent.DangerousGetHandle(), titlePtr, descrPtr);
+            uiMsgBox(parent.DangerousGetHandle(), titlePtr, descrPtr);
             Marshal.FreeHGlobal(titlePtr);
             Marshal.FreeHGlobal(descrPtr);
         }
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         private static extern void uiMsgBoxError(IntPtr parent, IntPtr title, IntPtr description);
+        public static void uiMsgBoxError(ControlSafeHandle parent, string title, string description)
+        {
+            IntPtr titlePtr = UTF8Helper.ToUTF8Ptr(title);
+            IntPtr descrPtr = UTF8Helper.ToUTF8Ptr(description);
+            uiMsgBoxError(parent.DangerousGetHandle(), titlePtr, descrPtr);
+            Marshal.FreeHGlobal(titlePtr);
+            Marshal.FreeHGlobal(descrPtr);
+        }
         #endregion
 
         #region uiArea
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAreaSetSize(IntPtr a, int width, int height);
         public static void uiAreaSetSize(ControlSafeHandle a, int width, int height) => uiAreaSetSize(a.DangerousGetHandle(), width, height);
-        public static void uiAreaSetSize(ControlSafeHandle a, Size size) => uiAreaSetSize(a, size.Width, size.Height);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAreaQueueReDrawAll(IntPtr a);
@@ -738,6 +733,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAreaScrollTo(IntPtr area, double x, double y, double width, double height);
         public static void uiAreaScrollTo(ControlSafeHandle a, double x, double y, double width, double height) => uiAreaScrollTo(a.DangerousGetHandle(), x, y, width, height);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAreaBeginUserWindowMove(IntPtr area);
         public static void uiAreaBeginUserWindowMove(ControlSafeHandle a) => uiAreaBeginUserWindowMove(a.DangerousGetHandle());
@@ -797,7 +793,7 @@ namespace LibUISharp.Internal
         public static extern void uiDrawPathEnd(IntPtr p);
         public static void uiDrawPathEnd(PathSafeHandle p) => uiDrawPathEnd(p.DangerousGetHandle());
         #endregion
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawStroke(IntPtr context, IntPtr path, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParam);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -937,21 +933,21 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern UIntPtr uiAttributedStringGraphemeToByteIndex(IntPtr s, UIntPtr pos);
         #endregion
+        
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiDrawNewTextLayout")]
+        public static extern IntPtr uiDrawNewTextLayout_(uiDrawTextLayoutParams param);
+        public static TextLayoutSafeHandle uiDrawNewTextLayout(uiDrawTextLayoutParams param) => new TextLayoutSafeHandle(uiDrawNewTextLayout_(param));
 
-        #region uiDrawTextLayout
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiDrawNewTextLayout(uiDrawTextLayoutParams param);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawFreeTextLayout(IntPtr tl);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawText(IntPtr c, IntPtr tl, double x, double y);
+        public static void uiDrawText(LibUISafeHandle c, TextLayoutSafeHandle tl, double x, double y) => uiDrawText(c.DangerousGetHandle(), tl.DangerousGetHandle(), x, y);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawTextLayoutExtents(IntPtr tl, out double width, out double height);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern int uiDrawTextLayoutNumLines(IntPtr tl);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void UIDrawTextLayoutLineByteRange(IntPtr tl, int line, out IntPtr start, out IntPtr end);
-        #endregion
+        public static void uiDrawTextLayoutExtents(TextLayoutSafeHandle tl, out double width, out double height) => uiDrawTextLayoutExtents(tl.DangerousGetHandle(), out width, out height);
 
         #region uiFontButton
         [DllImport(LibUIRef, CallingConvention = Cdecl)]

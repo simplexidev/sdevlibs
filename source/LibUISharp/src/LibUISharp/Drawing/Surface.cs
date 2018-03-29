@@ -71,7 +71,7 @@ namespace LibUISharp.Drawing
             {
                 if (size != value)
                 {
-                    uiAreaSetSize(Handle, value);
+                    uiAreaSetSize(Handle, value.Width, value.Height);
                     size = value;
                 }
             }

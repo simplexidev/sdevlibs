@@ -52,7 +52,15 @@ namespace LibUISharp.Internal
             public double M31;
             public double M32;
 
-            public static explicit operator Matrix(uiDrawMatrix m) => new Matrix(m.M11, m.M12, m.M21, m.M22, m.M31, m.M32);
+            public static explicit operator uiDrawMatrix(Matrix m) => new uiDrawMatrix()
+            {
+                M11 = m.M11,
+                M12 = m.M12,
+                M21 = m.M21,
+                M22 = m.M22,
+                M31 = m.M31,
+                M32 = m.M32
+            };
         }
 
         [StructLayout(LayoutKind.Sequential)]
