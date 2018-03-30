@@ -957,11 +957,18 @@ namespace LibUISharp.Internal
 
         #region uiFontButton
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiFontButtonFont(IntPtr b, uiFontDescriptor desc);
+        public static extern void uiFontButtonFont(IntPtr b, out uiFontDescriptor desc);
+        public static void uiFontButtonFont(ControlSafeHandle b, out uiFontDescriptor desc) => uiFontButtonFont(b.DangerousGetHandle(), out desc);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern void uiFontButtonOnChanged(IntPtr b, uiFontDescriptor desc);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewFontButton();
+        public static extern void uiFontButtonOnChanged(IntPtr b, uiOnValueChangedHandler f, IntPtr data);
+        public static void uiFontButtonOnChanged(ControlSafeHandle b, uiOnValueChangedHandler f, IntPtr data) => uiFontButtonOnChanged(b.DangerousGetHandle(), f, data);
+        public static void uiFontButtonOnChanged(ControlSafeHandle b, uiOnValueChangedHandler f) => uiFontButtonOnChanged(b, f, IntPtr.Zero);
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewFontButton")]
+        public static extern IntPtr uiNewFontButton_();
+        public static ControlSafeHandle uiNewFontButton() => new ControlSafeHandle(uiNewFontButton_());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFreeFontButtonFont(uiFontDescriptor desc);
         #endregion

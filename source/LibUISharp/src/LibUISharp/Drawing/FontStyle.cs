@@ -1,7 +1,7 @@
 ﻿namespace LibUISharp.Drawing
 {
     // uiTextItalic
-    public enum FontItalic : uint
+    public enum FontStyle : uint
     {
         Normal,
         Oblique,

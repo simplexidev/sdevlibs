@@ -36,7 +36,7 @@ namespace LibUISharp.Internal
             public double ClipY;
             public double ClipWidth;
             public double ClipHeight;
-            
+
             public static explicit operator DrawEventArgs(uiAreaDrawParams p) =>
                 new DrawEventArgs(new Context(new ControlSafeHandle(p.Context)), new RectangleD(p.ClipX, p.ClipY, p.ClipWidth, p.ClipHeight), new SizeD(p.AreaWidth, p.AreaHeight));
         }
@@ -122,6 +122,27 @@ namespace LibUISharp.Internal
             uiTextWeight Weight;
             uiTextItalic Italic;
             uiTextStretch Stretch;
+
+            public static explicit operator Font(uiFontDescriptor f) => new Font(UTF8Helper.ToUTF8Str(f.Family), f.Size, (FontWeight)f.Weight, (FontStyle)f.Italic, (FontStretch)f.Stretch);
+            public static explicit operator uiFontDescriptor(Font f)
+            {
+                IntPtr strPtr = UTF8Helper.ToUTF8Ptr(f.Family);
+                try
+                {
+                    return new uiFontDescriptor
+                    {
+                        Family = strPtr,
+                        Size = f.Size,
+                        Weight = (uiTextWeight)f.Weight,
+                        Italic = (uiTextItalic)f.Style,
+                        Stretch = (uiTextStretch)f.Weight
+                    };
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(strPtr);
+                }
+            }
         }
 
         public struct uiDrawTextLayoutParams
