@@ -36,8 +36,7 @@ namespace LibUISharp.Internal
             public double ClipY;
             public double ClipWidth;
             public double ClipHeight;
-
-
+            
             public static explicit operator DrawEventArgs(uiAreaDrawParams p) =>
                 new DrawEventArgs(new Context(new ControlSafeHandle(p.Context)), new RectangleD(p.ClipX, p.ClipY, p.ClipWidth, p.ClipHeight), new SizeD(p.AreaWidth, p.AreaHeight));
         }
@@ -114,34 +113,6 @@ namespace LibUISharp.Internal
             public IntPtr Dashes;
             public UIntPtr NumDashes;
             public double DashPhase;
-
-            public static explicit operator uiDrawStrokeParams(BrushStroke b)
-            {
-                uiDrawLineCap cap = (uiDrawLineCap)b.Cap;
-                uiDrawLineJoin join = (uiDrawLineJoin)b.Join;
-                GCHandle dashes = default;
-                UIntPtr dashCount = (UIntPtr)b.DashCount;
-                try
-                {
-                    dashes = GCHandle.Alloc(b.Dashes, GCHandleType.Pinned);
-
-                    return new uiDrawStrokeParams
-                    {
-                        Cap = cap,
-                        Join = join,
-                        Thickness = b.Thickness,
-                        MiterLimit = b.MiterLimit,
-                        Dashes = dashes.AddrOfPinnedObject(),
-                        NumDashes = dashCount,
-                        DashPhase = b.DashPhase
-                    };
-                }
-                finally
-                {
-                    if (dashes.IsAllocated)
-                        dashes.Free();
-                }
-            }
         }
 
         public struct uiFontDescriptor
