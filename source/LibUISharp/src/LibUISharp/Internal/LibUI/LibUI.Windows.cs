@@ -15,7 +15,7 @@ namespace LibUISharp.Internal
             [DllImport(User32Ref, SetLastError = true)]
             public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-            public static void ConsoleWindow(bool visible)
+            public static void ConsoleWindowVisible(bool visible)
             {
                 IntPtr ptr = GetConsoleWindow();
                 if (visible)

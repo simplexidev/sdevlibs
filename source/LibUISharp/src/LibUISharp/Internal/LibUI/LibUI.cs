@@ -4,11 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.Internal
 {
-    //TODO: uiDraw helper methods.
     //TODO: uiAttribute helper methods.
     //TODO: uiOpenTypeFeatures helper methods.
     //TODO: uiAttributedString helper methods.
-    //TODO: uiDrawTextLayout helper methods.
     //TODO: uiFontButton helper methods.
     internal static partial class LibUI
     {
@@ -796,8 +794,11 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawStroke(IntPtr context, IntPtr path, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParam);
+        public static void uiDrawStroke(LibUISafeHandle c, PathSafeHandle p, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParams) => uiDrawStroke(c.DangerousGetHandle(), p.DangerousGetHandle(), ref brush, ref strokeParams);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawFill(IntPtr context, IntPtr path, ref uiDrawBrush brush);
+        public static void uiDrawFill(LibUISafeHandle c, PathSafeHandle path, ref uiDrawBrush brush) => uiDrawFill(c.DangerousGetHandle(), path.DangerousGetHandle(), ref brush);
 
         #region uiDrawMatrix
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -824,14 +825,19 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawTransform(IntPtr context, uiDrawMatrix matrix);
+        public static void uiDrawTransform(LibUISafeHandle c, uiDrawMatrix matrix) => uiDrawTransform(c.DangerousGetHandle(), matrix);
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawClip(IntPtr context, IntPtr path);
+        public static void uiDrawClip(LibUISafeHandle context, PathSafeHandle path) => uiDrawClip(context.DangerousGetHandle(), path.DangerousGetHandle());
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawSave(IntPtr context);
+        public static void uiDrawSave(LibUISafeHandle c) => uiDrawSave(c.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawRestore(IntPtr context);
+        public static void uiDrawRestore(LibUISafeHandle c) => uiDrawRestore(c.DangerousGetHandle());
 
         #region uiAttribute
         [DllImport(LibUIRef, CallingConvention = Cdecl)]

@@ -13,15 +13,15 @@ namespace LibUISharp.Internal
             public UIntPtr Size;
         }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal class uiAreaHandler
-    {
-        public IntPtr Draw;
-        public IntPtr MouseEvent;
-        public IntPtr MouseCrossed;
-        public IntPtr DragBroken;
-        public IntPtr KeyEvent;
-    }
+        [StructLayout(LayoutKind.Sequential)]
+        internal class uiAreaHandler
+        {
+            public IntPtr Draw;
+            public IntPtr MouseEvent;
+            public IntPtr MouseCrossed;
+            public IntPtr DragBroken;
+            public IntPtr KeyEvent;
+        }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct uiAreaDrawParams
@@ -114,6 +114,34 @@ namespace LibUISharp.Internal
             public IntPtr Dashes;
             public UIntPtr NumDashes;
             public double DashPhase;
+
+            public static explicit operator uiDrawStrokeParams(BrushStroke b)
+            {
+                uiDrawLineCap cap = (uiDrawLineCap)b.Cap;
+                uiDrawLineJoin join = (uiDrawLineJoin)b.Join;
+                GCHandle dashes = default;
+                UIntPtr dashCount = (UIntPtr)b.DashCount;
+                try
+                {
+                    dashes = GCHandle.Alloc(b.Dashes, GCHandleType.Pinned);
+
+                    return new uiDrawStrokeParams
+                    {
+                        Cap = cap,
+                        Join = join,
+                        Thickness = b.Thickness,
+                        MiterLimit = b.MiterLimit,
+                        Dashes = dashes.AddrOfPinnedObject(),
+                        NumDashes = dashCount,
+                        DashPhase = b.DashPhase
+                    };
+                }
+                finally
+                {
+                    if (dashes.IsAllocated)
+                        dashes.Free();
+                }
+            }
         }
 
         public struct uiFontDescriptor

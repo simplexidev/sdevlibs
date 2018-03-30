@@ -78,7 +78,7 @@ namespace LibUISharp
         private void InitializeComponent()
         {
 #if WINDOWS
-            WindowsNT.ConsoleWindow(false);
+            WindowsNT.ConsoleWindowVisible(false);
 #endif
             uiInit(ref Options);
         }
