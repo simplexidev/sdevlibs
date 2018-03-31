@@ -16,23 +16,23 @@ namespace LibUISharp
         private Size size;
         private string title;
         private static readonly Dictionary<ControlSafeHandle, Window> WindowCache = new Dictionary<ControlSafeHandle, Window>();
-
-        public Window(int width = 500, int height = 300, string title = null, bool hasMenuBar = false)
+        
+        public Window(int width = 500, int height = 300, string title = null, bool hasMenuStrip = false)
         {
             if (string.IsNullOrEmpty(title))
                 title = "LibUI";
-            Handle = uiNewWindow(title, width, height, hasMenuBar);
+            Handle = uiNewWindow(title, width, height, hasMenuStrip);
             WindowCache.Add(Handle, this);
             this.title = title;
             InitializeEvents();
             InitializeComponent();
         }
-
-        public Window(Size size, string title = null, bool hasMenuBar = false) : this(size.Width, size.Height, title, hasMenuBar) { }
+        
+        public Window(Size size, string title = null, bool hasMenuStrip = false) : this(size.Width, size.Height, title, hasMenuStrip) { }
 
         public EventHandler<CancelEventArgs> Closing;
         public EventHandler SizeChanged;
-
+        
         public string Title
         {
             get

@@ -16,7 +16,7 @@ namespace LibUISharp
             lock (_lock)
             {
                 if (created)
-                    throw new InvalidOperationException("Cannot create more than one Application everytime.");
+                    throw new InvalidOperationException("Cannot create more than one Application.");
                 Current = this;
                 created = true;
                 InitializeComponent();

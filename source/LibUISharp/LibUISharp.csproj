@@ -23,6 +23,10 @@
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Internal\*.cs" />
     <Compile Include="src\LibUISharp\Collections\*.cs" />
+    <Compile Include="src\LibUISharp\Drawing\Text\TextAttribute.cs" />
+    <Compile Include="src\LibUISharp\Drawing\Text\TextLayout.cs" />
+    <Compile Include="src\LibUISharp\Drawing\Text\UnderlineColor.cs" />
+    <Compile Include="src\LibUISharp\Drawing\Text\UnderlineStyle.cs" />
     <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.cs" />
     <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Delegates.cs" />
     <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Enums.cs" />

@@ -2,7 +2,7 @@
 using LibUISharp.Internal;
 using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp.Drawing
+namespace LibUISharp.Drawing.Text
 {
     // uiDrawTextLayout
     public class TextLayout : IDisposable

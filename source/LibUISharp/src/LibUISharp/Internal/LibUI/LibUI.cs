@@ -4,10 +4,8 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.Internal
 {
-    //TODO: uiAttribute helper methods.
     //TODO: uiOpenTypeFeatures helper methods.
     //TODO: uiAttributedString helper methods.
-    //TODO: uiFontButton helper methods.
     internal static partial class LibUI
     {
 #if WINDOWS
@@ -845,45 +843,81 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern uiAttributeType uiAttributeGetType(IntPtr a);
+        public static uiAttributeType uiAttributeGetType(TextAttributeSafeHandle a) => uiAttributeGetType(a.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewFamilyAttribute(IntPtr family);
+        public static TextAttributeSafeHandle uiNewFamilyAttribute(string family)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(family);
+            TextAttributeSafeHandle safeHandle = new TextAttributeSafeHandle(uiNewFamilyAttribute(strPtr));
+            Marshal.FreeHGlobal(strPtr);
+            return safeHandle;
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiAttributeFamily(IntPtr a);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewSizeAttribute(double size);
+        public static string uiAttributeFamily(TextAttributeSafeHandle a) => UTF8Helper.ToUTF8Str(uiAttributeFamily(a.DangerousGetHandle()));
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewSizeAttribute")]
+        public static extern IntPtr uiNewSizeAttribute_(double size);
+        public static TextAttributeSafeHandle uiNewSizeAttribute(double size) => new TextAttributeSafeHandle(uiNewSizeAttribute_(size));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern double uiAttributeSize(IntPtr a);
+        public static double uiAttributeSize(TextAttributeSafeHandle a) => uiAttributeSize(a.DangerousGetHandle());
 
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewWeightAttribute(uiTextWeight weight);
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewWeightAttribute")]
+        public static extern IntPtr uiNewWeightAttribute_(uiTextWeight weight);
+        public static TextAttributeSafeHandle uiNewWeightAttribute(uiTextWeight weight) => new TextAttributeSafeHandle(uiNewWeightAttribute_(weight));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern uiTextWeight uiAttributeWeight(IntPtr a);
+        public static uiTextWeight uiAttributeWeight(TextAttributeSafeHandle a) => uiAttributeWeight(a.DangerousGetHandle());
 
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewItalicAttribute(uiTextItalic italic);
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewItalicAttribute")]
+        public static extern IntPtr uiNewItalicAttribute_(uiTextItalic italic);
+        public static TextAttributeSafeHandle uiNewItalicAttribute(uiTextItalic italic) => new TextAttributeSafeHandle(uiNewItalicAttribute_(italic));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern uiTextItalic uiAttributeItalic(IntPtr a);
+        public static uiTextItalic uiAttributeItalic(TextAttributeSafeHandle a) => uiAttributeItalic(a.DangerousGetHandle());
 
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewStretchAttribute(uiTextStretch stretch);
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewStretchAttribute")]
+        public static extern IntPtr uiNewStretchAttribute_(uiTextStretch stretch);
+        public static TextAttributeSafeHandle uiNewStretchAttribute(uiTextStretch stretch) => new TextAttributeSafeHandle(uiNewStretchAttribute_(stretch));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern uiTextStretch uiAttributeStretch(IntPtr a);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewColorAttribute(double r, double g, double b, double a);
+        public static uiTextStretch uiAttributeStretch(TextAttributeSafeHandle a) => uiAttributeStretch(a.DangerousGetHandle());
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewColorAttribute")]
+        public static extern IntPtr uiNewColorAttribute_(double r, double g, double b, double a);
+        public static TextAttributeSafeHandle uiNewColorAttribute(double r, double g, double b, double a) => new TextAttributeSafeHandle(uiNewColorAttribute_(r, g, b, a));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAttributeColor(IntPtr a, out double r, out double g, out double b, out double alpha);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewBackgroundAttribute(double r, double g, double b, double a);
+        public static void uiAttributeColor(TextAttributeSafeHandle a, out double r, out double g, out double b, out double alpha) => uiAttributeColor(a.DangerousGetHandle(), out r, out g, out b, out alpha);
 
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewUnderlineAttribute(uiUnderline u);
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewBackgroundAttribute")]
+        public static extern IntPtr uiNewBackgroundAttribute_(double r, double g, double b, double a);
+        public static TextAttributeSafeHandle uiNewBackgroundAttribute(double r, double g, double b, double a) => new TextAttributeSafeHandle(uiNewBackgroundAttribute_(r, g, b, a));
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewUnderlineAttribute")]
+        public static extern IntPtr uiNewUnderlineAttribute_(uiUnderline u);
+        public static TextAttributeSafeHandle uiNewUnderlineAttribute(uiUnderline u) => new TextAttributeSafeHandle(uiNewUnderlineAttribute_(u));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern uiUnderline uiAttributeUnderline(IntPtr a);
+        public static uiUnderline uiAttributeUnderline(TextAttributeSafeHandle a) => uiAttributeUnderline(a.DangerousGetHandle());
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewUnderlineColorAttribute")]
+        public static extern IntPtr uiNewUnderlineColorAttribute_(uiUnderlineColor u, double r, double g, double b, double a);
+        public static TextAttributeSafeHandle uiNewUnderlineColorAttribute(uiUnderlineColor u, double r, double g, double b, double a) => new TextAttributeSafeHandle(uiNewUnderlineColorAttribute_(u, r, g ,b, a));
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewUnderlineColorAttribute(uiUnderlineColor u, double r, double g, double b, double a);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAttributeUnderline(IntPtr a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha);
+        public static void uiAttributeUnderline(TextAttributeSafeHandle a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha) => uiAttributeUnderline(a.DangerousGetHandle(), out u, out r, out g, out b, out alpha);
         #endregion
 
         #region uiOpenTypeFeatures

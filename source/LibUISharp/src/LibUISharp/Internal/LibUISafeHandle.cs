@@ -61,4 +61,18 @@ namespace LibUISharp.Internal
             return true;
         }
     }
+
+    internal sealed class TextAttributeSafeHandle : LibUISafeHandle
+    {
+        public TextAttributeSafeHandle() : this(IntPtr.Zero) { }
+        public TextAttributeSafeHandle(IntPtr ptr) : base(ptr) { }
+
+        protected override bool ReleaseHandle()
+        {
+            uiFreeAttribute(handle);
+            handle = IntPtr.Zero;
+            // return Marshal.GetLastWin32Error() == 0;
+            return true;
+        }
+    }
 }
