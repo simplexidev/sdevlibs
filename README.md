@@ -79,8 +79,8 @@ Any output is placed in the `build\` directory.
 | Operating System | Prerequisites                                                                                                    |
 | :--------------- | :--------------------------------------------------------------------------------------------------------------- |
 | Windows 7/8.1/10 | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio 2017.5<br/>Visual Studio Code (With the C# extension) |
-| Mac OS X         | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code                                                  |
-| Linux            | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code                                                  |
+| Mac OS X         | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                          |
+| Linux            | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                          |
 
 ### Build Using Visual Studio (Windows)
 
