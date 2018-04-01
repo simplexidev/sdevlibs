@@ -12,41 +12,23 @@
     <LangVersion>7.2</LangVersion>
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
-  <PropertyGroup>
-    <DefineConstants Condition="'$(IsWindows)' == 'true'">$(DefineConstants);WINDOWS</DefineConstants>
-    <DefineConstants Condition="'$(IsLinux)' == 'true'">$(DefineConstants);LINUX</DefineConstants>
-    <DefineConstants Condition="'$(IsMacOS)' == 'true'">$(DefineConstants);MACOS</DefineConstants>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Internal\*.cs" />
     <Compile Include="src\LibUISharp\Collections\*.cs" />
-    <Compile Include="src\LibUISharp\Drawing\Text\TextAttribute.cs" />
-    <Compile Include="src\LibUISharp\Drawing\Text\TextLayout.cs" />
-    <Compile Include="src\LibUISharp\Drawing\Text\UnderlineColor.cs" />
-    <Compile Include="src\LibUISharp\Drawing\Text\UnderlineStyle.cs" />
-    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.cs" />
-    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Delegates.cs" />
-    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Enums.cs" />
-    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Structs.cs" />
+    <Compile Include="src\LibUISharp\Drawing\Text\*.cs" />
+    <Compile Include="src\LibUISharp\Internal\LibUI\*.cs" />
   </ItemGroup>
-  <ItemGroup Condition="'$(IsWindows)' == 'true'">
-    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Windows.cs" />
+  <ItemGroup>
     <Content Include="lib\win-x64\libui.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup Condition="'$(IsLinux)' == 'true'">
-    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.Linux.cs" />
-    <Content Include="lib\win-x64\libui.so">
+    <Content Include="lib\osx-x64\libui.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup Condition="'$(IsMacOS)' == 'true'">
-    <Compile Include="src\LibUISharp\Internal\LibUI\LibUI.MacOS.cs" />
-    <Content Include="lib\win-x64\libui.dylib">
+    <Content Include="lib\linux-x64\libui.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

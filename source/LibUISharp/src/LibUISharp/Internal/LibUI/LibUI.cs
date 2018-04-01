@@ -8,13 +8,7 @@ namespace LibUISharp.Internal
     //TODO: uiAttributedString helper methods.
     internal static partial class LibUI
     {
-#if WINDOWS
-        private const string LibUIRef = "libui.dll";
-#elif LINUX
-        private const string LibUIRef = "libui.so";
-#elif MACOS
-        private const string LibUIRef = "libui.dylib";
-#endif
+        private const string LibUIRef = "libui";
         private const CallingConvention Cdecl = CallingConvention.Cdecl;
         
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiInit")]
@@ -925,8 +919,7 @@ namespace LibUISharp.Internal
         public delegate uiForEach uiOpenTypeFeaturesForEachFunc(IntPtr otf, byte a, byte b, byte c, byte d, uint value, IntPtr data);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewOpenTypeFeatures();
-        [DllImport(LibUIRef, CallingConvention = Cdecl,
-            SetLastError = true)]
+        [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFreeOpenTypeFeatures(IntPtr otf);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiOpenTypeFeaturesClone(IntPtr otf);

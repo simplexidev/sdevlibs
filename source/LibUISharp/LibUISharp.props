@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <IntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj</IntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <OutputPath>..\..\build\$(MSBuildProjectName)\bin</OutputPath>
     <Platform>AnyCPU</Platform>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
@@ -47,6 +47,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/tom-corwin/LibUISharp</RepositoryUrl>
   </PropertyGroup>
+  <!--
   <PropertyGroup>
     <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
   </PropertyGroup>
@@ -54,4 +55,5 @@
     <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
+  -->
 </Project>

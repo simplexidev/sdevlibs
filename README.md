@@ -1,41 +1,56 @@
 # LibUISharp ![License](https://img.shields.io/badge/License-MIT-blue.svg?style)
 <!--TODO: Add build status buttons.-->
 
-*This README file, as well as the rest of the repository, is a work in progress.*
-
 LibUISharp is a library containing bindings for [libui](https://github/andlabs/libui), written in C# for .NET Core.
 
 ## Features
 
 LibUISharp allows you to create a native GUI application running .NET Core. Please note that LibUI is in alpha development, so the native library, thus this C# library, is not stable. This library (LibUISharp) has not been tested, yet, and may have build errors.
 
-**Controls:**
-
-* Window
 * Button
-* HPanel/VPanel
 * CheckBox
-* TextBox/PasswordBox/SearchBox/MultilineTextBox
-* Label
-* TabControl/TabPage
-* GroupBox
-* SpinBox
-* Slider
-* ProgressBar
-* Separator
-* ComboBox/EditableComboBox
-* RadioButtonGroup
-* DateTimePicker/DatePicker/TimePicker
-* MenuStrip/MenuStripItem
-* OpenFileDialog/SaveFileDialog
-* MessageBox
-* Surface/ScrollableSurface
-* FontPicker
 * ColorPicker
+* ComboBox
+  * EditableComboBox
+* DateTimePicker
+  * DatePicker
+  * TimePicker
+* FileDialog
+  * OpenFileDialog
+  * SaveFileDialog 
+* FontPicker
 * Form
 * Grid
+* GroupBox
+* Label
+* MenuStrip
+* MenuStripItem
+  * MenuStripAboutItem
+  * MenuStripCheckItem
+  * MenuStripPreferencesItem
+  * MenuStripQuitItem
+* MessageBox
+* Panel
+  * HPanel
+  * VPanel
+* ProgressBar
+* RadioButtonGroup
+* Separator
+  * HSeparator
+  * VSeparator
+* Slider
+* SpinBox
+* Surface
+  * ScrollableSurface
+* TextBox
+  * MultilineTextBox
+  * PasswordBox
+  * SearchBox
+* TabControl
+* TabPage
+* Window
 
-## Supported Platforms
+### Supported Platforms
 
 This list is basically copied and reformatted from [here](https://github.com/dotnet/core/blob/master/release-notes/2.0/2.0-supported-os.md).
 
@@ -50,7 +65,7 @@ This list is basically copied and reformatted from [here](https://github.com/dot
 
 ## Obtaining the Library
 
-LibUISharp will be available as a NuGet package once I (somewhat) finish.
+LibUISharp will be available as a NuGet package in the next week or so.
 
 ## Building From Source
 

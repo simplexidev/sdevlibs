@@ -5,7 +5,7 @@ namespace LibUISharp.Internal
 {
     internal static partial class LibUI
     {
-        public static class WindowsNT
+        public static class WinNT
         {
             private const string Kernel32Ref = "kernel32.dll";
             private const string User32Ref = "user32.dll";
