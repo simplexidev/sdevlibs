@@ -2,10 +2,10 @@
 using LibUISharp.Internal;
 using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp.Drawing.Text
+namespace LibUISharp.Drawing
 {
     // uiAttribute
-    public abstract class TextAttribute : IDisposable
+    public abstract class TextAttribute : UIComponent
     {
         private bool disposed = false;
 
@@ -13,7 +13,7 @@ namespace LibUISharp.Drawing.Text
 
         internal uiAttributeType Type => uiAttributeGetType(Handle);
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -24,7 +24,7 @@ namespace LibUISharp.Drawing.Text
             }
         }
 
-        public virtual void Dispose()
+        public override void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);

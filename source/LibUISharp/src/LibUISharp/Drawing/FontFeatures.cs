@@ -2,7 +2,7 @@
 using LibUISharp.Internal;
 using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp.Drawing.Text
+namespace LibUISharp.Drawing
 {
     // uiOpenTypeFeatures
     //TODO: Setup the ForEachFunc. Not sure how to do that yet.

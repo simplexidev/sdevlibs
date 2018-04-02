@@ -2,7 +2,7 @@
 using LibUISharp.Internal;
 using static LibUISharp.Internal.LibUI;
 
-namespace LibUISharp.Drawing.Text
+namespace LibUISharp.Drawing
 {
     // uiDrawTextLayout
     public class TextLayout : UIComponent

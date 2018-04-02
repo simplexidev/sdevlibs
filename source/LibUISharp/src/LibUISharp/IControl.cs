@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LibUISharp
+﻿namespace LibUISharp
 {
     public interface IControl
     {

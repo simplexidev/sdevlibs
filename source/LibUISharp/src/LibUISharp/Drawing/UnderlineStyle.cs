@@ -1,4 +1,4 @@
-﻿namespace LibUISharp.Drawing.Text
+﻿namespace LibUISharp.Drawing
 {
     public enum UnderlineStyle : uint
     {

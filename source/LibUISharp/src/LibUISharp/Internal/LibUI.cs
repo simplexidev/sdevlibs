@@ -29,7 +29,7 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiOnEventHandler(IntPtr control, IntPtr data);
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiInit")]
         private static extern IntPtr _uiInit(ref uiInitOptions options);
         public static void uiInit(ref uiInitOptions options)
@@ -79,10 +79,10 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFreeText(IntPtr text);
-        
+
         //// [StructLayout(LayoutKind.Sequential)]
         //// public struct uiControl { }
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl, SetLastError = true)]
         public static extern void uiControlDestroy(IntPtr c);
 
@@ -124,7 +124,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiControlDisable(IntPtr c);
         public static void uiControlDisable(ControlSafeHandle c) => uiControlDisable(c.DangerousGetHandle());
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiControlVerifySetParent(IntPtr c, IntPtr parent);
         public static void uiControlVerifySetParent(ControlSafeHandle c, ControlSafeHandle parent) => uiControlVerifySetParent(c.DangerousGetHandle(), parent.DangerousGetHandle());
@@ -625,7 +625,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewNonWrappingMultilineEntry")]
         public static extern IntPtr _uiNewNonWrappingMultilineEntry();
         public static ControlSafeHandle uiNewNonWrappingMultilineEntry() => new ControlSafeHandle(_uiNewNonWrappingMultilineEntry());
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiMenuItemEnable(IntPtr m);
         public static void uiMenuItemEnable(ControlSafeHandle m) => uiMenuItemEnable(m.DangerousGetHandle());
@@ -649,7 +649,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiMenuItemSetChecked(IntPtr m, bool @checked);
         public static void uiMenuItemSetChecked(ControlSafeHandle m, bool @checked) => uiMenuItemSetChecked(m.DangerousGetHandle(), @checked);
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiMenuAppendItem(IntPtr m, IntPtr name);
         public static ControlSafeHandle uiMenuAppendItem(ControlSafeHandle m, string name)
@@ -695,7 +695,7 @@ namespace LibUISharp.Internal
             Marshal.FreeHGlobal(strPtr);
             return safeHandle;
         }
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiOpenFile(IntPtr parent);
         public static string uiOpenFile(ControlSafeHandle parent) => UTF8Helper.ToUTF8Str(uiOpenFile(parent.DangerousGetHandle()));
@@ -725,7 +725,7 @@ namespace LibUISharp.Internal
             Marshal.FreeHGlobal(titlePtr);
             Marshal.FreeHGlobal(descrPtr);
         }
-        
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiAreaDrawHandler(IntPtr handler, IntPtr area, [In, Out]ref uiAreaDrawParams param);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -804,7 +804,7 @@ namespace LibUISharp.Internal
             public static explicit operator DrawEventArgs(uiAreaDrawParams p) =>
                 new DrawEventArgs(new Context(new ControlSafeHandle(p.Context)), new RectangleD(p.ClipX, p.ClipY, p.ClipWidth, p.ClipHeight), new SizeD(p.AreaWidth, p.AreaHeight));
         }
-        
+
         public enum uiDrawBrushType : uint
         {
             uiDrawBrushTypeSolid,
@@ -908,7 +908,7 @@ namespace LibUISharp.Internal
             public UIntPtr NumDashes;
             public double DashPhase;
         }
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiDrawNewPath(uiDrawFillMode fillMode);
         public static PathSafeHandle uiDrawNewPath(FillMode fillMode) => new PathSafeHandle(uiDrawNewPath((uiDrawFillMode)fillMode));
@@ -955,7 +955,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawFill(IntPtr context, IntPtr path, ref uiDrawBrush brush);
         public static void uiDrawFill(LibUISafeHandle c, PathSafeHandle path, ref uiDrawBrush brush) => uiDrawFill(c.DangerousGetHandle(), path.DangerousGetHandle(), ref brush);
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawMatrixSetIdentity(uiDrawMatrix matrix);
 
@@ -1001,7 +1001,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawRestore(IntPtr context);
         public static void uiDrawRestore(LibUISafeHandle c) => uiDrawRestore(c.DangerousGetHandle());
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFreeAttribute(IntPtr a);
 
@@ -1144,12 +1144,12 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewUnderlineColorAttribute")]
         public static extern IntPtr _uiNewUnderlineColorAttribute(uiUnderlineColor u, double r, double g, double b, double a);
-        public static TextAttributeSafeHandle uiNewUnderlineColorAttribute(uiUnderlineColor u, double r, double g, double b, double a) => new TextAttributeSafeHandle(_uiNewUnderlineColorAttribute(u, r, g ,b, a));
+        public static TextAttributeSafeHandle uiNewUnderlineColorAttribute(uiUnderlineColor u, double r, double g, double b, double a) => new TextAttributeSafeHandle(_uiNewUnderlineColorAttribute(u, r, g, b, a));
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAttributeUnderline(IntPtr a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha);
         public static void uiAttributeUnderline(TextAttributeSafeHandle a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha) => uiAttributeUnderline(a.DangerousGetHandle(), out u, out r, out g, out b, out alpha);
-        
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate uiForEach uiOpenTypeFeaturesForEachFunc(IntPtr otf, byte a, byte b, byte c, byte d, uint value, IntPtr data);
 
@@ -1195,10 +1195,20 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewAttributedString(IntPtr initialString);
+        public static AttributedTextSafeHandle uiNewAttributedString(string initialString)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(initialString);
+            AttributedTextSafeHandle safeHandle = new AttributedTextSafeHandle(uiNewAttributedString(strPtr));
+            Marshal.FreeHGlobal(strPtr);
+            return safeHandle;
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFreeAttributedString(IntPtr s);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiAttributedStringString(IntPtr s);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern UIntPtr uiAttributedStringLen(IntPtr s);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
@@ -1263,7 +1273,7 @@ namespace LibUISharp.Internal
             double Width;
             uiDrawTextAlign Align;
         }
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiDrawNewTextLayout")]
         public static extern IntPtr _uiDrawNewTextLayout(uiDrawTextLayoutParams param);
         public static TextLayoutSafeHandle uiDrawNewTextLayout(uiDrawTextLayoutParams param) => new TextLayoutSafeHandle(_uiDrawNewTextLayout(param));
@@ -1278,7 +1288,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiDrawTextLayoutExtents(IntPtr tl, out double width, out double height);
         public static void uiDrawTextLayoutExtents(TextLayoutSafeHandle tl, out double width, out double height) => uiDrawTextLayoutExtents(tl.DangerousGetHandle(), out width, out height);
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFontButtonFont(IntPtr b, out uiFontDescriptor desc);
         public static void uiFontButtonFont(ControlSafeHandle b, out uiFontDescriptor desc) => uiFontButtonFont(b.DangerousGetHandle(), out desc);
@@ -1325,7 +1335,7 @@ namespace LibUISharp.Internal
             public static explicit operator MouseEventArgs(uiAreaMouseEvent e) =>
                 new MouseEventArgs(new PointD(e.X, e.Y), new SizeD(e.AreaWidth, e.AreaHeight), e.Up, e.Down, e.Count, (KeyModifierFlags)e.Modifiers, e.Held1To64);
         }
-        
+
         public enum uiExtKey : uint
         {
             uiExtKeyEscape = 1,
@@ -1416,7 +1426,7 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewColorButton")]
         public static extern IntPtr _uiNewColorButton();
         public static ControlSafeHandle uiNewColorButton() => new ControlSafeHandle(_uiNewColorButton());
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFormAppend(IntPtr f, IntPtr label, IntPtr c, bool stretchy);
         public static void uiFormAppend(ControlSafeHandle f, string label, ControlSafeHandle c, bool stretchy)
@@ -1457,7 +1467,7 @@ namespace LibUISharp.Internal
             uiAtTrailing,
             uiAtBottom
         }
-        
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiGridAppend(IntPtr grid, IntPtr child, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
         public static void uiGridAppend(ControlSafeHandle g, ControlSafeHandle c, int left, int top, int xspan, int yspan, int hexpand, Alignment halign, int vexpand, Alignment valign) => uiGridAppend(g.DangerousGetHandle(), c.DangerousGetHandle(), left, top, xspan, yspan, hexpand, (uiAlign)halign, vexpand, (uiAlign)valign);

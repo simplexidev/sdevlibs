@@ -76,6 +76,7 @@ namespace LibUISharp
         public void Exit() => uiQuit();
 
         public override void Dispose() => Dispose(true);
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
