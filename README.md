@@ -7,6 +7,9 @@ LibUISharp is a library containing bindings for [libui](https://github/andlabs/l
 
 LibUISharp allows you to create a native GUI application running .NET Core. Please note that LibUI is in alpha development, so the native library, thus this C# library, is not stable. This library (LibUISharp) has not been tested, yet, and may have build errors.
 
+**Comtrols and Drawing Features**:
+
+* *AttributedText (TODO)*
 * Button
 * CheckBox
 * ColorPicker
@@ -18,6 +21,7 @@ LibUISharp allows you to create a native GUI application running .NET Core. Plea
 * FileDialog
   * OpenFileDialog
   * SaveFileDialog 
+* FontFeatures
 * FontPicker
 * Form
 * Grid
@@ -42,6 +46,16 @@ LibUISharp allows you to create a native GUI application running .NET Core. Plea
 * SpinBox
 * Surface
   * ScrollableSurface
+* TextAttribute
+  * FontFamilyAttribute
+  * FontFeaturesAttribute
+  * FontSizeAttribute
+  * FontWeightAttribute
+  * FontStretchAttribute
+  * ForegroundColorAttribute
+  * BackgroundColorAttribute
+  * UnderlineStyleAttribute
+  * UnderlineColorAttribute
 * TextBox
   * MultilineTextBox
   * PasswordBox
