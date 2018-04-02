@@ -12,9 +12,9 @@ namespace LibUISharp.Drawing
         protected private Dictionary<ControlSafeHandle, SurfaceBase> Surfaces = new Dictionary<ControlSafeHandle, SurfaceBase>();
         private Size size;
 
-        protected SurfaceBase(ISurfaceEventHandler events)
+        protected SurfaceBase(ISurfaceHandler events)
         {
-            SurfaceEventHandler surfaceEvents = new SurfaceEventHandler
+            SurfaceHandler surfaceEvents = new SurfaceHandler
             {
                 Draw = (IntPtr surfaceHandler, IntPtr surface, ref uiAreaDrawParams args) =>
                 {
@@ -91,7 +91,7 @@ namespace LibUISharp.Drawing
 
     public class Surface : SurfaceBase
     {
-        public Surface(ISurfaceEventHandler handler) : base(handler)
+        public Surface(ISurfaceHandler handler) : base(handler)
         {
             Handle = uiNewArea(EventHandler);
             Surfaces[Handle] = this;
@@ -100,16 +100,16 @@ namespace LibUISharp.Drawing
 
     public class ScrollableSurface : Surface
     {
-        public ScrollableSurface(ISurfaceEventHandler handler, int width, int height) : base(handler)
+        public ScrollableSurface(ISurfaceHandler handler, int width, int height) : base(handler)
         {
             Handle = uiNewScrollingArea(EventHandler, width, height);
             Surfaces[Handle] = this;
         }
 
-        public ScrollableSurface(ISurfaceEventHandler handler, Size size) : this(handler, size.Width, size.Height) { }
+        public ScrollableSurface(ISurfaceHandler handler, Size size) : this(handler, size.Width, size.Height) { }
     }
 
-    public interface ISurfaceEventHandler
+    public interface ISurfaceHandler
     {
         void Draw(SurfaceBase surface, ref DrawEventArgs args);
         void MouseEvent(SurfaceBase surface, ref MouseEventArgs args);
@@ -120,7 +120,7 @@ namespace LibUISharp.Drawing
 
     // uiAreaHandler
     [StructLayout(LayoutKind.Sequential)]
-    internal class SurfaceEventHandler
+    internal class SurfaceHandler
     {
         [MarshalAs(UnmanagedType.FunctionPtr)]
         public uiAreaDrawHandler Draw;

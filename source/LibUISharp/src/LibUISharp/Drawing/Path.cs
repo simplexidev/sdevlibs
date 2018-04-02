@@ -5,7 +5,7 @@ using static LibUISharp.Internal.LibUI;
 namespace LibUISharp.Drawing
 {
     // uiDrawPath
-    public class Path : IDisposable
+    public class Path : UIComponent
     {
         private bool disposed = false;
 
@@ -36,7 +36,7 @@ namespace LibUISharp.Drawing
 
         public void End() => uiDrawPathEnd(Handle);
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -47,7 +47,7 @@ namespace LibUISharp.Drawing
             }
         }
 
-        public virtual void Dispose()
+        public override void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);

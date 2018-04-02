@@ -5,12 +5,13 @@ using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
 {
-    public sealed class Application : IDisposable
+    public sealed class Application : UIComponent
     {
         private static object _lock = new object();
         private static bool created;
         private static uiInitOptions Options = new uiInitOptions(UIntPtr.Zero);
         private int exitCode;
+        private bool disposed;
 
         public Application()
         {
@@ -72,18 +73,27 @@ namespace LibUISharp
 
         private bool Step(bool wait) => uiMainStep(wait);
 
-        public void Dispose() => uiUnInit();
-
         public void Exit() => uiQuit();
 
-        private void InitializeComponent()
+        public override void Dispose() => Dispose(true);
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (!disposed)
+                    uiUnInit();
+                disposed = true;
+            }
+        }
+
+        protected override void InitializeComponent()
         {
             if (PlatformHelper.IsWindows)
                 winntConsoleWindowVisible(false);
             uiInit(ref Options);
         }
 
-        private void InitializeEvents() => uiOnShouldQuit(data =>
+        protected override void InitializeEvents() => uiOnShouldQuit(data =>
             {
                 CancelEventArgs args = new CancelEventArgs();
                 OnExit?.Invoke(this, args);

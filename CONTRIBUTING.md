@@ -1,12 +1,12 @@
 # Contributing to LibUISharp
 
-For starters, thank you for taking the time to contribute to this project. We try to create a stable project, fix bugs and add features continuously, and without your help, it wouldn't be possible.
+For starters, thank you for taking the time to at least consider contributing to this project. We try to create a stable project, fix bugs and add features continuously, and without your help, it wouldn't be possible.
 
 ## Getting started
 
 ### Check out the Roadmap
 
-If there is a bug or a feature that is not listed in the [issues](https://github.com/tom-corwin/LibUISharp/issues) or there is no one assigned to the issue, feel free to fix/add it! Although it's better to discuss it in the issue or create a new issue for it so there is no confilcting code.
+If there is a bug or a feature that is not listed in the [issues](https://github.com/tom-corwin/LibUISharp/issues) or there is no one assigned to the issue, feel free to add/fix it! Although, it's generally best to discuss it in the issue or create a new issue for it so there is no confilcting code.
 
 ### Writing some code!
 

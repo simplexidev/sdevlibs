@@ -5,7 +5,7 @@ using static LibUISharp.Internal.LibUI;
 namespace LibUISharp.Drawing
 {
     // uiDraw*
-    public class Context
+    public sealed class Context
     {
         public Context(Surface surface) : this(surface.Handle) { }
         internal Context(LibUISafeHandle Handle) { }

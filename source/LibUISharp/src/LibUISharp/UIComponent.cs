@@ -4,8 +4,6 @@ namespace LibUISharp
 {
     public abstract class UIComponent : IDisposable
     {
-        protected UIComponent() { }
-
         protected virtual void InitializeComponent() { }
         protected virtual void InitializeEvents() { }
 

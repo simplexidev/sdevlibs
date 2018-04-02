@@ -98,3 +98,7 @@ Any output is placed in the `build\` directory.
 Run the following command in a command-line interface in the root directory of this repository:
 
 1. `dotnet build LibUISharp.sln'
+
+## Contributing
+
+Please see the [CONTRIBUTING.md](https://github.com/tom-corwin/LibUISharp/blob/master/CONTRIBUTING.md) file for more information.
