@@ -8,7 +8,7 @@ namespace LibUISharp.Drawing.Text
     public class TextLayout : IDisposable
     {
         private bool disposed = false;
-        
+
         public TextLayout(TextLayoutOptions options)
         {
             Handle = uiDrawNewTextLayout((uiDrawTextLayoutParams)options);

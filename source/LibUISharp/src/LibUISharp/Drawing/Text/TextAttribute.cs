@@ -125,4 +125,11 @@ namespace LibUISharp.Drawing.Text
             }
         }
     }
+
+    public sealed class FontFeaturesAttribute : TextAttribute
+    {
+        public FontFeaturesAttribute(FontFeatures features) => Handle = uiNewFeaturesAttribute(features.Handle);
+
+        public FontFeatures FontFeatures => new FontFeatures(uiAttributeFeatures(Handle));
+    }
 }

@@ -8,7 +8,6 @@ using LibUISharp.Drawing;
 
 namespace LibUISharp.Internal
 {
-    //TODO: uiOpenTypeFeatures class and helper methods.
     //TODO: uiAttributedString class and helper methods.
     internal static partial class LibUI
     {
@@ -1150,29 +1149,45 @@ namespace LibUISharp.Internal
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAttributeUnderline(IntPtr a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha);
         public static void uiAttributeUnderline(TextAttributeSafeHandle a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha) => uiAttributeUnderline(a.DangerousGetHandle(), out u, out r, out g, out b, out alpha);
-
-        #region TODO: uiOpenTypeFeatures
+        
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate uiForEach uiOpenTypeFeaturesForEachFunc(IntPtr otf, byte a, byte b, byte c, byte d, uint value, IntPtr data);
-        [DllImport(LibUIRef, CallingConvention = Cdecl)]
-        public static extern IntPtr uiNewOpenTypeFeatures();
+
+        [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiNewOpenTypeFeatures")]
+        public static extern IntPtr _uiNewOpenTypeFeatures();
+        public static FontFeaturesSafeHandle uiNewOpenTypeFeatures() => new FontFeaturesSafeHandle(_uiNewOpenTypeFeatures());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiFreeOpenTypeFeatures(IntPtr otf);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiOpenTypeFeaturesClone(IntPtr otf);
+        public static FontFeaturesSafeHandle uiOpenTypeFeaturesClone(FontFeaturesSafeHandle otf) => new FontFeaturesSafeHandle(otf.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiOpenTypeFeaturesAdd(IntPtr otf, byte a, byte b, byte c, byte d, uint value);
+        public static void uiOpenTypeFeaturesAdd(FontFeaturesSafeHandle otf, byte a, byte b, byte c, byte d, uint value) => uiOpenTypeFeaturesAdd(otf.DangerousGetHandle(), a, b, c, d, value);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiOpenTypeFeaturesRemove(IntPtr otf, byte a, byte b, byte c, byte d);
+        public static void uiOpenTypeFeaturesRemove(FontFeaturesSafeHandle otf, byte a, byte b, byte c, byte d) => uiOpenTypeFeaturesRemove(otf.DangerousGetHandle(), a, b, c, d);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern int uiOpenTypeFeaturesGet(IntPtr otf, byte a, byte b, byte c, byte d, out uint value);
+        public static int uiOpenTypeFeaturesGet(FontFeaturesSafeHandle otf, byte a, byte b, byte c, byte d, out uint value) => uiOpenTypeFeaturesGet(otf.DangerousGetHandle(), a, b, c, d, out value);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiOpenTypeFeaturesForEach(IntPtr otf, uiOpenTypeFeaturesForEachFunc f, IntPtr data);
+        public static void uiOpenTypeFeaturesForEach(FontFeaturesSafeHandle otf, uiOpenTypeFeaturesForEachFunc f, IntPtr data) => uiOpenTypeFeaturesForEach(otf.DangerousGetHandle(), f, data);
+        public static void uiOpenTypeFeaturesForEach(FontFeaturesSafeHandle otf, uiOpenTypeFeaturesForEachFunc f) => uiOpenTypeFeaturesForEach(otf, f, IntPtr.Zero);
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiNewFeaturesAttribute(IntPtr otf);
+        public static TextAttributeSafeHandle uiNewFeaturesAttribute(FontFeaturesSafeHandle otf) => new TextAttributeSafeHandle(uiNewFeaturesAttribute(otf.DangerousGetHandle()));
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiAttributeFeatures(IntPtr a);
-        #endregion
+        public static FontFeaturesSafeHandle uiAttributeFeatures(TextAttributeSafeHandle a) => new FontFeaturesSafeHandle(uiAttributeFeatures(a.DangerousGetHandle()));
 
         #region TODO: uiAttributedString
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

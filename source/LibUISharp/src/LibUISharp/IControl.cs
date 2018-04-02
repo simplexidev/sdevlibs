@@ -2,7 +2,7 @@
 
 namespace LibUISharp
 {
-    public interface IControl : IDisposable
+    public interface IControl
     {
         bool Enabled { get; set; }
         bool Visible { get; set; }

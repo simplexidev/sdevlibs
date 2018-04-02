@@ -7,7 +7,7 @@ namespace LibUISharp
 {
     // uiControl
     //TODO: uiControlVerifySetParent(IntPtr,IntPtr) => VerifyParent(Control)
-    public abstract class Control : IControl
+    public abstract class Control : UIComponent, IControl
     {
         private bool visible, enabled;
         private bool disposed = false;
@@ -84,9 +84,7 @@ namespace LibUISharp
 
         protected virtual void OnResize(EventArgs e) => Resize?.Invoke(this, e);
         protected virtual void OnLocationChanged(EventArgs e) => LocationChanged?.Invoke(this, e);
-
-        protected virtual void InitializeEvents() { }
-        protected virtual void InitializeComponent() { }
+        
         protected internal virtual void DelayRender() { }
 
         protected virtual void Destroy()
@@ -96,7 +94,7 @@ namespace LibUISharp
             ControlCache.Remove(Handle);
         }
         
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -106,7 +104,7 @@ namespace LibUISharp
             }
         }
         
-        public virtual void Dispose()
+        public override void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
