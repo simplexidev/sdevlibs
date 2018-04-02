@@ -2,8 +2,10 @@
     | Assembly: LibUISharp.Windows.dll             |
     | Guid: {F07C70DD-56E7-445C-95DF-85A7E14CD681} |-->
 <Project>
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj</BaseIntermediateOutputPath>
+  </PropertyGroup>
   <Import Project="..\source.props" />
-  <Import Project="$(LibUISharpBuildPath)Build.NETCore.Package.props" />
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>

@@ -2,8 +2,10 @@
     | Assembly: LibUISharp.MacOS.dll               |
     | Guid: {FE22AF64-A94C-49BC-A401-811F801106B2} |-->
 <Project>
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj</BaseIntermediateOutputPath>
+  </PropertyGroup>
   <Import Project="..\source.props" />
-  <Import Project="$(LibUISharpBuildPath)Build.NETCore.Package.props" />
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
