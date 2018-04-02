@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <LibUISharpBasePath>$(MSBuildThisFileDirectory)</LibUISharpBasePath>
+    <LibUISharpBuildPath>$(LibUISharpBasePath)build\</LibUISharpBuildPath>
+  </PropertyGroup>
+</Project>

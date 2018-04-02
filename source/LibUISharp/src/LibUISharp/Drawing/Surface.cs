@@ -86,7 +86,7 @@ namespace LibUISharp.Drawing
 
         public void BeginUserWindowMove() => uiAreaBeginUserWindowMove(Handle);
 
-        public void BeginUserWindowResize(WindowEdge edge) => uiAreaBeginUserWindowResize(Handle, edge);
+        public void BeginUserWindowResize(WindowEdge edge) => uiAreaBeginUserWindowResize(Handle, (uiWindowResizeEdge)edge);
     }
 
     public class Surface : SurfaceBase
@@ -123,14 +123,14 @@ namespace LibUISharp.Drawing
     internal class SurfaceEventHandler
     {
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiDrawHandler Draw;
+        public uiAreaDrawHandler Draw;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiMouseEventHandler MouseEvent;
+        public uiAreaMouseEventHandler MouseEvent;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiMouseCrossedHandler MouseCrossed;
+        public uiAreaMouseCrossedHandler MouseCrossed;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiDragBrokenHandler DragBroken;
+        public uiAreaDragBrokenHandler DragBroken;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiKeyEventHandler KeyEvent;
+        public uiAreaKeyEventHandler KeyEvent;
     }
 }

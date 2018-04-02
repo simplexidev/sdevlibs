@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using LibUISharp.Internal;
 using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp
@@ -77,14 +78,12 @@ namespace LibUISharp
 
         private void InitializeComponent()
         {
-#if WINDOWS
-            WindowsNT.ConsoleWindowVisible(false);
-#endif
+            if (PlatformHelper.IsWindows)
+                winntConsoleWindowVisible(false);
             uiInit(ref Options);
         }
 
-        private void InitializeEvents() =>
-            uiOnShouldQuit(data =>
+        private void InitializeEvents() => uiOnShouldQuit(data =>
             {
                 CancelEventArgs args = new CancelEventArgs();
                 OnExit?.Invoke(this, args);

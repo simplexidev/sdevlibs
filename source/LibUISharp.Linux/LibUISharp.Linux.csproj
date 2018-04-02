@@ -1,0 +1,22 @@
+<!--| Project:  LibUISharp.Linux.csproj            |
+    | Assembly: LibUISharp.Linux.dll               |
+    | Guid: {F19642A1-0A6C-4DD2-A198-13924EA888E3} |-->
+<Project>
+  <Import Project="..\source.props" />
+  <Import Project="$(LibUISharpBuildPath)Build.NETCore.Package.props" />
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.2</LangVersion>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="src\*.cs" />
+    <Compile Include="src\LibUISharp\Linux\*.cs" />
+    <Compile Include="src\LibUISharp\Linux\Internal\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ref\*.h" />
+  </ItemGroup>
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

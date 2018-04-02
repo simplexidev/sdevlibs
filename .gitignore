@@ -48,10 +48,10 @@ test-results/
 # Misc. Files
 ##############################
 ## Build Directories
-[Bb]uild
-[Bb]in
-[Oo]bj
-[Dd]ebug
-[Rr]elease
-[Aa]ny[Cc][Pp][Uu]
-.*/
+[Bb]uild/*
+!build/Build.*.props
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Aa]ny[Cc][Pp][Uu]/

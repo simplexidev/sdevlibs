@@ -2,11 +2,9 @@
     | Assembly: LibUISharp.dll                     |
     | Guid: {F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD} |-->
 <Project>
-  <PropertyGroup>
-    <BaseIntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj</BaseIntermediateOutputPath>
-  </PropertyGroup>
+  <Import Project="..\source.props" />
+  <Import Project="$(LibUISharpBuildPath)Build.NETCore.Package.props" />
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
-  <Import Project="LibUISharp.props" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
@@ -15,20 +13,13 @@
   <ItemGroup>
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
-    <Compile Include="src\LibUISharp\Drawing\*.cs" />
-    <Compile Include="src\LibUISharp\Internal\*.cs" />
     <Compile Include="src\LibUISharp\Collections\*.cs" />
+    <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\Text\*.cs" />
-    <Compile Include="src\LibUISharp\Internal\LibUI\*.cs" />
+    <Compile Include="src\LibUISharp\Internal\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\win-x64\libui.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="lib\osx-x64\libui.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="lib\linux-x64\libui.so">
+    <Content Include="lib\libui.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

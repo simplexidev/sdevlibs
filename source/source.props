@@ -1,0 +1,4 @@
+<Project>
+  <Import Project="..\global.props" />
+  <LibUISharpSourcePath>$(LibUISharpBasePath)source\</LibUISharpSourcePath>
+</Project>
