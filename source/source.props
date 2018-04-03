@@ -1,16 +1,15 @@
 <Project>
   <Choose>
-    <When Condition="'$(ConfigurationGroup)'=='Debug'">
+    <When Condition="'$(Configuration)'=='Debug'">
       <PropertyGroup>
         <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
         <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
         <Optimize Condition="'$(Optimize)'==''">false</Optimize>
         <DebugType Condition="'$(DebugType)'==''">full</DebugType>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
       </PropertyGroup>
     </When>
-    <When Condition="'$(ConfigurationGroup)'=='Release'">
+    <When Condition="'$(Configuration)'=='Release'">
       <PropertyGroup>
         <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
         <Optimize Condition="'$(Optimize)'==''">true</Optimize>
@@ -23,6 +22,7 @@
   <PropertyGroup>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <OutputPath>..\..\build\$(MSBuildProjectName)\bin</OutputPath>
+    <PackageOutputPath>..\..\build\nuget</PackageOutputPath>
     <Platform>AnyCPU</Platform>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
