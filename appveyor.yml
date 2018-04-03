@@ -6,9 +6,6 @@ dotnet_csproj:
   file: '**\*.csproj'
   version: '{version}'
   package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
 environment:
   LIBUISHARP_PRERELEASE: 1
 nuget:
@@ -22,7 +19,7 @@ build:
   include_nuget_references: true
   verbosity: detailed
 artifacts:
-- path: build\nuget\*.nuget
+- path: '**\*.nuget'
   name: LibUISharp
 deploy:
 - provider: NuGet
