@@ -1,0 +1,23 @@
+<!--| Project:  ControlGallery.csproj              |
+    | Assembly: ControlGallery.dll                 |
+    | Guid: {5C62872C-16E9-4997-97BF-E455E417089E} |-->
+<Project>
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>..\..\build\demos\$(MSBuildProjectName)\obj</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <Import Project="..\demos.props" />
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <LangVersion>7.2</LangVersion>
+    <OutputType>Exe</OutputType>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="src\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\LibUISharp\LibUISharp.csproj" />
+  </ItemGroup>
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

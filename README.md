@@ -1,11 +1,10 @@
-# LibUISharp ![License](https://img.shields.io/badge/License-MIT-blue.svg?style)
-<!--TODO: Add build status buttons.-->
+# LibUISharp ![License](https://img.shields.io/badge/License-MIT-blue.svg?style) [![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)
 
 LibUISharp is a library containing bindings for [libui](https://github/andlabs/libui), written in C# for .NET Core.
 
 ## Features
 
-LibUISharp allows you to create a native GUI application running .NET Core. Please note that LibUI is in alpha development, so the native library, thus this C# library, is not stable. This library (LibUISharp) has not been tested, yet, and may have build errors.
+LibUISharp allows you to create a native GUI application running .NET Core. Please note that LibUI is in alpha development, so the native library, thus this C# library, is not stable. This library (LibUISharp) has not really been tested, yet, and may have some bugs. Check out the demos in the `demos\` folder for examples.
 
 **Comtrols and Drawing Features**:
 
@@ -79,7 +78,13 @@ This list is basically copied and reformatted from [here](https://github.com/dot
 
 ## Obtaining the Library
 
-LibUISharp will be available as a NuGet package in the next week or so.
+LibUISharp is almost up-to-par with libui and doesn't have a package on nuget.org.
+
+Add our CI package feed for bleeding-edge packages:  
+```
+https://ci.appveyor.com/nuget/libuisharp
+```
+
 
 ## Building From Source
 

@@ -1,0 +1,36 @@
+<Project>
+  <Choose>
+    <When Condition="'$(ConfigurationGroup)'=='Debug'">
+      <PropertyGroup>
+        <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+        <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
+        <Optimize Condition="'$(Optimize)'==''">false</Optimize>
+        <DebugType Condition="'$(DebugType)'==''">full</DebugType>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(ConfigurationGroup)'=='Release'">
+      <PropertyGroup>
+        <DebugSymbols Condition="'$(DebugSymbols)'==''">true</DebugSymbols>
+        <Optimize Condition="'$(Optimize)'==''">true</Optimize>
+        <DebugType Condition="'$(DebugType)'==''">pdbonly</DebugType>
+        <DefineConstants>TRACE</DefineConstants>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <PropertyGroup>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <OutputPath>..\..\build\demos\$(MSBuildProjectName)\bin</OutputPath>
+    <Platform>AnyCPU</Platform>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+    <Authors>Thomas Corwin, et al.</Authors>
+    <Copyright>2018 (c) Thomas Corwin</Copyright>
+    <Version>0.3.5-alpha</Version>
+  </PropertyGroup>
+</Project>
