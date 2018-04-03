@@ -33,14 +33,13 @@
     <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
     <Authors>Thomas Corwin, et al.</Authors>
     <Copyright>2018 (c) Thomas Corwin</Copyright>
-    <VersionPrefix>0.3.5</VersionPrefix>
-    <VersionSuffix>alpha</VersionSuffix>
+    <Version>0.3.5-alpha</Version>
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>$(MSBuildProjectName)</PackageId>
     <Description>LibUI Bindings for .NET Core (C#)</Description>
     <PackageTags>libui;ui;gui;drawing;desktop;cross-platform;netcore;netstandard</PackageTags>
-    <PackageReleaseNotes>Version $(VersionPrefix)-$(VersionSuffix)</PackageReleaseNotes>
+    <PackageReleaseNotes>Version $(Version)</PackageReleaseNotes>
     <PackageIconUrl></PackageIconUrl>
     <PackageProjectUrl>https://github.com/tom-corwin/LibUISharp</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md</PackageLicenseUrl>

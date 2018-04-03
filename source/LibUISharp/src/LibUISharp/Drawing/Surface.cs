@@ -80,7 +80,7 @@ namespace LibUISharp.Drawing
         public int Width => size.Width;
         public int Height => size.Height;
 
-        public void QueueReDrawAll() => uiAreaQueueReDrawAll(Handle);
+        public void QueueRedrawAll() => uiAreaQueueReDrawAll(Handle);
 
         public void ScrollTo(double x, double y, double width, double height) => uiAreaScrollTo(Handle, x, y, width, height);
 

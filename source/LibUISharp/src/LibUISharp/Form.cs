@@ -5,23 +5,23 @@ namespace LibUISharp
 {
     public class Form : ContainerControl<FormItemCollection, Form>
     {
-        private bool padded;
+        private bool padding;
 
         public Form() => Handle = uiNewForm();
 
-        public bool Padded
+        public bool Padding
         {
             get
             {
-                padded = uiFormPadded(Handle);
-                return padded;
+                padding = uiFormPadded(Handle);
+                return padding;
             }
             set
             {
-                if (padded != value)
+                if (padding != value)
                 {
                     uiFormSetPadded(Handle, value);
-                    padded = value;
+                    padding = value;
                 }
             }
         }

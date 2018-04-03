@@ -155,7 +155,7 @@ namespace LibUISharp
             uiWindowOnContentSizeChanged(Handle, (window, data) => { OnResize(EventArgs.Empty); });
         }
 
-        protected sealed override void InitializeComponent() { }
+        protected override void InitializeComponent() { }
 
         protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
         protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);

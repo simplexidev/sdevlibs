@@ -1208,13 +1208,30 @@ namespace LibUISharp.Internal
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern IntPtr uiAttributedStringString(IntPtr s);
+        public static string uiAttributedStringString(AttributedTextSafeHandle s) => UTF8Helper.ToUTF8Str(uiAttributedStringString(s.DangerousGetHandle()));
 
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern UIntPtr uiAttributedStringLen(IntPtr s);
+        public static UIntPtr uiAttributedStringLen(AttributedTextSafeHandle s) => uiAttributedStringLen(s.DangerousGetHandle());
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAttributedStringAppendUnattributed(IntPtr s, IntPtr str);
+        public static void uiAttributedStringAppendUnattributed(AttributedTextSafeHandle s, string str)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(str);
+            uiAttributedStringAppendUnattributed(s.DangerousGetHandle(), strPtr);
+            Marshal.FreeHGlobal(strPtr);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAttributedStringInsertAtUnattributed(IntPtr s, IntPtr str, UIntPtr at);
+        public static void uiAttributedStringInsertAtUnattributed(AttributedTextSafeHandle s, string str, UIntPtr at)
+        {
+            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(str);
+            uiAttributedStringAppendUnattributed(s.DangerousGetHandle(), strPtr);
+            Marshal.FreeHGlobal(strPtr);
+        }
+
         [DllImport(LibUIRef, CallingConvention = Cdecl)]
         public static extern void uiAttributedStringDelete(IntPtr s, UIntPtr start, UIntPtr end);
         [DllImport(LibUIRef, CallingConvention = Cdecl)]

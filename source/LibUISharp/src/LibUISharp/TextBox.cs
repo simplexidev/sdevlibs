@@ -13,9 +13,9 @@ namespace LibUISharp
         {
             if (!(this is MultilineTextBox))
             {
-                if (this is PasswordTextBox)
+                if (this is PasswordBox)
                     Handle = uiNewPasswordEntry();
-                else if (this is SearchTextBox)
+                else if (this is SearchBox)
                     Handle = uiNewSearchEntry();
                 else
                     Handle = uiNewEntry();
@@ -84,14 +84,14 @@ namespace LibUISharp
         protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
     }
 
-    public class PasswordTextBox : TextBox
+    public class PasswordBox : TextBox
     {
-        public PasswordTextBox() : base() { }
+        public PasswordBox() : base() { }
     }
 
-    public class SearchTextBox : TextBox
+    public class SearchBox : TextBox
     {
-        public SearchTextBox() : base() { }
+        public SearchBox() : base() { }
     }
 
     // uiMultilineEntry

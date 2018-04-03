@@ -20,7 +20,7 @@ namespace LibUISharp.Drawing
         public void NewFigureWithArc(PointD center, double radius, double startAngle, double sweep, bool negative) => NewFigureWithArc(center.X, center.Y, radius, startAngle, sweep, negative);
 
         public void LineTo(double x, double y) => uiDrawPathLineTo(Handle, x, y);
-        public void LineTo(Point point) => LineTo(point.X, point.Y);
+        public void LineTo(PointD point) => LineTo(point.X, point.Y);
 
         public void ArcTo(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => uiDrawPathArcTo(Handle, xCenter, yCenter, radius, startAngle, sweep, negative);
         public void ArcTo(PointD center, double radius, double startAngle, double sweep, bool negative) => ArcTo(center.X, center.Y, radius, startAngle, sweep, negative);

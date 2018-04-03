@@ -5,23 +5,23 @@ namespace LibUISharp
 {
     public class Grid : ContainerControl<GridItemCollection, Grid>
     {
-        private bool padded;
+        private bool padding;
 
         public Grid() => Handle = uiNewGrid();
 
-        public bool Padded
+        public bool Padding
         {
             get
             {
-                padded = uiGridPadded(Handle);
-                return padded;
+                padding = uiGridPadded(Handle);
+                return padding;
             }
             set
             {
-                if (padded != value)
+                if (padding != value)
                 {
                     uiGridSetPadded(Handle, value);
-                    padded = value;
+                    padding = value;
                 }
             }
         }
