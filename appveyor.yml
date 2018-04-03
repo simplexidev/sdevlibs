@@ -1,0 +1,30 @@
+version: 0.3.5-alpha-{build}
+image: Visual Studio 2017
+configuration: Release
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+environment:
+  LIBUISHARP_PRERELEASE: 1
+nuget:
+  project_feed: true
+build:
+  project: LibUISharp.sln
+  publish_nuget: true
+  publish_nuget_symbols: true
+  include_nuget_references: true
+  verbosity: detailed
+artifacts:
+- path: build\**\*.nupkg
+  name: LibUISharp
+deploy:
+- provider: NuGet
+  api_key:
+    secure: IZppUyZ6HPKxAYqqlqWV8CPbsYJkbJGncDFIpm+lSNwGPEjynq1NsGZ4H5K/ryHh
+  on:
+    LIBUISHARP_PRERELEASE: 0

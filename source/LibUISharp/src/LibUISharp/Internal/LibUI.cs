@@ -1289,6 +1289,14 @@ namespace LibUISharp.Internal
             uiFontDescriptor DefaultFont;
             double Width;
             uiDrawTextAlign Align;
+
+            public static explicit operator uiDrawTextLayoutParams(TextLayoutOptions o) => new uiDrawTextLayoutParams()
+            {
+                String = o.Text.Handle.DangerousGetHandle(),
+                DefaultFont = (uiFontDescriptor)o.DefaultFont,
+                Width = o.Width,
+                Align = (uiDrawTextAlign)o.Alignment
+            };
         }
 
         [DllImport(LibUIRef, CallingConvention = Cdecl, EntryPoint = "uiDrawNewTextLayout")]
