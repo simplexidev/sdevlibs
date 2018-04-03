@@ -13,6 +13,8 @@ environment:
   LIBUISHARP_PRERELEASE: 1
 nuget:
   project_feed: true
+before_build:
+- cmd: dotnet restore LibUISharp.sln
 build:
   project: LibUISharp.sln
   publish_nuget: true
