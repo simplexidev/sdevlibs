@@ -17,7 +17,7 @@ build:
   include_nuget_references: true
   verbosity: detailed
 artifacts:
-- path: 'build\nuget\LibUISharp-*.nuget'
+- path: 'build\nuget\LibUISharp.*.nuget'
   name: LibUISharp
 deploy:
 - provider: NuGet
