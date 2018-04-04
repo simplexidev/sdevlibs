@@ -1285,10 +1285,10 @@ namespace LibUISharp.Internal
 
         public struct uiDrawTextLayoutParams
         {
-            IntPtr String;
-            uiFontDescriptor DefaultFont;
-            double Width;
-            uiDrawTextAlign Align;
+            public IntPtr String;
+            public uiFontDescriptor DefaultFont;
+            public double Width;
+            public uiDrawTextAlign Align;
 
             public static explicit operator uiDrawTextLayoutParams(TextLayoutOptions o) => new uiDrawTextLayoutParams()
             {

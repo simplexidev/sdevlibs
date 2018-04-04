@@ -16,7 +16,7 @@ namespace LibUISharp
         private Size size;
         private string title;
         private static readonly Dictionary<ControlSafeHandle, Window> WindowCache = new Dictionary<ControlSafeHandle, Window>();
-        
+
         public Window(int width = 500, int height = 300, string title = null, bool hasMenuStrip = false)
         {
             if (string.IsNullOrEmpty(title))
@@ -24,15 +24,15 @@ namespace LibUISharp
             Handle = uiNewWindow(title, width, height, hasMenuStrip);
             WindowCache.Add(Handle, this);
             this.title = title;
+            size = new Size(width, height);
             InitializeEvents();
-            InitializeComponent();
         }
-        
+
         public Window(Size size, string title = null, bool hasMenuStrip = false) : this(size.Width, size.Height, title, hasMenuStrip) { }
 
         public EventHandler<CancelEventArgs> Closing;
         public EventHandler SizeChanged;
-        
+
         public string Title
         {
             get
@@ -58,9 +58,17 @@ namespace LibUISharp
             get
             {
                 uiWindowContentSize(Handle, out int w, out int h);
-                return new Size(w, h);
+                size = new Size(w, h);
+                return size;
             }
-            set => uiWindowSetContentSize(Handle, value.Width, value.Height);
+            set
+            {
+                if (size != value)
+                {
+                    uiWindowSetContentSize(Handle, value.Width, value.Height);
+                    size = value;
+                }
+            }
         }
 
         public int Width => Size.Width;
@@ -154,8 +162,6 @@ namespace LibUISharp
 
             uiWindowOnContentSizeChanged(Handle, (window, data) => { OnResize(EventArgs.Empty); });
         }
-
-        protected override void InitializeComponent() { }
 
         protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
         protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
