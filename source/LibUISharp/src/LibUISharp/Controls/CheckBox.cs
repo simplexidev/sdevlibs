@@ -6,11 +6,18 @@ using LibUISharp.Native.SafeHandles;
 // uiCheckbox
 namespace LibUISharp.Controls
 {
+    /// <summary>
+    /// Represents a control that a user can set and clear.
+    /// </summary>
     public class CheckBox : Control
     {
         private string text;
         private bool @checked;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CheckBox"/> class with the specified text.
+        /// </summary>
+        /// <param name="text">The text specified by the <see cref="CheckBox"/>.</param>
         public CheckBox(string text)
         {
             IntPtr strPtr = LibuiLibrary.UTF8Helper.ToUTF8Ptr(text);
@@ -20,8 +27,15 @@ namespace LibUISharp.Controls
             InitializeEvents();
         }
 
+        //TODO: Maybe change this To separate Checked and Unchecked events.
+        /// <summary>
+        /// Occurs when the <see cref="Checked"/> property is changed.
+        /// </summary>
         public event EventHandler Toggled;
         
+        /// <summary>
+        /// Gets or sets the text shown by this <see cref="CheckBox"/>.
+        /// </summary>
         public string Text
         {
             get
@@ -41,6 +55,9 @@ namespace LibUISharp.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets the state of this <see cref="CheckBox"/>.
+        /// </summary>
         public bool Checked
         {
             get
@@ -58,8 +75,13 @@ namespace LibUISharp.Controls
             }
         }
 
+        /// <inheritdoc/>
         protected sealed override void InitializeEvents() => LibuiLibrary.uiCheckboxOnToggled(Handle.DangerousGetHandle(), (checkbox, data) => { OnToggled(EventArgs.Empty); }, IntPtr.Zero);
 
+        /// <summary>
+        /// Called when the <see cref="Checked"/> property checges.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
         protected virtual void OnToggled(EventArgs e) => Toggled?.Invoke(this, e);
     }
 }
