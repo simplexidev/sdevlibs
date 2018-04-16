@@ -1309,35 +1309,30 @@ namespace LibUISharp.Native.Libraries
         }
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiDrawNewTextLayout(uiDrawTextLayoutParams param);
-        public static TextLayoutSafeHandle uiDrawNewTextLayout(uiDrawTextLayoutParams param) => new TextLayoutSafeHandle(_uiDrawNewTextLayout(param));
+        public delegate IntPtr uiDrawNewTextLayout_t(uiDrawTextLayoutParams param);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawFreeTextLayout(IntPtr tl);
+        public delegate void uiDrawFreeTextLayout_t(IntPtr tl);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawText(IntPtr c, IntPtr tl, double x, double y);
-        public static void uiDrawText(LibUISafeHandle c, TextLayoutSafeHandle tl, double x, double y) => uiDrawText(c.DangerousGetHandle(), tl.DangerousGetHandle(), x, y);
+        public delegate void uiDrawText_t(IntPtr c, IntPtr tl, double x, double y);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawTextLayoutExtents(IntPtr tl, out double width, out double height);
-        public static void uiDrawTextLayoutExtents(TextLayoutSafeHandle tl, out double width, out double height) => uiDrawTextLayoutExtents(tl.DangerousGetHandle(), out width, out height);
+        public delegate void uiDrawTextLayoutExtents_t(IntPtr tl, out double width, out double height);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiFontButtonFont(IntPtr b, out uiFontDescriptor desc);
-        public static void uiFontButtonFont(ControlSafeHandle b, out uiFontDescriptor desc) => uiFontButtonFont(b.DangerousGetHandle(), out desc);
+        public delegate void uiFontButtonFont_t(IntPtr b, out uiFontDescriptor desc);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiFontButtonOnChanged(IntPtr b, uiOnEventHandler f, IntPtr data);
-        public static void uiFontButtonOnChanged(ControlSafeHandle b, uiOnEventHandler f, IntPtr data) => uiFontButtonOnChanged(b.DangerousGetHandle(), f, data);
-        public static void uiFontButtonOnChanged(ControlSafeHandle b, uiOnEventHandler f) => uiFontButtonOnChanged(b, f, IntPtr.Zero);
+        public delegate void uiFontButtonOnChanged_t(IntPtr b, uiFontButtonOnChanged_tf f, IntPtr data);
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiFontButtonOnChanged_tf(IntPtr b, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewFontButton();
-        public static ControlSafeHandle uiNewFontButton() => new ControlSafeHandle(_uiNewFontButton());
+        public delegate IntPtr uiNewFontButton_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiFreeFontButtonFont(uiFontDescriptor desc);
+        public delegate void uiFreeFontButtonFont_t(uiFontDescriptor desc);
 
         [Flags]
         public enum uiModifiers : uint
@@ -1439,52 +1434,33 @@ namespace LibUISharp.Native.Libraries
         }
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiColorButtonColor(IntPtr b, out double red, out double green, out double blue, out double alpha);
-        public static void uiColorButtonColor(ControlSafeHandle b, out double red, out double green, out double blue, out double alpha) => uiColorButtonColor(b.DangerousGetHandle(), out red, out blue, out green, out alpha);
-        public static Color uiColorButtonColor(ControlSafeHandle b)
-        {
-            uiColorButtonColor(b, out double red, out double green, out double blue, out double alpha);
-            return new Color(red, green, blue, alpha);
-        }
+        public delegate void uiColorButtonColor_t(IntPtr b, out double red, out double green, out double blue, out double alpha);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiColorButtonSetColor(IntPtr b, double red, double green, double blue, double alpha);
-        public static void uiColorButtonSetColor(ControlSafeHandle b, double red, double green, double blue, double alpha) => uiColorButtonSetColor(b.DangerousGetHandle(), red, green, blue, alpha);
-        public static void uiColorButtonSetColor(ControlSafeHandle b, Color color) => uiColorButtonSetColor(b, color.R, color.G, color.B, color.A);
+        public delegate void uiColorButtonSetColor_t(IntPtr b, double red, double green, double blue, double alpha);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiColorButtonOnChanged(IntPtr b, uiOnEventHandler f, IntPtr data);
-        public static void uiColorButtonOnChanged(ControlSafeHandle b, uiOnEventHandler f, IntPtr data) => uiColorButtonOnChanged(b.DangerousGetHandle(), f, data);
-        public static void uiColorButtonOnChanged(ControlSafeHandle b, uiOnEventHandler f) => uiColorButtonOnChanged(b, f, IntPtr.Zero);
+        public delegate void uiColorButtonOnChanged_t(IntPtr b, uiColorButtonOnChanged_tf f, IntPtr data);
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiColorButtonOnChanged_tf(IntPtr b, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewColorButton();
-        public static ControlSafeHandle uiNewColorButton() => new ControlSafeHandle(_uiNewColorButton());
+        public delegate IntPtr uiNewColorButton_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiFormAppend(IntPtr f, IntPtr label, IntPtr c, bool stretchy);
-        public static void uiFormAppend(ControlSafeHandle f, string label, ControlSafeHandle c, bool stretchy)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(label);
-            uiFormAppend(c.DangerousGetHandle(), strPtr, c.DangerousGetHandle(), stretchy);
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate void uiFormAppend_t(IntPtr f, IntPtr label, IntPtr c, bool stretchy);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiFormDelete(IntPtr f, int index);
-        public static void uiFormDelete(ControlSafeHandle f, int index) => uiFormDelete(f.DangerousGetHandle(), index);
+        public delegate void uiFormDelete_t(IntPtr f, int index);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiFormPadded(IntPtr f);
-        public static bool uiFormPadded(ControlSafeHandle f) => uiFormPadded(f.DangerousGetHandle());
+        public delegate bool uiFormPadded_t(IntPtr f);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiFormSetPadded(IntPtr f, bool padded);
-        public static void uiFormSetPadded(ControlSafeHandle f, bool padded) => uiFormSetPadded(f.DangerousGetHandle(), padded);
+        public delegate void uiFormSetPadded_t(IntPtr f, bool padded);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewForm();
-        public static ControlSafeHandle uiNewForm() => new ControlSafeHandle(_uiNewForm());
+        public delegate IntPtr uiNewForm_t();
 
         public enum uiAlign : uint
         {
@@ -1503,24 +1479,19 @@ namespace LibUISharp.Native.Libraries
         }
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiGridAppend(IntPtr grid, IntPtr child, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
-        public static void uiGridAppend(ControlSafeHandle g, ControlSafeHandle c, int left, int top, int xspan, int yspan, int hexpand, Alignment halign, int vexpand, Alignment valign) => uiGridAppend(g.DangerousGetHandle(), c.DangerousGetHandle(), left, top, xspan, yspan, hexpand, (uiAlign)halign, vexpand, (uiAlign)valign);
+        public delegate void uiGridAppend_t(IntPtr grid, IntPtr child, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiGridInsertAt(IntPtr grid, IntPtr child, IntPtr existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
-        public static void uiGridInsertAt(ControlSafeHandle g, ControlSafeHandle c, ControlSafeHandle existing, RelativeAlignment at, int xspan, int yspan, int hexpand, Alignment halign, int vexpand, Alignment valign) => uiGridInsertAt(g.DangerousGetHandle(), c.DangerousGetHandle(), existing.DangerousGetHandle(), (uiAt)at, xspan, yspan, hexpand, (uiAlign)halign, vexpand, (uiAlign)valign);
+        public delegate void uiGridInsertAt_t(IntPtr grid, IntPtr child, IntPtr existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiGridPadded(IntPtr grid);
-        public static bool uiGridPadded(ControlSafeHandle g) => uiGridPadded(g.DangerousGetHandle());
+        public delegate bool uiGridPadded_t(IntPtr grid);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiGridSetPadded(IntPtr grid, bool padded);
-        public static void uiGridSetPadded(ControlSafeHandle g, bool padded) => uiGridSetPadded(g.DangerousGetHandle(), padded);
+        public delegate void uiGridSetPadded_t(IntPtr grid, bool padded);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewGrid();
-        public static ControlSafeHandle uiNewGrid() => new ControlSafeHandle(_uiNewGrid());
+        public delegate IntPtr uiNewGrid_t();
 
     }
 }
