@@ -276,6 +276,9 @@ namespace LibUISharp.Native.Libraries
         public delegate IntPtr uiNewVerticalBox_t();
         public static IntPtr uiNewVerticalBox() => FunctionLoader.Load<uiNewVerticalBox_t>("uiNewVerticalBox")();
 
+        //TODO: From here down is broken code.
+        //\/////////////////////////////////////////////////////////////////
+
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate IntPtr uiCheckboxText(IntPtr c);
         public static string uiCheckboxText(ControlSafeHandle c) => UTF8Helper.ToUTF8Str(uiCheckboxText(c.DangerousGetHandle()));
