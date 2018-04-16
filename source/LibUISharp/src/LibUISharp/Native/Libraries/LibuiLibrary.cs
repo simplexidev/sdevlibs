@@ -276,44 +276,34 @@ namespace LibUISharp.Native.Libraries
         public delegate IntPtr uiNewVerticalBox_t();
         public static IntPtr uiNewVerticalBox() => FunctionLoader.Load<uiNewVerticalBox_t>("uiNewVerticalBox")();
 
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate IntPtr uiCheckboxText_t(IntPtr c);
+        public static IntPtr uiCheckboxText(IntPtr c) => FunctionLoader.Load<uiCheckboxText_t>("uiCheckboxText")(c);
+
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiCheckboxSetText_t(IntPtr c, IntPtr text);
+        public static void uiCheckboxSetText(IntPtr c, IntPtr text) => FunctionLoader.Load<uiCheckboxSetText_t>("uiCheckboxSetText")(c, text);
+
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiCheckboxOnToggled_t(IntPtr c, uiCheckboxOnToggled_tf f, IntPtr data);
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiCheckboxOnToggled_tf(IntPtr c, IntPtr data);
+        public static void uiCheckboxOnToggled(IntPtr c, uiCheckboxOnToggled_tf f, IntPtr data) => FunctionLoader.Load<uiCheckboxOnToggled_t>("uiCheckboxOnToggled")(c, f, data);
+
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate bool uiCheckboxChecked_t(IntPtr c);
+        public static bool uiCheckboxChecked(IntPtr c) => FunctionLoader.Load<uiCheckboxChecked_t>("uiCheckboxChecked")(c);
+
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiCheckboxSetChecked_t(IntPtr c, bool @checked);
+        public static void uiCheckboxSetChecked(IntPtr c, bool @checked) => FunctionLoader.Load<uiCheckboxSetChecked_t>("uiCheckboxSetChecked")(c, @checked);
+
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate IntPtr uiNewCheckbox_t(IntPtr text);
+        public static IntPtr uiNewCheckbox(IntPtr text) => FunctionLoader.Load<uiNewCheckbox_t>("uiNewCheckbox")(text);
+
         //TODO: From here down is broken code.
         //\/////////////////////////////////////////////////////////////////
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiCheckboxText(IntPtr c);
-        public static string uiCheckboxText(ControlSafeHandle c) => UTF8Helper.ToUTF8Str(uiCheckboxText(c.DangerousGetHandle()));
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiCheckboxSetText(IntPtr c, IntPtr text);
-        public static void uiCheckboxSetText(ControlSafeHandle c, string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiCheckboxSetText(c.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
-        }
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiCheckboxOnToggled(IntPtr c, uiOnEventHandler f, IntPtr data);
-        public static void uiCheckboxOnToggled(ControlSafeHandle c, uiOnEventHandler f, IntPtr data) => uiCheckboxOnToggled(c.DangerousGetHandle(), f, data);
-        public static void uiCheckboxOnToggled(ControlSafeHandle c, uiOnEventHandler f) => uiCheckboxOnToggled(c, f, IntPtr.Zero);
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiCheckboxChecked(IntPtr c);
-        public static bool uiCheckboxChecked(ControlSafeHandle c) => uiCheckboxChecked(c.DangerousGetHandle());
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiCheckboxSetChecked(IntPtr c, bool @checked);
-        public static void uiCheckboxSetChecked(ControlSafeHandle c, bool @checked) => uiCheckboxSetChecked(c.DangerousGetHandle(), @checked);
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiNewCheckbox(IntPtr text);
-        public static ControlSafeHandle uiNewCheckbox(string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            ControlSafeHandle safeHandle = new ControlSafeHandle(uiNewCheckbox(strPtr));
-            Marshal.FreeHGlobal(strPtr);
-            return safeHandle;
-        }
 
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate IntPtr uiEntryText(IntPtr e);
