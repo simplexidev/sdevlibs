@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 // uiControl
-namespace LibUISharp
+namespace LibUISharp.Controls
 {
     /// <summary>
     /// Defines the base class for controls, which are <see cref="LibuiComponent"/>s with visual representation.

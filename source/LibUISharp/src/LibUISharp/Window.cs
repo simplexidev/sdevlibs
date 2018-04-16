@@ -23,7 +23,7 @@ namespace LibUISharp
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class, with the options of specifying
-        /// the window's width, height, title, and whether or not it has a <see cref="MenuBar"/>.
+        /// the window's width, height, title, and whether or not it has a <see cref="MenuStrip"/>.
         /// </summary>
         /// <param name="width">The width of the window.</param>
         /// <param name="height">The height of the window.</param>
@@ -46,7 +46,7 @@ namespace LibUISharp
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class, with the options of specifying
-        /// the window's size, title, and whether or not it has a <see cref="MenuBar"/>.
+        /// the window's size, title, and whether or not it has a <see cref="MenuStrip"/>.
         /// </summary>
         /// <param name="size">The size of the window.</param>
         /// <param name="title">The title at the top of the window.</param>
