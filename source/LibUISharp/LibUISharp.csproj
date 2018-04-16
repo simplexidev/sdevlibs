@@ -1,32 +1,89 @@
-﻿<!--| Project:  LibUISharp.csproj                  |
+<!--| Project:  LibUISharp.csproj                  |
     | Assembly: LibUISharp.dll                     |
     | Guid: {F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD} |-->
 <Project>
+  <!--HACK https://github.com/dotnet/sdk/issues/2003 -->
   <PropertyGroup>
-    <BaseIntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\build\obj\$(MSBuildProjectName)\$(Configuration)</BaseIntermediateOutputPath>
   </PropertyGroup>
-  <Import Project="..\source.props" />
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
     <EnableDefaultItems>false</EnableDefaultItems>
+    <OutputPath>..\..\build\bin\$(MSBuildProjectName)\$(Configuration)</OutputPath>
+    <PackageOutputPath>..\..\build\pkg\$(MSBuildProjectName)\$(Configuration)</PackageOutputPath>
+    <DocumentationFile>..\..\build\doc\$(MSBuildProjectName)-$(Configuration).xml</DocumentationFile>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DefineConstants>DEBUG;TRACE;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants>TRACE;NETSTANDARD2_0</DefineConstants>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NativeLibraryLoader" Version="1.0.8" />
+    <PackageReference Include="Microsoft.DotNet.Analyzers.Compatibility" Version="0.2.12-alpha" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
-    <Compile Include="src\LibUISharp\Collections\*.cs" />
+    <Compile Include="src\LibUISharp\Controls\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
-    <Compile Include="src\LibUISharp\Drawing\Text\*.cs" />
-    <Compile Include="src\LibUISharp\Internal\*.cs" />
+    <Compile Include="src\LibUISharp\Native\*.cs" />
+    <Compile Include="src\LibUISharp\Native\Libraries\*.cs" />
+    <Compile Include="src\LibUISharp\Native\SafeHandles\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\libui.*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="lib\libui.dll">
+      <CopyToOutputDirectory>true</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\libui.so">
+      <CopyToOutputDirectory>true</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\libui.so.0">
+      <CopyToOutputDirectory>true</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\libui.dylib">
+      <CopyToOutputDirectory>true</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\libui.A.dylib">
+      <CopyToOutputDirectory>true</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ref\*.h" />
+    <None Include="ref\ui.h" />
+    <None Include="ref\ui_windows.h" />
+    <None Include="ref\ui_unix.h" />
+    <None Include="ref\ui_darwin.h" />
   </ItemGroup>
+  <PropertyGroup>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+    <Authors>Thomas Corwin, et al.</Authors>
+    <Copyright>2018 (c) Thomas Corwin</Copyright>
+    <Version>0.3.5-alpha</Version>
+    <PackageId>$(MSBuildProjectName)</PackageId>
+    <Description>LibUI Bindings for .NET Core (C#)</Description>
+    <PackageTags>libui;ui;gui;drawing;desktop;cross-platform;netcore;netstandard</PackageTags>
+    <PackageReleaseNotes>Version $(Version)</PackageReleaseNotes>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageProjectUrl>https://github.com/tom-corwin/LibUISharp</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/tom-corwin/LibUISharp</RepositoryUrl>
+  </PropertyGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 </Project>

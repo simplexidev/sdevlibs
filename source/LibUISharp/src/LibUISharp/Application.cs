@@ -1,18 +1,25 @@
-﻿using System;
+﻿using LibUISharp.Native;
+using LibUISharp.Native.Libraries;
+using System;
 using System.ComponentModel;
-using LibUISharp.Internal;
-using static LibUISharp.Internal.LibUI;
+using System.Runtime.InteropServices;
 
 namespace LibUISharp
 {
-    public sealed class Application : UIComponent
+    /// <summary>
+    /// Enacpsulates a LibUISharp (libui) application.
+    /// </summary>
+    public sealed class Application : LibuiComponent
     {
         private static object _lock = new object();
         private static bool created;
-        private static uiInitOptions Options = new uiInitOptions(UIntPtr.Zero);
+        private static LibuiLibrary.uiInitOptions Options = new LibuiLibrary.uiInitOptions() { Size = UIntPtr.Zero };
         private int exitCode;
         private bool disposed;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Application"/> class.
+        /// </summary>
         public Application()
         {
             lock (_lock)
@@ -26,12 +33,21 @@ namespace LibUISharp
             }
         }
 
-        public event EventHandler<CancelEventArgs> OnExit;
+        /// <summary>
+        /// Occurs just before an application shuts down.
+        /// </summary>
+        public event EventHandler<CancelEventArgs> Exiting;
 
+        /// <summary>
+        /// Gets the current instance of this <see cref="Application"/>.
+        /// </summary>
         public static Application Current { get; private set; }
 
         internal static Window MainWindow { get; private set; }
 
+        /// <summary>
+        /// Sets this <see cref="Application"/>'s exit code.
+        /// </summary>
         public int ExitCode
         {
             set
@@ -41,6 +57,11 @@ namespace LibUISharp
             }
         }
 
+        /// <summary>
+        /// Starts a LibUIShatrp (libui) application and opens the specified window.
+        /// </summary>
+        /// <param name="window">The specified window to open.</param>
+        /// <returns>0 if successful, else returns -1.</returns>
         public int Run(Window window)
         {
             MainWindow = window;
@@ -52,7 +73,7 @@ namespace LibUISharp
             try
             {
                 QueueMain(action);
-                uiMain();
+                LibuiLibrary.uiMain();
             }
             catch (Exception)
             {
@@ -61,44 +82,69 @@ namespace LibUISharp
             return 0;
         }
 
+        /// <summary>
+        /// Queues the specified action to run when possible on the UI thread.
+        /// </summary>
+        /// <param name="action">The <see cref="Action"/> to run.</param>
         public static void QueueMain(Action action)
         {
             lock (_lock)
             {
-                uiQueueMain(data => { action?.Invoke(); });
+                LibuiLibrary.uiQueueMain(data => { action?.Invoke(); }, IntPtr.Zero);
             }
         }
 
-        private void Steps() => uiMainSteps();
+        private void Steps() => LibuiLibrary.uiMainSteps();
 
-        private bool Step(bool wait) => uiMainStep(wait);
+        private bool Step(bool wait) => LibuiLibrary.uiMainStep(wait);
 
-        public void Exit() => uiQuit();
+        /// <summary>
+        /// Shut down this application.
+        /// </summary>
+        public void Shutdown() => LibuiLibrary.uiQuit();
 
+        #region LibuiComponent Implementation
+        /// <inheritdoc />
+        protected sealed override void InitializeComponent()
+        {
+            if (PlatformHelper.IsWinNT)
+            {
+                IntPtr ptr = Kernel32Library.GetConsoleWindow();
+                User32Library.ShowWindow(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
+            }
+
+            IntPtr errPtr = LibuiLibrary.uiInit(ref Options);
+            string errStr = LibuiLibrary.UTF8Helper.ToUTF16Str(errPtr);
+
+            if (string.IsNullOrEmpty(errStr))
+            {
+                Console.WriteLine(errStr);
+                LibuiLibrary.uiFreeInitError(errPtr);
+                throw new ExternalException(errStr);
+            }
+        }
+
+        /// <inheritdoc />
+        protected sealed override void InitializeEvents() => LibuiLibrary.uiOnShouldQuit(data =>
+            {
+                CancelEventArgs args = new CancelEventArgs();
+                Exiting?.Invoke(this, args);
+                return !args.Cancel;
+            }, IntPtr.Zero);
+
+        /// <inheritdoc />
         public override void Dispose() => Dispose(true);
 
+        /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 if (!disposed)
-                    uiUnInit();
+                    LibuiLibrary.uiUnInit();
                 disposed = true;
             }
         }
-
-        protected override void InitializeComponent()
-        {
-            if (PlatformHelper.IsWindows)
-                winntConsoleWindowVisible(false);
-            uiInit(ref Options);
-        }
-
-        protected override void InitializeEvents() => uiOnShouldQuit(data =>
-            {
-                CancelEventArgs args = new CancelEventArgs();
-                OnExit?.Invoke(this, args);
-                return !args.Cancel;
-            });
+        #endregion
     }
 }

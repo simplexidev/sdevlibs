@@ -4,7 +4,6 @@ configuration: Release
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '{version}'
   package_version: '{version}'
 nuget:
   project_feed: true
@@ -17,7 +16,7 @@ build:
   include_nuget_references: true
   verbosity: detailed
 artifacts:
-- path: 'build\nuget\LibUISharp.*.nupkg'
+- path: 'build\pkg\**\Release\*.nupkg'
   name: LibUISharp
 deploy:
 - provider: NuGet

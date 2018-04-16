@@ -1,5 +1,8 @@
 namespace LibUISharp.Drawing
 {
+    /// <summary>
+    /// Provides a collection of pre-defined colors.
+    /// </summary>
     public static class Colors
     {
         // This list is based on https://www.w3schools.com/colors/colors_hex.asp.

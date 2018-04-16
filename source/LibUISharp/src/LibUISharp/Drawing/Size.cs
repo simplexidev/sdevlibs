@@ -1,47 +1,89 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
+    /// <summary>
+    /// Represents an ordered pair of integers that defines a size in a two-dimensional plane.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Size
     {
-        private int width, height;
+        /// <summary>
+        /// Represents a <see cref="Size"/> that has <see cref="Width"/> and <see cref="Height"/> values set to zero.
+        /// </summary>
+        public static readonly Size Empty = new Size(0, 0);
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Size"/> class with the specified dimensions.
+        /// </summary>
+        /// <param name="w">The width component of the point.</param>
+        /// <param name="h">The height component of the point.</param>
         public Size(int w, int h)
         {
-            if (w < 0 || h < 0) throw new ArgumentException("A Size cannot have a negative value.");
-            width = w;
-            height = h;
+            Width = w;
+            Height = h;
         }
 
-        public static readonly Size Empty = new Size();
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Size"/> structure from a <see cref="Point"/>.
+        /// </summary>
+        /// <param name="pt">A <see cref="Point"/> that specifies the dimensions for the new <see cref="Size"/>.</param>
+        public Size(Point pt) : this(pt.X, pt.X) { }
 
-        public int Width
-        {
-            get => width;
-            set
-            {
-                if (value < 0) throw new ArgumentException("A Size cannot have a negative value.");
-                if (width == value) return;
-                width = value;
-            }
-        }
+        /// <summary>
+        /// Gets or sets the width of this <see cref="Size"/>.
+        /// </summary>
+        public int Width { get; set; }
 
-        public int Height
-        {
-            get => height;
-            set
-            {
-                if (value < 0) throw new ArgumentException("A Size cannot have a negative value.");
-                if (height == value) return;
-                height = value;
-            }
-        }
+        /// <summary>
+        /// Gets or sets the height of this <see cref="Size"/>.
+        /// </summary>
+        public int Height { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="Size"/> is empty.
+        /// </summary>
         public bool IsEmpty => this == Empty;
 
+        /// <summary>
+        /// Adds the specified <see cref="Size"/> to the other specified <see cref="Size"/>.
+        /// </summary>
+        /// <param name="sz1">The <see cref="Size"/> to be added to.</param>
+        /// <param name="sz2">The <see cref="Size"/> to add to <paramref name="sz1"/>.</param>
+        /// <returns>The <see cref="Size"/> that is the result of the addition operation.</returns>
+        public static Size Add(Size sz1, Size sz2) => new Size(sz1.Width + sz2.Width, sz1.Height + sz2.Height);
+
+        /// <summary>
+        /// Subtracts the specified <see cref="Size"/> from the other specified <see cref="Size"/>.
+        /// </summary>
+        /// <param name="sz1">The <see cref="Size"/> to be subtracted from.</param>
+        /// <param name="sz2">The <see cref="Size"/> to subtract from <paramref name="sz1"/>.</param>
+        /// <returns>The <see cref="Size"/> that is the result of the addition operation.</returns>
+        public static Size Subtract(Size sz1, Size sz2) => new Size(sz1.Width - sz2.Width, sz1.Height - sz2.Height);
+        
+        /// <summary>
+        /// Converts the specified <see cref="SizeD"/> to a <see cref="Size"/> by rounding the values of the <see cref="SizeD"/> to the next higher integer values.
+        /// </summary>
+        /// <param name="val">The <see cref="SizeD"/> to convert.</param>
+        /// <returns>The <see cref="Size"/> this method converts to.</returns>
+        public static Size Ceiling(SizeD val) => new Size((int)Math.Ceiling(val.Width), (int)Math.Ceiling(val.Height));
+
+        /// <summary>
+        /// Converts the specified <see cref="SizeD"/> to a <see cref="Size"/> by rounding the values of the <see cref="SizeD"/> to the nearest integer.
+        /// </summary>
+        /// <param name="val">The <see cref="SizeD"/> to convert.</param>
+        /// <returns>The <see cref="Size"/> this method converts to.</returns>
+        public static Size Round(SizeD val) => new Size((int)Math.Round(val.Width), (int)Math.Round(val.Height));
+
+        /// <summary>
+        /// Converts the specified <see cref="SizeD"/> to a <see cref="Size"/> by truncating the values of the <see cref="SizeD"/>.
+        /// </summary>
+        /// <param name="val">The <see cref="SizeD"/> to convert.</param>
+        /// <returns>The <see cref="Size"/> this converts to.</returns>
+        public static Size Truncate(SizeD val) => new Size((int)Math.Truncate(val.Width), (int)Math.Truncate(val.Height));
+
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (!(obj is Size))
@@ -49,64 +91,73 @@ namespace LibUISharp.Drawing
             return Equals((Size)obj);
         }
 
-        public bool Equals(Size size) => Width == size.Width && Height == size.Height;
-        public override int GetHashCode() => unchecked(this.GetHashCode(Width, Height));
+        /// <inheritdoc cref="Equals(object)"/>
+        public bool Equals(Size point) => Width == point.Width && Height == point.Height;
 
-        public static bool operator ==(Size size1, Size size2) => size1.Equals(size2);
-        public static bool operator !=(Size size1, Size size2) => !(size1 == size2);
-        public static explicit operator Point(Size size) => new Point(size.Width, size.Height);
-    }
+        /// <inheritdoc/>  
+        public override int GetHashCode() => unchecked(this.GetHashCodeFromPropertyValues(Width, Height));
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct SizeD
-    {
-        private double width, height;
 
-        public SizeD(double w, double h)
-        {
-            if (w < 0 || h < 0) throw new ArgumentException("A SizeD cannot have a negative value.");
-            width = w;
-            height = h;
-        }
+        /// <summary>
+        /// Adds the specified <see cref="Size"/> to the other specified <see cref="Size"/>.
+        /// </summary>
+        /// <param name="sz1">The <see cref="Size"/> to be added to.</param>
+        /// <param name="sz2">The <see cref="Size"/> to add to <paramref name="sz1"/>.</param>
+        /// <returns>The <see cref="Size"/> that is the result of the addition operation.</returns>
+        public static Size operator +(Size sz1, Size sz2) => Add(sz1, sz2);
 
-        public static readonly SizeD Empty = new SizeD();
+        /// <summary>
+        /// Subtracts the specified <see cref="Size"/> from the other specified <see cref="Size"/>.
+        /// </summary>
+        /// <param name="sz1">The <see cref="Size"/> to be subtracted from.</param>
+        /// <param name="sz2">The <see cref="Size"/> to subtract from <paramref name="sz1"/>.</param>
+        /// <returns>The <see cref="Size"/> that is the result of the subtraction operation.</returns>
+        public static Size operator -(Size sz1, Size sz2) => Subtract(sz1, sz2);
+        
+        /// <summary>
+        /// Multiplies the specified <see cref="Size"/> by the other specified <see cref="Size"/>.
+        /// </summary>
+        /// <param name="sz1">The first <see cref="Size"/> to be multiplied.</param>
+        /// <param name="sz2">The <see cref="Size"/> to be multiplied by <paramref name="sz1"/>.</param>
+        /// <returns>The <see cref="Size"/> that is the result of the multiplication operation.</returns>
+        public static Size operator *(Size sz1, Size sz2) => new Size(sz1.Width * sz2.Width, sz1.Height * sz2.Height);
+        
+        /// <summary>
+        /// Divides the specified <see cref="Size"/> by the other specified <see cref="Size"/>.
+        /// </summary>
+        /// <param name="sz1">The <see cref="Size"/> to be divided.</param>
+        /// <param name="sz2">The <see cref="Size"/> to divide <paramref name="sz1"/> by.</param>
+        /// <returns>The <see cref="Size"/> that is the result of the multiplication operation.</returns>
+        public static Size operator /(Size sz1, Size sz2) => new Size(sz1.Width / sz2.Width, sz1.Height / sz2.Height);
 
-        public double Width
-        {
-            get => width;
-            set
-            {
-                if (value < 0) throw new ArgumentException("A SizeD cannot have a negative value.");
-                if (width == value) return;
-                width = value;
-            }
-        }
+        /// <summary>
+        /// Tests whether two specified <see cref="Size"/> structures are equivalent.
+        /// </summary>
+        /// <param name="left">The <see cref="Size"/> that is to the left of the equality operator.</param>
+        /// <param name="right">The <see cref="Size"/> that is to the right of the equality operator.</param>
+        /// <returns><see langword="true"/> if the two <see cref="Size"/> structures are equal; otherwise, <see langword="false"/>.</returns>
+        public static bool operator ==(Size left, Size right) => left.Equals(right);
 
-        public double Height
-        {
-            get => height;
-            set
-            {
-                if (value < 0) throw new ArgumentException("A SizeD cannot have a negative value.");
-                if (height == value) return;
-                height = value;
-            }
-        }
+        /// <summary>
+        /// Tests whether two specified <see cref="Size"/> structures are different.
+        /// </summary>
+        /// <param name="left">The <see cref="Size"/> that is to the left of the inequality operator.</param>
+        /// <param name="right">The <see cref="Size"/> that is to the right of the inequality operator.</param>
+        /// <returns><see langword="true"/> if the two <see cref="Size"/> structures are different; otherwise, <see langword="false"/>.</returns>
+        public static bool operator !=(Size left, Size right) => !(left == right);
 
-        public bool IsEmpty => this == Empty;
+        /// <summary>
+        /// Converts the specified <see cref="Size"/> structure to a <see cref="Point"/> structure.
+        /// </summary>
+        /// <param name="sz">The <see cref="Size"/> to be converted.</param>
+        /// <returns>The <see cref="Point"/> that results from the conversion.</returns>
+        public static explicit operator Point(Size sz) => new Point(sz);
 
-        public override bool Equals(object obj)
-        {
-            if (!(obj is SizeD))
-                return false;
-            return Equals((SizeD)obj);
-        }
-
-        public bool Equals(SizeD size) => Width == size.Width && Height == size.Height;
-        public override int GetHashCode() => unchecked(this.GetHashCode(Width, Height));
-
-        public static bool operator ==(SizeD size1, SizeD size2) => size1.Equals(size2);
-        public static bool operator !=(SizeD size1, SizeD size2) => !(size1 == size2);
-        public static explicit operator PointD(SizeD size) => new PointD(size.Width, size.Height);
+        /// <summary>
+        /// Converts the specified <see cref="Size"/> structure to a <see cref="SizeD"/> structure.
+        /// </summary>
+        /// <param name="sz">The <see cref="Size"/> to be converted.</param>
+        /// <returns>The <see cref="SizeD"/> that results from the conversion.</returns>
+        public static explicit operator SizeD(Size sz) => new SizeD(sz.Width, sz.Height);
     }
 }

@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace LibUISharp
+namespace LibUISharp.Controls
 {
     public class ContainerControl : Control { }
 
-    public class ContainerControl<TChild, TContainerControl> : ContainerControl, IContainerControl<TChild, TContainerControl>
-        where TChild : ControlCollection<TContainerControl>
-        where TContainerControl : ContainerControl
+    public class ContainerControl<TContainer, TCollection> : ContainerControl, IContainerControl<TContainer, TCollection>
+        where TContainer : ContainerControl
+        where TCollection : ControlCollection<TContainer>
     {
         public override void Dispose()
         {
@@ -16,36 +16,36 @@ namespace LibUISharp
             base.Dispose();
         }
 
-        private TChild children;
+        private TCollection children;
 
-        public virtual TChild Children
+        public virtual TCollection Children
         {
             get
             {
                 if (children == null)
-                    children = (TChild)Activator.CreateInstance(typeof(TChild), this);
+                    children = (TCollection)Activator.CreateInstance(typeof(TCollection), this);
                 return children;
             }
         }
     }
 
-    interface IContainerControl<out TChild, TContainerControl>
-        where TChild : ControlCollection<TContainerControl>
-        where TContainerControl : ContainerControl
+    interface IContainerControl<TContainer, out TCollection>
+        where TContainer : ContainerControl
+        where TCollection : ControlCollection<TContainer>
     {
-        TChild Children { get; }
+        TCollection Children { get; }
     }
 
-    public class ControlCollection<TOwner> : IList<Control>
-        where TOwner : ContainerControl
+    public class ControlCollection<TContainer> : IList<Control>
+        where TContainer : ContainerControl
     {
-        protected TOwner Owner { get; set; }
+        protected TContainer Parent { get; set; }
 
         protected List<Control> InnerList { get; }
 
-        public ControlCollection(TOwner owner)
+        public ControlCollection(TContainer parent)
         {
-            Owner = owner;
+            Parent = parent;
             InnerList = new List<Control>();
         }
 
@@ -60,9 +60,9 @@ namespace LibUISharp
             if (item.TopLevel)
                 throw new ArgumentException("cannot attach the toplevel control.");
             item.Index = Count;
-            item.Parent = Owner;
+            item.Parent = Parent;
             InnerList.Add(item);
-            //TODO: Owner.UpdateLayout();
+            //TODO: Parent.UpdateLayout();
         }
 
         public virtual void Clear()
@@ -76,7 +76,7 @@ namespace LibUISharp
             }
             finally
             {
-                //TODO: Owner.UpdateLayout();
+                //TODO: Parent.UpdateLayout();
             }
         }
 
@@ -123,7 +123,7 @@ namespace LibUISharp
             else
             {
                 item.Index = index;
-                item.Parent = Owner;
+                item.Parent = Parent;
                 InnerList.Insert(index, item);
             }
         }
@@ -139,9 +139,9 @@ namespace LibUISharp
         private class ControlCollectionEnumerator : IEnumerator<Control>
         {
             private int curIndex;
-            private ControlCollection<TOwner> curControls;
+            private ControlCollection<TContainer> curControls;
 
-            public ControlCollectionEnumerator(ControlCollection<TOwner> controls)
+            public ControlCollectionEnumerator(ControlCollection<TContainer> controls)
             {
                 curControls = controls;
                 curIndex = -1;
