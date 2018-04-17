@@ -1,8 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using static LibUISharp.Internal.LibUI;
 
+// uiDrawMatrix
 namespace LibUISharp.Drawing
 {
+    //TODO: Add IEquatable<Matrix> support.
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix
     {

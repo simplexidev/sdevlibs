@@ -1,8 +1,8 @@
 ﻿using System;
 
+// uiAreaDrawParams
 namespace LibUISharp.Drawing
 {
-    // uiAreaDrawParams
     public class DrawEventArgs : EventArgs
     {
         public DrawEventArgs(Context context, RectangleD clip, SizeD areaSize)

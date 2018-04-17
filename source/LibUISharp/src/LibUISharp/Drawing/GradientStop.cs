@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 
+// uiGradientStop
 namespace LibUISharp.Drawing
 {
-    // uiGradientStop
     [StructLayout(LayoutKind.Sequential)]
     public struct GradientStop
     {
@@ -11,6 +11,7 @@ namespace LibUISharp.Drawing
             Position = pos;
             Color = color;
         }
+
         public double Position { get; set; }
         public Color Color { get; set; }
     }

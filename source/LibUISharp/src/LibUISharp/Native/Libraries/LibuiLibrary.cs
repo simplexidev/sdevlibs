@@ -31,41 +31,6 @@ namespace LibUISharp.Native.Libraries
             public static T Load<T>(string name) => LibuiNativeLibrary.LoadFunction<T>(name);
         }
 
-        public static class UTF8Helper
-        {
-            //! You MUST call System.Marshal.FreeHGlobal() after using this
-            //! or it will cause a memory leak.
-            public static IntPtr ToUTF8Ptr(string str)
-            {
-                if (str == null)
-                    return IntPtr.Zero;
-
-                byte[] bytes = Encoding.UTF8.GetBytes(str);
-                Array.Resize(ref bytes, bytes.Length + 1);
-                bytes[bytes.Length - 1] = 0;
-                IntPtr ptr = Marshal.AllocHGlobal(bytes.Length);
-                Marshal.Copy(bytes, 0, ptr, bytes.Length);
-                return ptr;
-            }
-
-            public static string ToUTF16Str(IntPtr ptr)
-            {
-                if (ptr == IntPtr.Zero)
-                    return string.Empty;
-
-                byte b = Marshal.ReadByte(ptr);
-                int i = 0;
-                while (b != 0)
-                    b = Marshal.ReadByte(ptr, ++i);
-
-                byte[] bytes = new byte[i];
-                Marshal.Copy(ptr, bytes, 0, bytes.Length);
-                string str = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                uiFreeText(ptr);
-                return str;
-            }
-        }
-
         public enum uiForEach : uint
         {
             uiForEachContinue,
@@ -302,447 +267,274 @@ namespace LibUISharp.Native.Libraries
         public delegate IntPtr uiNewCheckbox_t(IntPtr text);
         public static IntPtr uiNewCheckbox(IntPtr text) => FunctionLoader.Load<uiNewCheckbox_t>("uiNewCheckbox")(text);
 
-        //TODO: From here down is broken code.
+        //TODO: Finish writing static functions below this line.
         //\/////////////////////////////////////////////////////////////////
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiEntryText(IntPtr e);
-        public static string uiEntryText(ControlSafeHandle e) => UTF8Helper.ToUTF8Str(uiEntryText(e.DangerousGetHandle()));
+        public delegate IntPtr uiEntryText_t(IntPtr e);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiEntrySetText(IntPtr e, IntPtr text);
-        public static void uiEntrySetText(ControlSafeHandle e, string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiEntrySetText(e.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate void uiEntrySetText_t(IntPtr e, IntPtr text);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiEntryOnChanged(IntPtr e, uiOnEventHandler f, IntPtr data);
-        public static void uiEntryOnChanged(ControlSafeHandle e, uiOnEventHandler f, IntPtr data) => uiEntryOnChanged(e.DangerousGetHandle(), f, data);
-        public static void uiEntryOnChanged(ControlSafeHandle e, uiOnEventHandler f) => uiEntryOnChanged(e, f, IntPtr.Zero);
-
+        public delegate void uiEntryOnChanged_t(IntPtr e, uiEntryOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiEntryReadOnly(IntPtr e);
-        public static bool uiEntryReadOnly(ControlSafeHandle e) => uiEntryReadOnly(e.DangerousGetHandle());
+        public delegate void uiEntryOnChanged_tf(IntPtr e, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiEntrySetReadOnly(IntPtr e, bool @readonly);
-        public static void uiEntrySetReadOnly(ControlSafeHandle e, bool @readonly) => uiEntrySetReadOnly(e.DangerousGetHandle(), @readonly);
+        public delegate bool uiEntryReadOnly_t(IntPtr e);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewEntry();
-        public static ControlSafeHandle uiNewEntry() => new ControlSafeHandle(_uiNewEntry());
+        public delegate void uiEntrySetReadOnly_t(IntPtr e, bool @readonly);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewPasswordEntry();
-        public static ControlSafeHandle uiNewPasswordEntry() => new ControlSafeHandle(_uiNewPasswordEntry());
+        public delegate IntPtr uiNewEntry_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewSearchEntry();
-        public static ControlSafeHandle uiNewSearchEntry() => new ControlSafeHandle(_uiNewSearchEntry());
+        public delegate IntPtr uiNewPasswordEntry_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiLabelText(IntPtr l);
-        public static string uiLabelText(ControlSafeHandle l) => UTF8Helper.ToUTF8Str(uiLabelText(l.DangerousGetHandle()));
+        public delegate IntPtr uiNewSearchEntry_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiLabelSetText(IntPtr l, IntPtr text);
-        public static void uiLabelSetText(ControlSafeHandle l, string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiLabelSetText(l.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate IntPtr uiLabelText_t(IntPtr l);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiNewLabel(IntPtr text);
-        public static ControlSafeHandle uiNewLabel(string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            ControlSafeHandle safeHandle = new ControlSafeHandle(uiNewLabel(strPtr));
-            Marshal.FreeHGlobal(strPtr);
-            return safeHandle;
-        }
+        public delegate void uiLabelSetText_t(IntPtr l, IntPtr text);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiTabAppend(IntPtr t, IntPtr name, IntPtr c);
-        public static void uiTabAppend(ControlSafeHandle t, string name, ControlSafeHandle c)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
-            uiTabAppend(t.DangerousGetHandle(), strPtr, c.DangerousGetHandle());
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate IntPtr uiNewLabel_t(IntPtr text);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiTabInsertAt(IntPtr t, IntPtr name, int before, IntPtr c);
-        public static void uiTabInsertAt(ControlSafeHandle t, string name, int before, ControlSafeHandle c)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
-            uiTabInsertAt(t.DangerousGetHandle(), strPtr, before, c.DangerousGetHandle());
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate void uiTabAppend_t(IntPtr t, IntPtr name, IntPtr c);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiTabDelete(IntPtr t, int index);
-        public static void uiTabDelete(ControlSafeHandle t, int index) => uiTabDelete(t.DangerousGetHandle(), index);
+        public delegate void uiTabInsertAt_t(IntPtr t, IntPtr name, int before, IntPtr c);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate int uiTabNumPages(IntPtr t);
-        public static int uiTabNumPages(ControlSafeHandle t) => uiTabNumPages(t.DangerousGetHandle());
+        public delegate void uiTabDelete_t(IntPtr t, int index);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiTabMargined(IntPtr t, int page);
-        public static bool uiTabMargined(ControlSafeHandle t, int page) => uiTabMargined(t.DangerousGetHandle(), page);
+        public delegate int uiTabNumPages_t(IntPtr t);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiTabSetMargined(IntPtr t, int page, bool margined);
-        public static void uiTabSetMargined(ControlSafeHandle t, int page, bool margined) => uiTabSetMargined(t.DangerousGetHandle(), page, margined);
+        public delegate bool uiTabMargined_t(IntPtr t, int page);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewTab();
-        public static ControlSafeHandle uiNewTab() => new ControlSafeHandle(_uiNewTab());
+        public delegate void uiTabSetMargined_t(IntPtr t, int page, bool margined);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiGroupTitle(IntPtr g);
-        public static string uiGroupTitle(ControlSafeHandle g) => UTF8Helper.ToUTF8Str(uiGroupTitle(g.DangerousGetHandle()));
+        public delegate IntPtr uiNewTab_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiGroupSetTitle(IntPtr g, IntPtr title);
-        public static void uiGroupSetTitle(ControlSafeHandle g, string title)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(title);
-            uiGroupSetTitle(g.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate IntPtr uiGroupTitle_t(IntPtr g);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiGroupSetChild(IntPtr g, IntPtr child);
-        public static void uiGroupSetChild(ControlSafeHandle g, ControlSafeHandle child) => uiGroupSetChild(g.DangerousGetHandle(), child.DangerousGetHandle());
+        public delegate void uiGroupSetTitle_t(IntPtr g, IntPtr title);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiGroupMargined(IntPtr g);
-        public static bool uiGroupMargined(ControlSafeHandle g) => uiGroupMargined(g.DangerousGetHandle());
+        public delegate void uiGroupSetChild_t(IntPtr g, IntPtr child);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiGroupSetMargined(IntPtr g, bool margined);
-        public static void uiGroupSetMargined(ControlSafeHandle g, bool margined) => uiGroupSetMargined(g.DangerousGetHandle(), margined);
+        public delegate bool uiGroupMargined_t(IntPtr g);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiNewGroup(IntPtr title);
-        public static ControlSafeHandle uiNewGroup(string title)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(title);
-            ControlSafeHandle safeHandle = new ControlSafeHandle(uiNewGroup(strPtr));
-            Marshal.FreeHGlobal(strPtr);
-            return safeHandle;
-        }
+        public delegate void uiGroupSetMargined_t(IntPtr g, bool margined);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate int uiSpinboxValue(IntPtr s);
-        public static int uiSpinboxValue(ControlSafeHandle s) => uiSpinboxValue(s.DangerousGetHandle());
+        public delegate IntPtr uiNewGroup_t(IntPtr title);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiSpinboxSetValue(IntPtr s, int value);
-        public static void uiSpinboxSetValue(ControlSafeHandle s, int value) => uiSpinboxSetValue(s.DangerousGetHandle(), value);
+        public delegate int uiSpinboxValue_t(IntPtr s);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiSpinboxOnChanged(IntPtr s, uiOnEventHandler f, IntPtr data);
-        public static void uiSpinboxOnChanged(ControlSafeHandle s, uiOnEventHandler f, IntPtr data) => uiSpinboxOnChanged(s.DangerousGetHandle(), f, data);
-        public static void uiSpinboxOnChanged(ControlSafeHandle s, uiOnEventHandler f) => uiSpinboxOnChanged(s, f, IntPtr.Zero);
+        public delegate void uiSpinboxSetValue_t(IntPtr s, int value);
 
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiSpinboxOnChanged_t(IntPtr s, uiSpinboxOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewSpinbox(int min, int max);
-        public static ControlSafeHandle uiNewSpinbox(int min, int max) => new ControlSafeHandle(_uiNewSpinbox(min, max));
+        public delegate void uiSpinboxOnChanged_tf(IntPtr s, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate int uiSliderValue(IntPtr s);
-        public static int uiSliderValue(ControlSafeHandle s) => uiSliderValue(s.DangerousGetHandle());
+        public delegate IntPtr uiNewSpinbox_t(int min, int max);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiSliderSetValue(IntPtr s, int value);
-        public static void uiSliderSetValue(ControlSafeHandle s, int value) => uiSliderSetValue(s.DangerousGetHandle(), value);
+        public delegate int uiSliderValue_t(IntPtr s);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiSliderOnChanged(IntPtr s, uiOnEventHandler f, IntPtr data);
-        public static void uiSliderOnChanged(ControlSafeHandle s, uiOnEventHandler f, IntPtr data) => uiSliderOnChanged(s.DangerousGetHandle(), f, data);
-        public static void uiSliderOnChanged(ControlSafeHandle s, uiOnEventHandler f) => uiSliderOnChanged(s, f, IntPtr.Zero);
+        public delegate void uiSliderSetValue_t(IntPtr s, int value);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewSlider(int min, int max);
-        public static ControlSafeHandle uiNewSlider(int min, int max) => new ControlSafeHandle(_uiNewSlider(min, max));
+        public delegate void uiSliderOnChanged_t(IntPtr s, uiSliderOnChanged_tf f, IntPtr data);
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiSliderOnChanged_tf(IntPtr s, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate int uiProgressBarValue(IntPtr p);
-        public static int uiProgressBarValue(ControlSafeHandle p) => uiProgressBarValue(p.DangerousGetHandle());
+        public delegate IntPtr uiNewSlider_t(int min, int max);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiProgressBarSetValue(IntPtr p, int n);
-        public static void uiProgressBarSetValue(ControlSafeHandle p, int n) => uiProgressBarSetValue(p.DangerousGetHandle(), n);
+        public delegate int uiProgressBarValue_t(IntPtr p);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewProgressBar();
-        public static ControlSafeHandle uiNewProgressBar() => new ControlSafeHandle(_uiNewProgressBar());
+        public delegate void uiProgressBarSetValue_t(IntPtr p, int n);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewHorizontalSeparator();
-        public static ControlSafeHandle uiNewHorizontalSeparator() => new ControlSafeHandle(_uiNewHorizontalSeparator());
+        public delegate IntPtr uiNewProgressBar_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewVerticalSeparator();
-        public static ControlSafeHandle uiNewVerticalSeparator() => new ControlSafeHandle(_uiNewVerticalSeparator());
+        public delegate IntPtr uiNewHorizontalSeparator_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiComboboxAppend(IntPtr c, IntPtr text);
-        public static void uiComboboxAppend(ControlSafeHandle c, string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiComboboxAppend(c.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate IntPtr uiNewVerticalSeparator_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate int uiComboboxSelected(IntPtr c);
-        public static int uiComboboxSelected(ControlSafeHandle c) => uiComboboxSelected(c.DangerousGetHandle());
+        public delegate void uiComboboxAppend_t(IntPtr c, IntPtr text);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiComboboxSetSelected(IntPtr c, int n);
-        public static void uiComboboxSetSelected(ControlSafeHandle c, int n) => uiComboboxSetSelected(c.DangerousGetHandle(), n);
+        public delegate int uiComboboxSelected_t(IntPtr c);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiComboboxOnSelected(IntPtr c, uiOnEventHandler f, IntPtr data);
-        public static void uiComboboxOnSelected(ControlSafeHandle c, uiOnEventHandler f, IntPtr data) => uiComboboxOnSelected(c.DangerousGetHandle(), f, data);
-        public static void uiComboboxOnSelected(ControlSafeHandle c, uiOnEventHandler f) => uiComboboxOnSelected(c, f, IntPtr.Zero);
+        public delegate void uiComboboxSetSelected_t(IntPtr c, int n);
 
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiComboboxOnSelected_t(IntPtr c, uiComboboxOnSelected_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewCombobox();
-        public static ControlSafeHandle uiNewCombobox() => new ControlSafeHandle(_uiNewCombobox());
+        public delegate void uiComboboxOnSelected_tf(IntPtr c, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiEditableComboboxAppend(IntPtr c, IntPtr text);
-        public static void uiEditableComboboxAppend(ControlSafeHandle c, string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiEditableComboboxAppend(c.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate IntPtr uiNewCombobox_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiEditableComboboxText(IntPtr comboBox);
-        public static string uiEditableComboboxText(ControlSafeHandle c) => UTF8Helper.ToUTF8Str(uiEditableComboboxText(c.DangerousGetHandle()));
+        public delegate void uiEditableComboboxAppend_t(IntPtr c, IntPtr text);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiEditableComboboxSetText(IntPtr c, IntPtr text);
-        public static void uiEditableComboboxSetText(ControlSafeHandle c, string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiEditableComboboxSetText(c.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
+        public delegate IntPtr uiEditableComboboxText_t(IntPtr comboBox);
 
-        }
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiEditableComboboxSetText_t(IntPtr c, IntPtr text);
 
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiEditableComboboxOnChanged_t(IntPtr c, uiEditableComboboxOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiEditableComboboxOnChanged(IntPtr c, uiOnEventHandler f, IntPtr data);
-        public static void uiEditableComboboxOnChanged(ControlSafeHandle c, uiOnEventHandler f, IntPtr data) => uiEditableComboboxOnChanged(c.DangerousGetHandle(), f, data);
-        public static void uiEditableComboboxOnChanged(ControlSafeHandle c, uiOnEventHandler f) => uiEditableComboboxOnChanged(c, f);
+        public delegate void uiEditableComboboxOnChanged_tf(IntPtr c, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewEditableCombobox();
-        public static ControlSafeHandle uiNewEditableCombobox() => new ControlSafeHandle(_uiNewEditableCombobox());
+        public delegate IntPtr uiNewEditableCombobox_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiRadioButtonsAppend(IntPtr r, IntPtr text);
-        public static void uiRadioButtonsAppend(ControlSafeHandle r, string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiRadioButtonsAppend(r.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate void uiRadioButtonsAppend_t(IntPtr r, IntPtr text);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate int uiRadioButtonsSelected(IntPtr r);
-        public static int uiRadioButtonsSelected(ControlSafeHandle r) => uiRadioButtonsSelected(r.DangerousGetHandle());
+        public delegate int uiRadioButtonsSelected_t(IntPtr r);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiRadioButtonsSetSelected(IntPtr r, int n);
-        public static void uiRadioButtonsSetSelected(ControlSafeHandle r, int n) => uiRadioButtonsSetSelected(r.DangerousGetHandle(), n);
+        public delegate void uiRadioButtonsSetSelected_t(IntPtr r, int n);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiRadioButtonsOnSelected(IntPtr r, uiOnEventHandler f, IntPtr data);
-        public static void uiRadioButtonsOnSelected(ControlSafeHandle r, uiOnEventHandler f, IntPtr data) => uiRadioButtonsOnSelected(r.DangerousGetHandle(), f, data);
-        public static void uiRadioButtonsOnSelected(ControlSafeHandle r, uiOnEventHandler f) => uiRadioButtonsOnSelected(r, f, IntPtr.Zero);
+        public delegate void uiRadioButtonsOnSelected_t(IntPtr r, uiRadioButtonsOnSelected_tf f, IntPtr data);
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiRadioButtonsOnSelected_tf(IntPtr r, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewRadioButtons();
-        public static ControlSafeHandle uiNewRadioButtons() => new ControlSafeHandle(_uiNewRadioButtons());
+        public delegate IntPtr uiNewRadioButtons_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewDateTimePicker();
-        public static ControlSafeHandle uiNewDateTimePicker() => new ControlSafeHandle(_uiNewDateTimePicker());
+        public delegate IntPtr uiNewDateTimePicker_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewDatePicker();
-        public static ControlSafeHandle uiNewDatePicker() => new ControlSafeHandle(_uiNewDatePicker());
+        public delegate IntPtr uiNewDatePicker_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewTimePicker();
-        public static ControlSafeHandle uiNewTimePicker() => new ControlSafeHandle(_uiNewTimePicker());
+        public delegate IntPtr uiNewTimePicker_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiMultilineEntryText(IntPtr e);
-        public static string uiMultilineEntryText(ControlSafeHandle e) => UTF8Helper.ToUTF8Str(uiMultilineEntryText(e.DangerousGetHandle()));
+        public delegate IntPtr uiMultilineEntryText_t(IntPtr e);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMultilineEntrySetText(IntPtr e, IntPtr text);
-        public static void uiMultilineEntrySetText(ControlSafeHandle e, string text)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(text);
-            uiMultilineEntrySetText(e.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public delegate void uiMultilineEntrySetText_t(IntPtr e, IntPtr text);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMultilineEntryAppend(IntPtr e, IntPtr text);
-        public static void uiMultilineEntryAppend(ControlSafeHandle e, params string[] lines)
-        {
-            foreach (string s in lines)
-            {
-                IntPtr strPtr = UTF8Helper.ToUTF8Ptr(s);
-                uiMultilineEntryAppend(e.DangerousGetHandle(), strPtr);
-                Marshal.FreeHGlobal(strPtr);
-            }
-        }
+        public delegate void uiMultilineEntryAppend_t(IntPtr e, IntPtr text);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMultilineEntryOnChanged(IntPtr e, uiOnEventHandler f, IntPtr data);
-        public static void uiMultilineEntryOnChanged(ControlSafeHandle e, uiOnEventHandler f, IntPtr data) => uiMultilineEntryOnChanged(e.DangerousGetHandle(), f, data);
-        public static void uiMultilineEntryOnChanged(ControlSafeHandle e, uiOnEventHandler f) => uiMultilineEntryOnChanged(e, f, IntPtr.Zero);
+        public delegate void uiMultilineEntryOnChanged_t(IntPtr e, uiMultilineEntryOnChanged_tf f, IntPtr data);
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiMultilineEntryOnChanged_tf(IntPtr e, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiMultilineEntryReadOnly(IntPtr e);
-        public static bool uiMultilineEntryReadOnly(ControlSafeHandle e) => uiMultilineEntryReadOnly(e.DangerousGetHandle());
+        public delegate bool uiMultilineEntryReadOnly_t(IntPtr e);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMultilineEntrySetReadOnly(IntPtr e, bool @readonly);
-        public static void uiMultilineEntrySetReadOnly(ControlSafeHandle e, bool @readonly) => uiMultilineEntrySetReadOnly(e.DangerousGetHandle(), @readonly);
+        public delegate void uiMultilineEntrySetReadOnly_t(IntPtr e, bool @readonly);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewMultilineEntry();
-        public static ControlSafeHandle uiNewMultilineEntry() => new ControlSafeHandle(_uiNewMultilineEntry());
+        public delegate IntPtr uiNewMultilineEntry_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewNonWrappingMultilineEntry();
-        public static ControlSafeHandle uiNewNonWrappingMultilineEntry() => new ControlSafeHandle(_uiNewNonWrappingMultilineEntry());
+        public delegate IntPtr uiNewNonWrappingMultilineEntry_t();
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMenuItemEnable(IntPtr m);
-        public static void uiMenuItemEnable(ControlSafeHandle m) => uiMenuItemEnable(m.DangerousGetHandle());
+        public delegate void uiMenuItemEnable_t(IntPtr m);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMenuItemDisable(IntPtr m);
-        public static void uiMenuItemDisable(ControlSafeHandle m) => uiMenuItemDisable(m.DangerousGetHandle());
+        public delegate void uiMenuItemDisable_t(IntPtr m);
 
+        [UnmanagedFunctionPointer(callingConvention)]
+        public delegate void uiMenuItemOnClicked_t(IntPtr m, uiMenuItemOnClicked_tf f, IntPtr data);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void uiMenuItemOnClickedHandler(IntPtr menuItem, IntPtr window, IntPtr data);
+        public delegate void uiMenuItemOnClicked_tf(IntPtr menuItem, IntPtr window, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMenuItemOnClicked(IntPtr m, uiMenuItemOnClickedHandler f, IntPtr data);
-        public static void uiMenuItemOnClicked(ControlSafeHandle m, uiMenuItemOnClickedHandler f, IntPtr data) => uiMenuItemOnClicked(m.DangerousGetHandle(), f, data);
-        public static void uiMenuItemOnClicked(ControlSafeHandle m, uiMenuItemOnClickedHandler f) => uiMenuItemOnClicked(m, f, IntPtr.Zero);
+        public delegate bool uiMenuItemChecked_t(IntPtr m);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiMenuItemChecked(IntPtr m);
-        public static bool uiMenuItemChecked(ControlSafeHandle m) => uiMenuItemChecked(m.DangerousGetHandle());
+        public delegate void uiMenuItemSetChecked_t(IntPtr m, bool @checked);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMenuItemSetChecked(IntPtr m, bool @checked);
-        public static void uiMenuItemSetChecked(ControlSafeHandle m, bool @checked) => uiMenuItemSetChecked(m.DangerousGetHandle(), @checked);
+        public delegate IntPtr uiMenuAppendItem_t(IntPtr m, IntPtr name);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiMenuAppendItem(IntPtr m, IntPtr name);
-        public static ControlSafeHandle uiMenuAppendItem(ControlSafeHandle m, string name)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
-            ControlSafeHandle safeHandle = new ControlSafeHandle(uiMenuAppendItem(m.DangerousGetHandle(), strPtr));
-            Marshal.FreeHGlobal(strPtr);
-            return safeHandle;
-        }
+        public delegate IntPtr uiMenuAppendCheckItem_t(IntPtr m, IntPtr name);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiMenuAppendCheckItem(IntPtr m, IntPtr name);
-        public static ControlSafeHandle uiMenuAppendCheckItem(ControlSafeHandle m, string name)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
-            ControlSafeHandle safeHandle = new ControlSafeHandle(uiMenuAppendCheckItem(m.DangerousGetHandle(), strPtr));
-            Marshal.FreeHGlobal(strPtr);
-            return safeHandle;
-        }
+        public delegate IntPtr uiMenuAppendQuitItem_t(IntPtr m);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiMenuAppendQuitItem(IntPtr m);
-        public static ControlSafeHandle uiMenuAppendQuitItem(ControlSafeHandle m) => new ControlSafeHandle(uiMenuAppendQuitItem(m.DangerousGetHandle()));
+        public delegate IntPtr uiMenuAppendPreferencesItem_t(IntPtr m);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiMenuAppendPreferencesItem(IntPtr m);
-        public static ControlSafeHandle uiMenuAppendPreferencesItem(ControlSafeHandle m) => new ControlSafeHandle(uiMenuAppendPreferencesItem(m.DangerousGetHandle()));
+        public delegate IntPtr uiMenuAppendAboutItem_t(IntPtr m);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiMenuAppendAboutItem(IntPtr m);
-        public static ControlSafeHandle uiMenuAppendAboutItem(ControlSafeHandle m) => new ControlSafeHandle(uiMenuAppendAboutItem(m.DangerousGetHandle()));
+        public delegate void uiMenuAppendSeparator_t(IntPtr m);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMenuAppendSeparator(IntPtr m);
-        public static void uiMenuAppendSeparator(ControlSafeHandle m) => uiMenuAppendSeparator(m.DangerousGetHandle());
+        public delegate IntPtr uiNewMenu_t(IntPtr name);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiNewMenu(IntPtr name);
-        public static ControlSafeHandle uiNewMenu(string name)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(name);
-            ControlSafeHandle safeHandle = new ControlSafeHandle(uiNewMenu(strPtr));
-            Marshal.FreeHGlobal(strPtr);
-            return safeHandle;
-        }
+        public delegate IntPtr uiOpenFile_t(IntPtr parent);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiOpenFile(IntPtr parent);
-        public static string uiOpenFile(ControlSafeHandle parent) => UTF8Helper.ToUTF8Str(uiOpenFile(parent.DangerousGetHandle()));
+        public delegate IntPtr uiSaveFile_t(IntPtr parent);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiSaveFile(IntPtr parent);
-        public static string uiSaveFile(ControlSafeHandle parent) => UTF8Helper.ToUTF8Str(uiSaveFile(parent.DangerousGetHandle()));
+        public delegate void uiMsgBox_t(IntPtr parent, IntPtr title, IntPtr description);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiMsgBox(IntPtr parent, IntPtr title, IntPtr description);
-        public static void uiMsgBox(ControlSafeHandle parent, string title, string description)
-        {
-            IntPtr titlePtr = UTF8Helper.ToUTF8Ptr(title);
-            IntPtr descrPtr = UTF8Helper.ToUTF8Ptr(description);
-            uiMsgBox(parent.DangerousGetHandle(), titlePtr, descrPtr);
-            Marshal.FreeHGlobal(titlePtr);
-            Marshal.FreeHGlobal(descrPtr);
-        }
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        private static extern void uiMsgBoxError(IntPtr parent, IntPtr title, IntPtr description);
-        public static void uiMsgBoxError(ControlSafeHandle parent, string title, string description)
-        {
-            IntPtr titlePtr = UTF8Helper.ToUTF8Ptr(title);
-            IntPtr descrPtr = UTF8Helper.ToUTF8Ptr(description);
-            uiMsgBoxError(parent.DangerousGetHandle(), titlePtr, descrPtr);
-            Marshal.FreeHGlobal(titlePtr);
-            Marshal.FreeHGlobal(descrPtr);
-        }
+        private delegate void uiMsgBoxError_t(IntPtr parent, IntPtr title, IntPtr description);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiAreaDrawHandler(IntPtr handler, IntPtr area, [In, Out]ref uiAreaDrawParams param);
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiAreaMouseEventHandler(IntPtr handler, IntPtr area, [In, Out]ref uiAreaMouseEvent mouseEvent);
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiAreaMouseCrossedHandler(IntPtr handler, IntPtr area, bool left);
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiAreaDragBrokenHandler(IntPtr handler, IntPtr area);
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate bool uiAreaKeyEventHandler(IntPtr handler, IntPtr area, [In, Out]ref uiAreaKeyEvent keyEvent);
 
@@ -769,32 +561,25 @@ namespace LibUISharp.Native.Libraries
         }
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiAreaSetSize(IntPtr a, int width, int height);
-        public static void uiAreaSetSize(ControlSafeHandle a, int width, int height) => uiAreaSetSize(a.DangerousGetHandle(), width, height);
+        public delegate void uiAreaSetSize_t(IntPtr a, int width, int height);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiAreaQueueReDrawAll(IntPtr a);
-        public static void uiAreaQueueReDrawAll(ControlSafeHandle a) => uiAreaQueueReDrawAll(a.DangerousGetHandle());
+        public delegate void uiAreaQueueReDrawAll_t(IntPtr a);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiAreaScrollTo(IntPtr area, double x, double y, double width, double height);
-        public static void uiAreaScrollTo(ControlSafeHandle a, double x, double y, double width, double height) => uiAreaScrollTo(a.DangerousGetHandle(), x, y, width, height);
+        public delegate void uiAreaScrollTo_t(IntPtr area, double x, double y, double width, double height);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiAreaBeginUserWindowMove(IntPtr area);
-        public static void uiAreaBeginUserWindowMove(ControlSafeHandle a) => uiAreaBeginUserWindowMove(a.DangerousGetHandle());
+        public delegate void uiAreaBeginUserWindowMove_t(IntPtr area);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiAreaBeginUserWindowResize(IntPtr area, uiWindowResizeEdge edge);
-        public static void uiAreaBeginUserWindowResize(ControlSafeHandle a, uiWindowResizeEdge edge) => uiAreaBeginUserWindowResize(a.DangerousGetHandle(), (uiWindowResizeEdge)edge);
+        public delegate void uiAreaBeginUserWindowResize_t(IntPtr area, uiWindowResizeEdge edge);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewArea(uiAreaHandler ah);
-        public static ControlSafeHandle uiNewArea(uiAreaHandler ah) => new ControlSafeHandle(_uiNewArea(ah));
+        public delegate IntPtr uiNewArea_t(uiAreaHandler ah);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr _uiNewScrollingArea(uiAreaHandler ah, int width, int height);
-        public static ControlSafeHandle uiNewScrollingArea(uiAreaHandler ah, int width, int height) => new ControlSafeHandle(_uiNewScrollingArea(ah, width, height));
+        public delegate IntPtr uiNewScrollingArea_t(uiAreaHandler ah, int width, int height);
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct uiAreaDrawParams
@@ -809,9 +594,6 @@ namespace LibUISharp.Native.Libraries
             public double ClipY;
             public double ClipWidth;
             public double ClipHeight;
-
-            public static explicit operator DrawEventArgs(uiAreaDrawParams p) =>
-                new DrawEventArgs(new Context(new ControlSafeHandle(p.Context)), new RectangleD(p.ClipX, p.ClipY, p.ClipWidth, p.ClipHeight), new SizeD(p.AreaWidth, p.AreaHeight));
         }
 
         public enum uiDrawBrushType : uint
@@ -853,16 +635,6 @@ namespace LibUISharp.Native.Libraries
             public double M22;
             public double M31;
             public double M32;
-
-            public static explicit operator uiDrawMatrix(Matrix m) => new uiDrawMatrix()
-            {
-                M11 = m.M11,
-                M12 = m.M12,
-                M21 = m.M21,
-                M22 = m.M22,
-                M31 = m.M31,
-                M32 = m.M32
-            };
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -895,15 +667,6 @@ namespace LibUISharp.Native.Libraries
             public double G;
             public double B;
             public double A;
-
-            public static explicit operator uiDrawBrushGradientStop(GradientStop gs) => new uiDrawBrushGradientStop()
-            {
-                Pos = gs.Position,
-                R = gs.Color.R,
-                G = gs.Color.G,
-                B = gs.Color.B,
-                A = gs.Color.A
-            };
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -919,100 +682,85 @@ namespace LibUISharp.Native.Libraries
         }
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate IntPtr uiDrawNewPath(uiDrawFillMode fillMode);
-        public static PathSafeHandle uiDrawNewPath(FillMode fillMode) => new PathSafeHandle(uiDrawNewPath((uiDrawFillMode)fillMode));
+        public delegate IntPtr uiDrawNewPath_t(uiDrawFillMode fillMode);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawFreePath(IntPtr p);
+        public delegate void uiDrawFreePath_t(IntPtr p);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawPathNewFigure(IntPtr p, double x, double y);
-        public static void uiDrawPathNewFigure(PathSafeHandle p, double x, double y) => uiDrawPathNewFigure(p.DangerousGetHandle(), x, y);
+        public delegate void uiDrawPathNewFigure_t(IntPtr p, double x, double y);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawPathNewFigureWithArc(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
-        public static void uiDrawPathNewFigureWithArc(PathSafeHandle p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => uiDrawPathNewFigureWithArc(p.DangerousGetHandle(), xCenter, yCenter, radius, startAngle, sweep, negative);
+        public delegate void uiDrawPathNewFigureWithArc_t(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawPathLineTo(IntPtr p, double x, double y);
-        public static void uiDrawPathLineTo(PathSafeHandle p, double x, double y) => uiDrawPathLineTo(p.DangerousGetHandle(), x, y);
+        public delegate void uiDrawPathLineTo_t(IntPtr p, double x, double y);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawPathArcTo(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
-        public static void uiDrawPathArcTo(PathSafeHandle p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => uiDrawPathArcTo(p.DangerousGetHandle(), xCenter, yCenter, radius, startAngle, sweep, negative);
+        public delegate void uiDrawPathArcTo_t(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawPathBezierTo(IntPtr p, double c1x, double c1y, double c2x, double c2y, double endX, double endY);
-        public static void uiDrawPathBezierTo(PathSafeHandle p, double c1x, double c1y, double c2x, double c2y, double endX, double endY) => uiDrawPathBezierTo(p.DangerousGetHandle(), c1x, c1y, c2x, c2y, endX, endY);
+        public delegate void uiDrawPathBezierTo_t(IntPtr p, double c1x, double c1y, double c2x, double c2y, double endX, double endY);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawPathCloseFigure(IntPtr p);
-        public static void uiDrawPathCloseFigure(PathSafeHandle p) => uiDrawPathCloseFigure(p.DangerousGetHandle());
+        public delegate void uiDrawPathCloseFigure_t(IntPtr p);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawPathAddRectangle(IntPtr p, double x, double y, double width, double height);
-        public static void uiDrawPathAddRectangle(PathSafeHandle p, double x, double y, double width, double height) => uiDrawPathAddRectangle(p.DangerousGetHandle(), x, y, width, height);
+        public delegate void uiDrawPathAddRectangle_t(IntPtr p, double x, double y, double width, double height);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawPathEnd(IntPtr p);
-        public static void uiDrawPathEnd(PathSafeHandle p) => uiDrawPathEnd(p.DangerousGetHandle());
+        public delegate void uiDrawPathEnd_t(IntPtr p);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawStroke(IntPtr context, IntPtr path, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParam);
-        public static void uiDrawStroke(LibUISafeHandle c, PathSafeHandle p, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParams) => uiDrawStroke(c.DangerousGetHandle(), p.DangerousGetHandle(), ref brush, ref strokeParams);
+        public delegate void uiDrawStroke_t(IntPtr context, IntPtr path, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParam);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawFill(IntPtr context, IntPtr path, ref uiDrawBrush brush);
-        public static void uiDrawFill(LibUISafeHandle c, PathSafeHandle path, ref uiDrawBrush brush) => uiDrawFill(c.DangerousGetHandle(), path.DangerousGetHandle(), ref brush);
+        public delegate void uiDrawFill_t(IntPtr context, IntPtr path, ref uiDrawBrush brush);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawMatrixSetIdentity(uiDrawMatrix matrix);
+        public delegate void uiDrawMatrixSetIdentity_t(uiDrawMatrix matrix);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawMatrixTranslate(uiDrawMatrix matrix, double x, double y);
+        public delegate void uiDrawMatrixTranslate_t(uiDrawMatrix matrix, double x, double y);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawMatrixScale(uiDrawMatrix matrix, double xCenter, double yCenter, double x, double y);
+        public delegate void uiDrawMatrixScale_t(uiDrawMatrix matrix, double xCenter, double yCenter, double x, double y);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawMatrixRotate(uiDrawMatrix matrix, double x, double y, double amount);
+        public delegate void uiDrawMatrixRotate_t(uiDrawMatrix matrix, double x, double y, double amount);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawMatrixSkew(uiDrawMatrix matrix, double x, double y, double xamount, double yamount);
+        public delegate void uiDrawMatrixSkew_t(uiDrawMatrix matrix, double x, double y, double xamount, double yamount);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawMatrixMultiply(uiDrawMatrix dest, uiDrawMatrix src);
+        public delegate void uiDrawMatrixMultiply_t(uiDrawMatrix dest, uiDrawMatrix src);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiDrawMatrixInvertible(uiDrawMatrix matrix);
+        public delegate bool uiDrawMatrixInvertible_t(uiDrawMatrix matrix);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate int uiDrawMatrixInvert(uiDrawMatrix matrix);
+        public delegate int uiDrawMatrixInvert_t(uiDrawMatrix matrix);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawMatrixTransformPoint(uiDrawMatrix matrix, out double x, out double y);
+        public delegate void uiDrawMatrixTransformPoint_t(uiDrawMatrix matrix, out double x, out double y);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawMatrixTransformSize(uiDrawMatrix matrix, out double x, out double y);
+        public delegate void uiDrawMatrixTransformSize_t(uiDrawMatrix matrix, out double x, out double y);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawTransform(IntPtr context, uiDrawMatrix matrix);
-        public static void uiDrawTransform(LibUISafeHandle c, uiDrawMatrix matrix) => uiDrawTransform(c.DangerousGetHandle(), matrix);
+        public delegate void uiDrawTransform_t(IntPtr context, uiDrawMatrix matrix);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawClip(IntPtr context, IntPtr path);
-        public static void uiDrawClip(LibUISafeHandle context, PathSafeHandle path) => uiDrawClip(context.DangerousGetHandle(), path.DangerousGetHandle());
+        public delegate void uiDrawClip_t(IntPtr context, IntPtr path);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawSave(IntPtr context);
-        public static void uiDrawSave(LibUISafeHandle c) => uiDrawSave(c.DangerousGetHandle());
+        public delegate void uiDrawSave_t(IntPtr context);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiDrawRestore(IntPtr context);
-        public static void uiDrawRestore(LibUISafeHandle c) => uiDrawRestore(c.DangerousGetHandle());
+        public delegate void uiDrawRestore_t(IntPtr context);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiFreeAttribute(IntPtr a);
+        public delegate void uiFreeAttribute_t(IntPtr a);
 
         public enum uiAttributeType : uint
         {
@@ -1234,12 +982,6 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiAttributedStringInsertAtUnattributed(IntPtr s, IntPtr str, UIntPtr at);
-        public static void uiAttributedStringInsertAtUnattributed(AttributedTextSafeHandle s, string str, UIntPtr at)
-        {
-            IntPtr strPtr = UTF8Helper.ToUTF8Ptr(str);
-            uiAttributedStringAppendUnattributed(s.DangerousGetHandle(), strPtr);
-            Marshal.FreeHGlobal(strPtr);
-        }
 
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiAttributedStringDelete(IntPtr s, UIntPtr start, UIntPtr end);
@@ -1257,32 +999,11 @@ namespace LibUISharp.Native.Libraries
 
         public struct uiFontDescriptor
         {
-            IntPtr Family;
-            double Size;
-            uiTextWeight Weight;
-            uiTextItalic Italic;
-            uiTextStretch Stretch;
-
-            public static explicit operator Font(uiFontDescriptor f) => new Font(UTF8Helper.ToUTF8Str(f.Family), f.Size, (FontWeight)f.Weight, (FontStyle)f.Italic, (FontStretch)f.Stretch);
-            public static explicit operator uiFontDescriptor(Font f)
-            {
-                IntPtr strPtr = UTF8Helper.ToUTF8Ptr(f.Family);
-                try
-                {
-                    return new uiFontDescriptor
-                    {
-                        Family = strPtr,
-                        Size = f.Size,
-                        Weight = (uiTextWeight)f.Weight,
-                        Italic = (uiTextItalic)f.Style,
-                        Stretch = (uiTextStretch)f.Weight
-                    };
-                }
-                finally
-                {
-                    Marshal.FreeHGlobal(strPtr);
-                }
-            }
+            public IntPtr Family;
+            public double Size;
+            public uiTextWeight Weight;
+            public uiTextItalic Italic;
+            public uiTextStretch Stretch;
         }
 
         public enum uiDrawTextAlign : uint
@@ -1298,14 +1019,6 @@ namespace LibUISharp.Native.Libraries
             public uiFontDescriptor DefaultFont;
             public double Width;
             public uiDrawTextAlign Align;
-
-            public static explicit operator uiDrawTextLayoutParams(TextLayoutOptions o) => new uiDrawTextLayoutParams()
-            {
-                String = o.Text.Handle.DangerousGetHandle(),
-                DefaultFont = (uiFontDescriptor)o.DefaultFont,
-                Width = o.Width,
-                Align = (uiDrawTextAlign)o.Alignment
-            };
         }
 
         [UnmanagedFunctionPointer(callingConvention)]
@@ -1360,9 +1073,6 @@ namespace LibUISharp.Native.Libraries
             public uiModifiers Modifiers;
 
             public ulong Held1To64;
-
-            public static explicit operator MouseEventArgs(uiAreaMouseEvent e) =>
-                new MouseEventArgs(new PointD(e.X, e.Y), new SizeD(e.AreaWidth, e.AreaHeight), e.Up, e.Down, e.Count, (KeyModifierFlags)e.Modifiers, e.Held1To64);
         }
 
         public enum uiExtKey : uint
@@ -1416,21 +1126,6 @@ namespace LibUISharp.Native.Libraries
             public uiModifiers Modifier;
             public uiModifiers Modifiers;
             public bool Up;
-
-            public static explicit operator KeyEventArgs(uiAreaKeyEvent e)
-            {
-                KeyModifierFlags m = 0;
-                if (e.Modifiers.HasFlag(uiModifiers.uiModifierCtrl) || e.Modifiers.HasFlag(uiModifiers.uiModifierCtrl))
-                    m |= KeyModifierFlags.Ctrl;
-                if (e.Modifiers.HasFlag(uiModifiers.uiModifierAlt) || e.Modifiers.HasFlag(uiModifiers.uiModifierAlt))
-                    m |= KeyModifierFlags.Alt;
-                if (e.Modifiers.HasFlag(uiModifiers.uiModifierShift) || e.Modifiers.HasFlag(uiModifiers.uiModifierShift))
-                    m |= KeyModifierFlags.Shift;
-                if (e.Modifiers.HasFlag(uiModifiers.uiModifierSuper) || e.Modifiers.HasFlag(uiModifiers.uiModifierSuper))
-                    m |= KeyModifierFlags.Super;
-
-                return new KeyEventArgs(e.Key, (KeyExtension)e.ExtKey, m, e.Up);
-            }
         }
 
         [UnmanagedFunctionPointer(callingConvention)]

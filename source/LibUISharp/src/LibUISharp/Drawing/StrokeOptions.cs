@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using static LibUISharp.Internal.LibUI;
+using LibUISharp.Native.Libraries;
 
 namespace LibUISharp.Drawing
 {
@@ -11,7 +11,7 @@ namespace LibUISharp.Drawing
 
         public StrokeOptions() => MiterLimit = DefaultMiterLimit;
 
-        internal uiDrawStrokeParams Internal = new uiDrawStrokeParams();
+        internal LibuiLibrary.uiDrawStrokeParams Internal = new LibuiLibrary.uiDrawStrokeParams();
 
         public LineCap Cap
         {

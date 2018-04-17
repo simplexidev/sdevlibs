@@ -1,9 +1,8 @@
 ﻿using System;
-using LibUISharp.Internal;
 
+// uiFontDescriptor
 namespace LibUISharp.Drawing
 {
-    // uiFontDescriptor
     public readonly struct Font : IEquatable<Font>
     {
         public Font(string family, double size, FontWeight weight = FontWeight.Normal, FontStyle style = FontStyle.Normal, FontStretch stretch = FontStretch.Normal)

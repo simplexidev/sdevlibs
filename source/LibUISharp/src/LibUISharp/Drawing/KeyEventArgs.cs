@@ -1,8 +1,8 @@
 ﻿using System;
 
+// uiAreaKeyEvent
 namespace LibUISharp.Drawing
 {
-    // uiAreaKeyEvent
     public class KeyEventArgs : EventArgs
     {
         public KeyEventArgs(byte key, KeyExtension ext, KeyModifierFlags keyModifier, bool up)
