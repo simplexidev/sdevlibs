@@ -2,9 +2,9 @@
 using System.Runtime.InteropServices;
 using LibUISharp.Native.Libraries;
 
+// uiDrawStrokeParams
 namespace LibUISharp.Drawing
 {
-    // uiDrawStrokeParams
     public class StrokeOptions
     {
         public const double DefaultMiterLimit = 10.0;
@@ -16,13 +16,13 @@ namespace LibUISharp.Drawing
         public LineCap Cap
         {
             get => (LineCap)Internal.Cap;
-            set => Internal.Cap = (uiDrawLineCap)value;
+            set => Internal.Cap = (LibuiLibrary.uiDrawLineCap)value;
         }
 
         public LineJoin Join
         {
             get => (LineJoin)Internal.Join;
-            set => Internal.Join = (uiDrawLineJoin)value;
+            set => Internal.Join = (LibuiLibrary.uiDrawLineJoin)value;
         }
 
         public double Thickness
