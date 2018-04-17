@@ -11,11 +11,11 @@ namespace LibUISharp
         /// The contents fills the container.
         /// </summary>
         Fill = 0,
-
+        
         /// <summary>
-        /// The contents align toward the top-left of the container.
+        /// The contents align in the center of the container.
         /// </summary>
-        TopLeft = 1,
+        Center = 1,
 
         /// <summary>
         /// The contents align toward the top of the container.
@@ -23,39 +23,59 @@ namespace LibUISharp
         Top = 2,
 
         /// <summary>
+        /// The contents align toward the top-left of the container.
+        /// </summary>
+        TopLeft = 3,
+
+        /// <summary>
+        /// The contents align toward the top-center of the container.
+        /// </summary>
+        TopCenter = 4,
+
+        /// <summary>
         /// The contents align toward the top-right of the container.
         /// </summary>
-        TopRight = 3,
+        TopRight = 5,
 
         /// <summary>
         /// The contents align toward the left of the container.
         /// </summary>
-        Left = 3,
-        
+        Left = 6,
+
         /// <summary>
-        /// The contents align in the center of the container.
+        /// The contents align toward the left-center of the container.
         /// </summary>
-        Center = 5,
+        LeftCenter = 7,
 
         /// <summary>
         /// The contents align toward the right of the container.
         /// </summary>
-        Right = 6,
+        Right = 8,
 
         /// <summary>
-        /// The contents align toward the bottom-left of the container.
+        /// The contents align toward the right-center of the container.
         /// </summary>
-        BottomLeft = 7,
+        RightCenter = 9,
 
         /// <summary>
         /// The contents align toward the bottom of the container.
         /// </summary>
-        Bottom = 8,
+        Bottom = 10,
+
+        /// <summary>
+        /// The contents align toward the bottom-left of the container.
+        /// </summary>
+        BottomLeft = 11,
+
+        /// <summary>
+        /// The contents align toward the bottom-left of the container.
+        /// </summary>
+        BottomCenter = 12,
 
         /// <summary>
         /// The contents align toward the bottom-right of the container.
         /// </summary>
-        BottomRight = 9
+        BottomRight = 13
     }
 
     /// <summary>
