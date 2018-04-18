@@ -1,19 +1,17 @@
 <!--| Project:  LibUISharp.csproj                  |
     | Assembly: LibUISharp.dll                     |
     | Guid: {F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD} |-->
-<Project>
-  <!--HACK https://github.com/dotnet/sdk/issues/2003 -->
-  <PropertyGroup>
-    <BaseIntermediateOutputPath>..\..\build\obj\$(MSBuildProjectName)\$(Configuration)</BaseIntermediateOutputPath>
-  </PropertyGroup>
-  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
-    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>..\..\build\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>..\..\build\obj\$(MSBuildProjectName)</IntermediateOutputPath>
     <OutputPath>..\..\build\bin\$(MSBuildProjectName)\$(Configuration)</OutputPath>
-    <PackageOutputPath>..\..\build\pkg\$(MSBuildProjectName)\$(Configuration)</PackageOutputPath>
-    <DocumentationFile>..\..\build\doc\$(MSBuildProjectName)-$(Configuration).xml</DocumentationFile>
+    <PackageOutputPath>..\..\build\pkg\</PackageOutputPath>
+    <EnableDefaultItems>false</EnableDefaultItems>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -31,16 +29,21 @@
     <DebugType>pdbonly</DebugType>
     <DefineConstants>TRACE;NETSTANDARD2_0</DefineConstants>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <DocumentationFile>..\..\build\doc\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NativeLibraryLoader" Version="1.0.8" />
-    <PackageReference Include="Microsoft.DotNet.Analyzers.Compatibility" Version="0.2.12-alpha" />
+    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
+    <PackageReference Include="System.Console" Version="4.3.1" />
+    <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
     <Compile Include="src\LibUISharp\Controls\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
+    <Compile Include="src\LibUISharp\Drawing\Text\*.cs" />
     <Compile Include="src\LibUISharp\Native\*.cs" />
     <Compile Include="src\LibUISharp\Native\Libraries\*.cs" />
     <Compile Include="src\LibUISharp\Native\SafeHandles\*.cs" />
@@ -84,5 +87,4 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/tom-corwin/LibUISharp</RepositoryUrl>
   </PropertyGroup>
-  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 </Project>

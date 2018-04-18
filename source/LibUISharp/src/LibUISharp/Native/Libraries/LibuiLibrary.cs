@@ -1,7 +1,6 @@
 ﻿using NativeLibraryLoader;
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace LibUISharp.Native.Libraries
 {
@@ -267,34 +266,42 @@ namespace LibUISharp.Native.Libraries
         private delegate IntPtr uiNewCheckbox_t(IntPtr text);
         public static IntPtr uiNewCheckbox(IntPtr text) => FunctionLoader.Load<uiNewCheckbox_t>("uiNewCheckbox")(text);
 
-        //TODO: Finish writing static functions below this line.
-        //\/////////////////////////////////////////////////////////////////
-
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiEntryText_t(IntPtr e);
+        public static IntPtr uiEntryText(IntPtr e) => FunctionLoader.Load<uiEntryText_t>("uiEntryText")(e);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiEntrySetText_t(IntPtr e, IntPtr text);
+        public static void uiEntrySetText(IntPtr e, IntPtr text) => FunctionLoader.Load<uiEntrySetText_t>("uiEntrySetText")(e, text);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiEntryOnChanged_t(IntPtr e, uiEntryOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiEntryOnChanged_tf(IntPtr e, IntPtr data);
+        public static void uiEntryOnChanged(IntPtr e, uiEntryOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiEntryOnChanged_t>("uiEntryOnChanged")(e, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiEntryReadOnly_t(IntPtr e);
+        public static bool uiEntryReadOnly(IntPtr e) => FunctionLoader.Load<uiEntryReadOnly_t>("uiEntryReadOnly")(e);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiEntrySetReadOnly_t(IntPtr e, bool @readonly);
+        public static void uiEntrySetReadOnly(IntPtr e, bool @readonly) => FunctionLoader.Load<uiEntrySetReadOnly_t>("uiEntrySetReadOnly")(e, @readonly);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewEntry_t();
+        public static IntPtr uiNewEntry() => FunctionLoader.Load<uiNewEntry_t>("uiNewEntry")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewPasswordEntry_t();
+        public static IntPtr uiNewPasswordEntry() => FunctionLoader.Load<uiNewPasswordEntry_t>("uiNewPasswordEntry")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewSearchEntry_t();
+        public static IntPtr uiNewSearchEntry() => FunctionLoader.Load<uiNewSearchEntry_t>("uiNewSearchEntry")();
+
+        //TODO: Finish writing static functions below this line.
+        // /////////////////////////////////////////////////////////////////
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiLabelText_t(IntPtr l);
@@ -952,6 +959,7 @@ namespace LibUISharp.Native.Libraries
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate UIntPtr uiAttributedStringGraphemeToByteIndex_t(IntPtr s, UIntPtr pos);
 
+        [StructLayout(LayoutKind.Sequential)]
         public struct uiFontDescriptor
         {
             public IntPtr Family;
@@ -968,6 +976,7 @@ namespace LibUISharp.Native.Libraries
             uiDrawTextAlignRight
         }
 
+        [StructLayout(LayoutKind.Sequential)]
         public struct uiDrawTextLayoutParams
         {
             public IntPtr String;
@@ -1130,18 +1139,22 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiGridAppend_t(IntPtr grid, IntPtr child, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
+        public static ui() => FunctionLoader.Load<ui_t>("ui")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiGridInsertAt_t(IntPtr grid, IntPtr child, IntPtr existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
+        public static ui() => FunctionLoader.Load<ui_t>("ui")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiGridPadded_t(IntPtr grid);
+        public static ui() => FunctionLoader.Load<ui_t>("ui")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiGridSetPadded_t(IntPtr grid, bool padded);
+        public static void uiGridSetPadded(IntPtr g, bool padded) => FunctionLoader.Load<ui_t>("ui")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewGrid_t();
-
+        public static IntPtr uiNewGrid() => FunctionLoader.Load<uiNewGrid_t>("uiNewGrid")();
     }
 }

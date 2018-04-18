@@ -1,6 +1,5 @@
-﻿// uiAlign
-// uiAt
-namespace LibUISharp
+﻿// uiAt
+namespace LibUISharp.Controls
 {
     /// <summary>
     /// Specifies how contents are positioned in relation to other content.

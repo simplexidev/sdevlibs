@@ -1,5 +1,6 @@
-﻿using System.Runtime.InteropServices;
-using static LibUISharp.Internal.LibUI;
+﻿using LibUISharp.Native;
+using LibUISharp.Native.Libraries;
+using System.Runtime.InteropServices;
 
 // uiDrawMatrix
 namespace LibUISharp.Drawing
@@ -28,34 +29,34 @@ namespace LibUISharp.Drawing
         public static Matrix SetIdentity()
         {
             Matrix matrix = new Matrix();
-            uiDrawMatrixSetIdentity((uiDrawMatrix)matrix);
+            LibuiLibrary.uiDrawMatrixSetIdentity(LibuiConvert.ToLibuiDrawMatrix(matrix));
             return matrix;
         }
         
-        public void Translate(double x, double y) => uiDrawMatrixTranslate((uiDrawMatrix)this, x, y);
+        public void Translate(double x, double y) => LibuiLibrary.uiDrawMatrixTranslate(LibuiConvert.ToLibuiDrawMatrix(this), x, y);
 
-        public void Scale(double xCenter, double yCenter, double x, double y) => uiDrawMatrixScale((uiDrawMatrix)this, xCenter, yCenter, x, y);
+        public void Scale(double xCenter, double yCenter, double x, double y) => LibuiLibrary.uiDrawMatrixScale(LibuiConvert.ToLibuiDrawMatrix(this), xCenter, yCenter, x, y);
 
-        public void Rotate(double x, double y, double amount) => uiDrawMatrixRotate((uiDrawMatrix)this, x, y, amount);
+        public void Rotate(double x, double y, double amount) => LibuiLibrary.uiDrawMatrixRotate(LibuiConvert.ToLibuiDrawMatrix(this), x, y, amount);
 
-        public void Skew(double x, double y, double xamount, double yamount) => uiDrawMatrixSkew((uiDrawMatrix)this, x, y, xamount, yamount);
+        public void Skew(double x, double y, double xamount, double yamount) => LibuiLibrary.uiDrawMatrixSkew(LibuiConvert.ToLibuiDrawMatrix(this), x, y, xamount, yamount);
 
         public void Multiply([In] ref Matrix src) => Multiply(this, src);
-        public static void Multiply([Out]  Matrix dest, [In]  Matrix src) => uiDrawMatrixMultiply((uiDrawMatrix)dest, (uiDrawMatrix)src);
+        public static void Multiply([Out]  Matrix dest, [In]  Matrix src) => LibuiLibrary.uiDrawMatrixMultiply(LibuiConvert.ToLibuiDrawMatrix(dest), LibuiConvert.ToLibuiDrawMatrix(src));
 
-        public void Invertible() => uiDrawMatrixInvertible((uiDrawMatrix)this);
+        public void Invertible() => LibuiLibrary.uiDrawMatrixInvertible(LibuiConvert.ToLibuiDrawMatrix(this));
 
-        public void Invert() => uiDrawMatrixInvert((uiDrawMatrix)this);
+        public void Invert() => LibuiLibrary.uiDrawMatrixInvert(LibuiConvert.ToLibuiDrawMatrix(this));
 
         public PointD TransformToPoint()
         {
-            uiDrawMatrixTransformPoint((uiDrawMatrix)this, out double x, out double y);
+            LibuiLibrary.uiDrawMatrixTransformPoint(LibuiConvert.ToLibuiDrawMatrix(this), out double x, out double y);
             return new PointD(x, y);
         }
 
         public SizeD TransformToSize()
         {
-            uiDrawMatrixTransformSize((uiDrawMatrix)this, out double width, out double height);
+            LibuiLibrary.uiDrawMatrixTransformSize(LibuiConvert.ToLibuiDrawMatrix(this), out double width, out double height);
             return new SizeD(width, height);
         }
     }

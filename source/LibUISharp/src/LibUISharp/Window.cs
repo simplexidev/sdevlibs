@@ -1,5 +1,6 @@
 ﻿using LibUISharp.Controls;
 using LibUISharp.Drawing;
+using LibUISharp.Native;
 using LibUISharp.Native.Libraries;
 using LibUISharp.Native.SafeHandles;
 using System;
@@ -35,7 +36,7 @@ namespace LibUISharp
             if (string.IsNullOrEmpty(title))
                 title = "LibUISharp";
 
-            IntPtr strPtr = LibuiLibrary.UTF8Helper.ToUTF8Ptr(title);
+            IntPtr strPtr = LibuiConvert.ToLibuiString(title);
             Handle = new SafeControlHandle(LibuiLibrary.uiNewWindow(strPtr, width, height, hasMenuStrip));
             Marshal.FreeHGlobal(strPtr);
 
@@ -71,7 +72,7 @@ namespace LibUISharp
         {
             get
             {
-                title = LibuiLibrary.UTF8Helper.ToUTF16Str(LibuiLibrary.uiWindowTitle(Handle.DangerousGetHandle()));
+                title = LibuiConvert.ToString(LibuiLibrary.uiWindowTitle(Handle.DangerousGetHandle()));
                 return title;
             }
             set
@@ -83,7 +84,7 @@ namespace LibUISharp
                     else
                         title = value;
 
-                    IntPtr strPtr = LibuiLibrary.UTF8Helper.ToUTF8Ptr(title);
+                    IntPtr strPtr = LibuiConvert.ToLibuiString(title);
                     LibuiLibrary.uiWindowSetTitle(Handle.DangerousGetHandle(), strPtr);
                     Marshal.FreeHGlobal(strPtr);
                 }

@@ -1,4 +1,4 @@
-﻿// uiWindowEdge
+﻿// uiWindowResizeEdge
 namespace LibUISharp.Drawing
 {
     /// <summary>

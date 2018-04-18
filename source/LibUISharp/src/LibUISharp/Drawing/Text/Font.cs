@@ -32,7 +32,7 @@ namespace LibUISharp.Drawing
         }
         public bool Equals(Font other) => this == other;
 
-        public override int GetHashCode() => unchecked(this.GetHashCode(Family, Size, Weight, Style, Stretch));
+        public override int GetHashCode() => unchecked(this.GetHashCodeFromPropertyValues(Family, Size, Weight, Style, Stretch));
 
         public static bool operator ==(Font font1, Font font2) => font1.Family == font2.Family && font1.Size == font2.Size && font1.Stretch == font2.Stretch && font1.Style == font2.Style && font1.Weight == font2.Weight;
         public static bool operator !=(Font font1, Font font2) => !(font1 == font2);

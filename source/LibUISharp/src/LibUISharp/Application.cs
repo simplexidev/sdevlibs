@@ -114,13 +114,13 @@ namespace LibUISharp
             }
 
             IntPtr errPtr = LibuiLibrary.uiInit(ref Options);
-            string errStr = LibuiLibrary.UTF8Helper.ToUTF16Str(errPtr);
+            string errStr = LibuiConvert.ToString(errPtr);
 
             if (string.IsNullOrEmpty(errStr))
             {
                 Console.WriteLine(errStr);
                 LibuiLibrary.uiFreeInitError(errPtr);
-                throw new ExternalException(errStr);
+                throw new LibuiException(errStr);
             }
         }
 

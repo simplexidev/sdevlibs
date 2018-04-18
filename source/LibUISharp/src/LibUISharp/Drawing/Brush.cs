@@ -1,11 +1,11 @@
-﻿using System;
+﻿using LibUISharp.Native;
+using System;
 using System.Runtime.InteropServices;
-using static LibUISharp.Internal.LibUI;
+using static LibUISharp.Native.Libraries.LibuiLibrary;
 
+// uiDrawBrush
 namespace LibUISharp.Drawing
 {
-    // uiBrush
-    //TODO: public class Brushes
     public abstract class Brush
     {
         internal uiDrawBrush Internal = new uiDrawBrush();
@@ -60,7 +60,7 @@ namespace LibUISharp.Drawing
                     uiDrawBrushGradientStop[] stops = new uiDrawBrushGradientStop[value.Length];
                     for (int i = 0; i < value.Length; i++)
                     {
-                        stops[i] = (uiDrawBrushGradientStop)value[i];
+                        stops[i] = LibuiConvert.ToLibuiDrawBrushGradientStop(value[i]);
                     }
                     Internal.NumStops = (UIntPtr)value.Length;
                     Internal.Stops = Marshal.UnsafeAddrOfPinnedArrayElement(stops, 0);

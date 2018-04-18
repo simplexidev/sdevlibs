@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using LibUISharp.Native;
 using LibUISharp.Native.Libraries;
 using LibUISharp.Native.SafeHandles;
 
@@ -19,7 +20,7 @@ namespace LibUISharp.Controls
         /// <param name="text">The text to be displayed by this button.</param>
         public Button(string text)
         {
-            IntPtr strPtr = LibuiLibrary.UTF8Helper.ToUTF8Ptr(text);
+            IntPtr strPtr = LibuiConvert.ToLibuiString(text);
             Handle = new SafeControlHandle(LibuiLibrary.uiNewButton(strPtr));
             Marshal.FreeHGlobal(strPtr);
             this.text = text;
@@ -38,14 +39,14 @@ namespace LibUISharp.Controls
         {
             get
             {
-                text = LibuiLibrary.UTF8Helper.ToUTF16Str(LibuiLibrary.uiButtonText(Handle.DangerousGetHandle()));
+                text = LibuiConvert.ToString(LibuiLibrary.uiButtonText(Handle.DangerousGetHandle()));
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    IntPtr strPtr = LibuiLibrary.UTF8Helper.ToUTF8Ptr(value);
+                    IntPtr strPtr = LibuiConvert.ToLibuiString(value);
                     LibuiLibrary.uiButtonSetText(Handle.DangerousGetHandle(), strPtr);
                     Marshal.FreeHGlobal(strPtr);
                     text = value;

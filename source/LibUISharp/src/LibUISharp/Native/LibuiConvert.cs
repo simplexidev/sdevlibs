@@ -1,4 +1,5 @@
-﻿using LibUISharp.Drawing;
+﻿using LibUISharp.Controls;
+using LibUISharp.Drawing;
 using LibUISharp.Native.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
@@ -128,7 +129,7 @@ namespace LibUISharp.Native
         public static uiDrawTextLayoutParams ToLibuiDrawTextLayourParams(TextLayoutOptions o) => new uiDrawTextLayoutParams()
         {
             String = o.Text.Handle.DangerousGetHandle(),
-            DefaultFont = (uiFontDescriptor)o.DefaultFont,
+            DefaultFont = ToLibuiFontDescriptor(o.DefaultFont),
             Width = o.Width,
             Align = (uiDrawTextAlign)o.Alignment
         };

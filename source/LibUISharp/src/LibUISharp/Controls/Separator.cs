@@ -1,20 +1,20 @@
-﻿using System;
-using static LibUISharp.Internal.LibUI;
+﻿using LibUISharp.Native.Libraries;
+using System;
 
-namespace LibUISharp
+namespace LibUISharp.Controls
 {
     // uiSeparator
-    public abstract class Separator : Control
+    public class Separator : Control
     {
         protected Separator(Orientation orientation)
         {
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    Handle = uiNewHorizontalSeparator();
+                    Handle = LibuiLibrary.uiNewHorizontalSeparator();
                     break;
                 case Orientation.Vertical:
-                    Handle = uiNewVerticalSeparator();
+                    Handle = LibuiLibrary.uiNewVerticalSeparator();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("orientation");
@@ -23,15 +23,5 @@ namespace LibUISharp
         }
 
         public Orientation Orientation { get; }
-    }
-
-    public class HSeparator : Separator
-    {
-        public HSeparator() : base(Orientation.Horizontal) { }
-    }
-
-    public class VSeparator : Separator
-    {
-        public VSeparator() : base(Orientation.Vertical) { }
     }
 }
