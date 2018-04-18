@@ -17,13 +17,13 @@
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <Optimize>false</Optimize>
     <DebugType>full</DebugType>
     <DefineConstants>DEBUG;TRACE;NETSTANDARD2_0</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -63,10 +63,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ref\ui.h" />
-    <None Include="ref\ui_windows.h" />
-    <None Include="ref\ui_unix.h" />
-    <None Include="ref\ui_darwin.h" />
+    <None Include="..\External\libui\ui.h">
+      <Link>ref/ui.h</Link>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
