@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp", "source\LibUISharp\LibUISharp.csproj", "{F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp", "LibUISharp\LibUISharp.csproj", "{F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
