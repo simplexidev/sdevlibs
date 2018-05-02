@@ -15,6 +15,7 @@
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <DocumentationFile>..\..\build\doc\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -29,7 +30,6 @@
     <DebugType>pdbonly</DebugType>
     <DefineConstants>TRACE;NETSTANDARD2_0</DefineConstants>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <DocumentationFile>..\..\build\doc\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NativeLibraryLoader" Version="1.0.8" />
@@ -42,6 +42,7 @@
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
     <Compile Include="src\LibUISharp\Controls\*.cs" />
+    <Compile Include="src\LibUISharp\Controls\Collections\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\Text\*.cs" />
     <Compile Include="src\LibUISharp\Native\*.cs" />

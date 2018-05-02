@@ -75,7 +75,7 @@ namespace LibUISharp.Native.Libraries
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiQueueMain_tf(IntPtr data);
         public static void uiQueueMain(uiQueueMain_tf f, IntPtr data) => FunctionLoader.Load<uiQueueMain_t>("uiQueueMain")(f, data);
-
+        
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiOnShouldQuit_t(uiOnShouldQuit_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
@@ -300,235 +300,306 @@ namespace LibUISharp.Native.Libraries
         private delegate IntPtr uiNewSearchEntry_t();
         public static IntPtr uiNewSearchEntry() => FunctionLoader.Load<uiNewSearchEntry_t>("uiNewSearchEntry")();
 
-        //TODO: Finish writing static functions below this line.
-        // /////////////////////////////////////////////////////////////////
-
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiLabelText_t(IntPtr l);
+        public static IntPtr uiLabelText(IntPtr l) => FunctionLoader.Load<uiLabelText_t>("uiLabelText")(l);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiLabelSetText_t(IntPtr l, IntPtr text);
+        public static void uiLabelSetText(IntPtr l, IntPtr text) => FunctionLoader.Load<uiLabelSetText_t>("uiLabelSetText")(l, text);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewLabel_t(IntPtr text);
+        public static IntPtr uiNewLabel(IntPtr text) => FunctionLoader.Load<uiNewLabel_t>("uiNewLabel")(text);
+
+        // /////////////////////////////////////////////////////////////////
+        //TODO: Finish writing static functions below this line.
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiTabAppend_t(IntPtr t, IntPtr name, IntPtr c);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiTabInsertAt_t(IntPtr t, IntPtr name, int before, IntPtr c);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiTabDelete_t(IntPtr t, int index);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiTabNumPages_t(IntPtr t);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiTabMargined_t(IntPtr t, int page);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiTabSetMargined_t(IntPtr t, int page, bool margined);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewTab_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiGroupTitle_t(IntPtr g);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiGroupSetTitle_t(IntPtr g, IntPtr title);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiGroupSetChild_t(IntPtr g, IntPtr child);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiGroupMargined_t(IntPtr g);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiGroupSetMargined_t(IntPtr g, bool margined);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewGroup_t(IntPtr title);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiSpinboxValue_t(IntPtr s);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiSpinboxSetValue_t(IntPtr s, int value);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiSpinboxOnChanged_t(IntPtr s, uiSpinboxOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiSpinboxOnChanged_tf(IntPtr s, IntPtr data);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewSpinbox_t(int min, int max);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiSliderValue_t(IntPtr s);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiSliderSetValue_t(IntPtr s, int value);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiSliderOnChanged_t(IntPtr s, uiSliderOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiSliderOnChanged_tf(IntPtr s, IntPtr data);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewSlider_t(int min, int max);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiProgressBarValue_t(IntPtr p);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiProgressBarSetValue_t(IntPtr p, int n);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewProgressBar_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewHorizontalSeparator_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewVerticalSeparator_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiComboboxAppend_t(IntPtr c, IntPtr text);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiComboboxSelected_t(IntPtr c);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiComboboxSetSelected_t(IntPtr c, int n);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiComboboxOnSelected_t(IntPtr c, uiComboboxOnSelected_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiComboboxOnSelected_tf(IntPtr c, IntPtr data);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewCombobox_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiEditableComboboxAppend_t(IntPtr c, IntPtr text);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiEditableComboboxText_t(IntPtr comboBox);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiEditableComboboxSetText_t(IntPtr c, IntPtr text);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiEditableComboboxOnChanged_t(IntPtr c, uiEditableComboboxOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiEditableComboboxOnChanged_tf(IntPtr c, IntPtr data);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewEditableCombobox_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiRadioButtonsAppend_t(IntPtr r, IntPtr text);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiRadioButtonsSelected_t(IntPtr r);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiRadioButtonsSetSelected_t(IntPtr r, int n);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiRadioButtonsOnSelected_t(IntPtr r, uiRadioButtonsOnSelected_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiRadioButtonsOnSelected_tf(IntPtr r, IntPtr data);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewRadioButtons_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewDateTimePicker_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewDatePicker_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewTimePicker_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMultilineEntryText_t(IntPtr e);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMultilineEntrySetText_t(IntPtr e, IntPtr text);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMultilineEntryAppend_t(IntPtr e, IntPtr text);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMultilineEntryOnChanged_t(IntPtr e, uiMultilineEntryOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiMultilineEntryOnChanged_tf(IntPtr e, IntPtr data);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiMultilineEntryReadOnly_t(IntPtr e);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMultilineEntrySetReadOnly_t(IntPtr e, bool @readonly);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewMultilineEntry_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewNonWrappingMultilineEntry_t();
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuItemEnable_t(IntPtr m);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuItemDisable_t(IntPtr m);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuItemOnClicked_t(IntPtr m, uiMenuItemOnClicked_tf f, IntPtr data);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiMenuItemOnClicked_tf(IntPtr menuItem, IntPtr window, IntPtr data);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiMenuItemChecked_t(IntPtr m);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuItemSetChecked_t(IntPtr m, bool @checked);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendItem_t(IntPtr m, IntPtr name);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendCheckItem_t(IntPtr m, IntPtr name);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendQuitItem_t(IntPtr m);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendPreferencesItem_t(IntPtr m);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendAboutItem_t(IntPtr m);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuAppendSeparator_t(IntPtr m);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewMenu_t(IntPtr name);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiOpenFile_t(IntPtr parent);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiSaveFile_t(IntPtr parent);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMsgBox_t(IntPtr parent, IntPtr title, IntPtr description);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMsgBoxError_t(IntPtr parent, IntPtr title, IntPtr description);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiAreaDrawHandler(IntPtr handler, IntPtr area, [In, Out]ref uiAreaDrawParams param);
@@ -569,27 +640,37 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAreaSetSize_t(IntPtr a, int width, int height);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAreaQueueReDrawAll_t(IntPtr a);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAreaScrollTo_t(IntPtr area, double x, double y, double width, double height);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAreaBeginUserWindowMove_t(IntPtr area);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAreaBeginUserWindowResize_t(IntPtr area, uiWindowResizeEdge edge);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewArea_t(uiAreaHandler ah);
+        public static () => FunctionLoader.Load<>("")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewScrollingArea_t(uiAreaHandler ah, int width, int height);
+        public static () => FunctionLoader.Load<>("")();
 
+        //TODO: Finish writing static functions above this line.
+        // /////////////////////////////////////////////////////////////////
+        
         [StructLayout(LayoutKind.Sequential)]
-        internal struct uiAreaDrawParams
+        public struct uiAreaDrawParams
         {
             public IntPtr Context;
 
@@ -690,84 +771,111 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiDrawNewPath_t(uiDrawFillMode fillMode);
+        public static IntPtr uiDrawNewPath(uiDrawFillMode fillMode) => FunctionLoader.Load<uiDrawNewPath_t>("uiDrawNewPath")(fillMode);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawFreePath_t(IntPtr p);
+        public static void uiDrawFreePath(IntPtr p) => FunctionLoader.Load<uiDrawFreePath_t>("uiDrawFreePath")(p);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawPathNewFigure_t(IntPtr p, double x, double y);
+        public static void uiDrawPathNewFigure(IntPtr p, double x, double y) => FunctionLoader.Load<uiDrawPathNewFigure_t>("uiDrawPathNewFigure")(p, x, y);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawPathNewFigureWithArc_t(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
+        public static void uiDrawPathNewFigureWithArc(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => FunctionLoader.Load<uiDrawPathNewFigureWithArc_t>("uiDrawPathNewFigureWithArc")(p, xCenter, yCenter, radius, startAngle, sweep, negative);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawPathLineTo_t(IntPtr p, double x, double y);
+        public static void uiDrawPathLineTo(IntPtr p, double x, double y) => FunctionLoader.Load<uiDrawPathLineTo_t>("uiDrawPathLineTo")(p, x, y);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawPathArcTo_t(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
+        public static void uiDrawPathArcTo(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => FunctionLoader.Load<uiDrawPathArcTo_t>("uiDrawPathArcTo")(p, xCenter, yCenter, radius, startAngle, sweep, negative);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawPathBezierTo_t(IntPtr p, double c1x, double c1y, double c2x, double c2y, double endX, double endY);
+        public static void uiDrawPathBezierTo(IntPtr p, double c1x, double c1y, double c2x, double c2y, double endX, double endY) => FunctionLoader.Load<uiDrawPathBezierTo_t>("uiDrawPathBezierTo")(p, c1x, c1y, c2x, c2y, endX, endY);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawPathCloseFigure_t(IntPtr p);
+        public static void uiDrawPathCloseFigure(IntPtr p) => FunctionLoader.Load<uiDrawPathCloseFigure_t>("uiDrawPathCloseFigure")(p);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawPathAddRectangle_t(IntPtr p, double x, double y, double width, double height);
+        public static void uiDrawPathAddRectangle(IntPtr p, double x, double y, double width, double height) => FunctionLoader.Load<uiDrawPathAddRectangle_t>("uiDrawPathAddRectangle")(p, x, y, width, height);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawPathEnd_t(IntPtr p);
+        public static void uiDrawPathEnd(IntPtr p) => FunctionLoader.Load<uiDrawPathEnd_t>("uiDrawPathEnd")(p);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawStroke_t(IntPtr context, IntPtr path, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParam);
+        public static void uiDrawStroke(IntPtr context, IntPtr path, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParam) => FunctionLoader.Load<uiDrawStroke_t>("uiDrawStroke")(context, path, ref brush, ref strokeParam);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawFill_t(IntPtr context, IntPtr path, ref uiDrawBrush brush);
+        public static void uiDrawFill(IntPtr context, IntPtr path, ref uiDrawBrush brush) => FunctionLoader.Load<uiDrawFill_t>("uiDrawFill")(context, path, ref brush);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawMatrixSetIdentity_t(uiDrawMatrix matrix);
+        public static void uiDrawMatrixSetIdentity(uiDrawMatrix matrix) => FunctionLoader.Load<uiDrawMatrixSetIdentity_t>("uiDrawMatrixSetIdentity")(matrix);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawMatrixTranslate_t(uiDrawMatrix matrix, double x, double y);
+        public static void uiDrawMatrixTranslate(uiDrawMatrix matrix, double x, double y) => FunctionLoader.Load<uiDrawMatrixTranslate_t>("uiDrawMatrixTranslate")(matrix, x, y);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawMatrixScale_t(uiDrawMatrix matrix, double xCenter, double yCenter, double x, double y);
+        public static void uiDrawMatrixScale(uiDrawMatrix matrix, double xCenter, double yCenter, double x, double y) => FunctionLoader.Load<uiDrawMatrixScale_t>("uiDrawMatrixScale")(matrix, xCenter, yCenter, x, y);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawMatrixRotate_t(uiDrawMatrix matrix, double x, double y, double amount);
+        public static void uiDrawMatrixRotate(uiDrawMatrix matrix, double x, double y, double amount) => FunctionLoader.Load<uiDrawMatrixRotate_t>("uiDrawMatrixRotate")(matrix, x, y, amount);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawMatrixSkew_t(uiDrawMatrix matrix, double x, double y, double xamount, double yamount);
+        public static void uiDrawMatrixSkew(uiDrawMatrix matrix, double x, double y, double xamount, double yamount) => FunctionLoader.Load<uiDrawMatrixSkew_t>("uiDrawMatrixSkew")(matrix, x, y, xamount, yamount);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawMatrixMultiply_t(uiDrawMatrix dest, uiDrawMatrix src);
+        public static void uiDrawMatrixMultiply(uiDrawMatrix dest, uiDrawMatrix src) => FunctionLoader.Load<uiDrawMatrixMultiply_t>("uiDrawMatrixMultiply")(dest, src);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiDrawMatrixInvertible_t(uiDrawMatrix matrix);
+        public static bool uiDrawMatrixInvertible(uiDrawMatrix matrix) => FunctionLoader.Load<uiDrawMatrixInvertible_t>("uiDrawMatrixInvertible")(matrix);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiDrawMatrixInvert_t(uiDrawMatrix matrix);
+        public static int uiDrawMatrixInvert(uiDrawMatrix matrix) => FunctionLoader.Load<uiDrawMatrixInvert_t>("uiDrawMatrixInvert")(matrix);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawMatrixTransformPoint_t(uiDrawMatrix matrix, out double x, out double y);
+        public static void uiDrawMatrixTransformPoint(uiDrawMatrix matrix, out double x, out double y) => FunctionLoader.Load<uiDrawMatrixTransformPoint_t>("uiDrawMatrixTransformPoint")(matrix, out x, out y);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawMatrixTransformSize_t(uiDrawMatrix matrix, out double x, out double y);
+        public static void uiDrawMatrixTransformSize(uiDrawMatrix matrix, out double x, out double y) => FunctionLoader.Load<uiDrawMatrixTransformSize_t>("uiDrawMatrixTransformSize")(matrix, out x, out y);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawTransform_t(IntPtr context, uiDrawMatrix matrix);
+        public static void uiDrawTransform(IntPtr context, uiDrawMatrix matrix) => FunctionLoader.Load<uiDrawTransform_t>("uiDrawTransform")(context, matrix);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawClip_t(IntPtr context, IntPtr path);
+        public static void uiDrawClip(IntPtr context, IntPtr path) => FunctionLoader.Load<uiDrawClip_t>("uiDrawClip")(context, path);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawSave_t(IntPtr context);
+        public static void uiDrawSave(IntPtr context) => FunctionLoader.Load<uiDrawSave_t>("uiDrawSave")(context);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawRestore_t(IntPtr context);
+        public static void uiDrawRestore(IntPtr context) => FunctionLoader.Load<uiDrawRestore_t>("uiDrawRestore")(context);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiFreeAttribute_t(IntPtr a);
+        public static void uiFreeAttribute(IntPtr a) => FunctionLoader.Load<uiFreeAttribute_t>("uiFreeAttribute")(a);
 
         public enum uiAttributeType : uint
         {
@@ -785,18 +893,23 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate uiAttributeType uiAttributeGetType_t(IntPtr a);
+        public static uiAttributeType uiAttributeGetType(IntPtr a) => FunctionLoader.Load<uiAttributeGetType_t>("uiAttributeGetType")(a);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewFamilyAttribute_t(IntPtr family);
+        public static IntPtr uiNewFamilyAttribute(IntPtr family) => FunctionLoader.Load<uiNewFamilyAttribute_t>("uiNewFamilyAttribute")(family);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiAttributeFamily_t(IntPtr a);
+        public static IntPtr uiAttributeFamily(IntPtr a) => FunctionLoader.Load<uiAttributeFamily_t>("uiAttributeFamily")(a);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewSizeAttribute_t(double size);
+        public static IntPtr uiNewSizeAttribute(double size) => FunctionLoader.Load<uiNewSizeAttribute_t>("uiNewSizeAttribute")(size);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate double uiAttributeSize_t(IntPtr a);
+        public static double uiAttributeSize(IntPtr a) => FunctionLoader.Load<uiAttributeSize_t>("uiAttributeSize")(a);
 
         public enum uiTextWeight : uint
         {
@@ -817,9 +930,11 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewWeightAttribute_t(uiTextWeight weight);
+        public static IntPtr uiNewWeightAttribute(uiTextWeight weight) => FunctionLoader.Load<uiNewWeightAttribute_t>("uiNewWeightAttribute")(weight);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate uiTextWeight uiAttributeWeight_t(IntPtr a);
+        public static uiTextWeight uiAttributeWeight(IntPtr a) => FunctionLoader.Load<uiAttributeWeight_t>("uiAttributeWeight")(a);
 
         public enum uiTextItalic : uint
         {
@@ -830,9 +945,11 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewItalicAttribute_t(uiTextItalic italic);
+        public static IntPtr uiNewItalicAttribute(uiTextItalic italic) => FunctionLoader.Load<uiNewItalicAttribute_t>("uiNewItalicAttribute")(italic);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate uiTextItalic uiAttributeItalic_t(IntPtr a);
+        public static uiTextItalic uiAttributeItalic(IntPtr a) => FunctionLoader.Load<uiAttributeItalic_t>("uiAttributeItalic")(a);
 
         public enum uiTextStretch : uint
         {
@@ -849,18 +966,23 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewStretchAttribute_t(uiTextStretch stretch);
+        public static IntPtr uiNewStretchAttribute(uiTextStretch stretch) => FunctionLoader.Load<uiNewStretchAttribute_t>("uiNewStretchAttribute")(stretch);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate uiTextStretch uiAttributeStretch_t(IntPtr a);
+        public static uiTextStretch uiAttributeStretch(IntPtr a) => FunctionLoader.Load<uiAttributeStretch_t>("uiAttributeStretch")(a);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewColorAttribute_t(double r, double g, double b, double a);
+        public static IntPtr uiNewColorAttribute(double r, double g, double b, double a) => FunctionLoader.Load<uiNewColorAttribute_t>("uiNewColorAttribute")(r, g, b, a);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAttributeColor_t(IntPtr a, out double r, out double g, out double b, out double alpha);
+        public static void uiAttributeColor(IntPtr a, out double r, out double g, out double b, out double alpha) => FunctionLoader.Load<uiAttributeColor_t>("uiAttributeColor")(a, out r, out g, out b, out alpha);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewBackgroundAttribute_t(double r, double g, double b, double a);
+        public static IntPtr uiNewBackgroundAttribute(double r, double g, double b, double a) => FunctionLoader.Load<uiNewBackgroundAttribute_t>("uiNewBackgroundAttribute")(r, g, b, a);
 
         public enum uiUnderline : uint
         {
@@ -872,9 +994,11 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewUnderlineAttribute_t(uiUnderline u);
+        public static IntPtr uiNewUnderlineAttribute(uiUnderline u) => FunctionLoader.Load<uiNewUnderlineAttribute_t>("uiNewUnderlineAttribute")(u);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate uiUnderline uiAttributeUnderline_t(IntPtr a);
+        public static uiUnderline uiAttributeUnderline(IntPtr a) => FunctionLoader.Load<uiAttributeUnderline_t>("uiAttributeUnderline")(a);
 
         public enum uiUnderlineColor : uint
         {
@@ -886,78 +1010,101 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewUnderlineColorAttribute_t(uiUnderlineColor u, double r, double g, double b, double a);
+        public static IntPtr uiNewUnderlineColorAttribute(uiUnderlineColor u, double r, double g, double b, double a) => FunctionLoader.Load<uiNewUnderlineColorAttribute_t>("uiNewUnderlineColorAttribute")(u, r, g, b, a);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAttributeUnderline__t(IntPtr a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha);
+        public static void uiAttributeUnderline(IntPtr a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha) => FunctionLoader.Load<uiAttributeUnderline__t>("uiAttributeUnderline")(a, out u, out r, out g, out b, out alpha);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate uiForEach uiOpenTypeFeaturesForEachFunc(IntPtr otf, byte a, byte b, byte c, byte d, uint value, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewOpenTypeFeatures_t();
+        public static IntPtr uiNewOpenTypeFeatures() => FunctionLoader.Load<uiNewOpenTypeFeatures_t>("uiNewOpenTypeFeatures")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiFreeOpenTypeFeatures_t(IntPtr otf);
+        public static void uiFreeOpenTypeFeatures(IntPtr otf) => FunctionLoader.Load<uiFreeOpenTypeFeatures_t>("uiFreeOpenTypeFeatures")(otf);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiOpenTypeFeaturesClone_t(IntPtr otf);
+        public static IntPtr uiOpenTypeFeaturesClone(IntPtr otf) => FunctionLoader.Load<uiOpenTypeFeaturesClone_t>("uiOpenTypeFeaturesClone")(otf);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiOpenTypeFeaturesAdd_t(IntPtr otf, byte a, byte b, byte c, byte d, uint value);
+        public static void uiOpenTypeFeaturesAdd(IntPtr otf, byte a, byte b, byte c, byte d, uint value) => FunctionLoader.Load<uiOpenTypeFeaturesAdd_t>("uiOpenTypeFeaturesAdd")(otf, a, b, c, d, value);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiOpenTypeFeaturesRemove_t(IntPtr otf, byte a, byte b, byte c, byte d);
+        public static void uiOpenTypeFeaturesRemove(IntPtr otf, byte a, byte b, byte c, byte d) => FunctionLoader.Load<uiOpenTypeFeaturesRemove_t>("uiOpenTypeFeaturesRemove")(otf, a, b, c, d);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiOpenTypeFeaturesGet_t(IntPtr otf, byte a, byte b, byte c, byte d, out uint value);
+        public static int uiOpenTypeFeaturesGet(IntPtr otf, byte a, byte b, byte c, byte d, out uint value) => FunctionLoader.Load<uiOpenTypeFeaturesGet_t>("uiOpenTypeFeaturesGet")(otf, a, b, c, d, out value);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiOpenTypeFeaturesForEach_t(IntPtr otf, uiOpenTypeFeaturesForEachFunc f, IntPtr data);
+        public static void uiOpenTypeFeaturesForEach(IntPtr otf, uiOpenTypeFeaturesForEachFunc f, IntPtr data) => FunctionLoader.Load<uiOpenTypeFeaturesForEach_t>("uiOpenTypeFeaturesForEach")(otf, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewFeaturesAttribute_t(IntPtr otf);
+        public static IntPtr uiNewFeaturesAttribute(IntPtr otf) => FunctionLoader.Load<uiNewFeaturesAttribute_t>("uiNewFeaturesAttribute")(otf);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiAttributeFeatures_t(IntPtr a);
-        
+        public static IntPtr uiAttributeFeatures(IntPtr a) => FunctionLoader.Load<uiAttributeFeatures_t>("uiAttributeFeatures")(a);
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate uiForEach uiAttributedStringForEachAttributeFunc(IntPtr s, IntPtr a, UIntPtr start, UIntPtr end, IntPtr data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewAttributedString_t(IntPtr initialString);
+        public static IntPtr uiNewAttributedString(IntPtr initialString) => FunctionLoader.Load<uiNewAttributedString_t>("uiNewAttributedString")(initialString);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiFreeAttributedString_t(IntPtr s);
+        public static void uiFreeAttributedString(IntPtr s) => FunctionLoader.Load<uiFreeAttributedString_t>("uiFreeAttributedString")(s);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiAttributedStringString_t(IntPtr s);
+        public static IntPtr uiAttributedStringString(IntPtr s) => FunctionLoader.Load<uiAttributedStringString_t>("uiAttributedStringString")(s);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate UIntPtr uiAttributedStringLen_t(IntPtr s);
+        public static UIntPtr uiAttributedStringLen(IntPtr s) => FunctionLoader.Load<uiAttributedStringLen_t>("uiAttributedStringLen")(s);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAttributedStringAppendUnattributed_t(IntPtr s, IntPtr str);
+        public static void uiAttributedStringAppendUnattributed(IntPtr s, IntPtr str) => FunctionLoader.Load<uiAttributedStringAppendUnattributed_t>("uiAttributedStringAppendUnattributed")(s, str);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAttributedStringInsertAtUnattributed_t(IntPtr s, IntPtr str, UIntPtr at);
+        public static void uiAttributedStringInsertAtUnattributed(IntPtr s, IntPtr str, UIntPtr at) => FunctionLoader.Load<uiAttributedStringInsertAtUnattributed_t>("uiAttributedStringInsertAtUnattributed")(s, str, at);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAttributedStringDelete_t(IntPtr s, UIntPtr start, UIntPtr end);
+        public static void uiAttributedStringDelete(IntPtr s, UIntPtr start, UIntPtr end) => FunctionLoader.Load<uiAttributedStringDelete_t>("uiAttributedStringDelete")(s, start, end);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAttributedStringSetAttribute_t(IntPtr s, IntPtr a, UIntPtr start, UIntPtr end);
+        public static void uiAttributedStringSetAttribute(IntPtr s, IntPtr a, UIntPtr start, UIntPtr end) => FunctionLoader.Load<uiAttributedStringSetAttribute_t>("uiAttributedStringSetAttribute")(s, a, start, end);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAttributedStringForEachAttribute_t(IntPtr s, uiAttributedStringForEachAttributeFunc f, IntPtr data);
+        public static void uiAttributedStringForEachAttribute(IntPtr s, uiAttributedStringForEachAttributeFunc f, IntPtr data) => FunctionLoader.Load<uiAttributedStringForEachAttribute_t>("uiAttributedStringForEachAttribute")(s, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate UIntPtr uiAttributedStringNumGraphemes_t(IntPtr s);
+        public static UIntPtr uiAttributedStringNumGraphemes(IntPtr s) => FunctionLoader.Load<uiAttributedStringNumGraphemes_t>("uiAttributedStringNumGraphemes")(s);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate UIntPtr uiAttributedStringByteIndexToGrapheme_t(IntPtr s, UIntPtr pos);
+        public static UIntPtr uiAttributedStringByteIndexToGrapheme(IntPtr s, UIntPtr pos) => FunctionLoader.Load<uiAttributedStringByteIndexToGrapheme_t>("uiAttributedStringByteIndexToGrapheme")(s, pos);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate UIntPtr uiAttributedStringGraphemeToByteIndex_t(IntPtr s, UIntPtr pos);
+        public static UIntPtr uiAttributedStringGraphemeToByteIndex(IntPtr s, UIntPtr pos) => FunctionLoader.Load<uiAttributedStringGraphemeToByteIndex_t>("uiAttributedStringGraphemeToByteIndex")(s, pos);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct uiFontDescriptor
@@ -987,29 +1134,37 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiDrawNewTextLayout_t(uiDrawTextLayoutParams param);
+        public static IntPtr uiDrawNewTextLayout(uiDrawTextLayoutParams param) => FunctionLoader.Load<uiDrawNewTextLayout_t>("uiDrawNewTextLayout")(param);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawFreeTextLayout_t(IntPtr tl);
+        public static void uiDrawFreeTextLayout(IntPtr tl) => FunctionLoader.Load<uiDrawFreeTextLayout_t>("uiDrawFreeTextLayout")(tl);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawText_t(IntPtr c, IntPtr tl, double x, double y);
+        public static void uiDrawText(IntPtr c, IntPtr tl, double x, double y) => FunctionLoader.Load<uiDrawText_t>("uiDrawText")(c, tl, x, y);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiDrawTextLayoutExtents_t(IntPtr tl, out double width, out double height);
+        public static void uiDrawTextLayoutExtents(IntPtr tl, out double width, out double height) => FunctionLoader.Load<uiDrawTextLayoutExtents_t>("uiDrawTextLayoutExtents")(tl, out width, out height);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiFontButtonFont_t(IntPtr b, out uiFontDescriptor desc);
+        public static void uiFontButtonFont(IntPtr b, out uiFontDescriptor desc) => FunctionLoader.Load<uiFontButtonFont_t>("uiFontButtonFont")(b, out desc);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiFontButtonOnChanged_t(IntPtr b, uiFontButtonOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiFontButtonOnChanged_tf(IntPtr b, IntPtr data);
+        public static void uiFontButtonOnChanged(IntPtr b, uiFontButtonOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiFontButtonOnChanged_t>("uiFontButtonOnChanged")(b, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewFontButton_t();
+        public static IntPtr uiNewFontButton() => FunctionLoader.Load<uiNewFontButton_t>("uiNewFontButton")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiFreeFontButtonFont_t(uiFontDescriptor desc);
+        public static void uiFreeFontButtonFont(uiFontDescriptor desc) => FunctionLoader.Load<uiFreeFontButtonFont_t>("uiFreeFontButtonFont")(desc);
 
         [Flags]
         public enum uiModifiers : uint
@@ -1094,32 +1249,41 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiColorButtonColor_t(IntPtr b, out double red, out double green, out double blue, out double alpha);
+        public static void uiColorButtonColor(IntPtr b, out double red, out double green, out double blue, out double alpha) => FunctionLoader.Load<uiColorButtonColor_t>("uiColorButtonColor")(b, out red, out blue, out green, out alpha);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiColorButtonSetColor_t(IntPtr b, double red, double green, double blue, double alpha);
+        public static void uiColorButtonSetColor(IntPtr b, double red, double green, double blue, double alpha) => FunctionLoader.Load<uiColorButtonSetColor_t>("uiColorButtonSetColor")(b, red, blue, green, alpha);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiColorButtonOnChanged_t(IntPtr b, uiColorButtonOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiColorButtonOnChanged_tf(IntPtr b, IntPtr data);
+        public static void uiColorButtonOnChanged(IntPtr b, uiColorButtonOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiColorButtonOnChanged_t>("uiColorButtonOnChanged")(b, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewColorButton_t();
+        public static IntPtr uiNewColorButton() => FunctionLoader.Load<uiNewColorButton_t>("uiNewColorButton")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiFormAppend_t(IntPtr f, IntPtr label, IntPtr c, bool stretchy);
+        public static void uiFormAppend(IntPtr f, IntPtr label, IntPtr c, bool stretchy) => FunctionLoader.Load<uiFormAppend_t>("uiFormAppend")(f, label, c, stretchy);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiFormDelete_t(IntPtr f, int index);
+        public static void uiFormDelete(IntPtr f, int index) => FunctionLoader.Load<uiFormDelete_t>("uiFormDelete")(f, index);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiFormPadded_t(IntPtr f);
+        public static bool uiFormPadded(IntPtr f) => FunctionLoader.Load<uiFormPadded_t>("uiFormPadded")(f);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiFormSetPadded_t(IntPtr f, bool padded);
+        public static void uiFormSetPadded(IntPtr f, bool padded) => FunctionLoader.Load<uiFormSetPadded_t>("uiFormSetPadded")(f, padded);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewForm_t();
+        public static IntPtr uiNewForm() => FunctionLoader.Load<uiNewForm_t>("uiNewForm")();
 
         public enum uiAlign : uint
         {
@@ -1138,20 +1302,20 @@ namespace LibUISharp.Native.Libraries
         }
 
         [UnmanagedFunctionPointer(callingConvention)]
-        private delegate void uiGridAppend_t(IntPtr grid, IntPtr child, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
-        public static ui() => FunctionLoader.Load<ui_t>("ui")();
+        private delegate void uiGridAppend_t(IntPtr g, IntPtr c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
+        public static void uiGridAppend(IntPtr g, IntPtr c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign) => FunctionLoader.Load<uiGridAppend_t>("uiGridAppend")(g, c, left, top, xspan, yspan, hexpand, halign, vexpand, valign);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        private delegate void uiGridInsertAt_t(IntPtr grid, IntPtr child, IntPtr existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
-        public static ui() => FunctionLoader.Load<ui_t>("ui")();
+        private delegate void uiGridInsertAt_t(IntPtr g, IntPtr c, IntPtr existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
+        public static void uiGridInsertAt(IntPtr g, IntPtr c, IntPtr existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign) => FunctionLoader.Load<uiGridInsertAt_t>("uiGridInsertAt")(g, c, existing, at, xspan, yspan, hexpand, halign, vexpand, valign);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        private delegate bool uiGridPadded_t(IntPtr grid);
-        public static ui() => FunctionLoader.Load<ui_t>("ui")();
+        private delegate bool uiGridPadded_t(IntPtr g);
+        public static bool uiGridPadded(IntPtr g) => FunctionLoader.Load<uiGridPadded_t>("uiGridPadded")(g);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        private delegate void uiGridSetPadded_t(IntPtr grid, bool padded);
-        public static void uiGridSetPadded(IntPtr g, bool padded) => FunctionLoader.Load<ui_t>("ui")();
+        private delegate void uiGridSetPadded_t(IntPtr g, bool padded);
+        public static void uiGridSetPadded(IntPtr g, bool padded) => FunctionLoader.Load<uiGridSetPadded_t>("uiGridSetPadded")(g, padded);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewGrid_t();

@@ -8,7 +8,5 @@ namespace LibUISharp.Native
         public static bool IsMacOS = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
         public static bool IsLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
         public static bool IsUnix = (IsMacOS || IsLinux);
-
-
     }
 }

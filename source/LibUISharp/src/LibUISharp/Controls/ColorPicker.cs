@@ -35,14 +35,15 @@ namespace LibUISharp.Controls
         {
             get
             {
-                color = LibuiLibrary.uiColorButtonColor(Handle.DangerousGetHandle());
+                LibuiLibrary.uiColorButtonColor(Handle.DangerousGetHandle(), out double red, out double green, out double blue, out double alpha);
+                color = new Color(red, green, blue, alpha);
                 return color;
             }
             set
             {
                 if (color != value)
                 {
-                    LibuiLibrary.uiColorButtonSetColor(Handle.DangerousGetHandle(), value);
+                    LibuiLibrary.uiColorButtonSetColor(Handle.DangerousGetHandle(), value.R, value.G, value.B, value.A);
                     color = value;
                 }
             }

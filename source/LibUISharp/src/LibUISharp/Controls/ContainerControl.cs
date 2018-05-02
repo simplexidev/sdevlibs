@@ -2,20 +2,30 @@
 
 namespace LibUISharp.Controls
 {
+    /// <summary>
+    /// Represents a <see cref="Control"/> that contains a collection of child <see cref="Control"/>s.
+    /// </summary>
     public class ContainerControl : Control { }
 
+    /// <summary>
+    /// Represents a <see cref="Control"/> that contains a collection of child <see cref="Control"/>s.
+    /// </summary>
     public class ContainerControl<TContainer, TCollection> : ContainerControl, IContainerControl<TContainer, TCollection>
         where TContainer : ContainerControl
         where TCollection : ControlCollection<TContainer>
     {
+        private TCollection children;
+
+        /// <inheritdoc />
         public override void Dispose()
         {
             Children.Clear();
             base.Dispose();
         }
 
-        private TCollection children;
-
+        /// <summary>
+        /// Gets this <see cref="ContainerControl{TContainer, TCollection}"/>'s child <see cref="Control"/>s.
+        /// </summary>
         public virtual TCollection Children
         {
             get
@@ -25,12 +35,5 @@ namespace LibUISharp.Controls
                 return children;
             }
         }
-    }
-
-    internal interface IContainerControl<TContainer, out TCollection>
-        where TContainer : ContainerControl
-        where TCollection : ControlCollection<TContainer>
-    {
-        TCollection Children { get; }
     }
 }
