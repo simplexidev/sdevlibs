@@ -42,7 +42,6 @@
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
     <Compile Include="src\LibUISharp\Controls\*.cs" />
-    <Compile Include="src\LibUISharp\Controls\Collections\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\Text\*.cs" />
     <Compile Include="src\LibUISharp\Native\*.cs" />

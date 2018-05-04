@@ -1,12 +1,12 @@
 # LibUISharp ![License](https://img.shields.io/badge/License-MIT-blue.svg?style) [![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)
 
-LibUISharp is a library containing bindings for [libui](https://github.com/andlabs/libui), written in C# for .NET Core.
+LibUISharp is a library containing bindings for [libui](https://github.com/andlabs/libui), written in C# for .NET Core (and in the future, .NET Framework and Mono).
 
 ## Features
 
 LibUISharp allows you to create a native GUI application running .NET Core. Please note that LibUI is in alpha development, so the native library, thus this C# library, is not stable. This library (LibUISharp) has not really been tested, yet, and may have some bugs. Check out the demos in the `demos\` folder for examples.
 
-**Comtrols and Drawing Features**:
+**Controls and Drawing Features**:
 
 * *AttributedText (TODO)*
 * Button
@@ -97,7 +97,7 @@ Any output is placed in the `build\` directory.
 
 | Operating System | Prerequisites                                                                                                    |
 | :--------------- | :--------------------------------------------------------------------------------------------------------------- |
-| Windows 7/8.1/10 | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio 2017.5<br/>Visual Studio Code (With the C# extension) |
+| Windows 7/8.1/10 | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio 2017 (v15.6.x)<br/>Visual Studio Code (With the C# extension) |
 | Mac OS X         | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                          |
 | Linux            | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                          |
 
@@ -119,5 +119,7 @@ Run the following command in a command-line interface in the root directory of t
 1. `dotnet build LibUISharp.sln'
 
 ## Contributing
+
+Contributing is as easy as filing an issue, fixing a bug, or suggesting a new feature.
 
 Please see the [CONTRIBUTING.md](https://github.com/tom-corwin/LibUISharp/blob/master/CONTRIBUTING.md) file for more information.

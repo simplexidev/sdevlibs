@@ -1,36 +1,43 @@
 ﻿using System;
-using static LibUISharp.Internal.LibUI;
+using LibUISharp.Native;
+using LibUISharp.Native.Libraries;
+using LibUISharp.Native.SafeHandles;
 
-namespace LibUISharp
+namespace LibUISharp.Controls
 {
     public abstract class ComboBoxBase : Control
     {
         protected ComboBoxBase()
         {
             if (this is ComboBox)
-                Handle = uiNewCombobox();
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewCombobox());
             else if (this is EditableComboBox)
-                Handle = uiNewEditableCombobox();
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewEditableCombobox());
+        }
+
+        public void Add(string item)
+        {
+            if (string.IsNullOrEmpty(item))
+            {
+                if (this is ComboBox)
+                    LibuiLibrary.uiComboboxAppend(Handle.DangerousGetHandle(), null);
+                else if (this is EditableComboBox)
+                    LibuiLibrary.uiEditableComboboxAppend(Handle.DangerousGetHandle(), null);
+            }
+            else
+            {
+                if (this is ComboBox)
+                    LibuiLibrary.uiComboboxAppend(Handle.DangerousGetHandle(), LibuiConvert.ToLibuiString(item));
+                else if (this is EditableComboBox)
+                    LibuiLibrary.uiEditableComboboxAppend(Handle.DangerousGetHandle(), LibuiConvert.ToLibuiString(item));
+            }
         }
 
         public void Add(params string[] items)
         {
-            if (items == null)
+            foreach (string s in items)
             {
-                if (this is ComboBox)
-                    uiComboboxAppend(Handle, null);
-                else if (this is EditableComboBox)
-                    uiEditableComboboxAppend(Handle, null);
-            }
-            else
-            {
-                foreach (string s in items)
-                {
-                    if (this is ComboBox)
-                        uiComboboxAppend(Handle, s);
-                    else if (this is EditableComboBox)
-                        uiEditableComboboxAppend(Handle, s);
-                }
+                Add(s);
             }
         }
     }
@@ -38,7 +45,7 @@ namespace LibUISharp
     // uiCombobox
     public class ComboBox : ComboBoxBase
     {
-        public ComboBox() : base() =>  InitializeEvents();
+        public ComboBox() : base() => InitializeEvents();
 
         public event EventHandler Selected;
 
