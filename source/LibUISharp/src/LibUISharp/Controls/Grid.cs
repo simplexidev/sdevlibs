@@ -35,7 +35,7 @@ namespace LibUISharp.Controls
         public GridControlCollection(Grid uiParent) : base(uiParent) { }
 
         public override void Add(Control control) => Add(control, 0, 0, 0, 0, 0, 0, Alignment.Fill);
-        //TODO: public virtual void Add(Control control, Rectangle rect, Size expand, Alignment alignment) => Add(control, rect.Location, rect.Size, expand, alignment);
+        public virtual void Add(Control control, Rectangle rect, Size expand, Alignment alignment) => Add(control, rect.Location, rect.Size, expand, alignment);
         public virtual void Add(Control control, Point location, Size span, Size expand, Alignment alignment) => Add(control, location.X, location.Y, span.Width, span.Height, expand.Width, expand.Height, alignment);
 
         public virtual void Add(Control control, int left, int top, int xspan, int yspan, int hexpand, int vexpand, Alignment alignment)

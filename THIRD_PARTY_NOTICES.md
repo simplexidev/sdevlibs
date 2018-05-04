@@ -7,11 +7,11 @@ If you notice that I accidentally failed to list a required notice, please bring
 ***The attached notices are provided for information use only.***
 <hr/>
 
-## libui (also referred to as LibUI)
+## libui
 
 **Repository URL**: https://github.com/andlabs/libui
 
-LibUISharp references and distributes source code and libraries built from the source code of LibUI.
+LibUISharp references and distributes source code and libraries built from the source code of *libui*.
 
 ### Copyright Notice(s):
 
