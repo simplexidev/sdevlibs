@@ -1,4 +1,4 @@
-# LibUISharp ![License](https://img.shields.io/badge/License-MIT-blue.svg?style) [![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)
+# LibUISharp ![License](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true) [![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)
 
 LibUISharp is a library containing bindings for [libui](https://github.com/andlabs/libui), written in C# for .NET Core (and in the future, .NET Framework and Mono).
 
