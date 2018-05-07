@@ -7,7 +7,7 @@ namespace LibUISharp.Native
     /// Represents a native shared library opened by the operating system.
     /// This type can be used to load native function pointers by name.
     /// </summary>
-    public class NativeLibrary : IDisposable
+    internal class NativeLibrary : IDisposable
     {
         private static readonly LibraryLoader s_platformDefaultLoader = LibraryLoader.GetPlatformDefaultLoader();
         private readonly LibraryLoader _loader;

@@ -7,7 +7,7 @@ namespace LibUISharp.Native
     /// <summary>
     /// Exposes functionality for loading native libraries and function pointers.
     /// </summary>
-    public abstract class LibraryLoader
+    internal abstract class LibraryLoader
     {
         /// <summary>
         /// Loads a native library by name and returns an operating system handle to it.

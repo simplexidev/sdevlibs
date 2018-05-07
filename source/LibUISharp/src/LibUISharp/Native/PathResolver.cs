@@ -10,7 +10,7 @@ namespace LibUISharp.Native
     /// <summary>
     /// Enumerates possible library load targets.
     /// </summary>
-    public abstract class PathResolver
+    internal abstract class PathResolver
     {
         /// <summary>
         /// Returns an enumerator which yields possible library load targets, in priority order.
@@ -31,7 +31,7 @@ namespace LibUISharp.Native
     /// Second: The simple name, unchanged.
     /// Third: The library as resolved via the default DependencyContext, in the default nuget package cache folder.
     /// </summary>
-    public class DefaultPathResolver : PathResolver
+    internal class DefaultPathResolver : PathResolver
     {
         /// <summary>
         /// Returns an enumerator which yieilds possible library load targets, in priority order.
