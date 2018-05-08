@@ -74,7 +74,7 @@ namespace LibUISharp.Native.Libraries
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiQueueMain_tf(IntPtr data);
         public static void uiQueueMain(uiQueueMain_tf f, IntPtr data) => FunctionLoader.Load<uiQueueMain_t>("uiQueueMain")(f, data);
-        
+
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiOnShouldQuit_t(uiOnShouldQuit_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
@@ -311,309 +311,291 @@ namespace LibUISharp.Native.Libraries
         private delegate IntPtr uiNewLabel_t(IntPtr text);
         public static IntPtr uiNewLabel(IntPtr text) => FunctionLoader.Load<uiNewLabel_t>("uiNewLabel")(text);
 
-        // /////////////////////////////////////////////////////////////////
-        //TODO: Finish writing static functions below this line.
-
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiTabAppend_t(IntPtr t, IntPtr name, IntPtr c);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiTabAppend(IntPtr t, IntPtr name, IntPtr c) => FunctionLoader.Load<uiTabAppend_t>("uiTabAppend")(t, name, c);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiTabInsertAt_t(IntPtr t, IntPtr name, int before, IntPtr c);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiTabInsertAt(IntPtr t, IntPtr name, int before, IntPtr c) => FunctionLoader.Load<uiTabInsertAt_t>("uiTabInsertAt")(t, name, before, c);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiTabDelete_t(IntPtr t, int index);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiTabDelete(IntPtr t, int index) => FunctionLoader.Load<uiTabDelete_t>("uiTabDelete")(t, index);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiTabNumPages_t(IntPtr t);
-        public static () => FunctionLoader.Load<>("")();
+        public static int uiTabNumPages(IntPtr t) => FunctionLoader.Load<uiTabNumPages_t>("uiTabNumPages")(t);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiTabMargined_t(IntPtr t, int page);
-        public static () => FunctionLoader.Load<>("")();
+        public static bool uiTabMargined(IntPtr t, int page) => FunctionLoader.Load<uiTabMargined_t>("uiTabMargined")(t, page);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiTabSetMargined_t(IntPtr t, int page, bool margined);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiTabSetMargined(IntPtr t, int page, bool margined) => FunctionLoader.Load<uiTabSetMargined_t>("uiTabSetMargined")(t, page, margined);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewTab_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewTab() => FunctionLoader.Load<uiNewTab_t>("uiNewTab")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiGroupTitle_t(IntPtr g);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiGroupTitle(IntPtr g) => FunctionLoader.Load<uiGroupTitle_t>("uiGroupTitle")(g);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiGroupSetTitle_t(IntPtr g, IntPtr title);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiGroupSetTitle(IntPtr g, IntPtr title) => FunctionLoader.Load<uiGroupSetTitle_t>("uiGroupSetTitle")(g, title);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiGroupSetChild_t(IntPtr g, IntPtr child);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiGroupSetChild(IntPtr g, IntPtr child) => FunctionLoader.Load<uiGroupSetChild_t>("uiGroupSetChild")(g, child);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiGroupMargined_t(IntPtr g);
-        public static () => FunctionLoader.Load<>("")();
+        public static bool uiGroupMargined(IntPtr g) => FunctionLoader.Load<uiGroupMargined_t>("uiGroupMargined")(g);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiGroupSetMargined_t(IntPtr g, bool margined);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiGroupSetMargined(IntPtr g, bool margined) => FunctionLoader.Load<uiGroupSetMargined_t>("uiGroupSetMargined")(g, margined);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewGroup_t(IntPtr title);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewGroup(IntPtr title) => FunctionLoader.Load<uiNewGroup_t>("uiNewGroup")(title);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiSpinboxValue_t(IntPtr s);
-        public static () => FunctionLoader.Load<>("")();
+        public static int uiSpinboxValue(IntPtr s) => FunctionLoader.Load<uiSpinboxValue_t>("uiSpinboxValue")(s);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiSpinboxSetValue_t(IntPtr s, int value);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiSpinboxSetValue(IntPtr s, int value) => FunctionLoader.Load<uiSpinboxSetValue_t>("uiSpinboxSetValue")(s, value);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiSpinboxOnChanged_t(IntPtr s, uiSpinboxOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiSpinboxOnChanged_tf(IntPtr s, IntPtr data);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiSpinboxOnChanged(IntPtr s, uiSpinboxOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiSpinboxOnChanged_t>("uiSpinboxOnChanged")(s, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewSpinbox_t(int min, int max);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewSpinbox(int min, int max) => FunctionLoader.Load<uiNewSpinbox_t>("uiNewSpinbox")(min, max);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiSliderValue_t(IntPtr s);
-        public static () => FunctionLoader.Load<>("")();
+        public static int uiSliderValue(IntPtr s) => FunctionLoader.Load<uiSliderValue_t>("uiSliderValue")(s);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiSliderSetValue_t(IntPtr s, int value);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiSliderSetValue(IntPtr s, int value) => FunctionLoader.Load<uiSliderSetValue_t>("uiSliderSetValue")(s, value);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiSliderOnChanged_t(IntPtr s, uiSliderOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiSliderOnChanged_tf(IntPtr s, IntPtr data);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiSliderOnChanged(IntPtr s, uiSliderOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiSliderOnChanged_t>("uiSliderOnChanged")(s, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewSlider_t(int min, int max);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewSlider(int min, int max) => FunctionLoader.Load<uiNewSlider_t>("uiNewSlider")(min, max);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiProgressBarValue_t(IntPtr p);
-        public static () => FunctionLoader.Load<>("")();
+        public static int uiProgressBarValue(IntPtr p) => FunctionLoader.Load<uiProgressBarValue_t>("uiProgressBarValue")(p);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiProgressBarSetValue_t(IntPtr p, int n);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiProgressBarSetValue(IntPtr p, int n) => FunctionLoader.Load<uiProgressBarSetValue_t>("uiProgressBarSetValue")(p, n);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewProgressBar_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewProgressBar() => FunctionLoader.Load<uiNewProgressBar_t>("uiNewProgressBar")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewHorizontalSeparator_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewHorizontalSeparator() => FunctionLoader.Load<uiNewHorizontalSeparator_t>("uiNewHorizontalSeparator")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewVerticalSeparator_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewVerticalSeparator() => FunctionLoader.Load<uiNewVerticalSeparator_t>("uiNewVerticalSeparator")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiComboboxAppend_t(IntPtr c, IntPtr text);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiComboboxAppend(IntPtr c, IntPtr text) => FunctionLoader.Load<uiComboboxAppend_t>("uiComboboxAppend")(c, text);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiComboboxSelected_t(IntPtr c);
-        public static () => FunctionLoader.Load<>("")();
+        public static int uiComboboxSelected(IntPtr c) => FunctionLoader.Load<uiComboboxSelected_t>("uiComboboxSelected")(c);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiComboboxSetSelected_t(IntPtr c, int n);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiComboboxSetSelected(IntPtr c, int n) => FunctionLoader.Load<uiComboboxSetSelected_t>("uiComboboxSetSelected")(c, n);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiComboboxOnSelected_t(IntPtr c, uiComboboxOnSelected_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiComboboxOnSelected_tf(IntPtr c, IntPtr data);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiComboboxOnSelected(IntPtr c, uiComboboxOnSelected_tf f, IntPtr data) => FunctionLoader.Load<uiComboboxOnSelected_t>("uiComboboxOnSelected")(c, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewCombobox_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewCombobox() => FunctionLoader.Load<uiNewCombobox_t>("uiNewCombobox")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiEditableComboboxAppend_t(IntPtr c, IntPtr text);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiEditableComboboxAppend(IntPtr c, IntPtr text) => FunctionLoader.Load<uiEditableComboboxAppend_t>("uiEditableComboboxAppend")(c, text);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        private delegate IntPtr uiEditableComboboxText_t(IntPtr comboBox);
-        public static () => FunctionLoader.Load<>("")();
+        private delegate IntPtr uiEditableComboboxText_t(IntPtr c);
+        public static IntPtr uiEditableComboboxText(IntPtr c) => FunctionLoader.Load<uiEditableComboboxText_t>("uiEditableComboboxText")(c);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiEditableComboboxSetText_t(IntPtr c, IntPtr text);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiEditableComboboxSetText(IntPtr c, IntPtr text) => FunctionLoader.Load<uiEditableComboboxSetText_t>("uiEditableComboboxSetText")(c, text);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiEditableComboboxOnChanged_t(IntPtr c, uiEditableComboboxOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiEditableComboboxOnChanged_tf(IntPtr c, IntPtr data);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiEditableComboboxOnChanged(IntPtr c, uiEditableComboboxOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiEditableComboboxOnChanged_t>("uiEditableComboboxOnChanged")(c, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewEditableCombobox_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewEditableCombobox() => FunctionLoader.Load<uiNewEditableCombobox_t>("uiNewEditableCombobox")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiRadioButtonsAppend_t(IntPtr r, IntPtr text);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiRadioButtonsAppend(IntPtr r, IntPtr text) => FunctionLoader.Load<uiRadioButtonsAppend_t>("uiRadioButtonsAppend")(r, text);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate int uiRadioButtonsSelected_t(IntPtr r);
-        public static () => FunctionLoader.Load<>("")();
+        public static int uiRadioButtonsSelected(IntPtr r) => FunctionLoader.Load<uiRadioButtonsSelected_t>("uiRadioButtonsSelected")(r);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiRadioButtonsSetSelected_t(IntPtr r, int n);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiRadioButtonsSetSelected(IntPtr r, int n) => FunctionLoader.Load<uiRadioButtonsSetSelected_t>("uiRadioButtonsSetSelected")(r, n);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiRadioButtonsOnSelected_t(IntPtr r, uiRadioButtonsOnSelected_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiRadioButtonsOnSelected_tf(IntPtr r, IntPtr data);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiRadioButtonsOnSelected(IntPtr r, uiRadioButtonsOnSelected_tf f, IntPtr data) => FunctionLoader.Load<uiRadioButtonsOnSelected_t>("uiRadioButtonsOnSelected")(r, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewRadioButtons_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewRadioButtons() => FunctionLoader.Load<uiNewRadioButtons_t>("uiNewRadioButtons")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewDateTimePicker_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewDateTimePicker() => FunctionLoader.Load<uiNewDateTimePicker_t>("uiNewDateTimePicker")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewDatePicker_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewDatePicker() => FunctionLoader.Load<uiNewDatePicker_t>("uiNewDatePicker")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewTimePicker_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewTimePicker() => FunctionLoader.Load<uiNewTimePicker_t>("uiNewTimePicker")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMultilineEntryText_t(IntPtr e);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiMultilineEntryText(IntPtr e) => FunctionLoader.Load<uiMultilineEntryText_t>("uiMultilineEntryText")(e);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMultilineEntrySetText_t(IntPtr e, IntPtr text);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMultilineEntrySetText(IntPtr e, IntPtr text) => FunctionLoader.Load<uiMultilineEntrySetText_t>("uiMultilineEntrySetText")(e, text);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMultilineEntryAppend_t(IntPtr e, IntPtr text);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMultilineEntryAppend(IntPtr e, IntPtr text) => FunctionLoader.Load<uiMultilineEntryAppend_t>("uiMultilineEntryAppend")(e, text);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMultilineEntryOnChanged_t(IntPtr e, uiMultilineEntryOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(callingConvention)]
         public delegate void uiMultilineEntryOnChanged_tf(IntPtr e, IntPtr data);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMultilineEntryOnChanged(IntPtr e, uiMultilineEntryOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiMultilineEntryOnChanged_t>("uiMultilineEntryOnChanged")(e, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiMultilineEntryReadOnly_t(IntPtr e);
-        public static () => FunctionLoader.Load<>("")();
+        public static bool uiMultilineEntryReadOnly(IntPtr e) => FunctionLoader.Load<uiMultilineEntryReadOnly_t>("uiMultilineEntryReadOnly")(e);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMultilineEntrySetReadOnly_t(IntPtr e, bool @readonly);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMultilineEntrySetReadOnly(IntPtr e, bool @readonly) => FunctionLoader.Load<uiMultilineEntrySetReadOnly_t>("uiMultilineEntrySetReadOnly")(e, @readonly);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewMultilineEntry_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewMultilineEntry() => FunctionLoader.Load<uiNewMultilineEntry_t>("uiNewMultilineEntry")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewNonWrappingMultilineEntry_t();
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewNonWrappingMultilineEntry() => FunctionLoader.Load<uiNewNonWrappingMultilineEntry_t>("uiNewNonWrappingMultilineEntry")();
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuItemEnable_t(IntPtr m);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMenuItemEnable(IntPtr m) => FunctionLoader.Load<uiMenuItemEnable_t>("uiMenuItemEnable")(m);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuItemDisable_t(IntPtr m);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMenuItemDisable(IntPtr m) => FunctionLoader.Load<uiMenuItemDisable_t>("uiMenuItemDisable")(m);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuItemOnClicked_t(IntPtr m, uiMenuItemOnClicked_tf f, IntPtr data);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void uiMenuItemOnClicked_tf(IntPtr menuItem, IntPtr window, IntPtr data);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMenuItemOnClicked(IntPtr m, uiMenuItemOnClicked_tf f, IntPtr data) => FunctionLoader.Load<uiMenuItemOnClicked_t>("uiMenuItemOnClicked")(m, f, data);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate bool uiMenuItemChecked_t(IntPtr m);
-        public static () => FunctionLoader.Load<>("")();
+        public static bool uiMenuItemChecked(IntPtr m) => FunctionLoader.Load<uiMenuItemChecked_t>("uiMenuItemChecked")(m);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuItemSetChecked_t(IntPtr m, bool @checked);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMenuItemSetChecked(IntPtr m, bool @checked) => FunctionLoader.Load<uiMenuItemSetChecked_t>("uiMenuItemSetChecked")(m, @checked);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendItem_t(IntPtr m, IntPtr name);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiMenuAppendItem(IntPtr m, IntPtr name) => FunctionLoader.Load<uiMenuAppendItem_t>("uiMenuAppendItem")(m, name);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendCheckItem_t(IntPtr m, IntPtr name);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiMenuAppendCheckItem(IntPtr m, IntPtr name) => FunctionLoader.Load<uiMenuAppendCheckItem_t>("uiMenuAppendCheckItem")(m, name);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendQuitItem_t(IntPtr m);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiMenuAppendQuitItem(IntPtr m) => FunctionLoader.Load<uiMenuAppendQuitItem_t>("uiMenuAppendQuitItem")(m);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendPreferencesItem_t(IntPtr m);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiMenuAppendPreferencesItem(IntPtr m) => FunctionLoader.Load<uiMenuAppendPreferencesItem_t>("uiMenuAppendPreferencesItem")(m);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiMenuAppendAboutItem_t(IntPtr m);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiMenuAppendAboutItem(IntPtr m) => FunctionLoader.Load<uiMenuAppendAboutItem_t>("uiMenuAppendAboutItem")(m);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMenuAppendSeparator_t(IntPtr m);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMenuAppendSeparator(IntPtr m) => FunctionLoader.Load<uiMenuAppendSeparator_t>("uiMenuAppendSeparator")(m);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewMenu_t(IntPtr name);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewMenu(IntPtr name) => FunctionLoader.Load<uiNewMenu_t>("uiNewMenu")(name);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiOpenFile_t(IntPtr parent);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiOpenFile(IntPtr parent) => FunctionLoader.Load<uiOpenFile_t>("uiOpenFile")(parent);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiSaveFile_t(IntPtr parent);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiSaveFile(IntPtr parent) => FunctionLoader.Load<uiSaveFile_t>("uiSaveFile")(parent);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMsgBox_t(IntPtr parent, IntPtr title, IntPtr description);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiMsgBox(IntPtr parent, IntPtr title, IntPtr description) => FunctionLoader.Load<uiMsgBox_t>("uiMsgBox")(parent, title, description);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiMsgBoxError_t(IntPtr parent, IntPtr title, IntPtr description);
-        public static () => FunctionLoader.Load<>("")();
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiAreaDrawHandler(IntPtr handler, IntPtr area, [In, Out]ref uiAreaDrawParams param);
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiAreaMouseEventHandler(IntPtr handler, IntPtr area, [In, Out]ref uiAreaMouseEvent mouseEvent);
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiAreaMouseCrossedHandler(IntPtr handler, IntPtr area, bool left);
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate void uiAreaDragBrokenHandler(IntPtr handler, IntPtr area);
-
-        [UnmanagedFunctionPointer(callingConvention)]
-        public delegate bool uiAreaKeyEventHandler(IntPtr handler, IntPtr area, [In, Out]ref uiAreaKeyEvent keyEvent);
+        public static void uiMsgBoxError(IntPtr parent, IntPtr title, IntPtr description) => FunctionLoader.Load<uiMsgBoxError_t>("uiMsgBoxError")(parent, title, description);
 
         [StructLayout(LayoutKind.Sequential)]
         internal class uiAreaHandler
@@ -639,35 +621,32 @@ namespace LibUISharp.Native.Libraries
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAreaSetSize_t(IntPtr a, int width, int height);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiAreaSetSize(IntPtr a, int width, int height) => FunctionLoader.Load<uiAreaSetSize_t>("uiAreaSetSize")(a, width, height);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate void uiAreaQueueReDrawAll_t(IntPtr a);
-        public static () => FunctionLoader.Load<>("")();
+        public static void uiAreaQueueReDrawAll(IntPtr a) => FunctionLoader.Load<uiAreaQueueReDrawAll_t>("uiAreaQueueReDrawAll")(a);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        private delegate void uiAreaScrollTo_t(IntPtr area, double x, double y, double width, double height);
-        public static () => FunctionLoader.Load<>("")();
+        private delegate void uiAreaScrollTo_t(IntPtr a, double x, double y, double width, double height);
+        public static void uiAreaScrollTo(IntPtr a, double x, double y, double width, double height) => FunctionLoader.Load<uiAreaScrollTo_t>("uiAreaScrollTo")(a, x, y, width, height);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        private delegate void uiAreaBeginUserWindowMove_t(IntPtr area);
-        public static () => FunctionLoader.Load<>("")();
+        private delegate void uiAreaBeginUserWindowMove_t(IntPtr a);
+        public static void uiAreaBeginUserWindowMove(IntPtr a) => FunctionLoader.Load<uiAreaBeginUserWindowMove_t>("uiAreaBeginUserWindowMove")(a);
 
         [UnmanagedFunctionPointer(callingConvention)]
-        private delegate void uiAreaBeginUserWindowResize_t(IntPtr area, uiWindowResizeEdge edge);
-        public static () => FunctionLoader.Load<>("")();
+        private delegate void uiAreaBeginUserWindowResize_t(IntPtr a, uiWindowResizeEdge edge);
+        public static void uiAreaBeginUserWindowResize(IntPtr a, uiWindowResizeEdge edge) => FunctionLoader.Load<uiAreaBeginUserWindowResize_t>("uiAreaBeginUserWindowResize")(a, edge);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewArea_t(uiAreaHandler ah);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewArea(uiAreaHandler ah) => FunctionLoader.Load<uiNewArea_t>("uiNewArea")(ah);
 
         [UnmanagedFunctionPointer(callingConvention)]
         private delegate IntPtr uiNewScrollingArea_t(uiAreaHandler ah, int width, int height);
-        public static () => FunctionLoader.Load<>("")();
+        public static IntPtr uiNewScrollingArea(uiAreaHandler ah, int width, int height) => FunctionLoader.Load<uiNewScrollingArea_t>("uiNewScrollingArea")(ah, width, height);
 
-        //TODO: Finish writing static functions above this line.
-        // /////////////////////////////////////////////////////////////////
-        
         [StructLayout(LayoutKind.Sequential)]
         public struct uiAreaDrawParams
         {
