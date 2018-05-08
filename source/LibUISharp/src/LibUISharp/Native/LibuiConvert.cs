@@ -1,10 +1,10 @@
 ﻿using LibUISharp.Controls;
 using LibUISharp.Drawing;
+using LibUISharp.Native.Libraries;
 using LibUISharp.Native.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using static LibUISharp.Native.Libraries.LibuiLibrary;
 
 namespace LibUISharp.Native
 {
@@ -13,7 +13,7 @@ namespace LibUISharp.Native
         #region IntPtr (UTF8) <=> string
         /// <summary>
         /// You must call System.Marshal.FreeHGlobal() after using this or it will cause a memory leak.
-        /// </summary>summary
+        /// </summary>
         public static IntPtr ToLibuiString(string str)
         {
             if (str == null)
@@ -40,27 +40,27 @@ namespace LibUISharp.Native
             byte[] bytes = new byte[i];
             Marshal.Copy(ptr, bytes, 0, bytes.Length);
             string str = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            uiFreeText(ptr);
+            LibuiLibrary.uiFreeText(ptr);
             return str;
         }
         #endregion
 
         #region uiForEach <=> bool
-        public static uiForEach ToLibuiForEach(bool forEach)
+        public static LibuiLibrary.uiForEach ToLibuiForEach(bool forEach)
         {
             if (forEach)
-                return uiForEach.uiForEachStop;
+                return LibuiLibrary.uiForEach.uiForEachStop;
             else
-                return uiForEach.uiForEachContinue;
+                return LibuiLibrary.uiForEach.uiForEachContinue;
         }
 
-        public static bool ToBoolean(uiForEach forEach)
+        public static bool ToBoolean(LibuiLibrary.uiForEach forEach)
         {
             switch (forEach)
             {
-                case uiForEach.uiForEachContinue:
+                case LibuiLibrary.uiForEach.uiForEachContinue:
                     return false;
-                case uiForEach.uiForEachStop:
+                case LibuiLibrary.uiForEach.uiForEachStop:
                     return true;
                 default:
                     throw new ArgumentOutOfRangeException("forEach");
@@ -69,13 +69,13 @@ namespace LibUISharp.Native
         #endregion
 
         #region uiAreaDrawParams => DrawEventArgs
-        public static uiAreaDrawParams ToLibuiAreaDrawParams(DrawEventArgs args) => throw new NotSupportedException("This conversion is not supported.");
+        public static LibuiLibrary.uiAreaDrawParams ToLibuiAreaDrawParams(DrawEventArgs args) => throw new NotSupportedException("This conversion is not supported.");
 
-        public static DrawEventArgs ToDrawEventArgs(uiAreaDrawParams p) => new DrawEventArgs(new Context(new SafeControlHandle(p.Context)), new RectangleD(p.ClipX, p.ClipY, p.ClipWidth, p.ClipHeight), new SizeD(p.AreaWidth, p.AreaHeight));
+        public static DrawEventArgs ToDrawEventArgs(LibuiLibrary.uiAreaDrawParams p) => new DrawEventArgs(new Context(new SafeControlHandle(p.Context)), new RectangleD(p.ClipX, p.ClipY, p.ClipWidth, p.ClipHeight), new SizeD(p.AreaWidth, p.AreaHeight));
         #endregion
 
         #region uiDrawMatrix <= Matrix
-        public static uiDrawMatrix ToLibuiDrawMatrix(Matrix m) => new uiDrawMatrix()
+        public static LibuiLibrary.uiDrawMatrix ToLibuiDrawMatrix(Matrix m) => new LibuiLibrary.uiDrawMatrix()
         {
             M11 = m.M11,
             M12 = m.M12,
@@ -85,11 +85,11 @@ namespace LibUISharp.Native
             M32 = m.M32
         };
 
-        public static Matrix ToMatrix(uiDrawMatrix m) => throw new NotSupportedException("This conversion is not supported.");
+        public static Matrix ToMatrix(LibuiLibrary.uiDrawMatrix m) => throw new NotSupportedException("This conversion is not supported.");
         #endregion
 
         #region uiDrawBrushGradientStop <= GradientStop
-        public static uiDrawBrushGradientStop ToLibuiDrawBrushGradientStop(GradientStop g) => new uiDrawBrushGradientStop()
+        public static LibuiLibrary.uiDrawBrushGradientStop ToLibuiDrawBrushGradientStop(GradientStop g) => new LibuiLibrary.uiDrawBrushGradientStop()
         {
             Pos = g.Position,
             R = g.Color.R,
@@ -98,22 +98,22 @@ namespace LibUISharp.Native
             A = g.Color.A
         };
 
-        public static GradientStop ToGradientStop(uiDrawBrushGradientStop g) => throw new NotSupportedException("This conversion is not supported.");
+        public static GradientStop ToGradientStop(LibuiLibrary.uiDrawBrushGradientStop g) => throw new NotSupportedException("This conversion is not supported.");
         #endregion
 
         #region uiFontDescriptor <=> Font
-        public static uiFontDescriptor ToLibuiFontDescriptor(Font f)
+        public static LibuiLibrary.uiFontDescriptor ToLibuiFontDescriptor(Font f)
         {
             IntPtr strPtr = ToLibuiString(f.Family);
             try
             {
-                return new uiFontDescriptor
+                return new LibuiLibrary.uiFontDescriptor
                 {
                     Family = strPtr,
                     Size = f.Size,
-                    Weight = (uiTextWeight)f.Weight,
-                    Italic = (uiTextItalic)f.Style,
-                    Stretch = (uiTextStretch)f.Weight
+                    Weight = (LibuiLibrary.uiTextWeight)f.Weight,
+                    Italic = (LibuiLibrary.uiTextItalic)f.Style,
+                    Stretch = (LibuiLibrary.uiTextStretch)f.Weight
                 };
             }
             finally
@@ -122,40 +122,40 @@ namespace LibUISharp.Native
             }
         }
 
-        public static Font ToFont(uiFontDescriptor f) => new Font(ToString(f.Family), f.Size, (FontWeight)f.Weight, (FontStyle)f.Italic, (FontStretch)f.Stretch);
+        public static Font ToFont(LibuiLibrary.uiFontDescriptor f) => new Font(ToString(f.Family), f.Size, (FontWeight)f.Weight, (FontStyle)f.Italic, (FontStretch)f.Stretch);
         #endregion
 
         #region uiDrawTextLayoutParams <= TextLayoutOptions
-        public static uiDrawTextLayoutParams ToLibuiDrawTextLayourParams(TextLayoutOptions o) => new uiDrawTextLayoutParams()
+        public static LibuiLibrary.uiDrawTextLayoutParams ToLibuiDrawTextLayourParams(TextLayoutOptions o) => new LibuiLibrary.uiDrawTextLayoutParams()
         {
             String = o.Text.Handle.DangerousGetHandle(),
             DefaultFont = ToLibuiFontDescriptor(o.DefaultFont),
             Width = o.Width,
-            Align = (uiDrawTextAlign)o.Alignment
+            Align = (LibuiLibrary.uiDrawTextAlign)o.Alignment
         };
 
-        public static TextLayoutOptions ToTextLayoutOptions(uiDrawTextLayoutParams p) => throw new NotSupportedException("This conversion is not supported.");
+        public static TextLayoutOptions ToTextLayoutOptions(LibuiLibrary.uiDrawTextLayoutParams p) => throw new NotSupportedException("This conversion is not supported.");
         #endregion
 
         #region uiAreaMouseEvent => MouseEventArgs
-        public static uiAreaMouseEvent ToLibuiAreaMouseEvent(MouseEventArgs e) => throw new NotSupportedException("This conversion is not supported.");
+        public static LibuiLibrary.uiAreaMouseEvent ToLibuiAreaMouseEvent(MouseEventArgs e) => throw new NotSupportedException("This conversion is not supported.");
 
-        public static MouseEventArgs ToMouseEventArgs(uiAreaMouseEvent e) => new MouseEventArgs(new PointD(e.X, e.Y), new SizeD(e.AreaWidth, e.AreaHeight), e.Up, e.Down, e.Count, (KeyModifierFlags)e.Modifiers, e.Held1To64);
+        public static MouseEventArgs ToMouseEventArgs(LibuiLibrary.uiAreaMouseEvent e) => new MouseEventArgs(new PointD(e.X, e.Y), new SizeD(e.AreaWidth, e.AreaHeight), e.Up, e.Down, e.Count, (KeyModifierFlags)e.Modifiers, e.Held1To64);
         #endregion
 
         #region uiAreaKeyEventArgs => KeyEventArgs
-        public static uiAreaKeyEvent ToLibuiAreaKeyEvent(KeyEventArgs args) => throw new NotSupportedException("This conversion is not supported.");
+        public static LibuiLibrary.uiAreaKeyEvent ToLibuiAreaKeyEvent(KeyEventArgs args) => throw new NotSupportedException("This conversion is not supported.");
 
-        public static KeyEventArgs ToKeyEventArgs(uiAreaKeyEvent e)
+        public static KeyEventArgs ToKeyEventArgs(LibuiLibrary.uiAreaKeyEvent e)
         {
             KeyModifierFlags m = 0;
-            if (e.Modifier.HasFlag(uiModifiers.uiModifierCtrl) || e.Modifiers.HasFlag(uiModifiers.uiModifierCtrl))
+            if (e.Modifier.HasFlag(LibuiLibrary.uiModifiers.uiModifierCtrl) || e.Modifiers.HasFlag(LibuiLibrary.uiModifiers.uiModifierCtrl))
                 m |= KeyModifierFlags.Ctrl;
-            if (e.Modifier.HasFlag(uiModifiers.uiModifierAlt) || e.Modifiers.HasFlag(uiModifiers.uiModifierAlt))
+            if (e.Modifier.HasFlag(LibuiLibrary.uiModifiers.uiModifierAlt) || e.Modifiers.HasFlag(LibuiLibrary.uiModifiers.uiModifierAlt))
                 m |= KeyModifierFlags.Alt;
-            if (e.Modifier.HasFlag(uiModifiers.uiModifierShift) || e.Modifiers.HasFlag(uiModifiers.uiModifierShift))
+            if (e.Modifier.HasFlag(LibuiLibrary.uiModifiers.uiModifierShift) || e.Modifiers.HasFlag(LibuiLibrary.uiModifiers.uiModifierShift))
                 m |= KeyModifierFlags.Shift;
-            if (e.Modifier.HasFlag(uiModifiers.uiModifierSuper) || e.Modifiers.HasFlag(uiModifiers.uiModifierSuper))
+            if (e.Modifier.HasFlag(LibuiLibrary.uiModifiers.uiModifierSuper) || e.Modifiers.HasFlag(LibuiLibrary.uiModifiers.uiModifierSuper))
                 m |= KeyModifierFlags.Super;
 
             return new KeyEventArgs(e.Key, (KeyExtension)e.ExtKey, m, e.Up);
@@ -163,100 +163,100 @@ namespace LibUISharp.Native
         #endregion
 
         #region uiAlign <=> Alignment
-        public static void ToLibuiAligns(Alignment a, out uiAlign hAlign, out uiAlign vAlign)
+        public static void ToLibuiAligns(Alignment a, out LibuiLibrary.uiAlign hAlign, out LibuiLibrary.uiAlign vAlign)
         {
             switch (a)
             {
                 case Alignment.Fill:
-                    vAlign = uiAlign.uiAlignFill;
-                    hAlign = uiAlign.uiAlignFill;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignFill;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignFill;
                     break;
                 case Alignment.Center:
-                    vAlign = uiAlign.uiAlignCenter;
-                    hAlign = uiAlign.uiAlignCenter;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignCenter;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignCenter;
                     break;
                 case Alignment.Top:
-                    vAlign = uiAlign.uiAlignStart;
-                    hAlign = uiAlign.uiAlignFill;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignStart;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignFill;
                     break;
                 case Alignment.TopLeft:
-                    vAlign = uiAlign.uiAlignStart;
-                    hAlign = uiAlign.uiAlignStart;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignStart;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignStart;
                     break;
                 case Alignment.TopCenter:
-                    vAlign = uiAlign.uiAlignStart;
-                    hAlign = uiAlign.uiAlignCenter;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignStart;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignCenter;
                     break;
                 case Alignment.TopRight:
-                    vAlign = uiAlign.uiAlignStart;
-                    hAlign = uiAlign.uiAlignEnd;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignStart;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignEnd;
                     break;
                 case Alignment.Left:
-                    vAlign = uiAlign.uiAlignFill;
-                    hAlign = uiAlign.uiAlignStart;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignFill;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignStart;
                     break;
                 case Alignment.LeftCenter:
-                    vAlign = uiAlign.uiAlignCenter;
-                    hAlign = uiAlign.uiAlignStart;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignCenter;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignStart;
                     break;
                 case Alignment.Right:
-                    vAlign = uiAlign.uiAlignFill;
-                    hAlign = uiAlign.uiAlignEnd;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignFill;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignEnd;
                     break;
                 case Alignment.RightCenter:
-                    vAlign = uiAlign.uiAlignCenter;
-                    hAlign = uiAlign.uiAlignEnd;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignCenter;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignEnd;
                     break;
                 case Alignment.Bottom:
-                    vAlign = uiAlign.uiAlignEnd;
-                    hAlign = uiAlign.uiAlignFill;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignEnd;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignFill;
                     break;
                 case Alignment.BottomLeft:
-                    vAlign = uiAlign.uiAlignEnd;
-                    hAlign = uiAlign.uiAlignStart;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignEnd;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignStart;
                     break;
                 case Alignment.BottomCenter:
-                    vAlign = uiAlign.uiAlignEnd;
-                    hAlign = uiAlign.uiAlignCenter;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignEnd;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignCenter;
                     break;
                 case Alignment.BottomRight:
-                    vAlign = uiAlign.uiAlignEnd;
-                    hAlign = uiAlign.uiAlignEnd;
+                    vAlign = LibuiLibrary.uiAlign.uiAlignEnd;
+                    hAlign = LibuiLibrary.uiAlign.uiAlignEnd;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("hAlign|vAlign");
             }
         }
 
-        public static Alignment ToAlignment(uiAlign hAlign, uiAlign vAlign)
+        public static Alignment ToAlignment(LibuiLibrary.uiAlign hAlign, LibuiLibrary.uiAlign vAlign)
         {
-            if (vAlign == uiAlign.uiAlignFill && hAlign == uiAlign.uiAlignFill)
+            if (vAlign == LibuiLibrary.uiAlign.uiAlignFill && hAlign == LibuiLibrary.uiAlign.uiAlignFill)
                 return Alignment.Fill;
-            else if (vAlign == uiAlign.uiAlignCenter && hAlign == uiAlign.uiAlignCenter)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignCenter && hAlign == LibuiLibrary.uiAlign.uiAlignCenter)
                 return Alignment.Center;
-            else if (vAlign == uiAlign.uiAlignStart && hAlign == uiAlign.uiAlignFill)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignStart && hAlign == LibuiLibrary.uiAlign.uiAlignFill)
                 return Alignment.Top;
-            else if (vAlign == uiAlign.uiAlignStart && hAlign == uiAlign.uiAlignStart)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignStart && hAlign == LibuiLibrary.uiAlign.uiAlignStart)
                 return Alignment.TopLeft;
-            else if (vAlign == uiAlign.uiAlignStart && hAlign == uiAlign.uiAlignCenter)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignStart && hAlign == LibuiLibrary.uiAlign.uiAlignCenter)
                 return Alignment.TopCenter;
-            else if (vAlign == uiAlign.uiAlignStart && hAlign == uiAlign.uiAlignEnd)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignStart && hAlign == LibuiLibrary.uiAlign.uiAlignEnd)
                 return Alignment.TopRight;
-            else if (vAlign == uiAlign.uiAlignFill && hAlign == uiAlign.uiAlignStart)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignFill && hAlign == LibuiLibrary.uiAlign.uiAlignStart)
                 return Alignment.Left;
-            else if (vAlign == uiAlign.uiAlignCenter && hAlign == uiAlign.uiAlignStart)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignCenter && hAlign == LibuiLibrary.uiAlign.uiAlignStart)
                 return Alignment.LeftCenter;
-            else if (vAlign == uiAlign.uiAlignFill && hAlign == uiAlign.uiAlignEnd)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignFill && hAlign == LibuiLibrary.uiAlign.uiAlignEnd)
                 return Alignment.Right;
-            else if (vAlign == uiAlign.uiAlignCenter && hAlign == uiAlign.uiAlignEnd)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignCenter && hAlign == LibuiLibrary.uiAlign.uiAlignEnd)
                 return Alignment.RightCenter;
-            else if (vAlign == uiAlign.uiAlignEnd && hAlign == uiAlign.uiAlignFill)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignEnd && hAlign == LibuiLibrary.uiAlign.uiAlignFill)
                 return Alignment.Bottom;
-            else if (vAlign == uiAlign.uiAlignEnd && hAlign == uiAlign.uiAlignStart)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignEnd && hAlign == LibuiLibrary.uiAlign.uiAlignStart)
                 return Alignment.BottomLeft;
-            else if (vAlign == uiAlign.uiAlignEnd && hAlign == uiAlign.uiAlignCenter)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignEnd && hAlign == LibuiLibrary.uiAlign.uiAlignCenter)
                 return Alignment.BottomCenter;
-            else if (vAlign == uiAlign.uiAlignEnd && hAlign == uiAlign.uiAlignEnd)
+            else if (vAlign == LibuiLibrary.uiAlign.uiAlignEnd && hAlign == LibuiLibrary.uiAlign.uiAlignEnd)
                 return Alignment.BottomRight;
             else
                 throw new ArgumentOutOfRangeException("hAlign|vAlign");
