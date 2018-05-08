@@ -4,52 +4,11 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.Native
 {
-    /// <summary>
-    /// Exposes functionality for loading native libraries and function pointers.
-    /// </summary>
     internal abstract class LibraryLoader
     {
-        /// <summary>
-        /// Loads a native library by name and returns an operating system handle to it.
-        /// </summary>
-        /// <param name="name">The name of the library to open.</param>
-        /// <returns>The operating system handle for the shared library.</returns>
-        public IntPtr LoadNativeLibrary(string name) => LoadNativeLibrary(name, PathResolver.Default);
+        public IntPtr LoadNativeLibrary(params string[] names) => LoadNativeLibrary(PathResolver.Default, names);
 
-        /// <summary>
-        /// Loads a native library by name and returns an operating system handle to it.
-        /// </summary>
-        /// <param name="names">An ordered list of names. Each name is tried in turn, until the library is successfully loaded.
-        /// </param>
-        /// <returns>The operating system handle for the shared library.</returns>
-        public IntPtr LoadNativeLibrary(string[] names) => LoadNativeLibrary(names, PathResolver.Default);
-
-        /// <summary>
-        /// Loads a native library by name and returns an operating system handle to it.
-        /// </summary>
-        /// <param name="name">The name of the library to open.</param>
-        /// <param name="pathResolver">The path resolver to use.</param>
-        /// <returns>The operating system handle for the shared library.</returns>
-        public IntPtr LoadNativeLibrary(string name, PathResolver pathResolver)
-        {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("Parameter must not be null or empty.", nameof(name));
-
-            IntPtr ret = LoadWithResolver(name, pathResolver);
-
-            if (ret == IntPtr.Zero)
-                throw new FileNotFoundException("Could not find or load the native library: " + name);
-            return ret;
-        }
-
-        /// <summary>
-        /// Loads a native library by name and returns an operating system handle to it.
-        /// </summary>
-        /// <param name="names">An ordered list of names. Each name is tried in turn, until the library is successfully loaded.
-        /// </param>
-        /// <param name="pathResolver">The path resolver to use.</param>
-        /// <returns>The operating system handle for the shared library.</returns>
-        public IntPtr LoadNativeLibrary(string[] names, PathResolver pathResolver)
+        public IntPtr LoadNativeLibrary(PathResolver pathResolver, params string[] names)
         {
             if (names == null || names.Length == 0)
                 throw new ArgumentException("Parameter must not be null or empty.", nameof(names));
@@ -68,6 +27,35 @@ namespace LibUISharp.Native
             return ret;
         }
 
+        public IntPtr LoadFunctionPointer(IntPtr handle, string functionName)
+        {
+            if (string.IsNullOrEmpty(functionName))
+                throw new ArgumentException("Parameter must not be null or empty.", nameof(functionName));
+            return CoreLoadFunctionPointer(handle, functionName);
+        }
+
+        public void FreeNativeLibrary(IntPtr handle)
+        {
+            if (handle == IntPtr.Zero)
+                throw new ArgumentException("Parameter must not be zero.", nameof(handle));
+            CoreFreeNativeLibrary(handle);
+        }
+
+        public static LibraryLoader GetPlatformDefaultLoader()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return new Win32LibraryLoader();
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                return new UnixLibraryLoader();
+            throw new PlatformNotSupportedException("This platform cannot load native libraries.");
+        }
+
+        protected abstract IntPtr CoreLoadNativeLibrary(string name);
+
+        protected abstract void CoreFreeNativeLibrary(IntPtr handle);
+
+        protected abstract IntPtr CoreLoadFunctionPointer(IntPtr handle, string functionName);
+
         private IntPtr LoadWithResolver(string name, PathResolver pathResolver)
         {
             if (Path.IsPathRooted(name))
@@ -85,65 +73,6 @@ namespace LibUISharp.Native
                 }
                 return IntPtr.Zero;
             }
-        }
-
-        /// <summary>
-        /// Loads a function pointer out of the given library by name.
-        /// </summary>
-        /// <param name="handle">The operating system handle of the opened shared library.</param>
-        /// <param name="functionName">The name of the exported function to load.</param>
-        /// <returns>A pointer to the loaded function.</returns>
-        public IntPtr LoadFunctionPointer(IntPtr handle, string functionName)
-        {
-            if (string.IsNullOrEmpty(functionName))
-                throw new ArgumentException("Parameter must not be null or empty.", nameof(functionName));
-            return CoreLoadFunctionPointer(handle, functionName);
-        }
-
-        /// <summary>
-        /// Frees the library represented by the given operating system handle.
-        /// </summary>
-        /// <param name="handle">The handle of the open shared library.</param>
-        public void FreeNativeLibrary(IntPtr handle)
-        {
-            if (handle == IntPtr.Zero)
-                throw new ArgumentException("Parameter must not be zero.", nameof(handle));
-            CoreFreeNativeLibrary(handle);
-        }
-
-        /// <summary>
-        /// Loads a native library by name and returns an operating system handle to it.
-        /// </summary>
-        /// <param name="name">The name of the library to open. This parameter must not be null or empty.</param>
-        /// <returns>The operating system handle for the shared library.
-        /// If the library cannot be loaded, IntPtr.Zero should be returned.</returns>
-        protected abstract IntPtr CoreLoadNativeLibrary(string name);
-
-        /// <summary>
-        /// Frees the library represented by the given operating system handle.
-        /// </summary>
-        /// <param name="handle">The handle of the open shared library. This must not be zero.</param>
-        protected abstract void CoreFreeNativeLibrary(IntPtr handle);
-
-        /// <summary>
-        /// Loads a function pointer out of the given library by name.
-        /// </summary>
-        /// <param name="handle">The operating system handle of the opened shared library. This must not be zero.</param>
-        /// <param name="functionName">The name of the exported function to load. This must not be null or empty.</param>
-        /// <returns>A pointer to the loaded function.</returns>
-        protected abstract IntPtr CoreLoadFunctionPointer(IntPtr handle, string functionName);
-
-        /// <summary>
-        /// Returns a default library loader for the running operating system.
-        /// </summary>
-        /// <returns>A LibraryLoader suitable for loading libraries.</returns>
-        public static LibraryLoader GetPlatformDefaultLoader()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return new Win32LibraryLoader();
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                return new UnixLibraryLoader();
-            throw new PlatformNotSupportedException("This platform cannot load native libraries.");
         }
 
         private class Win32LibraryLoader : LibraryLoader

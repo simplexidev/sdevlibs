@@ -7,37 +7,14 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.Native
 {
-    /// <summary>
-    /// Enumerates possible library load targets.
-    /// </summary>
     internal abstract class PathResolver
     {
-        /// <summary>
-        /// Returns an enumerator which yields possible library load targets, in priority order.
-        /// </summary>
-        /// <param name="name">The name of the library to load.</param>
-        /// <returns>An enumerator yielding load targets.</returns>
         public abstract IEnumerable<string> EnumeratePossibleLibraryLoadTargets(string name);
-
-        /// <summary>
-        /// Gets a default path resolver.
-        /// </summary>
         public static PathResolver Default { get; } = new DefaultPathResolver();
     }
-
-    /// <summary>
-    /// Enumerates possible library load targets. This default implementation returns the following load targets:
-    /// First: The library contained in the applications base folder.
-    /// Second: The simple name, unchanged.
-    /// Third: The library as resolved via the default DependencyContext, in the default nuget package cache folder.
-    /// </summary>
+    
     internal class DefaultPathResolver : PathResolver
     {
-        /// <summary>
-        /// Returns an enumerator which yieilds possible library load targets, in priority order.
-        /// </summary>
-        /// <param name="name">The name of the library to load.</param>
-        /// <returns>An enumerator yielding load targets.</returns>
         public override IEnumerable<string> EnumeratePossibleLibraryLoadTargets(string name)
         {
             yield return Path.Combine(AppContext.BaseDirectory, name);
