@@ -1,5 +1,5 @@
 ﻿// uiAlign
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     /// <summary>
     /// Specifies how content is positioned in a container.

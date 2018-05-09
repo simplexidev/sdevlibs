@@ -2,7 +2,7 @@
 using LibUISharp.Native.Libraries;
 
 // uiBox
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     public class StackPanelItemCollection : ControlCollection<StackPanel>
     {

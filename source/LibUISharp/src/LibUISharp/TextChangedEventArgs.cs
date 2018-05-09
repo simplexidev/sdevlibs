@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     /// <summary>
     /// Provides data for a <c>TextChanged</c> event.

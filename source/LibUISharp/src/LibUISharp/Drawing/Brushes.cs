@@ -6,6 +6,7 @@ namespace LibUISharp.Drawing
         // Please keep this in order with the above list, and for now, all entries
         // that have alternative spellings (i.e.: keep both Gray and Grey).
 
+        //TODO: Replace "new Color({argb})" with actual color from Colors.
         public static readonly SolidBrush Transparent = new SolidBrush(new Color(0x00000000));
         public static readonly SolidBrush Black = new SolidBrush(new Color(0xFF000000));
         public static readonly SolidBrush Navy = new SolidBrush(new Color(0xFF000080));

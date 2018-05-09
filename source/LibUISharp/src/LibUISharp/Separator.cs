@@ -1,9 +1,10 @@
 ﻿using LibUISharp.Native.Libraries;
+using LibUISharp.Native.SafeHandles;
 using System;
 
-namespace LibUISharp.Controls
+// uiSeparator
+namespace LibUISharp
 {
-    // uiSeparator
     public class Separator : Control
     {
         protected Separator(Orientation orientation)
@@ -11,10 +12,10 @@ namespace LibUISharp.Controls
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    Handle = LibuiLibrary.uiNewHorizontalSeparator();
+                    Handle = new SafeControlHandle(LibuiLibrary.uiNewHorizontalSeparator());
                     break;
                 case Orientation.Vertical:
-                    Handle = LibuiLibrary.uiNewVerticalSeparator();
+                    Handle = new SafeControlHandle(LibuiLibrary.uiNewVerticalSeparator());
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("orientation");

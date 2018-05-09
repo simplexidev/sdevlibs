@@ -1,16 +1,17 @@
 ﻿using LibUISharp.Native;
 using System;
 using System.Runtime.InteropServices;
-using static LibUISharp.Native.Libraries.LibuiLibrary;
+using LibUISharp.Native.Libraries;
 
 // uiDrawBrush
 namespace LibUISharp.Drawing
 {
+
     public abstract class Brush
     {
-        internal uiDrawBrush Internal = new uiDrawBrush();
+        internal LibuiLibrary.uiDrawBrush Internal = new LibuiLibrary.uiDrawBrush();
 
-        internal uiDrawBrushType BrushType
+        internal LibuiLibrary.uiDrawBrushType BrushType
         {
             get => Internal.Type;
             protected private set => Internal.Type = value;
@@ -21,7 +22,7 @@ namespace LibUISharp.Drawing
     {
         // linear: start X
         // radial: start X
-        internal protected double X0
+        private protected double X0
         {
             get => Internal.X0;
             set => Internal.X0 = value;
@@ -29,7 +30,7 @@ namespace LibUISharp.Drawing
 
         // linear: start Y
         // radial: start Y
-        internal protected double Y0
+        private protected double Y0
         {
             get => Internal.Y0;
             set => Internal.Y0 = value;
@@ -37,7 +38,7 @@ namespace LibUISharp.Drawing
 
         // linear: end X
         // radial: outer circle center X
-        internal protected double X1
+        private protected double X1
         {
             get => Internal.X1;
             set => Internal.X1 = value;
@@ -45,7 +46,7 @@ namespace LibUISharp.Drawing
 
         // linear: end Y
         // radial: outer circle center Y
-        internal protected double Y1
+        private protected double Y1
         {
             get => Internal.Y1;
             set => Internal.Y1 = value;
@@ -57,7 +58,7 @@ namespace LibUISharp.Drawing
             {
                 if (value != null && value.Length != 0)
                 {
-                    uiDrawBrushGradientStop[] stops = new uiDrawBrushGradientStop[value.Length];
+                    LibuiLibrary.uiDrawBrushGradientStop[] stops = new LibuiLibrary.uiDrawBrushGradientStop[value.Length];
                     for (int i = 0; i < value.Length; i++)
                     {
                         stops[i] = LibuiConvert.ToLibuiDrawBrushGradientStop(value[i]);
@@ -74,7 +75,7 @@ namespace LibUISharp.Drawing
         private PointD start = new PointD();
         private PointD end = new PointD(1.0, 1.0);
 
-        public LinearGradientBrush() => Internal.Type = uiDrawBrushType.uiDrawBrushTypeLinearGradient;
+        public LinearGradientBrush() => Internal.Type = LibuiLibrary.uiDrawBrushType.uiDrawBrushTypeLinearGradient;
 
         public PointD StartPoint
         {
@@ -117,7 +118,7 @@ namespace LibUISharp.Drawing
     {
         private PointD origin, center = new PointD(0.5, 0.5);
 
-        public RadialGradientBrush() => Internal.Type = uiDrawBrushType.uiDrawBrushTypeRadialGradient;
+        public RadialGradientBrush() => Internal.Type = LibuiLibrary.uiDrawBrushType.uiDrawBrushTypeRadialGradient;
 
         public PointD Origin
         {
@@ -162,11 +163,14 @@ namespace LibUISharp.Drawing
         }
     }
 
+    /// <summary>
+    /// Defines objects used to fill the interiors of graphical shapes such as rectangles, ellipses, pies, polygons, and paths.
+    /// </summary>
     public sealed class SolidBrush : Brush
     {
         private Color color;
 
-        public SolidBrush() => Internal.Type = uiDrawBrushType.uiDrawBrushTypeSolid;
+        public SolidBrush() => Internal.Type = LibuiLibrary.uiDrawBrushType.uiDrawBrushTypeSolid;
 
         public SolidBrush(Color color) : this() => Color = color;
 

@@ -3,7 +3,7 @@ using LibUISharp.Native.Libraries;
 using LibUISharp.Native.SafeHandles;
 
 // uiBox
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     /// <summary>
     /// Arranges child elements into a single line that can be oriented horizontally or vertically.

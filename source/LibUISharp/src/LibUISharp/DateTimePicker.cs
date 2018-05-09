@@ -1,18 +1,19 @@
-﻿using static LibUISharp.Internal.LibUI;
+﻿using LibUISharp.Native.Libraries;
+using LibUISharp.Native.SafeHandles;
 
+// uiDateTimePicker
 namespace LibUISharp
 {
-    // uiDateTimePicker
     public class DateTimePicker : Control
     {
         public DateTimePicker()
         {
             if (this is DatePicker)
-                Handle = uiNewDatePicker();
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewDatePicker());
             else if (this is TimePicker)
-                Handle = uiNewTimePicker();
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewTimePicker());
             else
-                Handle = uiNewDateTimePicker();
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewDateTimePicker());
         }
     }
 

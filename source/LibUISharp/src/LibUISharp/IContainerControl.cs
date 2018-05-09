@@ -1,4 +1,4 @@
-﻿namespace LibUISharp.Controls
+﻿namespace LibUISharp
 {
     internal interface IContainerControl<TContainer, out TCollection>
         where TContainer : ContainerControl

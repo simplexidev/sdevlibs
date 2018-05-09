@@ -5,7 +5,7 @@ using LibUISharp.Native.Libraries;
 using LibUISharp.Native.SafeHandles;
 
 // uiButton
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     /// <summary>
     /// Represents a basic button control with text.

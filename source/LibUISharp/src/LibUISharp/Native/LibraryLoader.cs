@@ -43,9 +43,9 @@ namespace LibUISharp.Native
 
         public static LibraryLoader GetPlatformDefaultLoader()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (PlatformHelper.IsWinNT)
                 return new Win32LibraryLoader();
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            else if (PlatformHelper.IsUnix)
                 return new UnixLibraryLoader();
             throw new PlatformNotSupportedException("This platform cannot load native libraries.");
         }

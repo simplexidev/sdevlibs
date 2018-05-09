@@ -1,4 +1,4 @@
-﻿namespace LibUISharp.Controls
+﻿namespace LibUISharp
 {
     /// <summary>
     /// Defines the different orientations that a control or layout can have.

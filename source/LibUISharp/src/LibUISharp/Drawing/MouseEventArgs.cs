@@ -1,8 +1,8 @@
 ﻿using System;
 
+// uiAreaMouseEvent
 namespace LibUISharp.Drawing
 {
-    // uiAreaMouseEvent
     public class MouseEventArgs : EventArgs
     {
         public MouseEventArgs(PointD point, SizeD areaSize, bool up, bool down, int count, KeyModifierFlags keyModifiers, ulong held1To64)

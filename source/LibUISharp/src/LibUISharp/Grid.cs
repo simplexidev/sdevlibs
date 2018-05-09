@@ -4,7 +4,7 @@ using LibUISharp.Native.Libraries;
 using LibUISharp.Native.SafeHandles;
 using System;
 
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     public class Grid : ContainerControl<Grid, GridControlCollection>
     {

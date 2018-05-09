@@ -5,7 +5,7 @@ using System;
 using System.Runtime.InteropServices;
 
 // uiLabel
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     /// <summary>
     /// Represents a standard label, which contains and shows text.

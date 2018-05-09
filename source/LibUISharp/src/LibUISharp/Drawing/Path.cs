@@ -2,18 +2,36 @@
 using LibUISharp.Native.Libraries;
 using LibUISharp.Native.SafeHandles;
 
+// uiDrawPath
 namespace LibUISharp.Drawing
 {
-    // uiDrawPath
+    /// <summary>
+    /// Represents a geometric path in a <see cref="Context"/>.
+    /// </summary>
     public class Path : LibuiComponent<SafePathHandle>
     {
         private bool disposed = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Path"/> class with the specified <see cref="FillMode"/>.
+        /// </summary>
+        /// <param name="mode">The <see cref="FillMode"/> specifying how the initialized <see cref="Path"/> should be filled.</param>
         public Path(FillMode mode) => Handle = new SafePathHandle(LibuiLibrary.uiDrawNewPath((LibuiLibrary.uiDrawFillMode)mode));
 
+        /// <inheritdoc/>
         protected internal override SafePathHandle Handle { get; private protected set; }
 
+        /// <summary>
+        /// Starts a new figure in this <see cref="Path"/> with the specified current x- and y-coordinates.
+        /// </summary>
+        /// <param name="x">The current x-coordinate.</param>
+        /// <param name="y">The current y-coordinate.</param>
         public void NewFigure(double x, double y) => LibuiLibrary.uiDrawPathNewFigure(Handle.DangerousGetHandle(), x, y);
+
+        /// <summary>
+        /// Starts a new figure in this <see cref="Path"/> with the specified current point.
+        /// </summary>
+        /// <param name="point"></param>
         public void NewFigure(PointD point) => NewFigure(point.X, point.Y);
 
         public void NewFigureWithArc(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => LibuiLibrary.uiDrawPathNewFigureWithArc(Handle.DangerousGetHandle(), xCenter, yCenter, radius, startAngle, sweep, negative);
@@ -34,8 +52,12 @@ namespace LibUISharp.Drawing
         public void AddRectangle(PointD location, SizeD size) => AddRectangle(location.X, location.Y, size.Width, size.Height);
         public void AddRectangle(RectangleD rect) => AddRectangle(rect.Location, rect.Size);
 
+        /// <summary>
+        /// Ends this <see cref="Path"/>.
+        /// </summary>
         public void End() => LibuiLibrary.uiDrawPathEnd(Handle.DangerousGetHandle());
 
+        /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
             if (!disposed)
@@ -47,6 +69,7 @@ namespace LibUISharp.Drawing
             }
         }
 
+        /// <inheritdoc/>
         public override void Dispose()
         {
             Dispose(true);

@@ -1,6 +1,4 @@
-﻿using LibUISharp.Internal;
-
-namespace LibUISharp.Drawing
+﻿namespace LibUISharp.Drawing
 {
     public struct Rectangle
     {

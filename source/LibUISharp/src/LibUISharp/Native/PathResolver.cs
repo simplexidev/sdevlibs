@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace LibUISharp.Native
 {
@@ -92,7 +91,7 @@ namespace LibUISharp.Native
 
         private string GetUserDirectory()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (PlatformHelper.IsWinNT)
                 return Environment.GetEnvironmentVariable("USERPROFILE");
             else
                 return Environment.GetEnvironmentVariable("HOME");

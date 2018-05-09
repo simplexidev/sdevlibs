@@ -4,7 +4,7 @@ using LibUISharp.Native.Libraries;
 using LibUISharp.Native.SafeHandles;
 
 // uiColorButton
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     /// <summary>
     /// Represents a common button that allows a user to choose a <see cref="Drawing.Color"/>.

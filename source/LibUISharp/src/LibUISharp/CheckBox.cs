@@ -5,7 +5,7 @@ using LibUISharp.Native.Libraries;
 using LibUISharp.Native.SafeHandles;
 
 // uiCheckbox
-namespace LibUISharp.Controls
+namespace LibUISharp
 {
     /// <summary>
     /// Represents a control that a user can set and clear.

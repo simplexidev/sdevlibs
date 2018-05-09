@@ -20,7 +20,7 @@ namespace LibUISharp.Drawing
 
         public void Save() => LibuiLibrary.uiDrawSave(Handle.DangerousGetHandle());
 
-        public void ReStore() => LibuiLibrary.uiDrawRestore(Handle.DangerousGetHandle());
+        public void Restore() => LibuiLibrary.uiDrawRestore(Handle.DangerousGetHandle());
 
         public void Transform(Matrix matrix) => LibuiLibrary.uiDrawTransform(Handle.DangerousGetHandle(), LibuiConvert.ToLibuiDrawMatrix(matrix));
 

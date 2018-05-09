@@ -1,58 +1,63 @@
-﻿using System;
+﻿using LibUISharp.Controls;
+using LibUISharp.Native;
+using LibUISharp.Native.Libraries;
+using LibUISharp.Native.SafeHandles;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using LibUISharp.Internal;
-using static LibUISharp.Internal.LibUI;
 
+// uiArea
 namespace LibUISharp.Drawing
 {
-    // uiArea
+    /// <summary>
+    /// Represents the base of all types of <see cref="Surface"/>.
+    /// </summary>
     public abstract class SurfaceBase : Control
     {
-        protected private Dictionary<ControlSafeHandle, SurfaceBase> Surfaces = new Dictionary<ControlSafeHandle, SurfaceBase>();
+        protected private Dictionary<SafeControlHandle, SurfaceBase> Surfaces = new Dictionary<SafeControlHandle, SurfaceBase>();
         private Size size;
 
         protected SurfaceBase(ISurfaceHandler events)
         {
             SurfaceHandler surfaceEvents = new SurfaceHandler
             {
-                Draw = (IntPtr surfaceHandler, IntPtr surface, ref uiAreaDrawParams args) =>
+                Draw = (IntPtr surfaceHandler, IntPtr surface, ref LibuiLibrary.uiAreaDrawParams args) =>
                 {
-                    ControlSafeHandle surfaceHandle = new ControlSafeHandle(surface); 
+                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
                     SurfaceBase realSurface = Surfaces[surfaceHandle];
-                    DrawEventArgs a = (DrawEventArgs)args;
+                    DrawEventArgs a = LibuiConvert.ToDrawEventArgs(args);
                     events.Draw(realSurface, ref a);
                 },
-                MouseEvent = (IntPtr surfaceHandler, IntPtr surface, ref uiAreaMouseEvent args) =>
+                MouseEvent = (IntPtr surfaceHandler, IntPtr surface, ref LibuiLibrary.uiAreaMouseEvent args) =>
                 {
-                    ControlSafeHandle surfaceHandle = new ControlSafeHandle(surface);
+                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
                     SurfaceBase realSurface = Surfaces[surfaceHandle];
-                    MouseEventArgs a = (MouseEventArgs)args;
+                    MouseEventArgs a = LibuiConvert.ToMouseEventArgs(args);
                     events.MouseEvent(realSurface, ref a);
                 },
                 MouseCrossed = (surfaceHandler, surface, left) =>
                 {
-                    ControlSafeHandle surfaceHandle = new ControlSafeHandle(surface);
+                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
                     SurfaceBase realSurface = Surfaces[surfaceHandle];
                     MouseCrossedEventArgs a = new MouseCrossedEventArgs(left);
                     events.MouseCrossed(realSurface, a);
                 },
                 DragBroken = (surfaceHandler, surface) =>
                 {
-                    ControlSafeHandle surfaceHandle = new ControlSafeHandle(surface);
+                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
                     SurfaceBase realSurface = Surfaces[surfaceHandle];
                     events.DragBroken(realSurface);
                 },
-                KeyEvent = (IntPtr surfaceHandler, IntPtr surface, ref uiAreaKeyEvent args) =>
+                KeyEvent = (IntPtr surfaceHandler, IntPtr surface, ref LibuiLibrary.uiAreaKeyEvent args) =>
                 {
-                    ControlSafeHandle surfaceHandle = new ControlSafeHandle(surface);
+                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
                     SurfaceBase realSurface = Surfaces[surfaceHandle];
-                    KeyEventArgs a = (KeyEventArgs)args;
+                    KeyEventArgs a = LibuiConvert.ToKeyEventArgs(args);
                     return events.KeyEvent(realSurface, ref a);
                 }
             };
 
-            EventHandler = new uiAreaHandler
+            EventHandler = new LibuiLibrary.uiAreaHandler
             {
                 DragBroken = Marshal.GetFunctionPointerForDelegate(surfaceEvents.DragBroken),
                 Draw = Marshal.GetFunctionPointerForDelegate(surfaceEvents.Draw),
@@ -62,7 +67,7 @@ namespace LibUISharp.Drawing
             };
         }
 
-        internal uiAreaHandler EventHandler { get; }
+        internal LibuiLibrary.uiAreaHandler EventHandler { get; }
 
         public Size Size
         {
@@ -71,7 +76,7 @@ namespace LibUISharp.Drawing
             {
                 if (size != value)
                 {
-                    uiAreaSetSize(Handle, value.Width, value.Height);
+                    LibuiLibrary.uiAreaSetSize(Handle.DangerousGetHandle(), value.Width, value.Height);
                     size = value;
                 }
             }
@@ -80,21 +85,24 @@ namespace LibUISharp.Drawing
         public int Width => size.Width;
         public int Height => size.Height;
 
-        public void QueueRedrawAll() => uiAreaQueueReDrawAll(Handle);
+        public void QueueRedrawAll() => LibuiLibrary.uiAreaQueueReDrawAll(Handle.DangerousGetHandle());
 
-        public void ScrollTo(double x, double y, double width, double height) => uiAreaScrollTo(Handle, x, y, width, height);
+        public void ScrollTo(double x, double y, double width, double height) => LibuiLibrary.uiAreaScrollTo(Handle.DangerousGetHandle(), x, y, width, height);
 
-        public void BeginUserWindowMove() => uiAreaBeginUserWindowMove(Handle);
+        public void BeginUserWindowMove() => LibuiLibrary.uiAreaBeginUserWindowMove(Handle.DangerousGetHandle());
 
-        public void BeginUserWindowResize(WindowEdge edge) => uiAreaBeginUserWindowResize(Handle, (uiWindowResizeEdge)edge);
+        public void BeginUserWindowResize(WindowEdge edge) => LibuiLibrary.uiAreaBeginUserWindowResize(Handle.DangerousGetHandle(), (LibuiLibrary.uiWindowResizeEdge)edge);
     }
 
     public class Surface : SurfaceBase
     {
         public Surface(ISurfaceHandler handler) : base(handler)
         {
-            Handle = uiNewArea(EventHandler);
-            Surfaces[Handle] = this;
+            if (!(this is ScrollableSurface))
+            {
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewArea(EventHandler));
+                Surfaces[Handle] = this;
+            }
         }
     }
 
@@ -102,7 +110,7 @@ namespace LibUISharp.Drawing
     {
         public ScrollableSurface(ISurfaceHandler handler, int width, int height) : base(handler)
         {
-            Handle = uiNewScrollingArea(EventHandler, width, height);
+            Handle = new SafeControlHandle(LibuiLibrary.uiNewScrollingArea(EventHandler, width, height));
             Surfaces[Handle] = this;
         }
 
@@ -118,19 +126,30 @@ namespace LibUISharp.Drawing
         bool KeyEvent(SurfaceBase surface, ref KeyEventArgs args);
     }
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void DrawHandler(IntPtr handler, IntPtr area, [In, Out]ref LibuiLibrary.uiAreaDrawParams param);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void MouseEventHandler(IntPtr handler, IntPtr area, [In, Out]ref LibuiLibrary.uiAreaMouseEvent mouseEvent);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void MouseCrossedHandler(IntPtr handler, IntPtr area, bool left);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void DragBrokenHandler(IntPtr handler, IntPtr area);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate bool KeyEventHandler(IntPtr handler, IntPtr area, [In, Out]ref LibuiLibrary.uiAreaKeyEvent keyEvent);
+
     // uiAreaHandler
     [StructLayout(LayoutKind.Sequential)]
     internal class SurfaceHandler
     {
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiAreaDrawHandler Draw;
+        public DrawHandler Draw;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiAreaMouseEventHandler MouseEvent;
+        public MouseEventHandler MouseEvent;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiAreaMouseCrossedHandler MouseCrossed;
+        public MouseCrossedHandler MouseCrossed;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiAreaDragBrokenHandler DragBroken;
+        public DragBrokenHandler DragBroken;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public uiAreaKeyEventHandler KeyEvent;
+        public KeyEventHandler KeyEvent;
     }
 }
