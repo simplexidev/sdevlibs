@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LibUISharp.Native;
+using LibUISharp.Native.Libraries;
+using System;
+using System.Runtime.InteropServices;
 
 namespace LibUISharp
 {
@@ -14,14 +17,16 @@ namespace LibUISharp
         {
             get
             {
-                text = uiEditableComboboxText(Handle);
+                text = LibuiConvert.ToString(LibuiLibrary.uiEditableComboboxText(Handle.DangerousGetHandle()));
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    uiEditableComboboxSetText(Handle, value);
+                    IntPtr strPtr = LibuiConvert.ToLibuiString(value);
+                    LibuiLibrary.uiEditableComboboxSetText(Handle.DangerousGetHandle(), strPtr);
+                    Marshal.FreeHGlobal(strPtr);
                     text = value;
                 }
             }
@@ -29,6 +34,6 @@ namespace LibUISharp
 
         protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
 
-        protected sealed override void InitializeEvents() => uiEditableComboboxOnChanged(Handle, (box, data) => { OnTextChanged(EventArgs.Empty); });
+        protected sealed override void InitializeEvents() => LibuiLibrary.uiEditableComboboxOnChanged(Handle.DangerousGetHandle(), (box, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
     }
 }
