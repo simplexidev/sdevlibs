@@ -1,47 +1,40 @@
-<!--| Project:  LibUISharp.csproj                  |
+﻿<!--| Project:  LibUISharp.csproj                  |
     | Assembly: LibUISharp.dll                     |
     | Guid: {F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD} |-->
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <BaseIntermediateOutputPath>..\..\build\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>..\..\build\obj\$(MSBuildProjectName)</IntermediateOutputPath>
-    <OutputPath>..\..\build\bin\$(MSBuildProjectName)\$(Configuration)</OutputPath>
-    <PackageOutputPath>..\..\build\pkg\</PackageOutputPath>
     <EnableDefaultItems>false</EnableDefaultItems>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <DocumentationFile>..\..\build\doc\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <Optimize>false</Optimize>
     <DebugType>full</DebugType>
-    <DefineConstants>DEBUG;TRACE;NETSTANDARD2_0</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <DefineConstants>TRACE;NETSTANDARD2_0</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.3" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.Console" Version="4.3.1" />
     <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
-    <Compile Include="src\LibUISharp\Controls\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\Text\*.cs" />
     <Compile Include="src\LibUISharp\Native\*.cs" />
