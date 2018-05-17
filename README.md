@@ -5,6 +5,11 @@
 
 LibUISharp is a library containing bindings for [libui](https://github.com/andlabs/libui), written in C# for .NET Core (and in the future, .NET Framework and Mono).
 
+## Looking for a Co-Maintainer!
+Currently, I don't have either the free time to make LibUISharp a complete working library on my own. Because of this, I am actively looking for a second maintainer. If you are interested in this position, please contact me [via email](mailto:tacorwin@outlook.com).
+
+While this means I will not be pushing quite as often, I will still be responing to issues and pull requests in a decently-timely manner.
+
 ## Features
 
 LibUISharp allows you to create a native GUI application running .NET Core. Please note that LibUI is in alpha development, so the native library, thus this C# library, is not stable. This library (LibUISharp) has not really been tested, yet, and may have some bugs. Check out the demos in the `demos\` folder for examples.
