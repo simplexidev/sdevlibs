@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace LibUISharp.Native
+namespace LibUISharp.Internal
 {
     internal class NativeLibrary : IDisposable
     {

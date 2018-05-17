@@ -6,7 +6,6 @@ using LibUISharp.Native.Libraries;
 // uiDrawBrush
 namespace LibUISharp.Drawing
 {
-
     public abstract class Brush
     {
         internal LibuiLibrary.uiDrawBrush Internal = new LibuiLibrary.uiDrawBrush();

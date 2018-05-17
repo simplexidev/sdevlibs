@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace LibUISharp.Native.Libraries
+namespace LibUISharp.Internal
 {
     internal static class Kernel32Library
     {

@@ -8,22 +8,18 @@ namespace LibUISharp
     {
         public DateTimePicker()
         {
-            if (this is DatePicker)
-                Handle = new SafeControlHandle(LibuiLibrary.uiNewDatePicker());
-            else if (this is TimePicker)
-                Handle = new SafeControlHandle(LibuiLibrary.uiNewTimePicker());
-            else
+            if (!(this is DatePicker || this is TimePicker))
                 Handle = new SafeControlHandle(LibuiLibrary.uiNewDateTimePicker());
         }
     }
 
     public class DatePicker : DateTimePicker
     {
-        public DatePicker() : base() { }
+        public DatePicker() : base() => Handle = new SafeControlHandle(LibuiLibrary.uiNewDatePicker());
     }
 
     public class TimePicker : DateTimePicker
     {
-        public TimePicker() : base() { }
+        public TimePicker() : base() => Handle = new SafeControlHandle(LibuiLibrary.uiNewTimePicker());
     }
 }

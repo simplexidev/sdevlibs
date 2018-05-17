@@ -1,5 +1,7 @@
 ﻿using System;
-using static LibUISharp.Internal.LibUI;
+using System.Runtime.InteropServices;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -14,11 +16,11 @@ namespace LibUISharp
             if (!(this is MultilineTextBox))
             {
                 if (this is PasswordBox)
-                    Handle = uiNewPasswordEntry();
+                    Handle = new SafeControlHandle(LibuiLibrary.uiNewPasswordEntry());
                 else if (this is SearchBox)
-                    Handle = uiNewSearchEntry();
+                    Handle = new SafeControlHandle(LibuiLibrary.uiNewSearchEntry());
                 else
-                    Handle = uiNewEntry();
+                    Handle = new SafeControlHandle(LibuiLibrary.uiNewEntry());
                 InitializeEvents();
             }
             else
@@ -55,9 +57,9 @@ namespace LibUISharp
             get
             {
                 if (this is MultilineTextBox)
-                    readOnly = uiMultilineEntryReadOnly(Handle);
+                    readOnly = LibuiLibrary.uiMultilineEntryReadOnly(Handle);
                 else
-                    readOnly = uiEntryReadOnly(Handle);
+                    readOnly = LibuiLibrary.uiEntryReadOnly(Handle);
                 return readOnly;
             }
             set
@@ -65,9 +67,9 @@ namespace LibUISharp
                 if (readOnly != value)
                 {
                     if (this is MultilineTextBox)
-                        uiMultilineEntrySetReadOnly(Handle, value);
+                        LibuiLibrary.uiMultilineEntrySetReadOnly(Handle, value);
                     else
-                        uiEntrySetReadOnly(Handle, value);
+                        LibuiLibrary.uiEntrySetReadOnly(Handle, value);
                     readOnly = value;
                 }
             }
@@ -76,9 +78,9 @@ namespace LibUISharp
         protected override void InitializeEvents()
         {
             if (this is MultilineTextBox)
-                uiMultilineEntryOnChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); });
+                LibuiLibrary.uiMultilineEntryOnChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
             else
-                uiEntryOnChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); });
+                LibuiLibrary.uiEntryOnChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
         }
 
         protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
@@ -111,6 +113,16 @@ namespace LibUISharp
 
         public bool WordWrap { get; }
 
-        public void Append(params string[] lines) => uiMultilineEntryAppend(Handle, lines);
+        public void Append(params string[] lines)
+        {
+            if (lines == null || lines.Length < 1) throw new ArgumentNullException("lines");
+
+            foreach (string line in lines)
+            {
+                IntPtr strPtr = line.ToLibuiString();
+                LibuiLibrary.uiMultilineEntryAppend(Handle.DangrousGetHandle(), strPtr);
+                Marshal.FreeHGlobal(strPtr);
+            }
+        }
     }
 }

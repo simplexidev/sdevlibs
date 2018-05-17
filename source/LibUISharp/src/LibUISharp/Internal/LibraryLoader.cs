@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace LibUISharp.Native
+namespace LibUISharp.Internal
 {
     internal abstract class LibraryLoader
     {

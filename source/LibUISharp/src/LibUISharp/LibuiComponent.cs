@@ -1,4 +1,4 @@
-﻿using LibUISharp.Native.SafeHandles;
+﻿using LibUISharp.SafeHandles;
 using System;
 
 namespace LibUISharp
@@ -27,14 +27,14 @@ namespace LibUISharp
     }
 
     /// <summary>
-    /// The base inplementation for a Libui component with the specified type of <see cref="LibuiSafeHandle"/>.
+    /// The base implementation for a Libui component with the specified type of <see cref="SafeHandleZeroIsInvalid"/>.
     /// </summary>
     /// <typeparam name="T">The type of safe handle.</typeparam>
     public abstract class LibuiComponent<T> : LibuiComponent
-        where T : LibuiSafeHandle
+        where T : SafeHandleZeroIsInvalid
     {
         /// <summary>
-        /// Gets the components native handle, in the form of a <see cref="LibuiSafeHandle"/>.
+        /// Gets the components native handle, in the form of a <see cref="SafeHandleZeroIsInvalid"/>.
         /// </summary>
         internal protected abstract T Handle { get; private protected set; }
     }

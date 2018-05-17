@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace LibUISharp.Native
+namespace LibUISharp.Internal
 {
     internal abstract class PathResolver
     {

@@ -1,5 +1,4 @@
-﻿using LibUISharp.Native;
-using LibUISharp.Native.Libraries;
+﻿using LibUISharp.Internal;
 using System;
 using System.ComponentModel;
 
@@ -101,8 +100,7 @@ namespace LibUISharp
         /// Shut down this application.
         /// </summary>
         public void Shutdown() => LibuiLibrary.uiQuit();
-
-        #region LibuiComponent Implementation
+        
         /// <inheritdoc />
         protected sealed override void InitializeComponent()
         {
@@ -113,7 +111,8 @@ namespace LibUISharp
             }
 
             IntPtr errPtr = LibuiLibrary.uiInit(ref Options);
-            string errStr = LibuiConvert.ToString(errPtr);
+            string errStr = null;
+            errStr = errStr.FromLibuiString(errPtr);
 
             if (string.IsNullOrEmpty(errStr))
             {
@@ -144,6 +143,5 @@ namespace LibUISharp
                 disposed = true;
             }
         }
-        #endregion
     }
 }

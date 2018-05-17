@@ -37,9 +37,17 @@
     <Compile Include="src\LibUISharp\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\Text\*.cs" />
-    <Compile Include="src\LibUISharp\Native\*.cs" />
-    <Compile Include="src\LibUISharp\Native\Libraries\*.cs" />
-    <Compile Include="src\LibUISharp\Native\SafeHandles\*.cs" />
+    <Compile Include="src\LibUISharp\SafeHandles\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\LibUISharp\Internal\Kernel32Library.cs" />
+    <Compile Include="src\LibUISharp\Internal\LibraryLoader.cs" />
+    <Compile Include="src\LibUISharp\Internal\LibuiExtensions.cs" />
+    <Compile Include="src\LibUISharp\Internal\LibuiLibrary.cs" />
+    <Compile Include="src\LibUISharp\Internal\NativeLibrary.cs" />
+    <Compile Include="src\LibUISharp\Internal\PathResolver.cs" />
+    <Compile Include="src\LibUISharp\Internal\PlatformHelper.cs" />
+    <Compile Include="src\LibUISharp\Internal\User32Library.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\libui.dll">

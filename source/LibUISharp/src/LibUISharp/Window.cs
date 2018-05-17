@@ -1,7 +1,6 @@
 ﻿using LibUISharp.Drawing;
-using LibUISharp.Native;
-using LibUISharp.Native.Libraries;
-using LibUISharp.Native.SafeHandles;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +10,7 @@ using System.Runtime.InteropServices;
 namespace LibUISharp
 {
     /// <summary>
-    /// Represents a windiw that makes up an application's user interface.
+    /// Represents a window that makes up an application's user interface.
     /// </summary>
     public class Window : Control
     {
@@ -35,7 +34,7 @@ namespace LibUISharp
             if (string.IsNullOrEmpty(title))
                 title = "LibUISharp";
 
-            IntPtr strPtr = LibuiConvert.ToLibuiString(title);
+            IntPtr strPtr = title.ToLibuiString();
             Handle = new SafeControlHandle(LibuiLibrary.uiNewWindow(strPtr, width, height, hasMenuStrip));
             Marshal.FreeHGlobal(strPtr);
 
@@ -71,7 +70,7 @@ namespace LibUISharp
         {
             get
             {
-                title = LibuiConvert.ToString(LibuiLibrary.uiWindowTitle(Handle.DangerousGetHandle()));
+                title = title.FromLibuiString(LibuiLibrary.uiWindowTitle(Handle.DangerousGetHandle()));
                 return title;
             }
             set
@@ -83,7 +82,7 @@ namespace LibUISharp
                     else
                         title = value;
 
-                    IntPtr strPtr = LibuiConvert.ToLibuiString(title);
+                    IntPtr strPtr = title.ToLibuiString();
                     LibuiLibrary.uiWindowSetTitle(Handle.DangerousGetHandle(), strPtr);
                     Marshal.FreeHGlobal(strPtr);
                 }
@@ -220,8 +219,7 @@ namespace LibUISharp
             WindowCache.Remove(Handle);
             Dispose();
         }
-
-        #region Control Implementation/Overrides
+        
         /// <inheritdoc/> 
         protected sealed override void InitializeEvents()
         {
@@ -263,6 +261,5 @@ namespace LibUISharp
                 base.Dispose(disposing);
             }
         }
-        #endregion
     }
 }

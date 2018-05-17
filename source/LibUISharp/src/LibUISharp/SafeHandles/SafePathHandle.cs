@@ -1,13 +1,13 @@
-﻿using LibUISharp.Native.Libraries;
+﻿using LibUISharp.Internal;
 using System;
 using System.Runtime.InteropServices;
 
-namespace LibUISharp.Native.SafeHandles
+namespace LibUISharp.SafeHandles
 {
     /// <summary>
     /// Represents a wrapper class for a path handle.
     /// </summary>
-    public sealed class SafePathHandle : LibuiSafeHandle
+    public sealed class SafePathHandle : SafeHandleZeroIsInvalid
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SafePathHandle"/> class.

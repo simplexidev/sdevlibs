@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace LibUISharp.Native
+namespace LibUISharp.Internal
 {
     internal static class PlatformHelper
     {
