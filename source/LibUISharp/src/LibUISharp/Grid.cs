@@ -1,7 +1,6 @@
 ﻿using LibUISharp.Drawing;
-using LibUISharp.Native;
-using LibUISharp.Native.Libraries;
-using LibUISharp.Native.SafeHandles;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 using System;
 
 namespace LibUISharp
@@ -35,7 +34,7 @@ namespace LibUISharp
         public GridControlCollection(Grid uiParent) : base(uiParent) { }
 
         public override void Add(Control control) => Add(control, 0, 0, 0, 0, 0, 0, Alignment.Fill);
-        public virtual void Add(Control control, Rectangle rect, Size expand, Alignment alignment) => Add(control, rect.Location, rect.Size, expand, alignment);
+        //TODO: public virtual void Add(Control control, Rectangle rect, Size expand, Alignment alignment) => Add(control, rect.Location, rect.Size, expand, alignment);
         public virtual void Add(Control control, Point location, Size span, Size expand, Alignment alignment) => Add(control, location.X, location.Y, span.Width, span.Height, expand.Width, expand.Height, alignment);
 
         public virtual void Add(Control control, int left, int top, int xspan, int yspan, int hexpand, int vexpand, Alignment alignment)
@@ -44,7 +43,7 @@ namespace LibUISharp
                 throw new ArgumentNullException("control");
             if (Contains(control))
                 throw new InvalidOperationException("Cannot add a Control that is already contained in this GridItemCollection.");
-            LibuiConvert.ToLibuiAligns(alignment, out LibuiLibrary.uiAlign halign, out LibuiLibrary.uiAlign valign);
+            alignment.ToLibuiAligns(out LibuiLibrary.uiAlign halign, out LibuiLibrary.uiAlign valign);
             LibuiLibrary.uiGridAppend(Parent.Handle.DangerousGetHandle(), control.Handle.DangerousGetHandle(), left, top, xspan, yspan, hexpand, halign, vexpand, valign);
             base.Add(control);
         }
@@ -57,7 +56,7 @@ namespace LibUISharp
                 throw new ArgumentNullException("control");
             if (Contains(control))
                 throw new InvalidOperationException("Cannot add a Control that is already contained in this GridItemCollection.");
-            LibuiConvert.ToLibuiAligns(alignment, out LibuiLibrary.uiAlign halign, out LibuiLibrary.uiAlign valign);
+            alignment.ToLibuiAligns(out LibuiLibrary.uiAlign halign, out LibuiLibrary.uiAlign valign);
             LibuiLibrary.uiGridInsertAt(Parent.Handle.DangerousGetHandle(), control.Handle.DangerousGetHandle(), existingControl.Handle.DangerousGetHandle(), (LibuiLibrary.uiAt)relativeAlignment, xspan, yspan, hexpand, halign, vexpand, valign);
             base.Insert(existingControl.Index, control);
         }
