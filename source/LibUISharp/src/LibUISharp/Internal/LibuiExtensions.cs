@@ -242,5 +242,18 @@ namespace LibUISharp.Internal
             else
                 throw new ArgumentOutOfRangeException("hAlign|vAlign");
         }
+
+        public static tm ToLibuiDateTime(this DateTime dt) => new tm()
+        {
+            tm_isdst = -1,
+            tm_hour = dt.Hour,
+            tm_min = dt.Minute,
+            tm_sec = dt.Second,
+            tm_mday = dt.Day,
+            tm_mon = dt.Month,
+            tm_year = dt.Year
+        };
+
+        public static DateTime ToDateTime(this tm dt) => new DateTime(dt.tm_year, dt.tm_mon, dt.tm_mday, dt.tm_hour, dt.tm_min, dt.tm_sec);
     }
 }

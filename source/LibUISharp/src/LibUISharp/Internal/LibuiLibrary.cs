@@ -485,6 +485,33 @@ namespace LibUISharp.Internal
         private delegate IntPtr uiNewRadioButtons_t();
         public static IntPtr uiNewRadioButtons() => FunctionLoader.Load<uiNewRadioButtons_t>("uiNewRadioButtons")();
 
+        [StructLayout(Layout)]
+        public struct tm
+        {
+            public int tm_sec;
+            public int tm_min;
+            public int tm_hour;
+            public int tm_mday;
+            public int tm_mon;
+            public int tm_year;
+            public int tm_wday; // undefined
+            public int tm_yday; // undefined
+            public int tm_isdst; // -1
+        }
+
+        [UnmanagedFunctionPointer(Convention)]
+        private delegate IntPtr uiDateTimePickerTime_t(IntPtr d, out tm time);
+        public static IntPtr uiDateTimePickerTime(IntPtr d, out tm time) => FunctionLoader.Load<uiDateTimePickerTime_t>("uiDateTimePickerTime")(d, out time);
+
+        [UnmanagedFunctionPointer(Convention)]
+        private delegate IntPtr uiDateTimePickerSetTime_t(IntPtr d, tm time);
+        public static IntPtr uiDateTimePickerSetTime(IntPtr d, tm time) => FunctionLoader.Load<uiDateTimePickerSetTime_t>("uiDateTimePickerSetTime")(d, time);
+
+        [UnmanagedFunctionPointer(Convention)]
+        private delegate IntPtr uiDateTimePickerOnChanged_t(IntPtr d, uiDateTimePickerOnChanged_tf f, IntPtr data);
+        public delegate void uiDateTimePickerOnChanged_tf(IntPtr d, IntPtr data);
+        public static IntPtr uiDateTimePickerOnChanged(IntPtr d, uiDateTimePickerOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiDateTimePickerOnChanged_t>("uiDateTimePickerOnChanged")(d, f, data);
+
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewDateTimePicker_t();
         public static IntPtr uiNewDateTimePicker() => FunctionLoader.Load<uiNewDateTimePicker_t>("uiNewDateTimePicker")();
