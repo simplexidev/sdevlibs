@@ -1,16 +1,17 @@
 ﻿using System;
-using static LibUISharp.Internal.LibUI;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
+// uiSpinbox
 namespace LibUISharp
 {
-    // uiSpinbox
     public class SpinBox : Control
     {
         private int value;
 
         public SpinBox(int min, int max)
         {
-            Handle = uiNewSpinbox(min, max);
+            Handle = new SafeControlHandle(LibuiLibrary.uiNewSpinbox(min, max));
             MinimumValue = min;
             MaximumValue = max;
             InitializeEvents();
@@ -25,14 +26,14 @@ namespace LibUISharp
         {
             get
             {
-                value = uiSpinboxValue(Handle);
+                value = LibuiLibrary.uiSpinboxValue(Handle.DangerousGetHandle());
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    uiSpinboxSetValue(Handle, value);
+                    LibuiLibrary.uiSpinboxSetValue(Handle.DangerousGetHandle(), value);
                     this.value = value;
                 }
             }
@@ -40,6 +41,6 @@ namespace LibUISharp
 
         protected virtual void OnValueChanged(EventArgs e) => ValueChanged?.Invoke(this, e);
 
-        protected sealed override void InitializeEvents() => uiSpinboxOnChanged(Handle, (spinbox, data) => { OnValueChanged(EventArgs.Empty); });
+        protected sealed override void InitializeEvents() => LibuiLibrary.uiSpinboxOnChanged(Handle.DangerousGetHandle(), (spinbox, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
     }
 }

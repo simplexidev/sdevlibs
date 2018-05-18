@@ -70,7 +70,7 @@ namespace LibUISharp
         {
             get
             {
-                title = title.FromLibuiString(LibuiLibrary.uiWindowTitle(Handle.DangerousGetHandle()));
+                title = LibuiLibrary.uiWindowTitle(Handle.DangerousGetHandle()).ToStringEx();
                 return title;
             }
             set

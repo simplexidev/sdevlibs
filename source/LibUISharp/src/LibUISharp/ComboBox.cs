@@ -1,23 +1,64 @@
-﻿using LibUISharp.Native.Libraries;
-using System;
+﻿using System;
+using System.Runtime.InteropServices;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
-// uiCombobox
+// uiComboBox
+// uiEditableCombobox
 namespace LibUISharp
 {
-    /// <summary>
-    /// Represents a selection control with a drop-down list that can be shown or hidden by clicking the arrow on the control.
-    /// </summary>
+    public abstract class ComboBoxBase : Control
+    {
+        protected ComboBoxBase()
+        {
+            if (this is ComboBox)
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewCombobox());
+            else if (this is EditableComboBox)
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewEditableCombobox());
+        }
+
+        public void Add(string item)
+        {
+            if (string.IsNullOrEmpty(item))
+            {
+                if (this is ComboBox)
+                    LibuiLibrary.uiComboboxAppend(Handle.DangerousGetHandle(), IntPtr.Zero);
+                else if (this is EditableComboBox)
+                    LibuiLibrary.uiEditableComboboxAppend(Handle.DangerousGetHandle(), IntPtr.Zero);
+            }
+            else
+            {
+                IntPtr strPtr;
+                if (this is ComboBox)
+                {
+                    strPtr = item.ToLibuiString();
+                    LibuiLibrary.uiComboboxAppend(Handle.DangerousGetHandle(), strPtr);
+                }
+                else if (this is EditableComboBox)
+                {
+                    strPtr = item.ToLibuiString();
+                    LibuiLibrary.uiEditableComboboxAppend(Handle.DangerousGetHandle(), strPtr);
+                }
+            }
+        }
+
+        public void Add(params string[] items)
+        {
+            foreach (string s in items)
+            {
+                Add(s);
+            }
+        }
+    }
+
     public class ComboBox : ComboBoxBase
     {
         private int index = -1;
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="ComboBox"/> class.
-        /// </summary>
+        
         public ComboBox() : base() => InitializeEvents();
 
         public event EventHandler Selected;
-
+        
         public int SelectedIndex
         {
             get
@@ -36,8 +77,38 @@ namespace LibUISharp
         }
 
         protected virtual void OnSelected(EventArgs e) => Selected?.Invoke(this, e);
-
-        /// <inheritdoc />
+        
         protected sealed override void InitializeEvents() => LibuiLibrary.uiComboboxOnSelected(Handle.DangerousGetHandle(), (c, data) => { OnSelected(EventArgs.Empty); }, IntPtr.Zero);
+    }
+
+    public class EditableComboBox : ComboBoxBase
+    {
+        public EditableComboBox() : base() => InitializeEvents();
+
+        public event EventHandler<TextChangedEventArgs> TextChanged;
+
+        private string text;
+        public virtual string Text
+        {
+            get
+            {
+                text = LibuiLibrary.uiEditableComboboxText(Handle.DangerousGetHandle()).ToStringEx();
+                return text;
+            }
+            set
+            {
+                if (text != value)
+                {
+                    IntPtr strPtr = value.ToLibuiString();
+                    LibuiLibrary.uiEditableComboboxSetText(Handle.DangerousGetHandle(), strPtr);
+                    Marshal.FreeHGlobal(strPtr);
+                    text = value;
+                }
+            }
+        }
+
+        protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
+
+        protected sealed override void InitializeEvents() => LibuiLibrary.uiEditableComboboxOnChanged(Handle.DangerousGetHandle(), (box, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
     }
 }

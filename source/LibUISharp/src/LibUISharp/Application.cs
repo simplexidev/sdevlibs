@@ -111,10 +111,9 @@ namespace LibUISharp
             }
 
             IntPtr errPtr = LibuiLibrary.uiInit(ref Options);
-            string errStr = null;
-            errStr = errStr.FromLibuiString(errPtr);
+            string errStr = errPtr.ToStringEx();
 
-            if (string.IsNullOrEmpty(errStr))
+            if (!string.IsNullOrEmpty(errStr))
             {
                 Console.WriteLine(errStr);
                 LibuiLibrary.uiFreeInitError(errPtr);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibUISharp.Internal;
+using System;
 using System.Runtime.InteropServices;
 
 namespace LibUISharp.Drawing
@@ -112,7 +113,7 @@ namespace LibUISharp.Drawing
         public bool Equals(Point point) => X == point.X && Y == point.Y;
 
         /// <inheritdoc/>  
-        public override int GetHashCode() => unchecked(this.GetHashCodeFromPropertyValues(X, Y));
+        public override int GetHashCode() => unchecked(this.GetHashCode(X, Y));
 
         /// <summary>
         /// Translates a <see cref="Point"/> by a given <see cref="Size"/>.

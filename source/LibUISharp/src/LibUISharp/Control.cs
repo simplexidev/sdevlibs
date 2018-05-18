@@ -1,5 +1,5 @@
-﻿using LibUISharp.Native.Libraries;
-using LibUISharp.Native.SafeHandles;
+﻿using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 using System;
 using System.Collections.Generic;
 
@@ -122,8 +122,7 @@ namespace LibUISharp
                 Handle.Dispose();
             ControlCache.Remove(Handle);
         }
-
-        #region LibuiComponent<T> Implementation/Overrides
+        
         /// <inheritdoc />
         internal protected override SafeControlHandle Handle { get; private protected set; }
 
@@ -144,6 +143,5 @@ namespace LibUISharp
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        #endregion
     }
 }

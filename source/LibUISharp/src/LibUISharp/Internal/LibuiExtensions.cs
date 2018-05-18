@@ -9,8 +9,9 @@ namespace LibUISharp.Internal
 {
     internal static class LibuiExtensions
     {
+        // string => IntPtr
         /// <summary>
-        /// You must call System.Marshal.FreeHGlobal() after using this or it will cause a memory leak.
+        /// You must call <see cref="Marshal.FreeHGlobal()"/> after using this or it will cause a memory leak.
         /// </summary>
         public static IntPtr ToLibuiString(this string str)
         {
@@ -25,7 +26,9 @@ namespace LibUISharp.Internal
             return ptr;
         }
 
-        public static string FromLibuiString(this string str, IntPtr ptr)
+        // IntPtr => string
+        // Suffixed with "Ex" since you can't overload methods using extensions (or I don't know how anyways)
+        public static string ToStringEx(this IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
                 return string.Empty;
@@ -42,6 +45,7 @@ namespace LibUISharp.Internal
             return s;
         }
 
+        // bool => uiForEach
         public static uiForEach ToLibuiForEach(this bool b)
         {
             if (b)
@@ -50,7 +54,8 @@ namespace LibUISharp.Internal
                 return uiForEach.uiForEachContinue;
         }
 
-        public static bool FromLibuiForEach(this bool b, uiForEach forEach)
+        // uiForEach => bool
+        public static bool ToBool(this uiForEach forEach)
         {
             switch (forEach)
             {
@@ -63,10 +68,10 @@ namespace LibUISharp.Internal
             }
         }
 
-        public static uiAreaDrawParams ToLibuiAreaDrawParams(this DrawEventArgs args) => throw new NotSupportedException("This conversion is not supported.");
+        // uiAreaDrawParams => DrawEventArgs
+        public static DrawEventArgs ToDrawEventArgs(this uiAreaDrawParams p) => new DrawEventArgs(new Context(new SafeControlHandle(p.Context)), new RectangleD(p.ClipX, p.ClipY, p.ClipWidth, p.ClipHeight), new SizeD(p.AreaWidth, p.AreaHeight));
 
-        public static DrawEventArgs FromLibuiAreaDrawParams(this DrawEventArgs args, uiAreaDrawParams p) => new DrawEventArgs(new Context(new SafeControlHandle(p.Context)), new RectangleD(p.ClipX, p.ClipY, p.ClipWidth, p.ClipHeight), new SizeD(p.AreaWidth, p.AreaHeight));
-
+        // Matrix => uiDrawMatrix
         public static uiDrawMatrix ToLibuiDrawMatrix(this Matrix m) => new uiDrawMatrix()
         {
             M11 = m.M11,
@@ -77,8 +82,7 @@ namespace LibUISharp.Internal
             M32 = m.M32
         };
 
-        public static Matrix FromLibuiDrawMatrix(this Matrix matrix, uiDrawMatrix m) => throw new NotSupportedException("This conversion is not supported.");
-
+        // GradientStop => uiDrawBrushGradientStop
         public static uiDrawBrushGradientStop ToLibuiDrawBrushGradientStop(this GradientStop g) => new uiDrawBrushGradientStop()
         {
             Pos = g.Position,
@@ -88,8 +92,7 @@ namespace LibUISharp.Internal
             A = g.Color.A
         };
 
-        public static GradientStop FromLibuiDrawBrushGradientStop(this GradientStop gs, uiDrawBrushGradientStop g) => throw new NotSupportedException("This conversion is not supported.");
-
+        // Font => uiFontDescriptor
         public static uiFontDescriptor ToLibuiFontDescriptor(this Font f)
         {
             IntPtr strPtr = ToLibuiString(f.Family);
@@ -110,8 +113,10 @@ namespace LibUISharp.Internal
             }
         }
 
-        public static Font FromLibuiFontDescriptor(this Font font, uiFontDescriptor f) => new Font(FromLibuiString(null, f.Family), f.Size, (FontWeight)f.Weight, (FontStyle)f.Italic, (FontStretch)f.Stretch);
+        // uiFontDescriptor => Font
+        public static Font ToFont(this uiFontDescriptor f) => new Font(f.Family.ToStringEx(), f.Size, (FontWeight)f.Weight, (FontStyle)f.Italic, (FontStretch)f.Stretch);
 
+        // TextLayoutOptions => uiDrawTextLayoutParams
         public static uiDrawTextLayoutParams ToLibuiDrawTextLayoutParams(this TextLayoutOptions o) => new uiDrawTextLayoutParams()
         {
             String = o.Text.Handle.DangerousGetHandle(),
@@ -119,16 +124,12 @@ namespace LibUISharp.Internal
             Width = o.Width,
             Align = (uiDrawTextAlign)o.Alignment
         };
+ 
+        // uiAreaMouseEvent => MouseEventArgs
+        public static MouseEventArgs ToMouseEventArgs(this uiAreaMouseEvent e) => new MouseEventArgs(new PointD(e.X, e.Y), new SizeD(e.AreaWidth, e.AreaHeight), e.Up, e.Down, e.Count, (KeyModifierFlags)e.Modifiers, e.Held1To64);
 
-        public static TextLayoutOptions FromLibuiDrawTextLayoutParams(this TextLayoutOptions o, uiDrawTextLayoutParams p) => throw new NotSupportedException("This conversion is not supported.");
-
-        public static uiAreaMouseEvent ToLibuiAreaMouseEvent(this MouseEventArgs args) => throw new NotSupportedException("This conversion is not supported.");
-
-        public static MouseEventArgs FromLibuiAreaMouseEvent(this MouseEventArgs args, uiAreaMouseEvent e) => new MouseEventArgs(new PointD(e.X, e.Y), new SizeD(e.AreaWidth, e.AreaHeight), e.Up, e.Down, e.Count, (KeyModifierFlags)e.Modifiers, e.Held1To64);
-
-        public static uiAreaKeyEvent ToLibuiAreaKeyEvent(this KeyEventArgs args) => throw new NotSupportedException("This conversion is not supported.");
-
-        public static KeyEventArgs FromLibuiAreaKeyEvent(this KeyEventArgs args, uiAreaKeyEvent e)
+        // uiAreaKeyEvent => KeyEventArgs
+        public static KeyEventArgs ToKeyEventArgs(this uiAreaKeyEvent e)
         {
             KeyModifierFlags m = 0;
             if (e.Modifier.HasFlag(uiModifiers.uiModifierCtrl) || e.Modifiers.HasFlag(uiModifiers.uiModifierCtrl))

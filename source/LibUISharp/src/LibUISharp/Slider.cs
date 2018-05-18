@@ -1,23 +1,24 @@
 ﻿using System;
-using static LibUISharp.Internal.LibUI;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
+// uiSlider
 namespace LibUISharp
 {
-    // uiSlider
     public class Slider : Control
     {
         private int value;
 
         public Slider(int min, int max)
         {
-            Handle = uiNewSlider(min, max);
+            Handle = new SafeControlHandle(LibuiLibrary.uiNewSlider(min, max));
             MinimumValue = min;
             MaximumValue = max;
             InitializeEvents();
         }
 
         public event EventHandler ValueChanged;
-        
+
         public int MinimumValue { get; }
         public int MaximumValue { get; }
 
@@ -25,14 +26,14 @@ namespace LibUISharp
         {
             get
             {
-                value = uiSliderValue(Handle);
+                value = LibuiLibrary.uiSliderValue(Handle.DangerousGetHandle());
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    uiSliderSetValue(Handle, value);
+                    LibuiLibrary.uiSliderSetValue(Handle.DangerousGetHandle(), value);
                     this.value = value;
                 }
             }
@@ -40,6 +41,6 @@ namespace LibUISharp
 
         protected virtual void OnValueChanged(EventArgs e) => ValueChanged?.Invoke(this, e);
 
-        protected sealed override void InitializeEvents() => uiSliderOnChanged(Handle, (slider, data) => { OnValueChanged(EventArgs.Empty); });
+        protected sealed override void InitializeEvents() => LibuiLibrary.uiSliderOnChanged(Handle.DangerousGetHandle(), (slider, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
     }
 }

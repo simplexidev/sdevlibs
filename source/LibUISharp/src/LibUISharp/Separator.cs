@@ -1,5 +1,5 @@
-﻿using LibUISharp.Native.Libraries;
-using LibUISharp.Native.SafeHandles;
+﻿using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 using System;
 
 // uiSeparator

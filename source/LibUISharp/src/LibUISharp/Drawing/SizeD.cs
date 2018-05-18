@@ -1,4 +1,4 @@
-﻿using System;
+﻿using LibUISharp.Internal;
 using System.Runtime.InteropServices;
 
 namespace LibUISharp.Drawing
@@ -74,7 +74,7 @@ namespace LibUISharp.Drawing
         public bool Equals(SizeD point) => Width == point.Width && Height == point.Height;
 
         /// <inheritdoc/>  
-        public override int GetHashCode() => unchecked(this.GetHashCodeFromPropertyValues(Width, Height));
+        public override int GetHashCode() => unchecked(this.GetHashCode(Width, Height));
 
 
         /// <summary>

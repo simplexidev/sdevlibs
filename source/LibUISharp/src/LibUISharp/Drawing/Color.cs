@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibUISharp.Internal;
+using System;
 using System.Runtime.InteropServices;
 
 namespace LibUISharp.Drawing
@@ -77,7 +78,7 @@ namespace LibUISharp.Drawing
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode() => unchecked(this.GetHashCodeFromPropertyValues(R, G, B, A));
+        public override int GetHashCode() => unchecked(this.GetHashCode(R, G, B, A));
 
         private static float sRgbToScRgb(byte bval)
         {
