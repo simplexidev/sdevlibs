@@ -43,24 +43,24 @@
   </ItemGroup>
   <ItemGroup Condition="'$(RuntimeIdentifier'=='linux-x64'">
     <Content Include="lib\libui.so">
-      <Link>runtimes\win-x64\native\libui.so</Link>
+      <Link>runtimes\linux-x64\native\libui.so</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
     <Content Include="lib\libui.so.0">
-      <Link>runtimes\win-x64\native\libui.so.0</Link>
+      <Link>runtimes\linux-x64\native\libui.so.0</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
   <ItemGroup Condition="'$(RuntimeIdentifier'=='osx-x64'">
     <Content Include="lib\libui.dylib">
-      <Link>runtimes\win-x64\native\libui.dylib</Link>
+      <Link>runtimes\osx-x64\native\libui.dylib</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
     <Content Include="lib\libui.dylib.A">
-      <Link>runtimes\win-x64\native\libui.dylib.A</Link>
+      <Link>runtimes\osx-x64\native\libui.dylib.A</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
