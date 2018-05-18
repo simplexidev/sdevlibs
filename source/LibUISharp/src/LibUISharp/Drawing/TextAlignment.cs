@@ -1,6 +1,6 @@
-﻿namespace LibUISharp.Drawing
+﻿// uiDrawTextAlign
+namespace LibUISharp.Drawing
 {
-    // uiDrawTextAlign
     public enum TextAlignment : uint
     {
         Left = 0,

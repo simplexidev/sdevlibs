@@ -1,4 +1,5 @@
-﻿namespace LibUISharp.Drawing
+﻿// uiUnderlineColor
+namespace LibUISharp.Drawing
 {
     public enum UnderlineColor : uint
     {

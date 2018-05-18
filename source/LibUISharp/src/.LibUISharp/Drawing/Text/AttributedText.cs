@@ -4,6 +4,7 @@ using static LibUISharp.Internal.LibUI;
 
 namespace LibUISharp.Drawing
 {
+    //TODO: This isn't what this should be. Needs 100% redone.
     public class AttributedText : UIComponent
     {
         private bool disposed = false;
