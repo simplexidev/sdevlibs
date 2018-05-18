@@ -16,9 +16,9 @@
     <Version>0.3.5-alpha</Version>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\source\LibUISharp\LibUISharp.csproj" />
+    <Compile Include="src\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\*.cs" />
+    <ProjectReference Include="..\..\source\LibUISharp\LibUISharp.csproj" />
   </ItemGroup>
 </Project>

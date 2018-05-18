@@ -7,17 +7,17 @@ namespace ControlGallery
     {
         private StackPanel vPanel = new StackPanel(Orientation.Vertical) { Padding = true };
         private StackPanel hPanel = new StackPanel(Orientation.Horizontal) { Padding = true };
-        private Button button = new Button("Button");
-        private CheckBox checkBox = new CheckBox("CheckBox");
-        private Label label = new Label("This is a Label. Right now, labels can only span one line.");
-        private Separator hSeparator = new Separator(Orientation.Horizontal);
+        private readonly Button button = new Button("Button");
+        private readonly CheckBox checkBox = new CheckBox("CheckBox");
+        private readonly Label label = new Label("This is a Label. Right now, labels can only span one line.");
+        private readonly Separator hSeparator = new Separator(Orientation.Horizontal);
         private GroupBox groupBox = new GroupBox("Entries") { Margins = true };
         private Form form = new Form { Padding = true };
-        private TextBox textBox = new TextBox();
-        private PasswordBox passwordBox = new PasswordBox();
-        private SearchBox searchBox = new SearchBox();
-        private MultilineTextBox multilineTextBox = new MultilineTextBox();
-        private MultilineTextBox noWordWrapMultilineTextBox = new MultilineTextBox(false);
+        private readonly TextBox textBox = new TextBox();
+        private readonly PasswordBox passwordBox = new PasswordBox();
+        private readonly SearchBox searchBox = new SearchBox();
+        private readonly MultilineTextBox multilineTextBox = new MultilineTextBox();
+        private readonly MultilineTextBox noWordWrapMultilineTextBox = new MultilineTextBox(false);
 
         public BasicControlsTab() : base("Basic Controls") => InitializeComponent();
 
@@ -49,9 +49,9 @@ namespace ControlGallery
         private SpinBox spinBox = new SpinBox(0, 100);
         private Slider slider = new Slider(0, 100);
         private ProgressBar progressBar = new ProgressBar();
-        private ProgressBar iProgressBar = new ProgressBar() { Value = -1 };
+        private readonly ProgressBar iProgressBar = new ProgressBar() { Value = -1 };
         private GroupBox groupBox2 = new GroupBox("Lists") { Margins = true };
-        private StackPanel vPanel2 = new StackPanel(Orientation.Vertical) { Padding = true };
+        private readonly StackPanel vPanel2 = new StackPanel(Orientation.Vertical) { Padding = true };
         private ComboBox comboBox = new ComboBox();
         private EditableComboBox editableComboBox = new EditableComboBox();
         private RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
@@ -104,12 +104,12 @@ namespace ControlGallery
     {
         private StackPanel hPanel = new StackPanel(Orientation.Horizontal) { Padding = true };
         private StackPanel vPanel = new StackPanel(Orientation.Vertical) { Padding = true };
-        private DatePicker datePicker = new DatePicker();
-        private TimePicker timePicker = new TimePicker();
-        private DateTimePicker dateTimePicker = new DateTimePicker();
-        private FontPicker fontPicker = new FontPicker();
-        private ColorPicker colorPicker = new ColorPicker();
-        private Separator hSeparator = new Separator(Orientation.Horizontal);
+        private readonly DatePicker datePicker = new DatePicker();
+        private readonly TimePicker timePicker = new TimePicker();
+        private readonly DateTimePicker dateTimePicker = new DateTimePicker();
+        private readonly FontPicker fontPicker = new FontPicker();
+        private readonly ColorPicker colorPicker = new ColorPicker();
+        private readonly Separator hSeparator = new Separator(Orientation.Horizontal);
         private StackPanel vPanel2 = new StackPanel(Orientation.Vertical) { Padding = true };
         private Grid grid = new Grid() { Padding = true };
         private Button button = new Button("Open File");
