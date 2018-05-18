@@ -1,6 +1,5 @@
-﻿using LibUISharp.Native;
-using LibUISharp.Native.Libraries;
-using LibUISharp.Native.SafeHandles;
+﻿using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -24,14 +23,14 @@ namespace LibUISharp.Drawing
                 {
                     SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
                     SurfaceBase realSurface = Surfaces[surfaceHandle];
-                    DrawEventArgs a = LibuiConvert.ToDrawEventArgs(args);
+                    DrawEventArgs a = args.ToDrawEventArgs();
                     events.Draw(realSurface, ref a);
                 },
                 MouseEvent = (IntPtr surfaceHandler, IntPtr surface, ref LibuiLibrary.uiAreaMouseEvent args) =>
                 {
                     SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
                     SurfaceBase realSurface = Surfaces[surfaceHandle];
-                    MouseEventArgs a = LibuiConvert.ToMouseEventArgs(args);
+                    MouseEventArgs a = args.ToMouseEventArgs();
                     events.MouseEvent(realSurface, ref a);
                 },
                 MouseCrossed = (surfaceHandler, surface, left) =>
@@ -51,7 +50,7 @@ namespace LibUISharp.Drawing
                 {
                     SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
                     SurfaceBase realSurface = Surfaces[surfaceHandle];
-                    KeyEventArgs a = LibuiConvert.ToKeyEventArgs(args);
+                    KeyEventArgs a = args.ToKeyEventArgs();
                     return events.KeyEvent(realSurface, ref a);
                 }
             };

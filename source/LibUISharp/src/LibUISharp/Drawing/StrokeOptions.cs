@@ -1,6 +1,6 @@
-﻿using System;
+﻿using LibUISharp.Internal;
+using System;
 using System.Runtime.InteropServices;
-using LibUISharp.Native.Libraries;
 
 // uiDrawStrokeParams
 namespace LibUISharp.Drawing

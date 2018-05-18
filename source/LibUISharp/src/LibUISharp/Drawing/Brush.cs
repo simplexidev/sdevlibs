@@ -1,7 +1,6 @@
-﻿using LibUISharp.Native;
+﻿using LibUISharp.Internal;
 using System;
 using System.Runtime.InteropServices;
-using LibUISharp.Native.Libraries;
 
 // uiDrawBrush
 namespace LibUISharp.Drawing
@@ -60,7 +59,7 @@ namespace LibUISharp.Drawing
                     LibuiLibrary.uiDrawBrushGradientStop[] stops = new LibuiLibrary.uiDrawBrushGradientStop[value.Length];
                     for (int i = 0; i < value.Length; i++)
                     {
-                        stops[i] = LibuiConvert.ToLibuiDrawBrushGradientStop(value[i]);
+                        stops[i] = value[i].ToLibuiDrawBrushGradientStop();
                     }
                     Internal.NumStops = (UIntPtr)value.Length;
                     Internal.Stops = Marshal.UnsafeAddrOfPinnedArrayElement(stops, 0);

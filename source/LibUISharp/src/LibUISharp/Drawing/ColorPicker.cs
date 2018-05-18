@@ -1,7 +1,7 @@
 ﻿using System;
 using LibUISharp.Drawing;
-using LibUISharp.Native.Libraries;
-using LibUISharp.Native.SafeHandles;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 // uiColorButton
 namespace LibUISharp

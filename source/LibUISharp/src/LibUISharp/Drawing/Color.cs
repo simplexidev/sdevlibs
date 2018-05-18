@@ -108,6 +108,6 @@ namespace LibUISharp.Drawing
         /// <returns><see langword="true"/> if the two <see cref="Color"/> structures are different; otherwise, <see langword="false"/>.</returns>
         public static bool operator !=(Color left, Color right) => !(left == right);
 
-        //TODO: public static explicit operator SolidBrush(Color color) => new SolidBrush(color);
+        public static explicit operator SolidBrush(Color color) => new SolidBrush(color);
     }
 }
