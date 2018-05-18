@@ -7,7 +7,7 @@ namespace LibUISharp
 {
     public class Separator : Control
     {
-        protected Separator(Orientation orientation)
+        public Separator(Orientation orientation)
         {
             switch (orientation)
             {
