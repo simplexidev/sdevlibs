@@ -34,19 +34,21 @@ namespace LibUISharp
             get
             {
                 if (this is MultilineTextBox)
-                    text = uiMultilineEntryText(Handle);
+                    text = LibuiLibrary.uiMultilineEntryText(Handle.DangerousGetHandle()).ToStringEx();
                 else
-                    text = uiEntryText(Handle);
+                    text = LibuiLibrary.uiEntryText(Handle.DangerousGetHandle()).ToStringEx();
                 return text;
             }
             set
             {
                 if (text != value)
                 {
+                    IntPtr strPtr = value.ToLibuiString();
                     if (this is MultilineTextBox)
-                        uiMultilineEntrySetText(Handle, value);
+                        LibuiLibrary.uiMultilineEntrySetText(Handle.DangerousGetHandle(), strPtr);
                     else
-                        uiEntrySetText(Handle, value);
+                        LibuiLibrary.uiEntrySetText(Handle.DangerousGetHandle(), strPtr);
+                    Marshal.FreeHGlobal(strPtr);
                     text = value;
                 }
             }
@@ -57,9 +59,9 @@ namespace LibUISharp
             get
             {
                 if (this is MultilineTextBox)
-                    readOnly = LibuiLibrary.uiMultilineEntryReadOnly(Handle);
+                    readOnly = LibuiLibrary.uiMultilineEntryReadOnly(Handle.DangerousGetHandle());
                 else
-                    readOnly = LibuiLibrary.uiEntryReadOnly(Handle);
+                    readOnly = LibuiLibrary.uiEntryReadOnly(Handle.DangerousGetHandle());
                 return readOnly;
             }
             set
@@ -67,9 +69,9 @@ namespace LibUISharp
                 if (readOnly != value)
                 {
                     if (this is MultilineTextBox)
-                        LibuiLibrary.uiMultilineEntrySetReadOnly(Handle, value);
+                        LibuiLibrary.uiMultilineEntrySetReadOnly(Handle.DangerousGetHandle(), value);
                     else
-                        LibuiLibrary.uiEntrySetReadOnly(Handle, value);
+                        LibuiLibrary.uiEntrySetReadOnly(Handle.DangerousGetHandle(), value);
                     readOnly = value;
                 }
             }
@@ -78,9 +80,9 @@ namespace LibUISharp
         protected override void InitializeEvents()
         {
             if (this is MultilineTextBox)
-                LibuiLibrary.uiMultilineEntryOnChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
+                LibuiLibrary.uiMultilineEntryOnChanged(Handle.DangerousGetHandle(), (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
             else
-                LibuiLibrary.uiEntryOnChanged(Handle, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
+                LibuiLibrary.uiEntryOnChanged(Handle.DangerousGetHandle(), (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
         }
 
         protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
@@ -104,9 +106,9 @@ namespace LibUISharp
         public MultilineTextBox(bool wordWrap = true)
         {
             if (wordWrap)
-                Handle = uiNewMultilineEntry();
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewMultilineEntry());
             else
-                Handle = uiNewNonWrappingMultilineEntry();
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewNonWrappingMultilineEntry());
             WordWrap = wordWrap;
             InitializeEvents();
         }
@@ -120,7 +122,7 @@ namespace LibUISharp
             foreach (string line in lines)
             {
                 IntPtr strPtr = line.ToLibuiString();
-                LibuiLibrary.uiMultilineEntryAppend(Handle.DangrousGetHandle(), strPtr);
+                LibuiLibrary.uiMultilineEntryAppend(Handle.DangerousGetHandle(), strPtr);
                 Marshal.FreeHGlobal(strPtr);
             }
         }

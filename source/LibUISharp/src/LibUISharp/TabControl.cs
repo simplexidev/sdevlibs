@@ -1,12 +1,14 @@
-﻿using System;
-using static LibUISharp.Internal.LibUI;
+﻿using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
+using System;
+using System.Runtime.InteropServices;
 
+// uiTab
 namespace LibUISharp
 {
-    // uiTab
-    public class TabControl : ContainerControl<TabPageCollection, TabControl>
+    public class TabControl : ContainerControl<TabControl, TabPageCollection>
     {
-        public TabControl() => Handle = uiNewTab();
+        public TabControl() => Handle = new SafeControlHandle(LibuiLibrary.uiNewTab());
     }
 
     public class TabPage : Control
@@ -44,7 +46,7 @@ namespace LibUISharp
             {
                 if (Parent != null && Parent.Handle.IsInvalid)
                 {
-                    margins = uiTabMargined(Parent.Handle, Index);
+                    margins = LibuiLibrary.uiTabMargined(Parent.Handle.DangerousGetHandle(), Index);
                     uninitialized = false;
                 }
                 return margins;
@@ -54,7 +56,7 @@ namespace LibUISharp
                 if (margins != value)
                 {
                     if (Parent != null && Parent.Handle.IsInvalid)
-                        uiTabSetMargined(Parent.Handle, Index, value);
+                        LibuiLibrary.uiTabSetMargined(Parent.Handle.DangerousGetHandle(), Index, value);
                     margins = value;
                 }
             }
@@ -63,7 +65,7 @@ namespace LibUISharp
         protected internal override void DelayRender()
         {
             if (uninitialized && margins)
-                uiTabSetMargined(Parent.Handle, Index, margins);
+                LibuiLibrary.uiTabSetMargined(Parent.Handle.DangerousGetHandle(), Index, margins);
         }
     }
 
@@ -79,7 +81,9 @@ namespace LibUISharp
             if (child == null)
                 throw new ArgumentException("You cannot add a null TabPage to a TabControl.");
             base.Add(c);
-            uiTabAppend(Owner.Handle, c.Name, c.Handle);
+            IntPtr strPtr = c.Name.ToLibuiString();
+            LibuiLibrary.uiTabAppend(Parent.Handle.DangerousGetHandle(), strPtr, c.Handle.DangerousGetHandle());
+            Marshal.FreeHGlobal(strPtr);
             c.DelayRender();
         }
 
@@ -91,13 +95,15 @@ namespace LibUISharp
             if (child == null)
                 throw new ArgumentException("You cannot add a null TabPage to a TabControl.");
             base.Insert(i, child);
-            uiTabInsertAt(Owner.Handle, c.Name, i, c.Handle);
+            IntPtr strPtr = c.Name.ToLibuiString();
+            LibuiLibrary.uiTabInsertAt(Parent.Handle.DangerousGetHandle(), strPtr, i, c.Handle.DangerousGetHandle());
+            Marshal.FreeHGlobal(strPtr);
             c.DelayRender();
         }
 
         public override bool Remove(Control item)
         {
-            uiTabDelete(Owner.Handle, item.Index);
+            LibuiLibrary.uiTabDelete(Parent.Handle.DangerousGetHandle(), item.Index);
             return base.Remove(item);
         }
     }

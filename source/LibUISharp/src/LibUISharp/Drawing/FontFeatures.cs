@@ -1,22 +1,22 @@
 ﻿using System;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.LibUI;
+using LibUISharp.SafeHandles;
 
+// uiOpenTypeFeatures
 namespace LibUISharp.Drawing
 {
-    // uiOpenTypeFeatures
     //TODO: Setup the ForEachFunc. Not sure how to do that yet.
-    public class FontFeatures : UIComponent, ICloneable
+    public class FontFeatures : LibuiComponent, ICloneable
     {
         private bool disposed = false;
 
         public FontFeatures()
         {
-            Handle = uiNewOpenTypeFeatures();
+            Handle = new SafeFontFeaturesHandle(LibuiLibrary.uiNewOpenTypeFeatures());
             InitializeEvents();
         }
 
-        internal FontFeatures(FontFeaturesSafeHandle safeHandle)
+        internal FontFeatures(SafeFontFeaturesHandle safeHandle)
         {
             Handle = safeHandle;
             InitializeEvents();
@@ -24,9 +24,9 @@ namespace LibUISharp.Drawing
 
         //TODO: public event EventHandler ForEachFeature;
 
-        internal FontFeaturesSafeHandle Handle { get; set; }
+        internal SafeFontFeaturesHandle Handle { get; set; }
 
-        public void Add(byte a, byte b, byte c, byte d, uint value) => uiOpenTypeFeaturesAdd(Handle, a, b, c, d, value);
+        public void Add(byte a, byte b, byte c, byte d, uint value) => LibuiLibrary.uiOpenTypeFeaturesAdd(Handle.DangerousGetHandle(), a, b, c, d, value);
 
         public void Add(char a, char b, char c, char d, uint value) => Add((byte)a, (byte)b, (byte)c, (byte)d, value);
 
@@ -39,7 +39,7 @@ namespace LibUISharp.Drawing
             Add(chars[0], chars[1], chars[2], chars[3], value);
         }
 
-        public void Remove(byte a, byte b, byte c, byte d) => uiOpenTypeFeaturesRemove(Handle, a, b, c, d);
+        public void Remove(byte a, byte b, byte c, byte d) => LibuiLibrary.uiOpenTypeFeaturesRemove(Handle.DangerousGetHandle(), a, b, c, d);
 
         public void Remove(char a, char b, char c, char d) => Remove((byte)a, (byte)b, (byte)c, (byte)d);
 
@@ -52,7 +52,7 @@ namespace LibUISharp.Drawing
             Remove(chars[0], chars[1], chars[2], chars[3]);
         }
 
-        public int TryGetValue(byte a, byte b, byte c, byte d, out uint value) => uiOpenTypeFeaturesGet(Handle, a, b, c, d, out value);
+        public int TryGetValue(byte a, byte b, byte c, byte d, out uint value) => LibuiLibrary.uiOpenTypeFeaturesGet(Handle.DangerousGetHandle(), a, b, c, d, out value);
 
         public int TryGetValue(char a, char b, char c, char d, out uint value) => TryGetValue((byte)a, (byte)b, (byte)c, (byte)d, out value);
 
@@ -69,7 +69,7 @@ namespace LibUISharp.Drawing
 
         object ICloneable.Clone() => Clone();
 
-        public FontFeatures Clone() => new FontFeatures(uiOpenTypeFeaturesClone(Handle));
+        public FontFeatures Clone() => new FontFeatures(new SafeFontFeaturesHandle(LibuiLibrary.uiOpenTypeFeaturesClone(Handle.DangerousGetHandle())));
 
         protected override void InitializeEvents()
         {

@@ -1,28 +1,29 @@
 ﻿using System;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.LibUI;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp.Drawing
 {
     // uiDrawTextLayout
-    public class TextLayout : UIComponent
+    public class TextLayout : LibuiComponent
     {
         private bool disposed = false;
 
         public TextLayout(TextLayoutOptions options)
         {
-            Handle = uiDrawNewTextLayout((uiDrawTextLayoutParams)options);
+            Handle = new SafeTextLayoutHandle(LibuiLibrary.uiDrawNewTextLayout((options.ToLibuiDrawTextLayoutParams())));
             Options = options;
         }
 
         public TextLayoutOptions Options { get; }
-        internal TextLayoutSafeHandle Handle { get; set; }
+
+        internal SafeTextLayoutHandle Handle { get; set; }
 
         public SizeD Extents
         {
             get
             {
-                uiDrawTextLayoutExtents(Handle, out double w, out double h);
+                LibuiLibrary.uiDrawTextLayoutExtents(Handle.DangerousGetHandle(), out double w, out double h);
                 return new SizeD(w, h);
             }
         }
@@ -48,6 +49,14 @@ namespace LibUISharp.Drawing
     // uiDrawTextLayoutParams
     public readonly struct TextLayoutOptions
     {
+        public TextLayoutOptions(AttributedText text, Font defaultFont, double width, TextAlignment alignment)
+        {
+            Text = text;
+            DefaultFont = defaultFont;
+            Width = width;
+            Alignment = alignment;
+        }
+
         public AttributedText Text { get; }
         public Font DefaultFont { get; }
         public double Width { get; }
