@@ -1,30 +1,38 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.LibUI;
+using LibUISharp.SafeHandles;
 
+// uiGroup
 namespace LibUISharp
 {
-    // uiGroup
     public class GroupBox : Control
     {
         private string title;
         private bool margins;
         private Control child;
 
-        public GroupBox(string title) => Handle = uiNewGroup(title);
+        public GroupBox(string title)
+        {
+            IntPtr strPtr = title.ToLibuiString();
+            Handle = new SafeControlHandle(LibuiLibrary.uiNewGroup(strPtr));
+            Marshal.FreeHGlobal(strPtr);
+        }
 
         public string Title
         {
             get
             {
-                title = uiGroupTitle(Handle);
+                title = LibuiLibrary.uiGroupTitle(Handle.DangerousGetHandle()).ToStringEx();
                 return title;
             }
             set
             {
                 if (title != value)
                 {
-                    uiGroupSetTitle(Handle, value);
+                    IntPtr strPtr = value.ToLibuiString();
+                    LibuiLibrary.uiGroupSetTitle(Handle.DangerousGetHandle(), strPtr);
+                    Marshal.FreeHGlobal(strPtr);
                     title = value;
                 }
             }
@@ -34,19 +42,19 @@ namespace LibUISharp
         {
             get
             {
-                margins = uiGroupMargined(Handle);
+                margins = LibuiLibrary.uiGroupMargined(Handle.DangerousGetHandle());
                 return margins;
             }
             set
             {
                 if (margins != value)
                 {
-                    uiGroupSetMargined(Handle, value);
+                    LibuiLibrary.uiGroupSetMargined(Handle.DangerousGetHandle(), value);
                     margins = value;
                 }
             }
         }
-        
+
         public Control Child
         {
             get => child;
@@ -54,7 +62,13 @@ namespace LibUISharp
             {
                 if (child != value)
                 {
-                    uiGroupSetChild(Handle, value?.Handle ?? new ControlSafeHandle(IntPtr.Zero));
+                    IntPtr ptr;
+                    if (value.Handle.IsInvalid)
+                        ptr = IntPtr.Zero;
+                    else
+                        ptr = value.Handle.DangerousGetHandle();
+
+                    LibuiLibrary.uiGroupSetChild(Handle.DangerousGetHandle(), ptr);
                     child = value;
                 }
             }

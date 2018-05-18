@@ -1,5 +1,8 @@
-﻿namespace LibUISharp.Drawing
+﻿using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
+    //TODO: Get this up to par with Point and Size
     public struct Rectangle
     {
         public Rectangle(int x, int y, int width, int height)
@@ -58,6 +61,7 @@
         public static bool operator !=(Rectangle rect1, Rectangle rect2) => !(rect1 == rect2);
     }
 
+    //TODO: Get this up to par with PointD and SizeD
     public struct RectangleD
     {
         public RectangleD(double x, double y, double width, double height)

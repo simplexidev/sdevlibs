@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.LibUI;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -10,7 +11,9 @@ namespace LibUISharp
     {
         public MenuStrip(string name)
         {
-            Handle = uiNewMenu(name);
+            IntPtr strPtr = name.ToLibuiString();
+            Handle = new SafeControlHandle(LibuiLibrary.uiNewMenu(strPtr));
+            Marshal.FreeHGlobal(strPtr);
             Name = name;
             Items = new List<MenuStripItem>();
         }
@@ -20,7 +23,9 @@ namespace LibUISharp
 
         public void AddItem(string name, Action<IntPtr> click = null)
         {
-            MenuStripItem item = new MenuStripItem(uiMenuAppendItem(Handle, name));
+            IntPtr strPtr = name.ToLibuiString();
+            MenuStripItem item = new MenuStripItem(LibuiLibrary.uiMenuAppendItem(Handle.DangerousGetHandle(), strPtr));
+            Marshal.FreeHGlobal(strPtr);
 
             if (click != null)
             {
@@ -35,7 +40,9 @@ namespace LibUISharp
 
         public void AddCheckItem(string name, Action<IntPtr> click = null)
         {
-            MenuStripCheckItem item = new MenuStripCheckItem(uiMenuAppendCheckItem(Handle, name));
+            IntPtr strPtr = name.ToLibuiString();
+            MenuStripCheckItem item = new MenuStripCheckItem(LibuiLibrary.uiMenuAppendCheckItem(Handle.DangerousGetHandle(), strPtr));
+            Marshal.FreeHGlobal(strPtr);
 
             if (click != null)
             {
@@ -50,7 +57,7 @@ namespace LibUISharp
 
         public void AddPreferencesItem(Action<IntPtr> click = null)
         {
-            MenuStripPreferencesItem item = new MenuStripPreferencesItem(uiMenuAppendPreferencesItem(Handle));
+            MenuStripPreferencesItem item = new MenuStripPreferencesItem(LibuiLibrary.uiMenuAppendPreferencesItem(Handle.DangerousGetHandle()));
 
             if (click != null)
             {
@@ -65,7 +72,7 @@ namespace LibUISharp
 
         public void AddAboutItem(Action<IntPtr> click = null)
         {
-            MenuStripAboutItem item = new MenuStripAboutItem(uiMenuAppendAboutItem(Handle));
+            MenuStripAboutItem item = new MenuStripAboutItem(LibuiLibrary.uiMenuAppendAboutItem(Handle.DangerousGetHandle()));
 
             if (click != null)
             {
@@ -80,11 +87,11 @@ namespace LibUISharp
 
         public void AddQuitItem(Action<IntPtr> click = null)
         {
-            MenuStripQuitItem item = new MenuStripQuitItem(uiMenuAppendQuitItem(Handle));
+            MenuStripQuitItem item = new MenuStripQuitItem(LibuiLibrary.uiMenuAppendQuitItem(Handle.DangerousGetHandle()));
             Items.Add(item);
         }
 
-        public void AddSeparator() => uiMenuAppendSeparator(Handle);
+        public void AddSeparator() => LibuiLibrary.uiMenuAppendSeparator(Handle.DangerousGetHandle());
     }
 
     // uiMenuItem
@@ -92,9 +99,9 @@ namespace LibUISharp
     {
         private bool enabled;
 
-        internal MenuStripItem(ControlSafeHandle handle)
+        internal MenuStripItem(IntPtr handle)
         {
-            Handle = handle;
+            Handle = new SafeControlHandle(handle);
             InitializeEvents();
         }
 
@@ -107,14 +114,14 @@ namespace LibUISharp
             {
                 if (enabled == value) return;
                 if (value)
-                    uiMenuItemEnable(Handle);
+                    LibuiLibrary.uiMenuItemEnable(Handle.DangerousGetHandle());
                 else
-                    uiMenuItemDisable(Handle);
+                    LibuiLibrary.uiMenuItemDisable(Handle.DangerousGetHandle());
                 enabled = value;
             }
         }
 
-        protected override void InitializeEvents() => uiMenuItemOnClicked(Handle, (item, window, data) => { OnClick(new DataEventArgs(window)); });
+        protected override void InitializeEvents() => LibuiLibrary.uiMenuItemOnClicked(Handle.DangerousGetHandle(), (item, window, data) => { OnClick(new DataEventArgs(window)); }, IntPtr.Zero);
 
         protected virtual void OnClick(DataEventArgs e) => Click?.Invoke(this, e);
     }
@@ -123,16 +130,16 @@ namespace LibUISharp
     {
         private bool isChecked;
 
-        internal MenuStripCheckItem(ControlSafeHandle handle) : base(handle) { }
+        internal MenuStripCheckItem(IntPtr handle) : base(handle) { }
 
         public bool IsChecked
         {
-            get => isChecked = uiMenuItemChecked(Handle);
+            get => isChecked = LibuiLibrary.uiMenuItemChecked(Handle.DangerousGetHandle());
             set
             {
                 if (isChecked != value)
                 {
-                    uiMenuItemSetChecked(Handle, value);
+                    LibuiLibrary.uiMenuItemSetChecked(Handle.DangerousGetHandle(), value);
                     isChecked = value;
                 }
             }
@@ -141,20 +148,20 @@ namespace LibUISharp
 
     public class MenuStripPreferencesItem : MenuStripItem
     {
-        internal MenuStripPreferencesItem(ControlSafeHandle handle) : base(handle) { }
+        internal MenuStripPreferencesItem(IntPtr handle) : base(handle) { }
     }
 
     public class MenuStripAboutItem : MenuStripItem
     {
-        internal MenuStripAboutItem(ControlSafeHandle handle) : base(handle) { }
+        internal MenuStripAboutItem(IntPtr handle) : base(handle) { }
     }
 
     public class MenuStripQuitItem : MenuStripItem
     {
-        internal MenuStripQuitItem(ControlSafeHandle handle) : base(handle) { }
+        internal MenuStripQuitItem(IntPtr handle) : base(handle) { }
 
         protected override void InitializeEvents() { }
 
-        protected override void OnClick(DataEventArgs e) { }
+        protected override sealed void OnClick(DataEventArgs e) { }
     }
 }

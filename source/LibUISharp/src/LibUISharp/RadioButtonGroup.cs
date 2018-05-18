@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
+using System;
+using System.Runtime.InteropServices;
 
 namespace LibUISharp
 {
@@ -9,7 +12,7 @@ namespace LibUISharp
 
         public RadioButtonGroup()
         {
-            Handle = uiNewRadioButtons();
+            Handle = new SafeControlHandle(LibuiLibrary.uiNewRadioButtons());
             InitializeEvents();
         }
 
@@ -19,14 +22,14 @@ namespace LibUISharp
         {
             get
             {
-                index = uiRadioButtonsSelected(Handle);
+                index = LibuiLibrary.uiRadioButtonsSelected(Handle.DangerousGetHandle());
                 return index;
             }
             set
             {
                 if (index != value)
                 {
-                    uiRadioButtonsSetSelected(Handle, value);
+                    LibuiLibrary.uiRadioButtonsSetSelected(Handle.DangerousGetHandle(), value);
                     index = value;
                 }
             }
@@ -36,18 +39,20 @@ namespace LibUISharp
         {
 
             if (items == null)
-                uiRadioButtonsAppend(Handle, null);
+                LibuiLibrary.uiRadioButtonsAppend(Handle.DangerousGetHandle(), IntPtr.Zero);
             else
             {
                 foreach (string s in items)
                 {
-                    uiRadioButtonsAppend(Handle, s);
+                    IntPtr strPtr = s.ToLibuiString();
+                    LibuiLibrary.uiRadioButtonsAppend(Handle.DangerousGetHandle(), strPtr);
+                    Marshal.FreeHGlobal(strPtr);
                 }
             }
         }
 
         protected virtual void OnSelected(EventArgs e) => Selected?.Invoke(this, e);
 
-        protected sealed override void InitializeEvents() => uiRadioButtonsOnSelected(Handle, (btn, data) => { OnSelected(EventArgs.Empty); });
+        protected sealed override void InitializeEvents() => LibuiLibrary.uiRadioButtonsOnSelected(Handle.DangerousGetHandle(), (btn, data) => { OnSelected(EventArgs.Empty); }, IntPtr.Zero);
     }
 }
