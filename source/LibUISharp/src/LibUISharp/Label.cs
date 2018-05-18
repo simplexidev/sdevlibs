@@ -1,6 +1,5 @@
-﻿using LibUISharp.Native;
-using LibUISharp.Native.Libraries;
-using LibUISharp.Native.SafeHandles;
+﻿using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
 
@@ -20,7 +19,7 @@ namespace LibUISharp
         /// <param name="text">The specified text for this <see cref="Label"/>.</param>
         public Label(string text)
         {
-            IntPtr strPtr = LibuiConvert.ToLibuiString(text);
+            IntPtr strPtr = text.ToLibuiString();
             Handle = new SafeControlHandle(LibuiLibrary.uiNewLabel(strPtr));
             Marshal.FreeHGlobal(strPtr);
             this.text = text;
@@ -33,14 +32,14 @@ namespace LibUISharp
         {
             get
             {
-                text = LibuiConvert.ToString(LibuiLibrary.uiLabelText(Handle.DangerousGetHandle()));
+                text = LibuiLibrary.uiLabelText(Handle.DangerousGetHandle()).ToStringEx();
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    IntPtr strPtr = LibuiConvert.ToLibuiString(value);
+                    IntPtr strPtr = value.ToLibuiString();
                     LibuiLibrary.uiLabelSetText(Handle.DangerousGetHandle(), strPtr);
                     Marshal.FreeHGlobal(strPtr);
                     text = value;

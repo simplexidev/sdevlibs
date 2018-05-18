@@ -28,17 +28,12 @@ namespace LibUISharp
             }
             else
             {
-                IntPtr strPtr;
+                IntPtr strPtr = item.ToLibuiString();
                 if (this is ComboBox)
-                {
-                    strPtr = item.ToLibuiString();
                     LibuiLibrary.uiComboboxAppend(Handle.DangerousGetHandle(), strPtr);
-                }
                 else if (this is EditableComboBox)
-                {
-                    strPtr = item.ToLibuiString();
                     LibuiLibrary.uiEditableComboboxAppend(Handle.DangerousGetHandle(), strPtr);
-                }
+                Marshal.FreeHGlobal(strPtr);
             }
         }
 
@@ -54,11 +49,11 @@ namespace LibUISharp
     public class ComboBox : ComboBoxBase
     {
         private int index = -1;
-        
+
         public ComboBox() : base() => InitializeEvents();
 
         public event EventHandler Selected;
-        
+
         public int SelectedIndex
         {
             get
@@ -77,7 +72,7 @@ namespace LibUISharp
         }
 
         protected virtual void OnSelected(EventArgs e) => Selected?.Invoke(this, e);
-        
+
         protected sealed override void InitializeEvents() => LibuiLibrary.uiComboboxOnSelected(Handle.DangerousGetHandle(), (c, data) => { OnSelected(EventArgs.Empty); }, IntPtr.Zero);
     }
 

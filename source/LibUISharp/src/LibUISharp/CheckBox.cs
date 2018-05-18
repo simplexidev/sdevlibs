@@ -1,8 +1,7 @@
-﻿using System;
+﻿using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
+using System;
 using System.Runtime.InteropServices;
-using LibUISharp.Native;
-using LibUISharp.Native.Libraries;
-using LibUISharp.Native.SafeHandles;
 
 // uiCheckbox
 namespace LibUISharp
@@ -21,7 +20,7 @@ namespace LibUISharp
         /// <param name="text">The text specified by the <see cref="CheckBox"/>.</param>
         public CheckBox(string text)
         {
-            IntPtr strPtr = LibuiConvert.ToLibuiString(text);
+            IntPtr strPtr = text.ToLibuiString();
             Handle = new SafeControlHandle(LibuiLibrary.uiNewCheckbox(strPtr));
             Marshal.FreeHGlobal(strPtr);
             this.text = text;
@@ -41,14 +40,14 @@ namespace LibUISharp
         {
             get
             {
-                text = LibuiConvert.ToString(LibuiLibrary.uiCheckboxText(Handle.DangerousGetHandle()));
+                text = LibuiLibrary.uiCheckboxText(Handle.DangerousGetHandle()).ToStringEx();
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    IntPtr strPtr = LibuiConvert.ToLibuiString(value);
+                    IntPtr strPtr = value.ToLibuiString();
                     LibuiLibrary.uiCheckboxSetText(Handle.DangerousGetHandle(), strPtr);
                     Marshal.FreeHGlobal(strPtr);
                     text = value;

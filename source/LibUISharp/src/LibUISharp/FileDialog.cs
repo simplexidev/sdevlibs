@@ -1,6 +1,8 @@
-﻿using System.IO;
-using static LibUISharp.Internal.LibUI;
+﻿using LibUISharp.Internal;
+using System.IO;
 
+// uiSaveFile
+// uiOpenFile
 namespace LibUISharp
 {
     public abstract class FileDialog
@@ -14,9 +16,9 @@ namespace LibUISharp
         public bool Show()
         {
             if (this is SaveFileDialog)
-                Path = uiSaveFile(Parent.Handle);
+                Path = LibuiLibrary.uiSaveFile(Parent.Handle.DangerousGetHandle()).ToStringEx();
             else if (this is OpenFileDialog)
-                Path = uiOpenFile(Parent.Handle);
+                Path = LibuiLibrary.uiOpenFile(Parent.Handle.DangerousGetHandle()).ToStringEx();
 
             if (string.IsNullOrEmpty(Path))
                 return false;
@@ -24,15 +26,12 @@ namespace LibUISharp
         }
     }
 
-    // uiSaveFile
     public class SaveFileDialog : FileDialog
     {
         public SaveFileDialog(Window parent = null) : base(parent) { }
 
         public Stream OpenFile() => File.OpenWrite(Path);
     }
-
-    // uiOpenFile
     public class OpenFileDialog : FileDialog
     {
         public OpenFileDialog(Window parent = null) : base(parent) { }
