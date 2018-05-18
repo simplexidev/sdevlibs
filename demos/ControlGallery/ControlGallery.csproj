@@ -16,7 +16,7 @@
     <Version>0.3.5-alpha</Version>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\source\LibUISharp\LibUISharp.csproj" />
+    <PackageReference Include="LibUISharp" Version="0.3.5-alpha" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\*.cs" />

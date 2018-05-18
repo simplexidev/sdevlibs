@@ -1,12 +1,12 @@
 # LibUISharp
 ![License](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true)
-[![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)
+<!--[![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)-->
 [![CodeFactor](https://www.codefactor.io/repository/github/tom-corwin/libuisharp/badge)](https://www.codefactor.io/repository/github/tom-corwin/libuisharp)
 
 LibUISharp is a library containing bindings for [libui](https://github.com/andlabs/libui), written in C# for .NET Core (and in the future, .NET Framework and Mono).
 
 ## Looking for Contributors!
-Currently, I don't have either the free time to make LibUISharp a complete working library on my own. Because of this, I am looking for help from the community. Whether an issue, or a new feature, nothing is to small.  
+Currently, I don't have the free time to make LibUISharp a complete working library on my own. Because of this, I am looking for help from the community. Whether an issue, or a new feature, nothing is to small.  
 While this means I will not be pushing quite as often, I will still be responing to issues and pull requests in a decently-timely manner.
 
 ## Features
@@ -85,13 +85,13 @@ This list is basically copied and reformatted from [here](https://github.com/dot
 
 ## Obtaining the Library
 
-LibUISharp is almost up-to-par with libui and doesn't have a package on nuget.org.
+LibUISharp is almost up-to-par with libui and is now available on NuGet!
 
-Add our CI package feed for bleeding-edge packages:  
-```
-https://ci.appveyor.com/nuget/libuisharp
-```
+Just add this line to you project file:
 
+```
+<PackageReference Include="LibUISharp" Version="0.3.5-alpha" />
+```
 
 ## Building From Source
 
