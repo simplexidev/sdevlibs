@@ -4,7 +4,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
     <LangVersion>7.2</LangVersion>
     <EnableDefaultItems>false</EnableDefaultItems>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
@@ -34,36 +33,27 @@
     <Compile Include="src\LibUISharp\Internal\*.cs" />
     <Compile Include="src\LibUISharp\SafeHandles\*.cs" />
   </ItemGroup>
-  <ItemGroup Condition="'$(RuntimeIdentifier'=='win-x64'">
-    <Content Include="lib\libui.dll">
-      <Link>runtimes\win-x64\native\libui.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Visible>false</Visible>
-    </Content>
-  </ItemGroup>
-  <ItemGroup Condition="'$(RuntimeIdentifier'=='linux-x64'">
-    <Content Include="lib\libui.so">
+  <ItemGroup>
+    <None Include="runtimes\win7-x64\native\libui.dll">
+      <Link>runtimes\win7-x64\native\libui.dll</Link>
+      <Pack>true</Pack>
+    </None>
+    <None Include="runtimes\linux-x64\native\libui.so">
       <Link>runtimes\linux-x64\native\libui.so</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Visible>false</Visible>
-    </Content>
-    <Content Include="lib\libui.so.0">
+      <Pack>true</Pack>
+    </None>
+    <None Include="runtimes\linux-x64\native\libui.so.0">
       <Link>runtimes\linux-x64\native\libui.so.0</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Visible>false</Visible>
-    </Content>
-  </ItemGroup>
-  <ItemGroup Condition="'$(RuntimeIdentifier'=='osx-x64'">
-    <Content Include="lib\libui.dylib">
+      <Pack>true</Pack>
+    </None>
+    <None Include="runtimes\osx-x64\native\libui.dylib">
       <Link>runtimes\osx-x64\native\libui.dylib</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Visible>false</Visible>
-    </Content>
-    <Content Include="lib\libui.dylib.A">
-      <Link>runtimes\osx-x64\native\libui.dylib.A</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Visible>false</Visible>
-    </Content>
+      <Pack>true</Pack>
+    </None>
+    <None Include="runtimes\osx-x64\native\libui.A.dylib">
+      <Link>runtimes\osx-x64\native\libui.A.dylib</Link>
+      <Pack>true</Pack>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.4" />
@@ -73,7 +63,7 @@
     <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
     <Authors>Thomas Corwin, et al.</Authors>
     <Copyright>2018 (c) Thomas Corwin</Copyright>
-    <Version>0.3.5-alpha</Version>
+    <Version>0.3.5</Version>
     <PackageId>$(MSBuildProjectName)</PackageId>
     <Description>LibUI Bindings for .NET Core (C#)</Description>
     <PackageTags>libui;ui;gui;drawing;desktop;cross-platform;netcore;netstandard</PackageTags>
