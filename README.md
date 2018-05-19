@@ -90,7 +90,7 @@ LibUISharp is almost up-to-par with libui and is now available on NuGet!
 Just add this line to you project file:
 
 ```
-<PackageReference Include="LibUISharp" Version="0.3.5" />
+<PackageReference Include="LibUISharp" Version="0.4.0-alpha-2/>
 ```
 
 ## Building From Source
