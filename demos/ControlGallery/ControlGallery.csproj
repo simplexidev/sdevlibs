@@ -13,12 +13,12 @@
     <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
     <Authors>Thomas Corwin, et al.</Authors>
     <Copyright>2018 (c) Thomas Corwin</Copyright>
-    <Version>0.4.0-alpha-1</Version>
+    <Version>0.4.0-alpha-2</Version>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LibUISharp" Version="0.4.0-alpha-*" />
+    <PackageReference Include="LibUISharp" Version="0.4.0-alpha-2" />
   </ItemGroup>
 </Project>

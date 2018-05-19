@@ -34,31 +34,31 @@
     <Compile Include="src\LibUISharp\SafeHandles\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="runtimes\win7-x64\native\libui.dll">
+    <Content Include="runtimes\win7-x64\native\libui.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>runtimes\win7-x64\native\libui.dll</Link>
       <Pack>true</Pack>
-    </None>
-    <None Include="runtimes\linux-x64\native\libui.so">
+    </Content>
+    <Content Include="runtimes\linux-x64\native\libui.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>runtimes\linux-x64\native\libui.so</Link>
       <Pack>true</Pack>
-    </None>
-    <None Include="runtimes\linux-x64\native\libui.so.0">
+    </Content>
+    <Content Include="runtimes\linux-x64\native\libui.so.0">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>runtimes\linux-x64\native\libui.so.0</Link>
       <Pack>true</Pack>
-    </None>
-    <None Include="runtimes\osx-x64\native\libui.dylib">
+    </Content>
+    <Content Include="runtimes\osx-x64\native\libui.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>runtimes\osx-x64\native\libui.dylib</Link>
       <Pack>true</Pack>
-    </None>
-    <None Include="runtimes\osx-x64\native\libui.A.dylib">
+    </Content>
+    <Content Include="runtimes\osx-x64\native\libui.A.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>runtimes\osx-x64\native\libui.A.dylib</Link>
       <Pack>true</Pack>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.4" />
@@ -68,7 +68,7 @@
     <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
     <Authors>Thomas Corwin, et al.</Authors>
     <Copyright>2018 (c) Thomas Corwin</Copyright>
-    <Version>0.4.0-alpha-1</Version>
+    <Version>0.4.0-alpha-2</Version>
     <PackageId>$(MSBuildProjectName)</PackageId>
     <Description>LibUI Bindings for .NET Core (C#)</Description>
     <PackageTags>libui;ui;gui;drawing;desktop;cross-platform;netcore;netstandard</PackageTags>
