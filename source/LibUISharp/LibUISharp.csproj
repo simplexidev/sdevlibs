@@ -68,7 +68,7 @@
     <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
     <Authors>Thomas Corwin, et al.</Authors>
     <Copyright>2018 (c) Thomas Corwin</Copyright>
-    <Version>0.4.0-alpha-2</Version>
+    <Version>0.4.0-alpha-3</Version>
     <PackageId>$(MSBuildProjectName)</PackageId>
     <Description>LibUI Bindings for .NET Core (C#)</Description>
     <PackageTags>libui;ui;gui;drawing;desktop;cross-platform;netcore;netstandard</PackageTags>
