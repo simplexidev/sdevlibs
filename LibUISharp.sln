@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawTextDemo", "demos\DrawT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HistogramDemo", "demos\HistogramDemo\HistogramDemo.csproj", "{0651053B-EA5F-4014-8001-32A7871F66C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWindowDemo", "demos\SimpleWindowDemo\SimpleWindowDemo.csproj", "{B929A697-638D-447C-B413-7E61F6B5B1F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0651053B-EA5F-4014-8001-32A7871F66C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0651053B-EA5F-4014-8001-32A7871F66C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0651053B-EA5F-4014-8001-32A7871F66C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B929A697-638D-447C-B413-7E61F6B5B1F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B929A697-638D-447C-B413-7E61F6B5B1F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B929A697-638D-447C-B413-7E61F6B5B1F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B929A697-638D-447C-B413-7E61F6B5B1F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

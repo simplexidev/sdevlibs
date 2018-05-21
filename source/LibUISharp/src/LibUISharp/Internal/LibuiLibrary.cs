@@ -11,9 +11,20 @@ namespace LibUISharp.Internal
 
         private static class FunctionLoader
         {
-            private static readonly string[] WinNTLibNames = new[] { "libui.dll" };
-            private static readonly string[] LinuxLibNames = new[] { "libui.so", "libui.so.0" };
-            private static readonly string[] MacOSLibNames = new[] { "libui.dylib", "libui.A.dylib" };
+            private static readonly string[] WinNTLibNames = new[] 
+            {
+                @"runtimes\win7-x64\native\libui.dll"
+            };
+            private static readonly string[] LinuxLibNames = new[] 
+            {
+                @"runtimes\linux-x64\native\libui.so",
+                @"runtimes\linux-x64\native\libui.so.0"
+            };
+            private static readonly string[] MacOSLibNames = new[]
+            {
+                @"runtimes\osx-x64\native\libui.dylib",
+                @"runtimes\osx-x64\native\libui.A.dylib"
+            };
 
             private static NativeLibrary LibuiNativeLibrary
             {
