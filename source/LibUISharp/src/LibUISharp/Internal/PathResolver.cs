@@ -3,15 +3,17 @@ using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace LibUISharp.Internal
 {
     internal abstract class PathResolver
     {
         public abstract IEnumerable<string> EnumeratePossibleLibraryLoadTargets(string name);
-        public static PathResolver Default { get; } = new DefaultPathResolver();
+        public static PathResolver Default => new DefaultPathResolver();
+        public static PathResolver Embedded => new EmbeddedPathResolver();
     }
-    
+
     internal class DefaultPathResolver : PathResolver
     {
         public override IEnumerable<string> EnumeratePossibleLibraryLoadTargets(string name)
@@ -95,6 +97,60 @@ namespace LibUISharp.Internal
                 return Environment.GetEnvironmentVariable("USERPROFILE");
             else
                 return Environment.GetEnvironmentVariable("HOME");
+        }
+    }
+
+    internal class EmbeddedPathResolver : PathResolver
+    {
+        private readonly string TempLibPath = Path.Combine(GetTempDirectory(), Assembly.GetExecutingAssembly().FullName, "assets");
+
+        public override IEnumerable<string> EnumeratePossibleLibraryLoadTargets(string name)
+        {
+            yield return TempLibPath;
+            yield return name;
+
+            if (TryGetNativeAssetFromAssembly(name, out string resolvedPath))
+            {
+                if (resolvedPath != TempLibPath)
+                    yield return resolvedPath;
+            }
+        }
+
+        private bool TryGetNativeAssetFromAssembly(string name, out string resolvedPath)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            MemoryStream ms = new MemoryStream();
+            assembly.GetManifestResourceStream(name).CopyTo(ms);
+
+            if (ms == null)
+            {
+                resolvedPath = null;
+                return false;
+            }
+
+            if (File.Exists(TempLibPath + name))
+                File.Delete(TempLibPath + name);
+
+            try
+            {
+                File.WriteAllBytes(TempLibPath + name, ms.ToArray());
+                ms.Close();
+                resolvedPath = TempLibPath;
+                return true;
+            }
+            catch
+            {
+                resolvedPath = null;
+                return false;
+            }
+        }
+
+        private static string GetTempDirectory()
+        {
+            if (PlatformHelper.IsWinNT)
+                return Environment.GetEnvironmentVariable("TMP");
+            else
+                return Environment.GetEnvironmentVariable("TMPDIR");
         }
     }
 }
