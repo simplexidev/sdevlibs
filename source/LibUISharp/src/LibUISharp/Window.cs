@@ -4,6 +4,7 @@ using LibUISharp.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices;
 
 // uiWindow
@@ -211,6 +212,66 @@ namespace LibUISharp
         protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
 
         /// <summary>
+        /// Displays a message box to the user.
+        /// </summary>
+        /// <param name="title">The title of the window.</param>
+        /// <param name="description">The message description.</param>
+        /// <param name="isError">Whether to show an error or not.</param>
+        public void ShowMessageBox(string title, string description = null, bool isError = false)
+        {
+            IntPtr titlePtr = title.ToLibuiString();
+            IntPtr descriptionPtr = description.ToLibuiString();
+            if (isError)
+                LibuiLibrary.uiMsgBoxError(Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
+            else
+                LibuiLibrary.uiMsgBox(Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
+            Marshal.FreeHGlobal(titlePtr);
+            Marshal.FreeHGlobal(descriptionPtr);
+        }
+
+        /// <summary>
+        /// Shows a save file dialog.
+        /// </summary>
+        /// <param name="writeStream">The <see cref="Stream"/> returned to save data to.</param>
+        /// <returns>true if successful, else false.</returns>
+        public bool ShowSaveFileDialog(out Stream writeStream)
+        {
+            string path = LibuiLibrary.uiSaveFile(Handle.DangerousGetHandle()).ToStringEx();
+
+            if (string.IsNullOrEmpty(path))
+            {
+                writeStream = null;
+                return false;
+            }
+            else
+            {
+                writeStream = File.OpenWrite(path);
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Shows a open file dialog.
+        /// </summary>
+        /// <param name="writeStream">The <see cref="Stream"/> returned to read data from.</param>
+        /// <returns>true if successful, else false.</returns>
+        public bool ShowOpenFileDialog(out Stream readStream)
+        {
+            string path = LibuiLibrary.uiOpenFile(Handle.DangerousGetHandle()).ToStringEx();
+
+            if (string.IsNullOrEmpty(path))
+            {
+                readStream = null;
+                return false;
+            }
+            else
+            {
+                readStream = File.OpenRead(path);
+                return true;
+            }
+        }
+
+        /// <summary>
         /// Closes the window.
         /// </summary>
         public void Close()
@@ -219,7 +280,7 @@ namespace LibUISharp
             WindowCache.Remove(Handle);
             Dispose();
         }
-        
+
         /// <inheritdoc/> 
         protected sealed override void InitializeEvents()
         {

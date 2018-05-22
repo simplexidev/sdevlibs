@@ -7,7 +7,7 @@ using static LibUISharp.Internal.LibuiLibrary;
 
 namespace LibUISharp.Internal
 {
-    internal static class LibuiExtensions
+    internal static class LibuiConversionExtensions
     {
         // string => IntPtr
         /// <summary>
