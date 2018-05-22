@@ -104,9 +104,9 @@ namespace ControlGallery
     {
         private StackPanel hPanel = new StackPanel(Orientation.Horizontal) { Padding = true };
         private StackPanel vPanel = new StackPanel(Orientation.Vertical) { Padding = true };
-        private readonly DatePicker datePicker = new DatePicker();
-        private readonly TimePicker timePicker = new TimePicker();
-        private readonly DateTimePicker dateTimePicker = new DateTimePicker();
+        //private readonly DatePicker datePicker = new DatePicker();
+        //private readonly TimePicker timePicker = new TimePicker();
+        //private readonly DateTimePicker dateTimePicker = new DateTimePicker();
         private readonly FontPicker fontPicker = new FontPicker();
         private readonly ColorPicker colorPicker = new ColorPicker();
         private readonly Separator hSeparator = new Separator(Orientation.Horizontal);
@@ -129,9 +129,9 @@ namespace ControlGallery
 
             hPanel.Children.Add(vPanel);
 
-            vPanel.Children.Add(datePicker);
-            vPanel.Children.Add(timePicker);
-            vPanel.Children.Add(dateTimePicker);
+            //vPanel.Children.Add(datePicker);
+            //vPanel.Children.Add(timePicker);
+            //vPanel.Children.Add(dateTimePicker);
             vPanel.Children.Add(fontPicker);
             vPanel.Children.Add(colorPicker);
 

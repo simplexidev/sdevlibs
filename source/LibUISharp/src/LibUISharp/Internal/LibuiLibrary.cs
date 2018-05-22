@@ -523,7 +523,7 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         public delegate void uiDateTimePickerOnChanged_tf(IntPtr d, IntPtr data);
         public static void uiDateTimePickerOnChanged(IntPtr d, uiDateTimePickerOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiDateTimePickerOnChanged_t>("uiDateTimePickerOnChanged")(d, f, data);
-        // _UI_EXTERN void uiDateTimePickerOnChanged(uiDateTimePicker* d, void (* f)(uiDateTimePicker*, void*), void* data);
+
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewDateTimePicker_t();
         public static IntPtr uiNewDateTimePicker() => FunctionLoader.Load<uiNewDateTimePicker_t>("uiNewDateTimePicker")();
