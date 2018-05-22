@@ -19,9 +19,9 @@ namespace LibUISharp.Internal
             {
                 get
                 {
-                    if (PlatformHelper.IsWinNT) return new NativeLibrary(WinNTLibNames);
-                    else if (PlatformHelper.IsLinux) return new NativeLibrary(LinuxLibNames);
-                    else if (PlatformHelper.IsMacOS) return new NativeLibrary(MacOSLibNames);
+                    if (PlatformHelper.IsWinNT) return new NativeLibrary(LibraryLoader.GetPlatformDefaultLoader(), PathResolver.Embedded, WinNTEmbeddedLibNames);
+                    else if (PlatformHelper.IsLinux) return new NativeLibrary(LibraryLoader.GetPlatformDefaultLoader(), PathResolver.Embedded, LinuxEmbeddedLibNames);
+                    else if (PlatformHelper.IsMacOS) return new NativeLibrary(LibraryLoader.GetPlatformDefaultLoader(), PathResolver.Embedded, MacOSEmbeddedLibNames);
                     else throw new PlatformNotSupportedException();
                 }
             }

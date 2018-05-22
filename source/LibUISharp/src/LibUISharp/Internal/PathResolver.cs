@@ -102,7 +102,7 @@ namespace LibUISharp.Internal
 
     internal class EmbeddedPathResolver : PathResolver
     {
-        private readonly string TempLibPath = Path.Combine(GetTempDirectory(), Assembly.GetExecutingAssembly().FullName, "assets");
+        private readonly string TempLibPath = Path.Combine(GetTempDirectory(), Assembly.GetExecutingAssembly().FullName, "res");
 
         public override IEnumerable<string> EnumeratePossibleLibraryLoadTargets(string name)
         {
