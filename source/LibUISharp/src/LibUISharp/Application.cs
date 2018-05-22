@@ -1,6 +1,7 @@
 ﻿using LibUISharp.Internal;
 using System;
 using System.ComponentModel;
+using System.Text;
 
 namespace LibUISharp
 {
@@ -20,6 +21,7 @@ namespace LibUISharp
         /// </summary>
         public Application()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             lock (_lock)
             {
                 if (created)
