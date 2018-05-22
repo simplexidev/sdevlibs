@@ -35,19 +35,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\libui.dll">
-      <LogicalName>LibUISharp.Resources.libui.dll</LogicalName>
+      <LogicalName>LibUISharp.Resources.Libui.WinNT</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="res\libui.so">
-      <LogicalName>LibUISharp.Resources.libui.so</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="res\libui.so.0">
-      <LogicalName>LibUISharp.Resources.libui.so.0</LogicalName>
+      <LogicalName>LibUISharp.Resources.Libui.Linux</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="res\libui.dylib">
-      <LogicalName>LibUISharp.Resources.libui.dylib</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="res\libui.A.dylib">
-      <LogicalName>LibUISharp.Resources.libui.A.dylib</LogicalName>
+      <LogicalName>LibUISharp.Resources.Libui.MacOS</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
