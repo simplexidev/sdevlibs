@@ -243,6 +243,7 @@ namespace LibUISharp.Internal
                 throw new ArgumentOutOfRangeException("hAlign|vAlign");
         }
 
+#if LIBUI_4_0
         public static tm ToLibuiDateTime(this DateTime dt) => new tm()
         {
             tm_isdst = -1,
@@ -255,5 +256,6 @@ namespace LibUISharp.Internal
         };
 
         public static DateTime ToDateTime(this tm dt) => new DateTime(dt.tm_year, dt.tm_mon, dt.tm_mday, dt.tm_hour, dt.tm_min, dt.tm_sec);
+#endif
     }
 }

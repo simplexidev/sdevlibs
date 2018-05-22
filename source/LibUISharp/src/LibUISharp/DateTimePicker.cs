@@ -17,9 +17,12 @@ namespace LibUISharp
                 Handle = new SafeControlHandle(LibuiLibrary.uiNewTimePicker());
             else
                 Handle = new SafeControlHandle(LibuiLibrary.uiNewDateTimePicker());
+#if LIBUI_4_0
             InitializeEvents();
+#endif
         }
 
+#if LIBUI_4_0
         public event EventHandler TimeChanged;
 
         public DateTime DateTime
@@ -50,23 +53,28 @@ namespace LibUISharp
         protected sealed override void InitializeEvents() => LibuiLibrary.uiDateTimePickerOnChanged(Handle.DangerousGetHandle(), (d, data) => { OnTimeChanged(EventArgs.Empty); }, IntPtr.Zero);
 
         protected virtual void OnTimeChanged(EventArgs e) => TimeChanged?.Invoke(this, e);
+#endif
     }
 
     public class DatePicker : DateTimePicker
     {
         public DatePicker() : base() { }
 
+#if LIBUI_4_0
         private new int Hour => throw new NotSupportedException();
         private new int Minute => throw new NotSupportedException();
         private new int Second => throw new NotSupportedException();
+#endif
     }
 
     public class TimePicker : DateTimePicker
     {
         public TimePicker() : base() { }
 
+#if LIBUI_4_0
         private new int Day => throw new NotSupportedException();
         private new int Month => throw new NotSupportedException();
         private new int Year => throw new NotSupportedException();
+#endif
     }
 }
