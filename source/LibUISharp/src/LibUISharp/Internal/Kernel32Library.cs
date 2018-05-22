@@ -9,13 +9,11 @@ namespace LibUISharp.Internal
 
         private static class FunctionLoader
         {
-            private static readonly string[] WinNTLibNames = new[] { "kernel32.dll" };
-
             private static NativeLibrary Kernel32NativeLibrary
             {
                 get
                 {
-                    if (PlatformHelper.IsWinNT) return new NativeLibrary(WinNTLibNames);
+                    if (PlatformHelper.IsWinNT) return new NativeLibrary("kernel32.dll");
                     else throw new PlatformNotSupportedException();
                 }
             }
