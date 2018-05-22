@@ -1,6 +1,7 @@
 ﻿using LibUISharp.Internal;
 using System;
 using System.ComponentModel;
+using System.Text;
 
 namespace LibUISharp
 {
@@ -10,7 +11,7 @@ namespace LibUISharp
     public sealed class Application : LibuiComponent
     {
         private static object _lock = new object();
-        private static bool created;
+        private static bool created = false;
         private static LibuiLibrary.uiInitOptions Options = new LibuiLibrary.uiInitOptions() { Size = UIntPtr.Zero };
         private int exitCode;
         private bool disposed;
@@ -20,6 +21,7 @@ namespace LibUISharp
         /// </summary>
         public Application()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             lock (_lock)
             {
                 if (created)
@@ -104,12 +106,6 @@ namespace LibUISharp
         /// <inheritdoc />
         protected sealed override void InitializeComponent()
         {
-            if (PlatformHelper.IsWinNT)
-            {
-                IntPtr ptr = Kernel32Library.GetConsoleWindow();
-                User32Library.ShowWindow(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
-            }
-
             IntPtr errPtr = LibuiLibrary.uiInit(ref Options);
             string errStr = errPtr.ToStringEx();
 
@@ -118,6 +114,12 @@ namespace LibUISharp
                 Console.WriteLine(errStr);
                 LibuiLibrary.uiFreeInitError(errPtr);
                 throw new LibuiException(errStr);
+            }
+
+            if (PlatformHelper.IsWinNT)
+            {
+                IntPtr ptr = Kernel32Library.GetConsoleWindow();
+                User32Library.ShowWindow(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
             }
         }
 
