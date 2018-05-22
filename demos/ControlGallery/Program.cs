@@ -1,13 +1,13 @@
-﻿using LibUISharp;
+using LibUISharp;
 
-namespace SimpleWindowDemo
+namespace ControlGallery
 {
     class Program
     {
         static void Main()
         {
             Application app = new Application();
-            Window w = new Window();
+            Window w = new MainWindow();
 
             app.Run(w);
         }

@@ -1,24 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <LangVersion>7.2</LangVersion>
     <OutputType>Exe</OutputType>
-    <EnableDefaultItems>false</EnableDefaultItems>
-    <Platform>AnyCPU</Platform>
-    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
-    <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
-    <Authors>Thomas Corwin, et al.</Authors>
-    <Copyright>2018 (c) Thomas Corwin</Copyright>
-    <Version>0.4.0-alpha-2</Version>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src\*.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="LibUISharp" Version="0.4.0-alpha-2" />
+    <ProjectReference Include="..\..\source\LibUISharp\LibUISharp.csproj" />
   </ItemGroup>
 </Project>
