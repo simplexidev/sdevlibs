@@ -142,28 +142,22 @@ namespace ControlGallery
 
             button.Click += (sender, args) =>
             {
-                OpenFileDialog dialog = new OpenFileDialog();
-                if (!dialog.Show())
-                {
-                    textBox.Text = "(cancelled)";
-                    return;
-                };
-                textBox.Text = dialog.Path;
+                if (Window.ShowOpenFileDialog(out string path, null))
+                    textBox.Text = path;
+                else
+                    textBox.Text = "(null)";
             };
 
             button2.Click += (sender, args) =>
             {
-                SaveFileDialog dialog = new SaveFileDialog();
-                if (!dialog.Show())
-                {
-                    textBox2.Text = "(cancelled)";
-                    return;
-                };
-                textBox2.Text = dialog.Path;
+                if (Window.ShowSaveFileDialog(out string path, null))
+                    textBox2.Text = path;
+                else
+                    textBox2.Text = "(null)";
             };
 
-            button3.Click += (sender, args) => { MessageBox.Show("This is a normal message box.", "More detailed information can be shown here."); };
-            button4.Click += (sender, args) => { MessageBox.Show("This message box describes an error.", "More detailed information can be shown here.", true); };
+            button3.Click += (sender, args) => { Window.ShowMessageBox(null, "This is a normal message box.", "More detailed information can be shown here."); };
+            button4.Click += (sender, args) => { Window.ShowMessageBox(null, "This message box describes an error.", "More detailed information can be shown here.", true); };
 
             grid.Children.Add(button, 0, 0, 1, 1, 0, 0, Alignment.Fill);
             grid.Children.Add(textBox, 1, 0, 1, 1, 1, 0, Alignment.Fill);

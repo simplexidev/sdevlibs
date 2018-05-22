@@ -211,63 +211,82 @@ namespace LibUISharp
         /// <param name="e">An <see cref="EventArgs"/> containing the event data.</param>
         protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
 
-        /// <summary>
-        /// Displays a message box to the user.
-        /// </summary>
-        /// <param name="title">The title of the window.</param>
-        /// <param name="description">The message description.</param>
-        /// <param name="isError">Whether to show an error or not.</param>
-        public void ShowMessageBox(string title, string description = null, bool isError = false)
+        public void ShowMessageBox(string title, string description = null, bool isError = false) => ShowMessageBox(this, title, description, isError);
+
+        public static void ShowMessageBox(Window w, string title, string description = null, bool isError = false)
         {
+            if (w == null)
+                w = Application.MainWindow;
+
             IntPtr titlePtr = title.ToLibuiString();
             IntPtr descriptionPtr = description.ToLibuiString();
             if (isError)
-                LibuiLibrary.uiMsgBoxError(Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
+                LibuiLibrary.uiMsgBoxError(w.Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
             else
-                LibuiLibrary.uiMsgBox(Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
+                LibuiLibrary.uiMsgBox(w.Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
             Marshal.FreeHGlobal(titlePtr);
             Marshal.FreeHGlobal(descriptionPtr);
         }
 
-        /// <summary>
-        /// Shows a save file dialog.
-        /// </summary>
-        /// <param name="writeStream">The <see cref="Stream"/> returned to save data to.</param>
-        /// <returns>true if successful, else false.</returns>
-        public bool ShowSaveFileDialog(out Stream writeStream)
+        public bool ShowSaveFileDialog(out string path) => ShowSaveFileDialog(out path, this);
+
+        public bool ShowSaveFileDialog(out Stream writeStream) => ShowSaveFileDialog(out writeStream, this);
+
+        public static bool ShowSaveFileDialog(out string path, Window w)
         {
-            string path = LibuiLibrary.uiSaveFile(Handle.DangerousGetHandle()).ToStringEx();
+            if (w == null)
+                w = Application.MainWindow;
+
+            path = LibuiLibrary.uiSaveFile(w.Handle.DangerousGetHandle()).ToStringEx();
 
             if (string.IsNullOrEmpty(path))
-            {
-                writeStream = null;
                 return false;
-            }
             else
+                return true;
+        }
+        
+        public static bool ShowSaveFileDialog(out Stream writeStream, Window w)
+        {
+            if (ShowSaveFileDialog(out string path, w))
             {
                 writeStream = File.OpenWrite(path);
                 return true;
             }
-        }
-
-        /// <summary>
-        /// Shows a open file dialog.
-        /// </summary>
-        /// <param name="writeStream">The <see cref="Stream"/> returned to read data from.</param>
-        /// <returns>true if successful, else false.</returns>
-        public bool ShowOpenFileDialog(out Stream readStream)
-        {
-            string path = LibuiLibrary.uiOpenFile(Handle.DangerousGetHandle()).ToStringEx();
-
-            if (string.IsNullOrEmpty(path))
+            else
             {
-                readStream = null;
+                writeStream = null;
                 return false;
             }
+        }
+
+        public bool ShowOpenFileDialog(out string path) => ShowOpenFileDialog(out path, this);
+
+        public bool ShowOpenFileDialog(out Stream readStream) => ShowOpenFileDialog(out readStream, this);
+
+        public static bool ShowOpenFileDialog(out string path, Window w)
+        {
+            if (w == null)
+                w = Application.MainWindow;
+
+            path = LibuiLibrary.uiOpenFile(w.Handle.DangerousGetHandle()).ToStringEx();
+
+            if (string.IsNullOrEmpty(path))
+                return false;
             else
+                return true;
+        }
+
+        public static bool ShowOpenFileDialog(out Stream readStream, Window w)
+        {
+            if (ShowOpenFileDialog(out string path, w))
             {
                 readStream = File.OpenRead(path);
                 return true;
+            }
+            else
+            {
+                readStream = null;
+                return false;
             }
         }
 
