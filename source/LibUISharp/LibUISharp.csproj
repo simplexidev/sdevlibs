@@ -34,14 +34,17 @@
     <Compile Include="src\LibUISharp\SafeHandles\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="res\libui.dll">
+    <EmbeddedResource Include="src\LibUISharp\Resources\Libui.WinNT.dll">
       <LogicalName>LibUISharp.Resources.Libui.WinNT</LogicalName>
+      <Visible>false</Visible>
     </EmbeddedResource>
-    <EmbeddedResource Include="res\libui.so">
+    <EmbeddedResource Include="src\LibUISharp\Resources\Libui.Linux.so">
       <LogicalName>LibUISharp.Resources.Libui.Linux</LogicalName>
+      <Visible>false</Visible>
     </EmbeddedResource>
-    <EmbeddedResource Include="res\libui.dylib">
+    <EmbeddedResource Include="src\LibUISharp\Resources\Libui.MacOS.dylib">
       <LogicalName>LibUISharp.Resources.Libui.MacOS</LogicalName>
+      <Visible>false</Visible>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
