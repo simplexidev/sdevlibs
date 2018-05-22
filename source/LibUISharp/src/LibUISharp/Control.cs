@@ -15,7 +15,7 @@ namespace LibUISharp
     {
         private bool visible, enabled;
         private bool disposed = false;
-        private static readonly Dictionary<SafeControlHandle, Control> ControlCache = new Dictionary<SafeControlHandle, Control>();
+        // private static readonly Dictionary<SafeControlHandle, Control> ControlCache = new Dictionary<SafeControlHandle, Control>();
 
         /// <summary>
         /// Initializes a new <see cref="Control"/> class.
@@ -27,7 +27,7 @@ namespace LibUISharp
             else
             {
                 visible = true;
-                ControlCache.Add(Handle, this);
+                // ControlCache.Add(Handle, this);
             }
         }
 
@@ -73,7 +73,7 @@ namespace LibUISharp
             get
             {
                 if (!Handle.IsInvalid)
-                    return LibuiLibrary.uiControlTopLevel(Handle.DangerousGetHandle());
+                    return LibuiLibrary.uiControlToplevel(Handle.DangerousGetHandle());
                 return false;
             }
         }
@@ -120,7 +120,7 @@ namespace LibUISharp
         {
             if (!Handle.IsInvalid)
                 Handle.Dispose();
-            ControlCache.Remove(Handle);
+            // ControlCache.Remove(Handle);
         }
         
         /// <inheritdoc />

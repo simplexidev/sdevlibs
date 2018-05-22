@@ -8,7 +8,6 @@ namespace SimpleWindowDemo
         {
             Application app = new Application();
             Window w = new Window();
-
             app.Run(w);
         }
     }

@@ -23,8 +23,6 @@ namespace LibUISharp
                     Handle = new SafeControlHandle(LibuiLibrary.uiNewEntry());
                 InitializeEvents();
             }
-            else
-                throw new TypeInitializationException("LibUISharp.Controls.MultilineTextBox", new InvalidOperationException());
         }
 
         public event EventHandler<TextChangedEventArgs> TextChanged;

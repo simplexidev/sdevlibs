@@ -113,8 +113,8 @@ namespace LibUISharp.Internal
         public static void uiControlSetParent(IntPtr c, IntPtr parent) => FunctionLoader.Load<uiControlSetParent_t>("uiControlSetParent")(c, parent);
 
         [UnmanagedFunctionPointer(Convention)]
-        private delegate bool uiControlTopLevel_t(IntPtr c);
-        public static bool uiControlTopLevel(IntPtr c) => FunctionLoader.Load<uiControlTopLevel_t>("uiControlTopLevel")(c);
+        private delegate bool uiControlToplevel_t(IntPtr c);
+        public static bool uiControlToplevel(IntPtr c) => FunctionLoader.Load<uiControlToplevel_t>("uiControlToplevel")(c);
 
         [UnmanagedFunctionPointer(Convention)]
         private delegate bool uiControlVisible_t(IntPtr c);
@@ -240,7 +240,7 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiBoxSetPadded_t(IntPtr b, bool padded);
-        public static void uiBoxSetPadded(IntPtr b, bool padded) => FunctionLoader.Load<uiBoxSetPadded_t>("uiButtonSetPadded")(b, padded);
+        public static void uiBoxSetPadded(IntPtr b, bool padded) => FunctionLoader.Load<uiBoxSetPadded_t>("uiBoxSetPadded")(b, padded);
 
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewHorizontalBox_t();
@@ -511,18 +511,19 @@ namespace LibUISharp.Internal
         }
 
         [UnmanagedFunctionPointer(Convention)]
-        private delegate IntPtr uiDateTimePickerTime_t(IntPtr d, out tm time);
-        public static IntPtr uiDateTimePickerTime(IntPtr d, out tm time) => FunctionLoader.Load<uiDateTimePickerTime_t>("uiDateTimePickerTime")(d, out time);
+        private delegate void uiDateTimePickerTime_t(IntPtr d, out tm time);
+        public static void uiDateTimePickerTime(IntPtr d, out tm time) => FunctionLoader.Load<uiDateTimePickerTime_t>("uiDateTimePickerTime")(d, out time);
 
         [UnmanagedFunctionPointer(Convention)]
-        private delegate IntPtr uiDateTimePickerSetTime_t(IntPtr d, tm time);
-        public static IntPtr uiDateTimePickerSetTime(IntPtr d, tm time) => FunctionLoader.Load<uiDateTimePickerSetTime_t>("uiDateTimePickerSetTime")(d, time);
+        private delegate void uiDateTimePickerSetTime_t(IntPtr d, tm time);
+        public static void uiDateTimePickerSetTime(IntPtr d, tm time) => FunctionLoader.Load<uiDateTimePickerSetTime_t>("uiDateTimePickerSetTime")(d, time);
 
         [UnmanagedFunctionPointer(Convention)]
-        private delegate IntPtr uiDateTimePickerOnChanged_t(IntPtr d, uiDateTimePickerOnChanged_tf f, IntPtr data);
+        private delegate void uiDateTimePickerOnChanged_t(IntPtr d, uiDateTimePickerOnChanged_tf f, IntPtr data);
+        [UnmanagedFunctionPointer(Convention)]
         public delegate void uiDateTimePickerOnChanged_tf(IntPtr d, IntPtr data);
-        public static IntPtr uiDateTimePickerOnChanged(IntPtr d, uiDateTimePickerOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiDateTimePickerOnChanged_t>("uiDateTimePickerOnChanged")(d, f, data);
-
+        public static void uiDateTimePickerOnChanged(IntPtr d, uiDateTimePickerOnChanged_tf f, IntPtr data) => FunctionLoader.Load<uiDateTimePickerOnChanged_t>("uiDateTimePickerOnChanged")(d, f, data);
+        // _UI_EXTERN void uiDateTimePickerOnChanged(uiDateTimePicker* d, void (* f)(uiDateTimePicker*, void*), void* data);
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewDateTimePicker_t();
         public static IntPtr uiNewDateTimePicker() => FunctionLoader.Load<uiNewDateTimePicker_t>("uiNewDateTimePicker")();

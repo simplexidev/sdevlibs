@@ -11,7 +11,11 @@ namespace LibUISharp
 
         public DateTimePicker()
         {
-            if (!(this is DatePicker || this is TimePicker))
+            if (this is DatePicker)
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewDatePicker());
+            else if (this is TimePicker)
+                Handle = new SafeControlHandle(LibuiLibrary.uiNewTimePicker());
+            else
                 Handle = new SafeControlHandle(LibuiLibrary.uiNewDateTimePicker());
             InitializeEvents();
         }
@@ -50,7 +54,7 @@ namespace LibUISharp
 
     public class DatePicker : DateTimePicker
     {
-        public DatePicker() : base() => Handle = new SafeControlHandle(LibuiLibrary.uiNewDatePicker());
+        public DatePicker() : base() { }
 
         private new int Hour => throw new NotSupportedException();
         private new int Minute => throw new NotSupportedException();
@@ -59,7 +63,7 @@ namespace LibUISharp
 
     public class TimePicker : DateTimePicker
     {
-        public TimePicker() : base() => Handle = new SafeControlHandle(LibuiLibrary.uiNewTimePicker());
+        public TimePicker() : base() { }
 
         private new int Day => throw new NotSupportedException();
         private new int Month => throw new NotSupportedException();
