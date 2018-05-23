@@ -1,7 +1,7 @@
 ﻿namespace LibUISharp.Drawing
 {
     // uiExtKey
-    public enum KeyExtension : uint
+    public enum KeyExtension : long
     {
         Escape = 1,
         Insert = 2, // Equivalent to "Help" on Apple keyboards.

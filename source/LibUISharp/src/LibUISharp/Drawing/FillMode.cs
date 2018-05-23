@@ -4,7 +4,7 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Specifies how the interior of a closed path is filled.
     /// </summary>
-    public enum FillMode : uint
+    public enum FillMode : long
     {
         /// <summary>
         /// Specifies the winding fill mode.

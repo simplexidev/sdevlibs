@@ -4,7 +4,7 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Specifies the edge of a <see cref="Window"/> object.
     /// </summary>
-    public enum WindowEdge : uint
+    public enum WindowEdge : long
     {
         /// <summary>
         /// Specifies the left edge of a <see cref="Window"/>.

@@ -13,7 +13,7 @@ namespace LibUISharp
 
     public class TabPage : Control
     {
-        protected Control child;
+        protected Control childField;
         private bool uninitialized = true;
         private bool margins;
 
@@ -29,13 +29,13 @@ namespace LibUISharp
 
         public Control Child
         {
-            get => child;
+            get => childField;
             protected set
             {
-                if (child != value)
+                if (childField != value)
                 {
-                    child = value;
-                    Handle = child.Handle;
+                    childField = value;
+                    Handle = childField.Handle;
                 }
             }
         }

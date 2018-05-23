@@ -1,7 +1,7 @@
 ﻿// uiUnderlineStyle
 namespace LibUISharp.Drawing
 {
-    public enum UnderlineStyle : uint
+    public enum UnderlineStyle : long
     {
         None = 0,
         Single = 1,

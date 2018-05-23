@@ -1,7 +1,7 @@
 ﻿// uiDrawTextAlign
 namespace LibUISharp.Drawing
 {
-    public enum TextAlignment : uint
+    public enum TextAlignment : long
     {
         Left = 0,
         Center = 1,

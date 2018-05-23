@@ -4,7 +4,7 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Specifies the available cap styles for the end of <see cref="Path"/>s that are contained in a <see cref="StrokeOptions"/> object.
     /// </summary>
-    public enum LineCap : uint
+    public enum LineCap : long
     {
         /// <summary>
         /// Specifies the flat line cap.

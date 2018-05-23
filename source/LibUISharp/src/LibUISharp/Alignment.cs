@@ -4,13 +4,13 @@ namespace LibUISharp
     /// <summary>
     /// Specifies how content is positioned in a container.
     /// </summary>
-    public enum Alignment : uint
+    public enum Alignment : long
     {
         /// <summary>
         /// The contents fills the container.
         /// </summary>
         Fill = 0,
-        
+
         /// <summary>
         /// The contents align in the center of the container.
         /// </summary>

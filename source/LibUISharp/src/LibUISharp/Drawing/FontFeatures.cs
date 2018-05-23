@@ -26,11 +26,11 @@ namespace LibUISharp.Drawing
 
         internal SafeFontFeaturesHandle Handle { get; set; }
 
-        public void Add(byte a, byte b, byte c, byte d, uint value) => LibuiLibrary.uiOpenTypeFeaturesAdd(Handle.DangerousGetHandle(), a, b, c, d, value);
+        public void Add(byte a, byte b, byte c, byte d, long value) => LibuiLibrary.uiOpenTypeFeaturesAdd(Handle.DangerousGetHandle(), a, b, c, d, (uint)value);
 
-        public void Add(char a, char b, char c, char d, uint value) => Add((byte)a, (byte)b, (byte)c, (byte)d, value);
+        public void Add(char a, char b, char c, char d, long value) => Add((byte)a, (byte)b, (byte)c, (byte)d, value);
 
-        public void Add(string feature, uint value)
+        public void Add(string feature, long value)
         {
             if (feature.Length > 4 || feature.Length < 4)
                 throw new ArgumentException("feature");
@@ -52,11 +52,16 @@ namespace LibUISharp.Drawing
             Remove(chars[0], chars[1], chars[2], chars[3]);
         }
 
-        public int TryGetValue(byte a, byte b, byte c, byte d, out uint value) => LibuiLibrary.uiOpenTypeFeaturesGet(Handle.DangerousGetHandle(), a, b, c, d, out value);
+        public int TryGetValue(byte a, byte b, byte c, byte d, out long value)
+        {
+            var result = LibuiLibrary.uiOpenTypeFeaturesGet(Handle.DangerousGetHandle(), a, b, c, d, out var uintValue);
+            value = (long)uintValue;
+            return result;
+        }
 
-        public int TryGetValue(char a, char b, char c, char d, out uint value) => TryGetValue((byte)a, (byte)b, (byte)c, (byte)d, out value);
+        public int TryGetValue(char a, char b, char c, char d, out long value) => TryGetValue((byte)a, (byte)b, (byte)c, (byte)d, out value);
 
-        public int TryGetValue(string feature, out uint value)
+        public int TryGetValue(string feature, out long value)
         {
             if (feature.Length > 4 || feature.Length < 4)
                 throw new ArgumentException("feature");

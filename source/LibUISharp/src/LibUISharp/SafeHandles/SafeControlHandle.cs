@@ -21,6 +21,7 @@ namespace LibUISharp.SafeHandles
         /// Returns the native control handle for this control.
         /// </summary>
         /// <returns>An <see cref="UIntPtr"/> representing the controls handle.</returns>
+        [CLSCompliant(false)]
         public UIntPtr DangerousGetControlHandle() => LibuiLibrary.uiControlHandle(handle);
 
         /// <inheritdoc/>

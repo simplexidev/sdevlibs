@@ -28,3 +28,4 @@
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.uiUnderline")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.uiUnderlineColor")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.uiWindowResizeEdge")]
+[assembly: System.CLSCompliant(true)]
