@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+[assembly: System.CLSCompliant(true)]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.uiAlign")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.uiAreaDrawParams")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.uiAreaHandler")]
@@ -28,4 +29,3 @@
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.uiUnderline")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.uiUnderlineColor")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.uiWindowResizeEdge")]
-[assembly: System.CLSCompliant(true)]

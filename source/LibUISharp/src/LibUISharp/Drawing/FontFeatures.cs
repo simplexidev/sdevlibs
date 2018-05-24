@@ -54,8 +54,8 @@ namespace LibUISharp.Drawing
 
         public int TryGetValue(byte a, byte b, byte c, byte d, out long value)
         {
-            var result = LibuiLibrary.uiOpenTypeFeaturesGet(Handle.DangerousGetHandle(), a, b, c, d, out var uintValue);
-            value = (long)uintValue;
+            var result = LibuiLibrary.uiOpenTypeFeaturesGet(Handle.DangerousGetHandle(), a, b, c, d, out uint uintValue);
+            value = uintValue;
             return result;
         }
 
