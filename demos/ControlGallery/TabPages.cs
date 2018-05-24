@@ -97,7 +97,6 @@ namespace ControlGallery
             vPanel.Children.Add(editableComboBox);
             vPanel.Children.Add(radioButtonGroup);
         }
-
     }
 
     public sealed class DataChoosersTab : TabPage
@@ -110,15 +109,17 @@ namespace ControlGallery
         private readonly FontPicker fontPicker = new FontPicker();
         private readonly ColorPicker colorPicker = new ColorPicker();
         private readonly Separator hSeparator = new Separator(Orientation.Horizontal);
+
         private StackPanel vPanel2 = new StackPanel(Orientation.Vertical) { Padding = true };
-        private Grid grid = new Grid() { Padding = true };
-        private Button button = new Button("Open File");
-        private TextBox textBox = new TextBox() { ReadOnly = true };
-        private Button button2 = new Button("Save File");
-        private TextBox textBox2 = new TextBox() { ReadOnly = true };
-        private Grid grid2 = new Grid() { Padding = true };
-        private Button button3 = new Button("Message Box");
-        private Button button4 = new Button("Message Box (Error)");
+        private Grid gridFile = new Grid() { Padding = true };
+        private Button buttonOpenFile = new Button("Open File");
+        private TextBox textboxOpenFile = new TextBox() { ReadOnly = true };
+        private Button buttonSaveFile = new Button("Save File");
+        private TextBox textboxSaveFile = new TextBox() { ReadOnly = true };
+
+        private StackPanel hPanelMessages = new StackPanel(Orientation.Horizontal) { Padding = true };
+        private Button buttonMessage = new Button("Message Box");
+        private Button buttonMessageErr = new Button("Message Box (Error)");
 
         public DataChoosersTab() : base("Data Choosers") => InitializeComponent();
 
@@ -138,34 +139,36 @@ namespace ControlGallery
             hPanel.Children.Add(hSeparator);
             hPanel.Children.Add(vPanel2);
 
-            vPanel2.Children.Add(grid);
+            vPanel2.Children.Add(gridFile);
 
-            button.Click += (sender, args) =>
+            buttonOpenFile.Click += (sender, args) =>
             {
                 if (Window.ShowOpenFileDialog(out string path, null))
-                    textBox.Text = path;
+                    textboxOpenFile.Text = path;
                 else
-                    textBox.Text = "(null)";
+                    textboxOpenFile.Text = "(null)";
             };
 
-            button2.Click += (sender, args) =>
+            buttonSaveFile.Click += (sender, args) =>
             {
                 if (Window.ShowSaveFileDialog(out string path, null))
-                    textBox2.Text = path;
+                    textboxSaveFile.Text = path;
                 else
-                    textBox2.Text = "(null)";
+                    textboxSaveFile.Text = "(null)";
             };
 
-            button3.Click += (sender, args) => { Window.ShowMessageBox(null, "This is a normal message box.", "More detailed information can be shown here."); };
-            button4.Click += (sender, args) => { Window.ShowMessageBox(null, "This message box describes an error.", "More detailed information can be shown here.", true); };
+            buttonMessage.Click += (sender, args) => { Window.ShowMessageBox(null, "This is a normal message box.", "More detailed information can be shown here."); };
+            buttonMessageErr.Click += (sender, args) => { Window.ShowMessageBox(null, "This message box describes an error.", "More detailed information can be shown here.", true); };
 
-            grid.Children.Add(button, 0, 0, 1, 1, 0, 0, Alignment.Fill);
-            grid.Children.Add(textBox, 1, 0, 1, 1, 1, 0, Alignment.Fill);
-            grid.Children.Add(button2, 0, 1, 1, 1, 0, 0, Alignment.Fill);
-            grid.Children.Add(textBox2, 1, 1, 1, 1, 1, 0, Alignment.Fill);
-            grid.Children.Add(grid2, 0, 2, 2, 1, 0, 0, Alignment.TopCenter);
-            grid2.Children.Add(button3, 0, 0, 1, 1, 0, 0, Alignment.Fill);
-            grid2.Children.Add(button4, 1, 0, 1, 1, 0, 0, Alignment.Fill);
+            gridFile.Children.Add(buttonOpenFile, 0, 0, 1, 1, 0, 0, Alignment.Fill);
+            gridFile.Children.Add(textboxOpenFile, 1, 0, 1, 1, 1, 0, Alignment.Fill);
+            gridFile.Children.Add(buttonSaveFile, 0, 1, 1, 1, 0, 0, Alignment.Fill);
+            gridFile.Children.Add(textboxSaveFile, 1, 1, 1, 1, 1, 0, Alignment.Fill);
+
+            hPanelMessages.Children.Add(buttonMessage);
+            hPanelMessages.Children.Add(buttonMessageErr);
+
+            vPanel2.Children.Add(hPanelMessages);
         }
     }
 }
