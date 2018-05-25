@@ -1,6 +1,6 @@
 # LibUISharp
 ![License](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true)
-<!--[![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)-->
+[![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)
 [![CodeFactor](https://www.codefactor.io/repository/github/tom-corwin/libuisharp/badge)](https://www.codefactor.io/repository/github/tom-corwin/libuisharp)
 
 LibUISharp is a library containing bindings for [libui](https://github.com/andlabs/libui), written in C# for .NET Core (and in the future, .NET Framework and Mono).
@@ -90,7 +90,7 @@ LibUISharp is almost up-to-par with libui and is now available on NuGet!
 Just add this line to you project file:
 
 ```
-<PackageReference Include="LibUISharp" Version="0.4.0-alpha-4" />
+<PackageReference Include="LibUISharp" Version="0.4.0-build-*" />
 ```
 
 ## Building From Source
