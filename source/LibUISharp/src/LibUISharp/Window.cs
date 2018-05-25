@@ -218,8 +218,8 @@ namespace LibUISharp
             if (w == null)
                 w = Application.MainWindow;
 
-            IntPtr titlePtr = title.ToLibuiString();
-            IntPtr descriptionPtr = description.ToLibuiString();
+            IntPtr titlePtr = (title ?? string.Empty).ToLibuiString();
+            IntPtr descriptionPtr = (description ?? string.Empty).ToLibuiString();
             if (isError)
                 LibuiLibrary.uiMsgBoxError(w.Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
             else
