@@ -6,7 +6,7 @@ using LibUISharp.SafeHandles;
 namespace LibUISharp.Drawing
 {
     //TODO: Setup the ForEachFunc. Not sure how to do that yet.
-    public class FontFeatures : LibuiComponent, ICloneable
+    public class FontFeatures : UIComponent<SafeFontFeaturesHandle>, IUIComponent, ICloneable
     {
         private bool disposed = false;
 
@@ -23,8 +23,6 @@ namespace LibUISharp.Drawing
         }
 
         //TODO: public event EventHandler ForEachFeature;
-
-        internal SafeFontFeaturesHandle Handle { get; set; }
 
         public void Add(byte a, byte b, byte c, byte d, long value) => LibuiLibrary.uiOpenTypeFeaturesAdd(Handle.DangerousGetHandle(), a, b, c, d, (uint)value);
 
@@ -81,7 +79,13 @@ namespace LibUISharp.Drawing
             //TODO: uiOpenTypeFeaturesForEach(Handle, (otf, a, b, c, d, value, data) => { OnForEachFeature(EventArgs.Empty); });
         }
 
-        protected override void Dispose(bool disposing)
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -90,12 +94,6 @@ namespace LibUISharp.Drawing
                         Handle.Dispose();
                 disposed = true;
             }
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

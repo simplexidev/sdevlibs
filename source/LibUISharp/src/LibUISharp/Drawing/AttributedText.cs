@@ -6,7 +6,7 @@ using LibUISharp.SafeHandles;
 namespace LibUISharp.Drawing
 {
     //TODO: This isn't what this should be. Needs 100% redone.
-    public class AttributedText : LibuiComponent
+    public class AttributedText : UIComponent<SafeAttributedTextHandle>, IUIComponent
     {
         private bool disposed = false;
 
@@ -17,13 +17,17 @@ namespace LibUISharp.Drawing
             Marshal.FreeHGlobal(strPtr);
         }
 
-        internal SafeAttributedTextHandle Handle { get; set; }
-
         public string Text => LibuiLibrary.uiAttributedStringString(Handle.DangerousGetHandle()).ToStringEx();
 
         public long Len() => LibuiLibrary.uiAttributedStringLen(Handle.DangerousGetHandle()).ToUInt32();
 
-        protected override void Dispose(bool disposing)
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -32,12 +36,6 @@ namespace LibUISharp.Drawing
                         Handle.Dispose();
                 disposed = true;
             }
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

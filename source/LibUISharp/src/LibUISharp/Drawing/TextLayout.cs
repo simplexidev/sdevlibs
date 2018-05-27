@@ -5,7 +5,7 @@ using LibUISharp.SafeHandles;
 namespace LibUISharp.Drawing
 {
     // uiDrawTextLayout
-    public class TextLayout : LibuiComponent
+    public class TextLayout : UIComponent<SafeTextLayoutHandle>, IUIComponent
     {
         private bool disposed = false;
 
@@ -17,8 +17,6 @@ namespace LibUISharp.Drawing
 
         public TextLayoutOptions Options { get; }
 
-        internal SafeTextLayoutHandle Handle { get; set; }
-
         public SizeD Extents
         {
             get
@@ -28,7 +26,13 @@ namespace LibUISharp.Drawing
             }
         }
 
-        protected override void Dispose(bool disposing)
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -37,12 +41,6 @@ namespace LibUISharp.Drawing
                         Handle.Dispose();
                 disposed = true;
             }
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 
