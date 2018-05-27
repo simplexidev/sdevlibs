@@ -8,7 +8,7 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Represents a geometric path in a <see cref="Context"/>.
     /// </summary>
-    public class Path : LibuiComponent<SafePathHandle>
+    public class Path : UIComponent<SafePathHandle>, IUIComponent
     {
         private bool disposed = false;
 
@@ -17,9 +17,7 @@ namespace LibUISharp.Drawing
         /// </summary>
         /// <param name="mode">The <see cref="FillMode"/> specifying how the initialized <see cref="Path"/> should be filled.</param>
         public Path(FillMode mode) => Handle = new SafePathHandle(LibuiLibrary.uiDrawNewPath((LibuiLibrary.uiDrawFillMode)mode));
-
-        /// <inheritdoc/>
-        protected internal override SafePathHandle Handle { get; private protected set; }
+        
 
         /// <summary>
         /// Starts a new figure in this <see cref="Path"/> with the specified current x- and y-coordinates.
@@ -58,7 +56,14 @@ namespace LibUISharp.Drawing
         public void End() => LibuiLibrary.uiDrawPathEnd(Handle.DangerousGetHandle());
 
         /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -67,13 +72,6 @@ namespace LibUISharp.Drawing
                         Handle.Dispose();
                 disposed = true;
             }
-        }
-
-        /// <inheritdoc/>
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

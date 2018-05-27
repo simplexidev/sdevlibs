@@ -6,15 +6,19 @@ using LibUISharp.SafeHandles;
 namespace LibUISharp.Drawing
 {
     // uiAttribute
-    public abstract class TextAttribute : LibuiComponent
+    public abstract class TextAttribute : UIComponent<SafeTextAttributeHandle>, IUIComponent
     {
         private bool disposed = false;
 
-        internal SafeTextAttributeHandle Handle { get; set; }
-
         internal LibuiLibrary.uiAttributeType Type => LibuiLibrary.uiAttributeGetType(Handle.DangerousGetHandle());
 
-        protected override void Dispose(bool disposing)
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -23,12 +27,6 @@ namespace LibUISharp.Drawing
                         Handle.Dispose();
                 disposed = true;
             }
-        }
-
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 
