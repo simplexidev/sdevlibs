@@ -1,87 +1,68 @@
 # LibUISharp
-![License](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true)
-<!--[![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)-->
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true)](https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md)
+[![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)
 [![CodeFactor](https://www.codefactor.io/repository/github/tom-corwin/libuisharp/badge)](https://www.codefactor.io/repository/github/tom-corwin/libuisharp)
 
-LibUISharp is a library containing bindings for [libui](https://github.com/andlabs/libui), written in C# for .NET Core (and in the future, .NET Framework and Mono).
+LibUISharp is a library containing bindings for [libui](https://github.com/andlabs/libui). Currently, LibUISharp is only built as a .NET Standard 2.0 library, but can also support other frameworks as-per community interest.
+
+**Please Note**: [libui](https://github.com/andlabs/libui) is *mid-alpha* software, meaning the underlying API in LibUISharp is a work-in-progress.
 
 ## Looking for Contributors!
-Currently, I don't have the free time to make LibUISharp a complete working library on my own. Because of this, I am looking for help from the community. Whether an issue, or a new feature, nothing is to small.  
-While this means I will not be pushing quite as often, I will still be responing to issues and pull requests in a decently-timely manner.
+Currently, I don't have the free time to make LibUISharp complete on my own. Because of this, I am looking for help from the community. Whether an issue, or a new feature, nothing is to small.
 
 ## Features
 
-LibUISharp allows you to create a native GUI application running .NET Core. Please note that LibUI is in alpha development, so the native library, thus this C# library, is not stable. This library (LibUISharp) has not really been tested, yet, and may have some bugs. Check out the demos in the `demos\` folder for examples.
+LibUISharp allows you to create native, cross-platform graphical user interface (GUI) applications containing various controls, such as a `Button` or a `TabControl`, 
 
-**Controls and Drawing Features**:
+Check out the demos in the `demos\` folder for examples.
 
-* *AttributedText (TODO)*
+### Controls
+
 * Button
 * CheckBox
 * ColorPicker
 * ComboBox
-  * EditableComboBox
 * DateTimePicker
-  * DatePicker
-  * TimePicker
-* FileDialog
-  * OpenFileDialog
-  * SaveFileDialog 
-* FontFeatures
 * FontPicker
 * Form
 * Grid
 * GroupBox
 * Label
-* MenuStrip
-* MenuStripItem
-  * MenuStripAboutItem
-  * MenuStripCheckItem
-  * MenuStripPreferencesItem
-  * MenuStripQuitItem
+* MenuStrip/MenuStripItem
 * MessageBox
-* Panel
-  * HPanel
-  * VPanel
+* StackPanel
 * ProgressBar
 * RadioButtonGroup
 * Separator
-  * HSeparator
-  * VSeparator
 * Slider
 * SpinBox
-* Surface
-  * ScrollableSurface
-* TextAttribute
-  * FontFamilyAttribute
-  * FontFeaturesAttribute
-  * FontSizeAttribute
-  * FontWeightAttribute
-  * FontStretchAttribute
-  * ForegroundColorAttribute
-  * BackgroundColorAttribute
-  * UnderlineStyleAttribute
-  * UnderlineColorAttribute
 * TextBox
-  * MultilineTextBox
-  * PasswordBox
-  * SearchBox
 * TabControl
-* TabPage
 * Window
 
-### Supported Platforms
+### Drawing/Text
+* AttributedText
+* Brush
+* Context
+* Font
+* FontFeatures
+* Path
+* Surface
+* TextAttribute
+* TextLayout
 
-This list is basically copied and reformatted from [here](https://github.com/dotnet/core/blob/master/release-notes/2.0/2.0-supported-os.md).
+## Supported Platforms
+
+LibUISharp supports 64-bit Windows, macOS, and Linux <sub>[[source](https://github.com/dotnet/core/blob/master/release-notes/2.0/2.0-supported-os.md)]</sub>:
 
 | Operating System                                     | Version                                           | Architecture | Prerequiusites |
 | :--------------------------------------------------- | :------------------------------------------------ | :----------- | :------------- |
-| Windows Client<br/>Windows Server                    | 7 SP1, 8.1, 10 Build 1607+<br/>2008 R2 SP1+       | x64<br/>x64  |                |
+| Windows Client<br/>Windows Server                    | 7 SP1+, 8.1, 10 Build 1607+<br/>2008 R2 SP1+      | x64<br/>x64  |                |
 | Mac OS X                                             | 10.12+                                            | x64          |                |
-| Red Hat Enterprise Linux<br/>CentOS</br>Oracle Linux | 7                                                 | x64          | GTK+ 3.10+     |
-| Fedora                                               | 25, 26                                            | x64          | GTK+ 3.10+     |
-| Debian<br/>Ubuntu</br>Linux Mint                     | 8.7+, 9<br/>14.04, 16.04, 17.04, 17.10<br/>17, 18 | x64          | GTK+ 3.10+     |
-| openSUSE<br/>SUSE Enterprise Linux (SLES)            | 42.2+<br/>12 SP2+                                 | x64          | GTK+ 3.10+     |
+| Red Hat Enterprise Linux<br/>CentOS</br>Oracle Linux | 6, 7<br/>7<br/>7                                  | x64          | GTK+ 3.10+     |
+| Fedora                                               | 26, 27                                            | x64          | GTK+ 3.10+     |
+| Debian<br/>Ubuntu</br>Linux Mint                     | 8.7+, 9<br/>14.04, 16.04, 17.10, 18.04<br/>17, 18 | x64          | GTK+ 3.10+     |
+| openSUSE<br/>SUSE Enterprise Linux (SLES)            | 42.3+<br/>12 SP2+                                 | x64          | GTK+ 3.10+     |
 
 ## Obtaining the Library
 
@@ -90,15 +71,13 @@ LibUISharp is almost up-to-par with libui and is now available on NuGet!
 Just add this line to you project file:
 
 ```
-<PackageReference Include="LibUISharp" Version="0.4.0-alpha-4" />
+<PackageReference Include="LibUISharp" Version="0.4.0-build-*" />
 ```
 
 ## Building From Source
 
 LibUISharp is built with .NET Core, so you can build LibUISharp with either Visual Studio, Visual Studio Code,
 or just by running a couple simple commands. Use the steps below to get started!
-
-Any output is placed in the `build\` directory.
 
 ### Prerequisites
 
@@ -117,7 +96,7 @@ Any output is placed in the `build\` directory.
 
 ### Build Using Visual Studio Code (Windows/MacOS/Linux)
 
-***This section is to-be-written.***
+***This section is to-be-written. For now, refer to the next section.***
 
 ### Build Using a CLI
 

@@ -17,13 +17,13 @@ namespace LibUISharp.Internal
             };
             private static readonly string[] LinuxLibNames = new[] 
             {
-                @"runtimes\linux-x64\native\libui.so",
-                @"runtimes\linux-x64\native\libui.so.0"
+                @"runtimes/linux-x64/native/libui.so",
+                @"runtimes/linux-x64/native/libui.so.0"
             };
             private static readonly string[] MacOSLibNames = new[]
             {
-                @"runtimes\osx-x64\native\libui.dylib",
-                @"runtimes\osx-x64\native\libui.A.dylib"
+                @"runtimes/osx-x64/native/libui.dylib",
+                @"runtimes/osx-x64/native/libui.A.dylib"
             };
 
             private static NativeLibrary LibuiNativeLibrary
