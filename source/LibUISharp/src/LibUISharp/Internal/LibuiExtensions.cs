@@ -64,7 +64,7 @@ namespace LibUISharp.Internal
                 case uiForEach.uiForEachStop:
                     return true;
                 default:
-                    throw new ArgumentOutOfRangeException("forEach");
+                    throw new ArgumentOutOfRangeException(nameof(forEach));
             }
         }
 

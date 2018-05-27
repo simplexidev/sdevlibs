@@ -5,13 +5,18 @@ using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
-    // uiEntry
-    public class TextBox : Control
+    /// <summary>
+    /// Represents a base implementation of controls that can be used to display and edit text.
+    /// </summary>
+    public abstract class TextBoxBase : Control
     {
         private string text;
         private bool readOnly;
 
-        public TextBox()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBoxBase"/> class.
+        /// </summary>
+        protected TextBoxBase()
         {
             if (!(this is MultilineTextBox))
             {
@@ -21,12 +26,17 @@ namespace LibUISharp
                     Handle = new SafeControlHandle(LibuiLibrary.uiNewSearchEntry());
                 else
                     Handle = new SafeControlHandle(LibuiLibrary.uiNewEntry());
-                InitializeEvents();
             }
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="Text"/> property is changed.
+        /// </summary>
         public event EventHandler<TextChangedEventArgs> TextChanged;
 
+        /// <summary>
+        /// Gets or sets the displayed text.
+        /// </summary>
         public virtual string Text
         {
             get
@@ -52,6 +62,9 @@ namespace LibUISharp
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether the text is read-only or not.
+        /// </summary>
         public virtual bool ReadOnly
         {
             get
@@ -75,6 +88,9 @@ namespace LibUISharp
             }
         }
 
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
         protected override void InitializeEvents()
         {
             if (this is MultilineTextBox)
@@ -83,24 +99,57 @@ namespace LibUISharp
                 LibuiLibrary.uiEntryOnChanged(Handle.DangerousGetHandle(), (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
         }
 
+        /// <summary>
+        /// Called when the <see cref="TextChanged"/> event is raised.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
         protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
     }
 
+    /// <summary>
+    /// Represents a control that can be used to display or edit text.
+    /// </summary>
+    public class TextBox : TextBoxBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBox"/> class.
+        /// </summary>
+        public TextBox() : base() => InitializeEvents();
+    }
+
+    /// <summary>
+    /// Represents a <see cref="TextBox"/> that displays it's text as password characters.
+    /// </summary>
     public class PasswordBox : TextBox
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PasswordBox"/> class.
+        /// </summary>
         public PasswordBox() : base() { }
     }
 
+    /// <summary>
+    /// Represents a <see cref="TextBox"/> that displays a search icon.
+    /// </summary>
     public class SearchBox : TextBox
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchBox"/> class.
+        /// </summary>
         public SearchBox() : base() { }
     }
 
-    // uiMultilineEntry
-    public class MultilineTextBox : TextBox
+    /// <summary>
+    /// Represents a control that can be used to display or edit multiple lines of text.
+    /// </summary>
+    public class MultilineTextBox : TextBoxBase
     {
         private MultilineTextBox() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditableComboBox"/> class.
+        /// </summary>
+        /// <param name="wordWrap">Whether or not the lines of text are wrapped to fit within the <see cref="EditableComboBox"/> sides.</param>
         public MultilineTextBox(bool wordWrap = true)
         {
             if (wordWrap)
@@ -111,17 +160,35 @@ namespace LibUISharp
             InitializeEvents();
         }
 
+        /// <summary>
+        /// Gets whether or not this <see cref="EditableComboBox"/> wraps it's text to fit within it's sides.
+        /// </summary>
         public bool WordWrap { get; }
 
+        /// <summary>
+        /// Adds the specified line of text to the end of the text currently contained in this <see cref="EditableComboBox"/>.
+        /// </summary>
+        /// <param name="line">The line to add.</param>
+        public void Append(string line)
+        {
+            if (line == null) throw new ArgumentNullException(nameof(line));
+            
+            IntPtr strPtr = line.ToLibuiString();
+            LibuiLibrary.uiMultilineEntryAppend(Handle.DangerousGetHandle(), strPtr);
+            Marshal.FreeHGlobal(strPtr);
+        }
+
+        /// <summary>
+        /// Adds the specified lines of text to the end of the text currently contained in this <see cref="EditableComboBox"/>.
+        /// </summary>
+        /// <param name="lines">The lines to add.</param>
         public void Append(params string[] lines)
         {
-            if (lines == null || lines.Length < 1) throw new ArgumentNullException("lines");
+            if (lines == null || lines.Length < 1) throw new ArgumentNullException(nameof(lines));
 
             foreach (string line in lines)
             {
-                IntPtr strPtr = line.ToLibuiString();
-                LibuiLibrary.uiMultilineEntryAppend(Handle.DangerousGetHandle(), strPtr);
-                Marshal.FreeHGlobal(strPtr);
+                Append(line);
             }
         }
     }

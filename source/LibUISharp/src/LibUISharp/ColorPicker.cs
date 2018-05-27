@@ -3,7 +3,6 @@ using LibUISharp.Drawing;
 using LibUISharp.Internal;
 using LibUISharp.SafeHandles;
 
-// uiColorButton
 namespace LibUISharp
 {
     /// <summary>
@@ -49,7 +48,9 @@ namespace LibUISharp
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
         protected sealed override void InitializeEvents() => LibuiLibrary.uiColorButtonOnChanged(Handle.DangerousGetHandle(), (button, data) => { OnColorChanged(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>

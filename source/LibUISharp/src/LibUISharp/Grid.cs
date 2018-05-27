@@ -40,7 +40,7 @@ namespace LibUISharp
         public virtual void Add(Control control, int left, int top, int xspan, int yspan, int hexpand, int vexpand, Alignment alignment)
         {
             if (control == null)
-                throw new ArgumentNullException("control");
+                throw new ArgumentNullException(nameof(control));
             if (Contains(control))
                 throw new InvalidOperationException("Cannot add a Control that is already contained in this GridItemCollection.");
             alignment.ToLibuiAligns(out LibuiLibrary.uiAlign halign, out LibuiLibrary.uiAlign valign);
@@ -53,7 +53,7 @@ namespace LibUISharp
         public virtual void Insert(Control control, Control existingControl, RelativeAlignment relativeAlignment, int xspan, int yspan, int hexpand, int vexpand, Alignment alignment)
         {
             if (control == null)
-                throw new ArgumentNullException("control");
+                throw new ArgumentNullException(nameof(control));
             if (Contains(control))
                 throw new InvalidOperationException("Cannot add a Control that is already contained in this GridItemCollection.");
             alignment.ToLibuiAligns(out LibuiLibrary.uiAlign halign, out LibuiLibrary.uiAlign valign);

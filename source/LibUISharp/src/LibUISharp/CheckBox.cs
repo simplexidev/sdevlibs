@@ -3,7 +3,6 @@ using LibUISharp.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
 
-// uiCheckbox
 namespace LibUISharp
 {
     /// <summary>
@@ -27,7 +26,7 @@ namespace LibUISharp
             InitializeEvents();
         }
 
-        //TODO: Maybe change this To separate Checked and Unchecked events.
+        //TODO: Maybe change this to separate Checked and Unchecked events.
         /// <summary>
         /// Occurs when the <see cref="Checked"/> property is changed.
         /// </summary>
@@ -75,11 +74,13 @@ namespace LibUISharp
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
         protected sealed override void InitializeEvents() => LibuiLibrary.uiCheckboxOnToggled(Handle.DangerousGetHandle(), (checkbox, data) => { OnToggled(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>
-        /// Called when the <see cref="Checked"/> property checges.
+        /// Called when the <see cref="Toggled"/> event is raised.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
         protected virtual void OnToggled(EventArgs e) => Toggled?.Invoke(this, e);

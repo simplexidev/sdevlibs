@@ -3,7 +3,6 @@ using LibUISharp.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
 
-// uiLabel
 namespace LibUISharp
 {
     /// <summary>

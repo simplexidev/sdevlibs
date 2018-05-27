@@ -6,15 +6,15 @@ using System.Text;
 namespace LibUISharp
 {
     /// <summary>
-    /// Enacpsulates a LibUISharp (libui) application.
+    /// Enacpsulates an application with a user-interface.
     /// </summary>
-    public sealed class Application : LibuiComponent
+    public sealed class Application : UIComponent, IUIComponent
     {
         private static object _lock = new object();
         private static bool created = false;
         private static LibuiLibrary.uiInitOptions Options = new LibuiLibrary.uiInitOptions() { Size = UIntPtr.Zero };
         private int exitCode;
-        private bool disposed;
+        private bool disposed = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Application"/> class.
@@ -58,7 +58,7 @@ namespace LibUISharp
         }
 
         /// <summary>
-        /// Starts a LibUIShatrp (libui) application and opens the specified window.
+        /// Starts an application with a user-interface and opens the specified window.
         /// </summary>
         /// <param name="window">The specified window to open.</param>
         /// <returns>0 if successful, else returns -1.</returns>
@@ -102,8 +102,10 @@ namespace LibUISharp
         /// Shut down this application.
         /// </summary>
         public void Shutdown() => LibuiLibrary.uiQuit();
-        
-        /// <inheritdoc />
+
+        /// <summary>
+        /// Initializes this UI component.
+        /// </summary>
         protected sealed override void InitializeComponent()
         {
             IntPtr errPtr = LibuiLibrary.uiInit(ref Options);
@@ -113,7 +115,7 @@ namespace LibUISharp
             {
                 Console.WriteLine(errStr);
                 LibuiLibrary.uiFreeInitError(errPtr);
-                throw new LibuiException(errStr);
+                throw new UIException(errStr);
             }
 
             if (PlatformHelper.IsWinNT)
@@ -123,19 +125,30 @@ namespace LibUISharp
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
         protected sealed override void InitializeEvents() => LibuiLibrary.uiOnShouldQuit(data =>
             {
                 CancelEventArgs args = new CancelEventArgs();
                 Exiting?.Invoke(this, args);
                 return !args.Cancel;
             }, IntPtr.Zero);
+        
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-        /// <inheritdoc />
-        public override void Dispose() => Dispose(true);
-
-        /// <inheritdoc />
-        protected override void Dispose(bool disposing)
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <param name="disposing">Whether or not this control is disposing.</param>
+        internal void Dispose(bool disposing)
         {
             if (disposing)
             {
