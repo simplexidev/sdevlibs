@@ -2,11 +2,15 @@
 using LibUISharp.SafeHandles;
 using System;
 
-// uiSeparator
 namespace LibUISharp
 {
+    /// Represents a control that is used to separate items.
     public class Separator : Control
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Separator"/> class with the specified orientation.
+        /// </summary>
+        /// <param name="orientation">The specified orientation.</param>
         public Separator(Orientation orientation)
         {
             switch (orientation)
@@ -23,6 +27,9 @@ namespace LibUISharp
             Orientation = orientation;
         }
 
+        /// <summary>
+        /// Gets this <see cref="Separator"/> object's orientation.
+        /// </summary>
         public Orientation Orientation { get; }
     }
 }

@@ -2,10 +2,11 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?longCache=true)](https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md)
 [![Build status](https://ci.appveyor.com/api/projects/status/o2y9fu126dqmi4pv?svg=true)](https://ci.appveyor.com/project/tom-corwin/libuisharp)
 [![CodeFactor](https://www.codefactor.io/repository/github/tom-corwin/libuisharp/badge)](https://www.codefactor.io/repository/github/tom-corwin/libuisharp)
+![NuGet](https://img.shields.io/nuget/vpre/LibUISharp.svg)
 
 LibUISharp is a library containing bindings for [libui](https://github.com/andlabs/libui). Currently, LibUISharp is only built as a .NET Standard 2.0 library, but can also support other frameworks as-per community interest.
 
-**Please Note**: [libui](https://github.com/andlabs/libui) is *mid-alpha* software, meaning the underlying API in LibUISharp is a work-in-progress.
+**Please Note**: [libui](https://github.com/andlabs/libui) is *mid-alpha* software, meaning the underlying API in LibUISharp is a work-in-progress. Any LibUISharp releases up until v0.4.0 are CI builds, and are not guaranteed to work.
 
 ## Looking for Contributors!
 Currently, I don't have the free time to make LibUISharp complete on my own. Because of this, I am looking for help from the community. Whether an issue, or a new feature, nothing is to small.
