@@ -18,7 +18,7 @@ namespace LibUISharp
                     Handle = new SafeControlHandle(LibuiLibrary.uiNewVerticalSeparator());
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("orientation");
+                    throw new ArgumentOutOfRangeException(nameof(orientation));
             }
             Orientation = orientation;
         }

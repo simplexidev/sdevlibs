@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 
-// uiWindow
 namespace LibUISharp
 {
     /// <summary>
@@ -172,7 +171,7 @@ namespace LibUISharp
                 if (!Handle.IsInvalid)
                 {
                     if (value == null)
-                        throw new LibuiException("Cannot add a null Control to a Window.");
+                        throw new UIException("Cannot add a null Control to a Window.");
                     LibuiLibrary.uiWindowSetChild(Handle.DangerousGetHandle(), value.Handle.DangerousGetHandle());
                 }
                 child = value;
@@ -211,8 +210,21 @@ namespace LibUISharp
         /// <param name="e">An <see cref="EventArgs"/> containing the event data.</param>
         protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
 
+        /// <summary>
+        /// Displays a dialog showing a message, or optionally, an error.
+        /// </summary>
+        /// <param name="title">The title of the message dialog.</param>
+        /// <param name="description">The description of the message dialog.</param>
+        /// <param name="isError">Whether the message is displayed as an error.</param>
         public void ShowMessageBox(string title, string description = null, bool isError = false) => ShowMessageBox(this, title, description, isError);
 
+        /// <summary>
+        /// Displays a dialog showing a message, or optionally, an error.
+        /// </summary>
+        /// <param name="w">The dialog's parent window.</param>
+        /// <param name="title">The title of the message dialog.</param>
+        /// <param name="description">The description of the message dialog.</param>
+        /// <param name="isError">Whether the message is displayed as an error.</param>
         public static void ShowMessageBox(Window w, string title, string description = null, bool isError = false)
         {
             if (w == null)
@@ -228,10 +240,27 @@ namespace LibUISharp
             Marshal.FreeHGlobal(descriptionPtr);
         }
 
+        /// <summary>
+        /// Displays a dialog allowing a user to select a file to save to.
+        /// </summary>
+        /// <param name="path">The file's path selected by the user to save to.</param>
+        /// <param name="w">The dialog's parent window.</param>
+        /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
         public bool ShowSaveFileDialog(out string path) => ShowSaveFileDialog(out path, this);
 
+        /// <summary>
+        /// Displays a dialog allowing a user to select a file to save to.
+        /// </summary>
+        /// <param name="writeStream">The file selected by the user as a writable stream.</param>
+        /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
         public bool ShowSaveFileDialog(out Stream writeStream) => ShowSaveFileDialog(out writeStream, this);
 
+        /// <summary>
+        /// Displays a dialog allowing a user to select a file to save to.
+        /// </summary>
+        /// <param name="path">The file's path selected by the user to save to.</param>
+        /// <param name="w">The dialog's parent window.</param>
+        /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
         public static bool ShowSaveFileDialog(out string path, Window w)
         {
             if (w == null)
@@ -244,7 +273,13 @@ namespace LibUISharp
             else
                 return true;
         }
-        
+
+        /// <summary>
+        /// Displays a dialog allowing a user to select a file to save to.
+        /// </summary>
+        /// <param name="writeStream">The file selected by the user as a writable stream.</param>
+        /// <param name="w">The dialog's parent window.</param>
+        /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
         public static bool ShowSaveFileDialog(out Stream writeStream, Window w)
         {
             if (ShowSaveFileDialog(out string path, w))
@@ -259,10 +294,26 @@ namespace LibUISharp
             }
         }
 
+        /// <summary>
+        /// Displays a dialog allowing a user to select a file to open.
+        /// </summary>
+        /// <param name="path">The file's path selected by the user.</param>
+        /// <returns><see langword="true"/> if the file exists, else <see langword="false"/>.</returns>
         public bool ShowOpenFileDialog(out string path) => ShowOpenFileDialog(out path, this);
 
+        /// <summary>
+        /// Displays a dialog allowing a user to select a file to open.
+        /// </summary>
+        /// <param name="readStream">The file selected by the user as a readable stream.</param>
+        /// <returns><see langword="true"/> if the file exists, else <see langword="false"/>.</returns>
         public bool ShowOpenFileDialog(out Stream readStream) => ShowOpenFileDialog(out readStream, this);
 
+        /// <summary>
+        /// Displays a dialog allowing a user to select a file to open.
+        /// </summary>
+        /// <param name="path">The file's path selected by the user.</param>
+        /// <param name="w">The dialog's parent window.</param>
+        /// <returns><see langword="true"/> if the file exists, else <see langword="false"/>.</returns>
         public static bool ShowOpenFileDialog(out string path, Window w)
         {
             if (w == null)
@@ -276,6 +327,12 @@ namespace LibUISharp
                 return true;
         }
 
+        /// <summary>
+        /// Displays a dialog allowing a user to select a file to open.
+        /// </summary>
+        /// <param name="readStream">The file selected by the user as a readable stream.</param>
+        /// <param name="w">The dialog's parent window.</param>
+        /// <returns><see langword="true"/> if the file exists, else <see langword="false"/>.</returns>
         public static bool ShowOpenFileDialog(out Stream readStream, Window w)
         {
             if (ShowOpenFileDialog(out string path, w))
@@ -300,7 +357,9 @@ namespace LibUISharp
             Dispose();
         }
 
-        /// <inheritdoc/> 
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
         protected sealed override void InitializeEvents()
         {
             if (Handle.IsInvalid)
@@ -324,8 +383,11 @@ namespace LibUISharp
             LibuiLibrary.uiWindowOnContentSizeChanged(Handle.DangerousGetHandle(), (window, data) => { OnSizeChanged(EventArgs.Empty); }, IntPtr.Zero);
         }
 
-        /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <param name="disposing">Whether or not this control is disposing.</param>
+        protected sealed override void Dispose(bool disposing)
         {
             if (!disposed)
             {

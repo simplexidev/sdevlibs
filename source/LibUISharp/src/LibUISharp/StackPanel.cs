@@ -2,7 +2,6 @@
 using LibUISharp.SafeHandles;
 using System;
 
-// uiBox
 namespace LibUISharp
 {
     /// <summary>
@@ -27,7 +26,7 @@ namespace LibUISharp
                     Handle = new SafeControlHandle(LibuiLibrary.uiNewVerticalBox());
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("orientation");
+                    throw new ArgumentOutOfRangeException(nameof(orientation));
             }
             Orientation = orientation;
         }
@@ -38,7 +37,7 @@ namespace LibUISharp
         public Orientation Orientation { get; }
 
         /// <summary>
-        /// Gets or sets a value indiating whether this <see cref="StackPanel"/> is padded or not.
+        /// Gets or sets a value indiating whether this <see cref="StackPanel"/> has interior padding or not.
         /// </summary>
         public bool Padding
         {
@@ -58,25 +57,46 @@ namespace LibUISharp
         }
     }
 
+    /// <summary>
+    /// Represents a collection of child <see cref="Control"/>s inside of a <see cref="ControlCollection{TContainer}"/>.
+    /// </summary>
     public class StackPanelItemCollection : ControlCollection<StackPanel>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StackPanelItemCollection"/> class with the specified parent.
+        /// </summary>
+        /// <param name="parent">The parent <see cref="StackPanel"/> of this <see cref="StackPanelItemCollection"/>.</param>
         public StackPanelItemCollection(StackPanel uiParent) : base(uiParent) { }
-
+        
+        /// <summary>
+        /// Removes the first occurrence of a specific <see cref="Control"/> from the <see cref="StackPanelItemCollection"/>.
+        /// </summary>
+        /// <param name="item">The <see cref="Control"/> to remove from the <see cref="StackPanelItemCollection"/>.</param>
+        /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="StackPanelItemCollection"/>.</returns>
         public override bool Remove(Control item)
         {
             LibuiLibrary.uiBoxDelete(Parent.Handle.DangerousGetHandle(), item.Index);
             return base.Remove(item);
         }
 
-        public override void Add(Control child) => Add(child, false);
+        /// <summary>
+        /// Adds a <see cref="Control"/> to the end of the <see cref="StackPanelItemCollection"/>.
+        /// </summary>
+        /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="StackPanelItemCollection"/>.</param>
+        public override void Add(Control item) => Add(item, false);
 
-        public virtual void Add(Control child, bool stretches)
+        /// <summary>
+        /// Adds a <see cref="Control"/> to the end of the <see cref="StackPanelItemCollection"/>.
+        /// </summary>
+        /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="StackPanelItemCollection"/>.</param>
+        /// <param name="stretches">Whether or not <paramref name="item"/> stretches the area of the parent <see cref="Control."/></param>
+        public virtual void Add(Control item, bool stretches)
         {
-            if (Contains(child))
+            if (Contains(item))
                 throw new InvalidOperationException("cannot add the same control.");
-            if (child == null) return;
-            LibuiLibrary.uiBoxAppend(Parent.Handle.DangerousGetHandle(), child.Handle.DangerousGetHandle(), stretches);
-            base.Add(child);
+            if (item == null) return;
+            LibuiLibrary.uiBoxAppend(Parent.Handle.DangerousGetHandle(), item.Handle.DangerousGetHandle(), stretches);
+            base.Add(item);
         }
     }
 }

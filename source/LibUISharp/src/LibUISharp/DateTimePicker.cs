@@ -1,13 +1,14 @@
 ﻿using LibUISharp.Internal;
 using LibUISharp.SafeHandles;
-using System;
 
 // uiDateTimePicker
 namespace LibUISharp
 {
     public class DateTimePicker : Control
     {
+#if LIBUI_4_0
         private DateTime dateTime;
+#endif
 
         public DateTimePicker()
         {

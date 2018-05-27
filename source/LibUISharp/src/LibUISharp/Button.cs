@@ -3,7 +3,6 @@ using LibUISharp.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
 
-// uiButton
 namespace LibUISharp
 {
     /// <summary>
@@ -53,7 +52,9 @@ namespace LibUISharp
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
         protected sealed override void InitializeEvents() => LibuiLibrary.uiButtonOnClicked(Handle.DangerousGetHandle(), (button, data) => { OnClick(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>

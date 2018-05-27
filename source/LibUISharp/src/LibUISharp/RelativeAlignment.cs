@@ -1,5 +1,4 @@
-﻿// uiAt
-namespace LibUISharp
+﻿namespace LibUISharp
 {
     /// <summary>
     /// Specifies how contents are positioned in relation to other content.

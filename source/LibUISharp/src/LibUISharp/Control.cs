@@ -1,21 +1,19 @@
 ﻿using LibUISharp.Internal;
 using LibUISharp.SafeHandles;
 using System;
-using System.Collections.Generic;
 
-// uiControl
 namespace LibUISharp
 {
+    //TODO: uiControlVerifySetParent(IntPtr,IntPtr).
+    //TODO: uiControlEnabledToUser(IntPtr).
+    //TODO: Re-add control caching.
     /// <summary>
     /// Defines the base class for controls, which are <see cref="LibuiComponent"/>s with visual representation.
     /// </summary>
-    //TODO: uiControlVerifySetParent(IntPtr,IntPtr).
-    //TODO: uiControlEnabledToUser(IntPtr).
-    public abstract class Control : LibuiComponent<SafeControlHandle>
+    public abstract class Control : UIComponent<SafeControlHandle>, IUIComponent
     {
         private bool visible, enabled;
         private bool disposed = false;
-        // private static readonly Dictionary<SafeControlHandle, Control> ControlCache = new Dictionary<SafeControlHandle, Control>();
 
         /// <summary>
         /// Initializes a new <see cref="Control"/> class.
@@ -25,10 +23,7 @@ namespace LibUISharp
             if (this is Window)
                 visible = false;
             else
-            {
                 visible = true;
-                // ControlCache.Add(Handle, this);
-            }
         }
 
         /// <summary>
@@ -120,14 +115,22 @@ namespace LibUISharp
         {
             if (!Handle.IsInvalid)
                 Handle.Dispose();
-            // ControlCache.Remove(Handle);
         }
-        
-        /// <inheritdoc />
-        internal protected override SafeControlHandle Handle { get; private protected set; }
 
-        /// <inheritdoc />
-        protected override void Dispose(bool disposing)
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <param name="disposing">Whether or not this control is disposing.</param>
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -135,13 +138,6 @@ namespace LibUISharp
                     Destroy();
                 disposed = true;
             }
-        }
-
-        /// <inheritdoc />
-        public override void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }
