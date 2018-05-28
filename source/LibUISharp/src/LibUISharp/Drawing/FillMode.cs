@@ -1,5 +1,4 @@
-﻿// uiFillMode
-namespace LibUISharp.Drawing
+﻿namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies how the interior of a closed path is filled.

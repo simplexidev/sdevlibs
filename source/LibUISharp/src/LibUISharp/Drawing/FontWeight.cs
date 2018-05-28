@@ -1,5 +1,4 @@
-﻿// uiTextWeight
-namespace LibUISharp.Drawing
+﻿namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies the desity of a font, in terms of the lightness or heaviness of the strokes.
