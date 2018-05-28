@@ -34,21 +34,18 @@
     <Compile Include="src\LibUISharp\SafeHandles\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\win-x64\libui.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>lib\win-x64\libui.dll</Link>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="lib\linux-x64\libui.so">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>lib\linux-x64\libui.so</Link>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="lib\osx-x64\libui.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>lib\osx-x64\libui.dylib</Link>
-      <Pack>true</Pack>
-    </Content>
+    <EmbeddedResource Include="src\LibUISharp\Resources\Libui.WinNT.dll">
+      <LogicalName>LibUISharp.Resources.Libui.WinNT</LogicalName>
+      <Visible>false</Visible>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\LibUISharp\Resources\Libui.Linux.so">
+      <LogicalName>LibUISharp.Resources.Libui.Linux</LogicalName>
+      <Visible>false</Visible>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\LibUISharp\Resources\Libui.MacOS.dylib">
+      <LogicalName>LibUISharp.Resources.Libui.MacOS</LogicalName>
+      <Visible>false</Visible>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.4" />

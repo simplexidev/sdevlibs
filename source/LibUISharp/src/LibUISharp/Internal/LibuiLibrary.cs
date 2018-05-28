@@ -11,17 +11,13 @@ namespace LibUISharp.Internal
 
         private static class FunctionLoader
         {
-            private const string WinNTLibNames = @"lib\win-x64\libui.dll";
-            private const string LinuxLibNames = @"lib/linux-x64/libui.so";
-            private const string MacOSLibNames = @"lib/osx-x64/libui.dylib";
-
             private static NativeLibrary LibuiNativeLibrary
             {
                 get
                 {
-                    if (PlatformHelper.IsWinNT) return new NativeLibrary(WinNTLibNames);
-                    else if (PlatformHelper.IsLinux) return new NativeLibrary(LinuxLibNames);
-                    else if (PlatformHelper.IsMacOS) return new NativeLibrary(MacOSLibNames);
+                    if (PlatformHelper.IsWinNT) return new NativeLibrary(LibraryLoader.GetPlatformDefaultLoader(), PathResolver.Embedded, "LibUISharp.Resources.Libui.WinNT");
+                    else if (PlatformHelper.IsLinux) return new NativeLibrary(LibraryLoader.GetPlatformDefaultLoader(), PathResolver.Embedded, "LibUISharp.Resources.Libui.Linux");
+                    else if (PlatformHelper.IsMacOS) return new NativeLibrary(LibraryLoader.GetPlatformDefaultLoader(), PathResolver.Embedded, "LibUISharp.Resources.Libui.MacOS");
                     else throw new PlatformNotSupportedException();
                 }
             }
