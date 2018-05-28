@@ -1,23 +1,23 @@
 using LibUISharp;
 using LibUISharp.Drawing;
 
-namespace ControlGallery
+namespace LibUISharpDemos.ControlGallery
 {
     public sealed class BasicControlsTab : TabPage
     {
         private StackPanel vPanel = new StackPanel(Orientation.Vertical) { Padding = true };
         private StackPanel hPanel = new StackPanel(Orientation.Horizontal) { Padding = true };
-        private readonly Button button = new Button("Button");
-        private readonly CheckBox checkBox = new CheckBox("CheckBox");
-        private readonly Label label = new Label("This is a Label. Right now, labels can only span one line.");
-        private readonly Separator hSeparator = new Separator(Orientation.Horizontal);
+        private Button button = new Button("Button");
+        private CheckBox checkBox = new CheckBox("CheckBox");
+        private Label label = new Label("This is a Label. Right now, labels can only span one line.");
+        private Separator hSeparator = new Separator(Orientation.Horizontal);
         private GroupBox groupBox = new GroupBox("Entries") { Margins = true };
         private Form form = new Form { Padding = true };
-        private readonly TextBox textBox = new TextBox();
-        private readonly PasswordBox passwordBox = new PasswordBox();
-        private readonly SearchBox searchBox = new SearchBox();
-        private readonly MultilineTextBox multilineTextBox = new MultilineTextBox();
-        private readonly MultilineTextBox noWordWrapMultilineTextBox = new MultilineTextBox(false);
+        private TextBox textBox = new TextBox();
+        private PasswordBox passwordBox = new PasswordBox();
+        private SearchBox searchBox = new SearchBox();
+        private TextBlock textBlock = new TextBlock();
+        private TextBlock noWordWrapTextBlock = new TextBlock(false);
 
         public BasicControlsTab() : base("Basic Controls") => InitializeComponent();
 
@@ -36,8 +36,8 @@ namespace ControlGallery
             form.Children.Add("TextBox", textBox);
             form.Children.Add("PasswordBox", passwordBox);
             form.Children.Add("SearchBox", searchBox);
-            form.Children.Add("Multiline TextBox", multilineTextBox, true);
-            form.Children.Add("Multiline TextBox No WordWrap", noWordWrapMultilineTextBox, true);
+            form.Children.Add("Multiline TextBox", textBlock, true);
+            form.Children.Add("Multiline TextBox No WordWrap", noWordWrapTextBlock, true);
         }
     }
 
@@ -49,12 +49,12 @@ namespace ControlGallery
         private SpinBox spinBox = new SpinBox(0, 100);
         private Slider slider = new Slider(0, 100);
         private ProgressBar progressBar = new ProgressBar();
-        private readonly ProgressBar iProgressBar = new ProgressBar() { Value = -1 };
+        private ProgressBar iProgressBar = new ProgressBar() { Value = -1 };
         private GroupBox groupBox2 = new GroupBox("Lists") { Margins = true };
-        private readonly StackPanel vPanel2 = new StackPanel(Orientation.Vertical) { Padding = true };
+        private StackPanel vPanel2 = new StackPanel(Orientation.Vertical) { Padding = true };
         private ComboBox comboBox = new ComboBox();
         private EditableComboBox editableComboBox = new EditableComboBox();
-        private RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
+        private RadioButtonList radioButtonList = new RadioButtonList();
 
         public NumbersTab() : base("Numbers and Lists") => InitializeComponent();
 
@@ -91,11 +91,11 @@ namespace ControlGallery
 
             comboBox.Add("Combobox Item 1", "Combobox Item 2", "Combobox Item 3");
             editableComboBox.Add("Editable Item 1", "Editable Item 2", "Editable Item 3");
-            radioButtonGroup.Add("Radio Button 1", "Radio Button 2", "Radio Button 3");
+            radioButtonList.Add("Radio Button 1", "Radio Button 2", "Radio Button 3");
 
-            vPanel.Children.Add(comboBox);
-            vPanel.Children.Add(editableComboBox);
-            vPanel.Children.Add(radioButtonGroup);
+            vPanel2.Children.Add(comboBox);
+            vPanel2.Children.Add(editableComboBox);
+            vPanel2.Children.Add(radioButtonList);
         }
     }
 
@@ -103,12 +103,12 @@ namespace ControlGallery
     {
         private StackPanel hPanel = new StackPanel(Orientation.Horizontal) { Padding = true };
         private StackPanel vPanel = new StackPanel(Orientation.Vertical) { Padding = true };
-        private readonly DatePicker datePicker = new DatePicker();
-        private readonly TimePicker timePicker = new TimePicker();
-        private readonly DateTimePicker dateTimePicker = new DateTimePicker();
-        private readonly FontPicker fontPicker = new FontPicker();
-        private readonly ColorPicker colorPicker = new ColorPicker();
-        private readonly Separator hSeparator = new Separator(Orientation.Horizontal);
+        private DatePicker datePicker = new DatePicker();
+        private TimePicker timePicker = new TimePicker();
+        private DateTimePicker dateTimePicker = new DateTimePicker();
+        private FontPicker fontPicker = new FontPicker();
+        private ColorPicker colorPicker = new ColorPicker();
+        private Separator hSeparator = new Separator(Orientation.Horizontal);
 
         private StackPanel vPanel2 = new StackPanel(Orientation.Vertical) { Padding = true };
         private Grid gridFile = new Grid() { Padding = true };

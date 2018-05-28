@@ -1,7 +1,7 @@
 using LibUISharp;
 using LibUISharp.Drawing;
 
-namespace ControlGallery
+namespace LibUISharpDemos.ControlGallery
 {
     public class MainWindow : Window
     {

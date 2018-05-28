@@ -1,6 +1,6 @@
 using LibUISharp;
 
-namespace ControlGallery
+namespace LibUISharpDemos.ControlGallery
 {
     class Program
     {
@@ -8,7 +8,6 @@ namespace ControlGallery
         {
             Application app = new Application();
             Window w = new MainWindow();
-
             app.Run(w);
         }
     }

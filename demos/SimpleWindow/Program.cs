@@ -1,6 +1,6 @@
 ﻿using LibUISharp;
 
-namespace SimpleWindowDemo
+namespace LibUISharpDemos.SimpleWindow
 {
     class Program
     {

@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp", "source\LibUISharp\LibUISharp.csproj", "{F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlGallery", "demos\ControlGallery\ControlGallery.csproj", "{5C62872C-16E9-4997-97BF-E455E417089E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharpDemos.ControlGallery", "demos\ControlGallery\LibUISharpDemos.ControlGallery.csproj", "{5C62872C-16E9-4997-97BF-E455E417089E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWindowDemo", "demos\SimpleWindowDemo\SimpleWindowDemo.csproj", "{B929A697-638D-447C-B413-7E61F6B5B1F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharpDemos.SimpleWindow", "demos\SimpleWindowDemo\LibUISharpDemos.SimpleWindow.csproj", "{B929A697-638D-447C-B413-7E61F6B5B1F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
