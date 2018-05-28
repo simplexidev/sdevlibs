@@ -106,7 +106,7 @@ namespace LibUISharp
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
-        /// Adds a <see cref="Control'/> to the end of the <see cref="ControlCollection{TContainer}"/>.
+        /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection{TContainer}"/>.
         /// </summary>
         /// <param name="item">The <see cref="Control'/> to be added to the end of the <see cref="ControlCollection{TContainer}"/>.</param>
         public virtual void Add(Control item)
