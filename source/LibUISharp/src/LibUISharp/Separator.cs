@@ -4,7 +4,7 @@ using System;
 
 namespace LibUISharp
 {
-    /// Represents a control that is used to separate items.
+    /// Represents a control that is used to separate user-interface (UI) content.
     public class Separator : Control
     {
         /// <summary>

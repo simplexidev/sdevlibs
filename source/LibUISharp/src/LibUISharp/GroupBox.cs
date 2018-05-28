@@ -3,15 +3,21 @@ using System.Runtime.InteropServices;
 using LibUISharp.Internal;
 using LibUISharp.SafeHandles;
 
-// uiGroup
 namespace LibUISharp
 {
+    /// <summary>
+    /// Represents a control that creates a container that has a border and a title for user-interface (UI) content.
+    /// </summary>
     public class GroupBox : Control
     {
         private string title;
         private bool margins;
         private Control child;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GroupBox"/> class with the specified title.
+        /// </summary>
+        /// <param name="title"></param>
         public GroupBox(string title)
         {
             IntPtr strPtr = title.ToLibuiString();
@@ -19,6 +25,9 @@ namespace LibUISharp
             Marshal.FreeHGlobal(strPtr);
         }
 
+        /// <summary>
+        /// Gets or sets the title for this <see cref="GroupBox"/> control.
+        /// </summary>
         public string Title
         {
             get
@@ -38,6 +47,9 @@ namespace LibUISharp
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this <see cref="TabPage"/> has outer margins.
+        /// </summary>
         public bool Margins
         {
             get
@@ -55,6 +67,9 @@ namespace LibUISharp
             }
         }
 
+        /// <summary>
+        /// Gets or sets this <see cref="GroupBox"/> object's child <see cref="Control"/>.
+        /// </summary>
         public Control Child
         {
             get => child;
@@ -74,6 +89,9 @@ namespace LibUISharp
             }
         }
 
+        /// <summary>
+        /// Runs cleanup operations and destroys the control.
+        /// </summary>
         protected override void Destroy()
         {
             if (Child != null)
