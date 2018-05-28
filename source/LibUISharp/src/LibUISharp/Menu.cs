@@ -277,7 +277,7 @@ namespace LibUISharp
         protected override void InitializeEvents() { }
 
         /// <summary>
-        /// Called when the <see cref="Clicked"/> event is raised.
+        /// This mehod does not do anything, and will throw a <see cref="NotSupportedException"/>.
         /// </summary>
         /// <param name="e">A <see cref="DataEventArgs"/> that contains the event data.</param>
         protected override sealed void OnClicked(DataEventArgs e) => throw new NotSupportedException();

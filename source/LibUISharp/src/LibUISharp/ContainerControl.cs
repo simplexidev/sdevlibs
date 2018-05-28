@@ -29,7 +29,7 @@ namespace LibUISharp
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <param name="disposing">Whether or not this <see cref="Control'/> is disposing.</param>
+        /// <param name="disposing">Whether or not this <see cref="Control"/> is disposing.</param>
         protected sealed override void Dispose(bool disposing)
         {
             if (!disposed)
@@ -108,7 +108,7 @@ namespace LibUISharp
         /// <summary>
         /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection{TContainer}"/>.
         /// </summary>
-        /// <param name="item">The <see cref="Control'/> to be added to the end of the <see cref="ControlCollection{TContainer}"/>.</param>
+        /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection{TContainer}"/>.</param>
         public virtual void Add(Control item)
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
@@ -140,7 +140,7 @@ namespace LibUISharp
         /// <summary>
         /// Determines whether a <see cref="Control"/> is in the <see cref="ControlCollection{TContainer}"/>.
         /// </summary>
-        /// <param name="item">The <see cref="Control'/> to locate in the <see cref="ControlCollection{TContainer}"/>.</param>
+        /// <param name="item">The <see cref="Control"/> to locate in the <see cref="ControlCollection{TContainer}"/>.</param>
         /// <returns>true if item is found in the <see cref="ControlCollection{TContainer}"/>; otherwise, false.</returns>
         public virtual bool Contains(Control item)
         {
@@ -165,7 +165,7 @@ namespace LibUISharp
         /// <summary>
         /// Determines the index of a specific item in the <see cref="ControlCollection{TContainer}"/>.
         /// </summary>
-        /// <param name="item">The <see cref="Control'/> to locate in the <see cref="ControlCollection{TContainer}"/>.<param>
+        /// <param name="item">The <see cref="Control"/> to locate in the <see cref="ControlCollection{TContainer}"/>.</param>
         /// <returns>The index of item if found in the list; otherwise, -1.</returns>
         public int IndexOf(Control item) => InnerList.IndexOf(item);
 
@@ -173,7 +173,7 @@ namespace LibUISharp
         /// Inserts an item to the <see cref="ControlCollection{TContainer}"/> at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index at which item should be inserted.</param>
-        /// <param name="item">The <see cref="Control'/> to insert into the <see cref="ControlCollection{TContainer}"/>.</param>
+        /// <param name="item">The <see cref="Control"/> to insert into the <see cref="ControlCollection{TContainer}"/>.</param>
         public virtual void Insert(int index, Control item)
         {
             if (index > Count + 1)
@@ -187,9 +187,9 @@ namespace LibUISharp
         }
 
         /// <summary>
-        /// Removes the first occurrence of a specific <see cref="Control'/> from the <see cref="ControlCollection{TContainer}"/>.
+        /// Removes the first occurrence of a specific <see cref="Control"/> from the <see cref="ControlCollection{TContainer}"/>.
         /// </summary>
-        /// <param name="item">The <see cref="Control'/> to remove from the <see cref="ControlCollection{TContainer}"/>.</param>
+        /// <param name="item">The <see cref="Control"/> to remove from the <see cref="ControlCollection{TContainer}"/>.</param>
         /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ControlCollection{TContainer}"/>.</returns>
         public virtual bool Remove(Control item)
         {

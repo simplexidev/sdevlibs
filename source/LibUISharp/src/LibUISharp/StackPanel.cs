@@ -66,7 +66,7 @@ namespace LibUISharp
         /// Initializes a new instance of the <see cref="StackPanelItemCollection"/> class with the specified parent.
         /// </summary>
         /// <param name="parent">The parent <see cref="StackPanel"/> of this <see cref="StackPanelItemCollection"/>.</param>
-        public StackPanelItemCollection(StackPanel uiParent) : base(uiParent) { }
+        public StackPanelItemCollection(StackPanel parent) : base(parent) { }
         
         /// <summary>
         /// Removes the first occurrence of a specific <see cref="Control"/> from the <see cref="StackPanelItemCollection"/>.
@@ -89,7 +89,7 @@ namespace LibUISharp
         /// Adds a <see cref="Control"/> to the end of the <see cref="StackPanelItemCollection"/>.
         /// </summary>
         /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="StackPanelItemCollection"/>.</param>
-        /// <param name="stretches">Whether or not <paramref name="item"/> stretches the area of the parent <see cref="Control."/></param>
+        /// <param name="stretches">Whether or not <paramref name="item"/> stretches the area of the parent <see cref="Control"/></param>
         public virtual void Add(Control item, bool stretches)
         {
             if (Contains(item))

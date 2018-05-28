@@ -244,7 +244,6 @@ namespace LibUISharp
         /// Displays a dialog allowing a user to select a file to save to.
         /// </summary>
         /// <param name="path">The file's path selected by the user to save to.</param>
-        /// <param name="w">The dialog's parent window.</param>
         /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
         public bool ShowSaveFileDialog(out string path) => ShowSaveFileDialog(out path, this);
 
