@@ -5,7 +5,6 @@ namespace LibUISharp.Drawing
     /// </summary>
     public static class Brushes
     {
-
         /// <summary>
         /// Gets the solid fill color that has a hexadecimal value of <c>#00000000</c>.
         /// </summary>
@@ -115,11 +114,6 @@ namespace LibUISharp.Drawing
         /// Gets the solid fill color that has a hexadecimal value of <c>#FF2F4F4F</c>.
         /// </summary>
         public static SolidBrush DarkSlateGray => new SolidBrush(Colors.DarkSlateGray);
-
-        /// <summary>
-        /// Gets the solid fill color that has a hexadecimal value of <c>#FF2F4F4F</c>.
-        /// </summary>
-        public static SolidBrush DarkSlateGrey => new SolidBrush(Colors.DarkSlateGray);
 
         /// <summary>
         /// Gets the solid fill color that has a hexadecimal value of <c>#FF32CD32</c>.
@@ -250,11 +244,6 @@ namespace LibUISharp.Drawing
         /// Gets the solid fill color that has a hexadecimal value of <c>#FF808080</c>.
         /// </summary>
         public static SolidBrush Gray => new SolidBrush(Colors.Gray);
-
-        /// <summary>
-        /// Gets the solid fill color that has a hexadecimal value of <c>#FF808080</c>.
-        /// </summary>
-        public static SolidBrush Grey => new SolidBrush(Colors.Gray);
 
         /// <summary>
         /// Gets the solid fill color that has a hexadecimal value of <c>#FF87CEEB</c>.
