@@ -697,8 +697,8 @@ namespace LibUISharp.Internal
         public static void uiAreaSetSize(IntPtr a, int width, int height) => FunctionLoader.Load<uiAreaSetSize_t>("uiAreaSetSize")(a, width, height);
 
         [UnmanagedFunctionPointer(Convention)]
-        private delegate void uiAreaQueueReDrawAll_t(IntPtr a);
-        public static void uiAreaQueueReDrawAll(IntPtr a) => FunctionLoader.Load<uiAreaQueueReDrawAll_t>("uiAreaQueueReDrawAll")(a);
+        private delegate void uiAreaQueueRedrawAll_t(IntPtr a);
+        public static void uiAreaQueueRedrawAll(IntPtr a) => FunctionLoader.Load<uiAreaQueueRedrawAll_t>("uiAreaQueueRedrawAll")(a);
 
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiAreaScrollTo_t(IntPtr a, double x, double y, double width, double height);
