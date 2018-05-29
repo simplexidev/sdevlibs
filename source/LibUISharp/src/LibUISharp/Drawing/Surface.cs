@@ -12,7 +12,7 @@ namespace LibUISharp.Drawing
     /// </summary>
     public abstract class SurfaceBase : Control
     {
-        protected private Dictionary<SafeControlHandle, SurfaceBase> Surfaces = new Dictionary<SafeControlHandle, SurfaceBase>();
+        protected private Dictionary<IntPtr, SurfaceBase> Surfaces = new Dictionary<IntPtr, SurfaceBase>();
         private Size size;
 
         protected SurfaceBase(ISurfaceHandler events)
@@ -21,35 +21,30 @@ namespace LibUISharp.Drawing
             {
                 Draw = (IntPtr surfaceHandler, IntPtr surface, ref LibuiLibrary.uiAreaDrawParams args) =>
                 {
-                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
-                    SurfaceBase realSurface = Surfaces[surfaceHandle];
+                    SurfaceBase realSurface = Surfaces[surface];
                     DrawEventArgs a = args.ToDrawEventArgs();
                     events.Draw(realSurface, ref a);
                 },
                 MouseEvent = (IntPtr surfaceHandler, IntPtr surface, ref LibuiLibrary.uiAreaMouseEvent args) =>
                 {
-                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
-                    SurfaceBase realSurface = Surfaces[surfaceHandle];
+                    SurfaceBase realSurface = Surfaces[surface];
                     MouseEventArgs a = args.ToMouseEventArgs();
                     events.MouseEvent(realSurface, ref a);
                 },
                 MouseCrossed = (surfaceHandler, surface, left) =>
                 {
-                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
-                    SurfaceBase realSurface = Surfaces[surfaceHandle];
+                    SurfaceBase realSurface = Surfaces[surface];
                     MouseCrossedEventArgs a = new MouseCrossedEventArgs(left);
                     events.MouseCrossed(realSurface, a);
                 },
                 DragBroken = (surfaceHandler, surface) =>
                 {
-                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
-                    SurfaceBase realSurface = Surfaces[surfaceHandle];
+                    SurfaceBase realSurface = Surfaces[surface];
                     events.DragBroken(realSurface);
                 },
                 KeyEvent = (IntPtr surfaceHandler, IntPtr surface, ref LibuiLibrary.uiAreaKeyEvent args) =>
                 {
-                    SafeControlHandle surfaceHandle = new SafeControlHandle(surface);
-                    SurfaceBase realSurface = Surfaces[surfaceHandle];
+                    SurfaceBase realSurface = Surfaces[surface];
                     KeyEventArgs a = args.ToKeyEventArgs();
                     return events.KeyEvent(realSurface, ref a);
                 }
@@ -96,20 +91,17 @@ namespace LibUISharp.Drawing
     {
         public Surface(ISurfaceHandler handler) : base(handler)
         {
-            if (!(this is ScrollableSurface))
-            {
-                Handle = new SafeControlHandle(LibuiLibrary.uiNewArea(EventHandler));
-                Surfaces[Handle] = this;
-            }
+            Handle = new SafeControlHandle(LibuiLibrary.uiNewArea(EventHandler));
+            Surfaces[Handle.DangerousGetHandle()] = this;
         }
     }
 
-    public class ScrollableSurface : Surface
+    public class ScrollableSurface : SurfaceBase
     {
         public ScrollableSurface(ISurfaceHandler handler, int width, int height) : base(handler)
         {
             Handle = new SafeControlHandle(LibuiLibrary.uiNewScrollingArea(EventHandler, width, height));
-            Surfaces[Handle] = this;
+            Surfaces[Handle.DangerousGetHandle()] = this;
         }
 
         public ScrollableSurface(ISurfaceHandler handler, Size size) : this(handler, size.Width, size.Height) { }

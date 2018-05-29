@@ -2,9 +2,9 @@ using LibUISharp;
 
 namespace LibUISharpDemos.ControlGallery
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
             Application app = new Application();
             Window w = new MainWindow();

@@ -2,9 +2,9 @@
 
 namespace LibUISharpDemos.SimpleWindow
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        public static void Main()
         {
             Application app = new Application();
             Window w = new Window();

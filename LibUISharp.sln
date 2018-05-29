@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp", "source\LibUISharp\LibUISharp.csproj", "{F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharpDemos.ControlGallery", "demos\ControlGallery\LibUISharpDemos.ControlGallery.csproj", "{5C62872C-16E9-4997-97BF-E455E417089E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Demos.ControlGallery", "demos\LibUISharp.Demos.ControlGallery\LibUISharp.Demos.ControlGallery.csproj", "{5C62872C-16E9-4997-97BF-E455E417089E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharpDemos.SimpleWindow", "demos\SimpleWindowDemo\LibUISharpDemos.SimpleWindow.csproj", "{B929A697-638D-447C-B413-7E61F6B5B1F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Demos.SimpleWindow", "demos\LibUISharp.Demos.SimpleWindow\LibUISharp.Demos.SimpleWindow.csproj", "{B929A697-638D-447C-B413-7E61F6B5B1F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Demos.Histogram", "demos\LibUISharp.Demos.Histogram\LibUISharp.Demos.Histogram.csproj", "{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{B929A697-638D-447C-B413-7E61F6B5B1F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B929A697-638D-447C-B413-7E61F6B5B1F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B929A697-638D-447C-B413-7E61F6B5B1F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

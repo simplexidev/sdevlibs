@@ -5,15 +5,15 @@ namespace LibUISharp.Drawing
 {
     public class DrawEventArgs : EventArgs
     {
-        public DrawEventArgs(Context context, RectangleD clip, SizeD areaSize)
+        public DrawEventArgs(Context context, RectangleD clip, SizeD surfaceSize)
         {
             Context = context;
             Clip = clip;
-            AreaSize = areaSize;
+            SurfaceSize = surfaceSize;
         }
 
         public Context Context { get; }
         public RectangleD Clip { get; }
-        public SizeD AreaSize { get; }
+        public SizeD SurfaceSize { get; }
     }
 }
