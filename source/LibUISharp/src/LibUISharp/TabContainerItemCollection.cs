@@ -33,7 +33,7 @@ namespace LibUISharp
         /// Adds a <see cref="TabPage"/> to the <see cref="TabContainerItemCollection"/> at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index at which item should be inserted.</param>
-        /// <param name="child">The <see cref="TabPage"/> to insert into the <see cref="TabContainerItemCollection"/>.</param>
+        /// <param name="item">The <see cref="TabPage"/> to insert into the <see cref="TabContainerItemCollection"/>.</param>
         public override void AddAt(int index, TabPage item)
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
