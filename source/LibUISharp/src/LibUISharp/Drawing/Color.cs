@@ -19,7 +19,7 @@ namespace LibUISharp.Drawing
         /// Initializes a new <see cref="Color"/> structure from an argb value.
         /// </summary>
         /// <param name="argb">An argb value.</param>
-        public Color(uint argb)
+        public Color(long argb)
         {
             A = sRgbToScRgb((byte)((argb & 0xFF000000) >> 24));
             R = sRgbToScRgb((byte)((argb & 0x00FF0000) >> 16));

@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies how contents are positioned in relation to other content.
     /// </summary>
-    public enum RelativeAlignment : uint
+    public enum RelativeAlignment : long
     {
         /// <summary>
         /// The contents are positioned before the other content.

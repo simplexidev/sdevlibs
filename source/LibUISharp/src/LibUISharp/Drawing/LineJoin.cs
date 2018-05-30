@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies how to join consecutive line or curve segments in a figure that are contained in a <see cref="StrokeOptions"/> object.
     /// </summary>
-    public enum LineJoin : uint
+    public enum LineJoin : long
     {
         /// <summary>
         /// Specifies a mitered line join.

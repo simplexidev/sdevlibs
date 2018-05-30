@@ -1,4 +1,4 @@
-﻿using LibUISharp.Internal;
+using LibUISharp.Internal;
 using LibUISharp.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
@@ -21,7 +21,7 @@ namespace LibUISharp
     /// </summary>
     public class TabPage : Control
     {
-        private Control child;
+        private Control childField;
         private bool initialized = false;
         private bool margins;
 
@@ -52,13 +52,13 @@ namespace LibUISharp
         /// </summary>
         public Control Child
         {
-            get => child;
+            get => childField;
             protected set
             {
-                if (child != value)
+                if (childField != value)
                 {
-                    child = value;
-                    Handle = child.Handle;
+                    childField = value;
+                    Handle = childField.Handle;
                 }
             }
         }

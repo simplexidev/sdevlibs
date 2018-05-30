@@ -17,12 +17,6 @@ namespace LibUISharp.SafeHandles
         /// phase; <see langword="false"/> to prevent reliable release (not recommended).</param>
         public SafeControlHandle(IntPtr existingHandle, bool ownsHandle = true) : base(existingHandle, ownsHandle) { }
 
-        /// <summary>
-        /// Returns the native control handle for this control.
-        /// </summary>
-        /// <returns>An <see cref="UIntPtr"/> representing the controls handle.</returns>
-        public UIntPtr DangerousGetControlHandle() => LibuiLibrary.uiControlHandle(handle);
-
         /// <inheritdoc/>
         protected override bool ReleaseHandle()
         {

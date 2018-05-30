@@ -1255,7 +1255,7 @@ namespace LibUISharp.Internal
 
             public uiModifiers Modifiers;
 
-            public ulong Held1To64;
+            public long Held1To64;
         }
 
         public enum uiExtKey : uint

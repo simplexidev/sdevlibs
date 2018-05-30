@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
+
+[assembly: System.CLSCompliant(true)]
 
 // Style
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Internal.LibuiLibrary.tm")]

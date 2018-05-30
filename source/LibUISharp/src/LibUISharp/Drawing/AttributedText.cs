@@ -19,7 +19,7 @@ namespace LibUISharp.Drawing
 
         public string Text => LibuiLibrary.uiAttributedStringString(Handle.DangerousGetHandle()).ToStringEx();
 
-        public uint Len() => LibuiLibrary.uiAttributedStringLen(Handle.DangerousGetHandle()).ToUInt32();
+        public long Len() => LibuiLibrary.uiAttributedStringLen(Handle.DangerousGetHandle()).ToUInt32();
 
         public void Dispose()
         {

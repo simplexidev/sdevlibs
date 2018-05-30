@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies the desity of a font, in terms of the lightness or heaviness of the strokes.
     /// </summary>
-    public enum FontWeight : uint
+    public enum FontWeight : long
     {
         /// <summary>
         /// Specifies the minimum font weight.

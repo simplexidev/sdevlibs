@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies the style of a font as normal, italic or oblique.
     /// </summary>
-    public enum FontStyle : uint
+    public enum FontStyle : long
     {
         /// <summary>
         /// Specifies the normal font style.

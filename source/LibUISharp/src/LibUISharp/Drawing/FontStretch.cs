@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies how a font will be stretched compared to the normal aspect ratio of that font.
     /// </summary>
-    public enum FontStretch : uint
+    public enum FontStretch : long
     {
         /// <summary>
         /// Specifies the ultra-condensed font stretch.
