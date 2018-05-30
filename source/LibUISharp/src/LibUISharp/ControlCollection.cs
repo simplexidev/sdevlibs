@@ -64,7 +64,7 @@ namespace LibUISharp
         /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection{T}"/>.
         /// </summary>
         /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection{T}"/>.</param>
-        protected virtual void Add(T child)
+        public virtual void Add(T child)
         {
             if (child == null) throw new ArgumentNullException(nameof(child));
             if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlCollection.");
@@ -90,7 +90,7 @@ namespace LibUISharp
         /// </summary>
         /// <param name="index">The zero-based index at which item should be inserted.</param>
         /// <param name="child">The <see cref="Control"/> to insert into the <see cref="ControlCollection{T}"/>.</param>
-        protected virtual void AddAt(int index, T child)
+        public virtual void AddAt(int index, T child)
         {
             if (child == null) throw new ArgumentNullException(nameof(child));
             if (index < 0 || index > size) throw new ArgumentOutOfRangeException(nameof(index));
