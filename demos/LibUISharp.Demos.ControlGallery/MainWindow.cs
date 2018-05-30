@@ -5,7 +5,7 @@ namespace LibUISharpDemos.ControlGallery
 {
     public class MainWindow : Window
     {
-        private TabControl tabControl = new TabControl();
+        private TabContainer tabControl = new TabContainer();
         private readonly BasicControlsTab basicControlsTab = new BasicControlsTab();
         private readonly NumbersTab numbersTab = new NumbersTab();
         private readonly DataChoosersTab dataChoosersTab = new DataChoosersTab();
@@ -17,9 +17,9 @@ namespace LibUISharpDemos.ControlGallery
             Margins = true;
             Child = tabControl;
 
-            tabControl.Children.Add(basicControlsTab);
-            tabControl.Children.Add(numbersTab);
-            tabControl.Children.Add(dataChoosersTab);
+            tabControl.Items.Add(basicControlsTab);
+            tabControl.Items.Add(numbersTab);
+            tabControl.Items.Add(dataChoosersTab);
         }
     }
 }

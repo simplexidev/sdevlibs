@@ -5,14 +5,14 @@ namespace LibUISharpDemos.ControlGallery
 {
     public sealed class BasicControlsTab : TabPage
     {
-        private StackPanel vPanel = new StackPanel(Orientation.Vertical) { Padding = true };
-        private StackPanel hPanel = new StackPanel(Orientation.Horizontal) { Padding = true };
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { Padding = true };
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { Padding = true };
         private Button button = new Button("Button");
         private CheckBox checkBox = new CheckBox("CheckBox");
         private Label label = new Label("This is a Label. Right now, labels can only span one line.");
         private Separator hSeparator = new Separator(Orientation.Horizontal);
         private GroupBox groupBox = new GroupBox("Entries") { Margins = true };
-        private Form form = new Form { Padding = true };
+        private FormContainer form = new FormContainer { Padding = true };
         private TextBox textBox = new TextBox();
         private PasswordBox passwordBox = new PasswordBox();
         private SearchBox searchBox = new SearchBox();
@@ -26,32 +26,32 @@ namespace LibUISharpDemos.ControlGallery
             Margins = true;
             Child = vPanel;
 
-            vPanel.Children.Add(hPanel);
-            hPanel.Children.Add(button);
-            hPanel.Children.Add(checkBox);
-            vPanel.Children.Add(label);
-            vPanel.Children.Add(hSeparator);
-            vPanel.Children.Add(groupBox, true);
+            vPanel.Items.Add(hPanel);
+            hPanel.Items.Add(button);
+            hPanel.Items.Add(checkBox);
+            vPanel.Items.Add(label);
+            vPanel.Items.Add(hSeparator);
+            vPanel.Items.Add(groupBox, true);
             groupBox.Child = form;
-            form.Children.Add("TextBox", textBox);
-            form.Children.Add("PasswordBox", passwordBox);
-            form.Children.Add("SearchBox", searchBox);
-            form.Children.Add("Multiline TextBox", textBlock, true);
-            form.Children.Add("Multiline TextBox No WordWrap", noWordWrapTextBlock, true);
+            form.Items.Add("TextBox", textBox);
+            form.Items.Add("PasswordBox", passwordBox);
+            form.Items.Add("SearchBox", searchBox);
+            form.Items.Add("Multiline TextBox", textBlock, true);
+            form.Items.Add("Multiline TextBox No WordWrap", noWordWrapTextBlock, true);
         }
     }
 
     public sealed class NumbersTab : TabPage
     {
-        private StackPanel hPanel = new StackPanel(Orientation.Horizontal) { Padding = true };
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { Padding = true };
         private GroupBox groupBox = new GroupBox("Numbers") { Margins = true };
-        private StackPanel vPanel = new StackPanel(Orientation.Vertical) { Padding = true };
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { Padding = true };
         private SpinBox spinBox = new SpinBox(0, 100);
         private Slider slider = new Slider(0, 100);
         private ProgressBar progressBar = new ProgressBar();
         private ProgressBar iProgressBar = new ProgressBar() { Value = -1 };
         private GroupBox groupBox2 = new GroupBox("Lists") { Margins = true };
-        private StackPanel vPanel2 = new StackPanel(Orientation.Vertical) { Padding = true };
+        private StackContainer vPanel2 = new StackContainer(Orientation.Vertical) { Padding = true };
         private ComboBox comboBox = new ComboBox();
         private EditableComboBox editableComboBox = new EditableComboBox();
         private RadioButtonList radioButtonList = new RadioButtonList();
@@ -63,7 +63,7 @@ namespace LibUISharpDemos.ControlGallery
             Margins = true;
             Child = hPanel;
 
-            hPanel.Children.Add(groupBox, true);
+            hPanel.Items.Add(groupBox, true);
             groupBox.Child = vPanel;
 
             spinBox.ValueChanged += (sender, args) =>
@@ -80,12 +80,12 @@ namespace LibUISharpDemos.ControlGallery
                 progressBar.Value = value;
             };
 
-            vPanel.Children.Add(spinBox);
-            vPanel.Children.Add(slider);
-            vPanel.Children.Add(progressBar);
-            vPanel.Children.Add(iProgressBar);
+            vPanel.Items.Add(spinBox);
+            vPanel.Items.Add(slider);
+            vPanel.Items.Add(progressBar);
+            vPanel.Items.Add(iProgressBar);
 
-            hPanel.Children.Add(groupBox2, true);
+            hPanel.Items.Add(groupBox2, true);
 
             groupBox2.Child = vPanel2;
 
@@ -93,16 +93,16 @@ namespace LibUISharpDemos.ControlGallery
             editableComboBox.Add("Editable Item 1", "Editable Item 2", "Editable Item 3");
             radioButtonList.Add("Radio Button 1", "Radio Button 2", "Radio Button 3");
 
-            vPanel2.Children.Add(comboBox);
-            vPanel2.Children.Add(editableComboBox);
-            vPanel2.Children.Add(radioButtonList);
+            vPanel2.Items.Add(comboBox);
+            vPanel2.Items.Add(editableComboBox);
+            vPanel2.Items.Add(radioButtonList);
         }
     }
 
     public sealed class DataChoosersTab : TabPage
     {
-        private StackPanel hPanel = new StackPanel(Orientation.Horizontal) { Padding = true };
-        private StackPanel vPanel = new StackPanel(Orientation.Vertical) { Padding = true };
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { Padding = true };
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { Padding = true };
         private DatePicker datePicker = new DatePicker();
         private TimePicker timePicker = new TimePicker();
         private DateTimePicker dateTimePicker = new DateTimePicker();
@@ -110,14 +110,14 @@ namespace LibUISharpDemos.ControlGallery
         private ColorPicker colorPicker = new ColorPicker();
         private Separator hSeparator = new Separator(Orientation.Horizontal);
 
-        private StackPanel vPanel2 = new StackPanel(Orientation.Vertical) { Padding = true };
-        private Grid gridFile = new Grid() { Padding = true };
+        private StackContainer vPanel2 = new StackContainer(Orientation.Vertical) { Padding = true };
+        private GridContainer gridFile = new GridContainer() { Padding = true };
         private Button buttonOpenFile = new Button("Open File");
         private TextBox textboxOpenFile = new TextBox() { ReadOnly = true };
         private Button buttonSaveFile = new Button("Save File");
         private TextBox textboxSaveFile = new TextBox() { ReadOnly = true };
 
-        private StackPanel hPanelMessages = new StackPanel(Orientation.Horizontal) { Padding = true };
+        private StackContainer hPanelMessages = new StackContainer(Orientation.Horizontal) { Padding = true };
         private Button buttonMessage = new Button("Message Box");
         private Button buttonMessageErr = new Button("Message Box (Error)");
 
@@ -128,18 +128,18 @@ namespace LibUISharpDemos.ControlGallery
             Margins = true;
             Child = hPanel;
 
-            hPanel.Children.Add(vPanel);
+            hPanel.Items.Add(vPanel);
 
-            vPanel.Children.Add(datePicker);
-            vPanel.Children.Add(timePicker);
-            vPanel.Children.Add(dateTimePicker);
-            vPanel.Children.Add(fontPicker);
-            vPanel.Children.Add(colorPicker);
+            vPanel.Items.Add(datePicker);
+            vPanel.Items.Add(timePicker);
+            vPanel.Items.Add(dateTimePicker);
+            vPanel.Items.Add(fontPicker);
+            vPanel.Items.Add(colorPicker);
 
-            hPanel.Children.Add(hSeparator);
-            hPanel.Children.Add(vPanel2);
+            hPanel.Items.Add(hSeparator);
+            hPanel.Items.Add(vPanel2);
 
-            vPanel2.Children.Add(gridFile);
+            vPanel2.Items.Add(gridFile);
 
             buttonOpenFile.Click += (sender, args) =>
             {
@@ -160,15 +160,15 @@ namespace LibUISharpDemos.ControlGallery
             buttonMessage.Click += (sender, args) => { Window.ShowMessageBox(null, "This is a normal message box.", "More detailed information can be shown here."); };
             buttonMessageErr.Click += (sender, args) => { Window.ShowMessageBox(null, "This message box describes an error.", "More detailed information can be shown here.", true); };
 
-            gridFile.Children.Add(buttonOpenFile, 0, 0, 1, 1, 0, 0, Alignment.Fill);
-            gridFile.Children.Add(textboxOpenFile, 1, 0, 1, 1, 1, 0, Alignment.Fill);
-            gridFile.Children.Add(buttonSaveFile, 0, 1, 1, 1, 0, 0, Alignment.Fill);
-            gridFile.Children.Add(textboxSaveFile, 1, 1, 1, 1, 1, 0, Alignment.Fill);
+            gridFile.Items.Add(buttonOpenFile, 0, 0, 1, 1, 0, 0, Alignment.Fill);
+            gridFile.Items.Add(textboxOpenFile, 1, 0, 1, 1, 1, 0, Alignment.Fill);
+            gridFile.Items.Add(buttonSaveFile, 0, 1, 1, 1, 0, 0, Alignment.Fill);
+            gridFile.Items.Add(textboxSaveFile, 1, 1, 1, 1, 1, 0, Alignment.Fill);
 
-            hPanelMessages.Children.Add(buttonMessage);
-            hPanelMessages.Children.Add(buttonMessageErr);
+            hPanelMessages.Items.Add(buttonMessage);
+            hPanelMessages.Items.Add(buttonMessageErr);
 
-            vPanel2.Children.Add(hPanelMessages);
+            vPanel2.Items.Add(hPanelMessages);
         }
     }
 }

@@ -6,8 +6,8 @@ namespace LibUISharp.Demos.Histogram
 {
     public class HistogramWindow : Window
     {
-        private StackPanel hPanel = new StackPanel(Orientation.Horizontal) { Padding = true };
-        private StackPanel vPanel = new StackPanel(Orientation.Vertical) { Padding = true };
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { Padding = true };
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { Padding = true };
         private List<SpinBox> spinBoxList = new List<SpinBox>();
         private ColorPicker colorPicker = new ColorPicker() { Color = Colors.Blue };
         private Surface histogramSurface;
