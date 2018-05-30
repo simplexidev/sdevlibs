@@ -5,10 +5,10 @@ namespace LibUISharp.Drawing
 {
     public class MouseEventArgs : EventArgs
     {
-        public MouseEventArgs(PointD point, SizeD areaSize, bool up, bool down, int count, KeyModifierFlags keyModifiers, long held1To64)
+        public MouseEventArgs(PointD point, SizeD surfaceSize, bool up, bool down, int count, KeyModifierFlags keyModifiers, long held1To64)
         {
             Point = point;
-            AreaSize = areaSize;
+            SurfaceSize = surfaceSize;
             Up = up;
             Down = down;
             Count = count;
@@ -17,7 +17,7 @@ namespace LibUISharp.Drawing
         }
 
         public PointD Point { get; }
-        public SizeD AreaSize { get; }
+        public SizeD SurfaceSize { get; }
         public bool Up { get; }
         public bool Down { get; }
         public int Count { get; }

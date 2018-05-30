@@ -1,5 +1,4 @@
-﻿// uiDrawLineJoin
-namespace LibUISharp.Drawing
+﻿namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies how to join consecutive line or curve segments in a figure that are contained in a <see cref="StrokeOptions"/> object.

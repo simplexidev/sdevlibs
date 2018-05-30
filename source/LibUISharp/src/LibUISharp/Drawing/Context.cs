@@ -7,7 +7,7 @@ namespace LibUISharp.Drawing
     public sealed class Context
     {
         public Context(Surface surface) : this(surface.Handle) { }
-        internal Context(SafeControlHandle Handle) { }
+        internal Context(SafeControlHandle handle) => Handle = handle;
 
         internal SafeControlHandle Handle { get; }
 

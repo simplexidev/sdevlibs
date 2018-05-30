@@ -11,7 +11,7 @@ namespace LibUISharp.Internal
     {
         // string => IntPtr
         /// <summary>
-        /// You must call <see cref="Marshal.FreeHGlobal()"/> after using this or it will cause a memory leak.
+        /// You must call <see cref="Marshal.FreeHGlobal(IntPtr)"/> after using this or it will cause a memory leak.
         /// </summary>
         public static IntPtr ToLibuiString(this string str)
         {

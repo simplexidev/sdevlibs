@@ -1,5 +1,4 @@
-﻿// uiWindowResizeEdge
-namespace LibUISharp.Drawing
+﻿namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies the edge of a <see cref="Window"/> object.

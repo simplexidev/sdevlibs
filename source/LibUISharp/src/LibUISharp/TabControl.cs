@@ -21,7 +21,7 @@ namespace LibUISharp
     /// </summary>
     public class TabPage : Control
     {
-        protected Control childField;
+        private Control childField;
         private bool initialized = false;
         private bool margins;
 
@@ -138,10 +138,10 @@ namespace LibUISharp
         /// </summary>
         /// <param name="index">The zero-based index at which the <see cref="Control"/> should be inserted.</param>
         /// <param name="item">The <see cref="Control"/> to insert into the <see cref="TabPageCollection"/>.</param>
-        public override void Insert(int i, Control item)
+        public override void Insert(int index, Control item)
         {
             if (!(item is TabPage)) throw new ArgumentException("You can only insert a TabPage into a TabControl.");
-            Insert(i, (TabPage)item);
+            Insert(index, (TabPage)item);
         }
 
         /// <summary>
@@ -149,12 +149,12 @@ namespace LibUISharp
         /// </summary>
         /// <param name="index">The zero-based index at which the <see cref="TabPage"/> should be inserted.</param>
         /// <param name="item">The <see cref="TabPage"/> to insert into the <see cref="TabPageCollection"/>.</param>
-        public void Insert(int i, TabPage item)
+        public void Insert(int index, TabPage item)
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
-            base.Insert(i, item);
+            base.Insert(index, item);
             IntPtr strPtr = item.Name.ToLibuiString();
-            LibuiLibrary.uiTabInsertAt(Parent.Handle.DangerousGetHandle(), strPtr, i, item.Handle.DangerousGetHandle());
+            LibuiLibrary.uiTabInsertAt(Parent.Handle.DangerousGetHandle(), strPtr, index, item.Handle.DangerousGetHandle());
             Marshal.FreeHGlobal(strPtr);
             item.DelayRender();
         }

@@ -4,261 +4,364 @@ using System.Collections.Generic;
 
 namespace LibUISharp
 {
-    internal interface IContainerControl<TContainer, out TCollection>
-        where TContainer : ContainerControl
-        where TCollection : ControlCollection<TContainer>
+    internal interface IContainerControl<T, out TCollection>
+        where T : Control
+        where TCollection : ControlCollection<T>
     {
-        TCollection Children { get; }
+        TCollection Items { get; }
     }
 
     /// <summary>
-    /// Represents a <see cref="Control"/> that contains a collection of child <see cref="Control"/>s.
+    /// Represents a <see cref="Control"/> that contains a collection of child controls.
     /// </summary>
-    public class ContainerControl : Control { }
+    public abstract class ContainerControl : Control { }
 
     /// <summary>
-    /// Represents a <see cref="Control"/> that contains a collection of child <see cref="Control"/>s.
+    /// Represents a <see cref="Control"/> that contains a collection of child controls.
     /// </summary>
-    public class ContainerControl<TContainer, TCollection> : ContainerControl, IContainerControl<TContainer, TCollection>
-        where TContainer : ContainerControl
-        where TCollection : ControlCollection<TContainer>
+    /// <typeparam name="T">The type of <see cref="Control"/>.</typeparam>
+    /// <typeparam name="TCollection">The type of <see cref="ControlCollection{T}"/>.</typeparam>
+    public class ContainerControl<T, TCollection> : ContainerControl, IContainerControl<T, TCollection>
+        where T : Control
+        where TCollection : ControlCollection<T>
     {
-        private TCollection children;
+        private TCollection items;
         private bool disposed = false;
-        
+
+        /// <summary>
+        /// Gets this <see cref="ContainerControl{T, TCollection}"/>'s child <see cref="Control"/> objects.
+        /// </summary>
+        public virtual TCollection Items
+        {
+            get
+            {
+                if (items == null)
+                    items = (TCollection)Activator.CreateInstance(typeof(TCollection), this);
+                return items;
+            }
+        }
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <param name="disposing">Whether or not this <see cref="Control'/> is disposing.</param>
+        /// <param name="disposing">Whether or not this <see cref="Control"/> is disposing.</param>
         protected sealed override void Dispose(bool disposing)
         {
             if (!disposed)
             {
                 if (disposing)
-                    children.Clear();
+                    items.Clear();
                 disposed = true;
                 base.Dispose(disposing);
             }
         }
 
-        /// <summary>
-        /// Gets this <see cref="ContainerControl{TContainer, TCollection}"/>'s child <see cref="Control"/>s.
-        /// </summary>
-        public virtual TCollection Children
-        {
-            get
-            {
-                if (children == null)
-                    children = (TCollection)Activator.CreateInstance(typeof(TCollection), this);
-                return children;
-            }
-        }
     }
 
     /// <summary>
     /// Represents a collection of child <see cref="Control"/> objects inside of a <see cref="ContainerControl"/>.
     /// </summary>
-    /// <typeparam name="TContainer"></typeparam>
-    public class ControlCollection<TContainer> : IList<Control>
-        where TContainer : ContainerControl
+    /// <typeparam name="T">The type of <see cref="Control"/> in this collection.</typeparam>
+    public class ControlCollection<T> : ICollection, ICollection<T>, IEnumerable, ICloneable
+        where T : Control
     {
+        private readonly int defaultCapacity = 4;
+        private readonly int gFactor = 2;
+        private bool isReadOnly = false;
+        private T[] controls;
+        private int size;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControlCollection{TContainer}"/> class with the specified parent.
+        /// Initializes a new instance of the <see cref="ControlCollection{T}"/> class with the specified owner.
         /// </summary>
-        /// <param name="parent">The parent <typeparamref name="TContainer"/> of this <see cref="ControlCollection{TContainer}"/>.</param>
-        public ControlCollection(TContainer parent)
+        /// <param name="owner">The owner <see cref="Control"/> of this <see cref="ControlCollection{T}"/>.</param>
+        public ControlCollection(Control owner) => Owner = owner ?? throw new ArgumentNullException(nameof(owner));
+
+        internal ControlCollection(Control owner, int defaultCapacity, int growFactor) : this(owner)
         {
-            Parent = parent;
-            InnerList = new List<Control>();
+            this.defaultCapacity = defaultCapacity;
+            gFactor = growFactor;
         }
 
         /// <summary>
-        /// Gets this <see cref="ControlCollection{TContainer}"/>'s parent <typeparamref name="TContainer"/>.
+        /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection{T}"/>.
         /// </summary>
-        protected TContainer Parent { get; }
+        /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection{T}"/>.</param>
+        public virtual void Add(T child)
+        {
+            if (child == null) throw new ArgumentNullException(nameof(child));
+            if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlCollection.");
+
+            if (controls == null)
+                controls = new T[defaultCapacity];
+            else if (size >= controls.Length)
+            {
+                T[] array = new T[controls.Length * gFactor];
+                Array.Copy(controls, array, controls.Length);
+                controls = array;
+            }
+
+            child.Index = size;
+            child.Parent = Owner;
+            controls[size] = child;
+            //TODO: Owner.UpdateLayout();
+            size++;
+        }
 
         /// <summary>
-        /// Gets this <see cref="ControlCollection{TContainer}"/>'s inner <see cref="List{T}"/>.
+        /// Ads an item to the <see cref="ControlCollection{TContainer}"/> at the specified index.
         /// </summary>
-        protected List<Control> InnerList { get; }
+        /// <param name="index">The zero-based index at which item should be inserted.</param>
+        /// <param name="item">The <see cref="Control"/> to insert into the <see cref="ControlCollection{T}"/>.</param>
+        public virtual void AddAt(int index, T child)
+        {
+            if (child == null) throw new ArgumentNullException(nameof(child));
+            if (index < 0 || index > size) throw new ArgumentOutOfRangeException(nameof(index));
+
+            if (controls == null)
+                controls = new T[defaultCapacity];
+            else if (size >= controls.Length)
+            {
+                T[] array = new T[controls.Length * gFactor];
+                Array.Copy(controls, array, index);
+                array[index] = child;
+                Array.Copy(controls, index, array, index + 1, size - index);
+                controls = array;
+            }
+            else if (index < size)
+                Array.Copy(controls, index, controls, index + 1, size - index);
+
+            child.Index = index;
+            child.Parent = Owner;
+            controls[size] = child;
+            size++;
+        }
 
         /// <summary>
-        /// Gets the number of elements contained in the <see cref="ControlCollection{TContainer}"/>.
+        /// Removes all elements from the <see cref="ControlCollection{T}"/>.
         /// </summary>
-        public int Count => InnerList.Count;
+        public virtual void Clear()
+        {
+            if (controls != null)
+            {
+                for (int i = size - 1; 1 >= 0; i--)
+                {
+                    RemoveAt(i);
+                }
+            }
+            //TODO: Owner.UpdateLayout();
+        }
 
         /// <summary>
-        /// Gets whether this <see cref="ControlCollection{TContainer}"/> is read-only or not.
+        /// Determines whether a <see cref="Control"/> is in the <see cref="ControlCollection{T}"/>.
         /// </summary>
-        public bool IsReadOnly { get; }
+        /// <param name="item">The <see cref="Control"/> to locate in the <see cref="ControlCollection{T}"/>.</param>
+        /// <returns>true if item is found in the <see cref="ControlCollection{T}"/>; otherwise, false.</returns>
+        public virtual bool Contains(T c)
+        {
+            if (controls == null || c == null)
+                return false;
+
+            for (int i = 0; i < size; i++)
+            {
+                if (ReferenceEquals(c, controls[i]))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the number of elements contained in the <see cref="ControlCollection{T}"/>.
+        /// </summary>
+        public virtual int Count => size;
+
+        /// <summary>
+        /// Gets this <see cref="ControlCollection{T}"/>'s owner <see cref="Control">.
+        /// </summary>
+        protected Control Owner { get; }
+
+        /// <summary>
+        /// Determines the index of a specific value in the <see cref="ControlCollection{T}"/>.
+        /// </summary>
+        /// <param name="value">The <see cref="Control"/> to locate in the <see cref="ControlCollection{T}"/>.</param>
+        /// <returns>The index of item if found in the list; otherwise, -1.</returns>
+        public virtual int IndexOf(T value)
+        {
+            if (controls == null)
+                return -1;
+            return Array.IndexOf(controls, value, 0, size);
+        }
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns><see cref="IEnumerator{T}"/> object that can be used to iterate through the collection.</returns>
-        public IEnumerator<Control> GetEnumerator() => new ControlCollectionEnumerator(this);
-
+        public virtual IEnumerator<T> GetEnumerator() => new ControlCollectionEnumerator(this);
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
-        /// <returns><see cref="IEnumerator"/> object that can be used to iterate through the collection.</returns>
+        /// <returns>An <see cref="IEnumerator"/> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
-        /// Adds a <see cref="Control'/> to the end of the <see cref="ControlCollection{TContainer}"/>.
+        /// Copies the entire <see cref="ControlCollection{T}"/> to a compatible one-dimensional array, starting at the specified index of the target array.
         /// </summary>
-        /// <param name="item">The <see cref="Control'/> to be added to the end of the <see cref="ControlCollection{TContainer}"/>.</param>
-        public virtual void Add(Control item)
+        /// <param name="array">The one-dimensional <see cref="Array"/> that is the destination of the elements copied from <see cref="ControlCollection{T}"/>. The <see cref="Array"/> must have zero-based indexing.</param>
+        /// <param name="index">The zero-based index in <paramref name="array"/> at which copying begins.</param>
+        public virtual void CopyTo(Array array, int index)
         {
-            if (item == null) throw new ArgumentNullException(nameof(item));
-            if (item.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlCollection.");
-            item.Index = Count;
-            item.Parent = Parent;
-            InnerList.Add(item);
-            //TODO: Parent.UpdateLayout();
+            if (controls == null)
+                return;
+            if ((array != null) && (array.Rank != 1))
+                throw new ArgumentException("array must be 1-dimensional.", nameof(array));
+
+            Array.Copy(controls, 0, array, index, size);
         }
 
         /// <summary>
-        /// Removes all elements from the <see cref="ControlCollection{TContainer}"/>.
+        /// Copies the entire <see cref="ControlCollection{T}"/> to a compatible one-dimensional array, starting at the specified index of the target array.
         /// </summary>
-        public virtual void Clear()
+        /// <param name="array">The one-dimensional <see cref="Array"/> that is the destination of the elements copied from <see cref="ControlCollection{T}"/>. The <see cref="Array"/> must have zero-based indexing.</param>
+        /// <param name="index">The zero-based index in <paramref name="array"/> at which copying begins.</param>
+        public virtual void CopyTo(T[] array, int index) => CopyTo(array, index);
+        
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="ControlCollection{T}"/> is read-only.
+        /// </summary>
+        public bool IsReadOnly => isReadOnly == false;
+
+        internal void SetReadOnly(bool readOnly)
         {
-            try
-            {
-                while (Count != 0)
-                {
-                    RemoveAt(Count - 1);
-                }
-            }
-            finally
-            {
-                //TODO: Parent.UpdateLayout();
-            }
+            if (isReadOnly != readOnly)
+                isReadOnly = readOnly;
         }
 
         /// <summary>
-        /// Determines whether a <see cref="Control"/> is in the <see cref="ControlCollection{TContainer}"/>.
+        /// Gets a value indicating whether access to the <see cref="ControlCollection{T}"/> is synchronized (thread safe).
         /// </summary>
-        /// <param name="item">The <see cref="Control'/> to locate in the <see cref="ControlCollection{TContainer}"/>.</param>
-        /// <returns>true if item is found in the <see cref="ControlCollection{TContainer}"/>; otherwise, false.</returns>
-        public virtual bool Contains(Control item)
-        {
-            if (item == null)
-                return false;
-            for (int i = 0; i < InnerList.Count; i++)
-            {
-                Control inner = InnerList[i];
-                if (inner != null && inner.Equals(item))
-                    return true;
-            }
-            return false;
-        }
+        public bool IsSynchronized => false;
+        
+        /// <summary>
+        /// Gets an object that can be used to synchronize access to the <see cref="ControlCollection{T}"/>
+        /// </summary>
+        public object SyncRoot => this;
 
         /// <summary>
-        /// Copies the entire <see cref="ControlCollection{TContainer}"/> to a compatible one-dimensional array, starting at the specified index of the target array.
-        /// </summary>
-        /// <param name="array">The one-dimensional System.Array that is the destination of the elements copied from <see cref="ControlCollection{TContainer}"/>. The System.Array must have zero-based indexing.</param>
-        /// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
-        public void CopyTo(Control[] array, int arrayIndex) => throw new NotImplementedException();
-
-        /// <summary>
-        /// Determines the index of a specific item in the <see cref="ControlCollection{TContainer}"/>.
-        /// </summary>
-        /// <param name="item">The <see cref="Control'/> to locate in the <see cref="ControlCollection{TContainer}"/>.<param>
-        /// <returns>The index of item if found in the list; otherwise, -1.</returns>
-        public int IndexOf(Control item) => InnerList.IndexOf(item);
-
-        /// <summary>
-        /// Inserts an item to the <see cref="ControlCollection{TContainer}"/> at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index at which item should be inserted.</param>
-        /// <param name="item">The <see cref="Control'/> to insert into the <see cref="ControlCollection{TContainer}"/>.</param>
-        public virtual void Insert(int index, Control item)
-        {
-            if (index > Count + 1)
-                throw new NotImplementedException();
-            else
-            {
-                item.Index = index;
-                item.Parent = Parent;
-                InnerList.Insert(index, item);
-            }
-        }
-
-        /// <summary>
-        /// Removes the first occurrence of a specific <see cref="Control'/> from the <see cref="ControlCollection{TContainer}"/>.
-        /// </summary>
-        /// <param name="item">The <see cref="Control'/> to remove from the <see cref="ControlCollection{TContainer}"/>.</param>
-        /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ControlCollection{TContainer}"/>.</returns>
-        public virtual bool Remove(Control item)
-        {
-            if (item == null)
-                return false;
-            foreach (Control control in InnerList)
-            {
-                if (control.Index > item.Index)
-                    control.Index--;
-            }
-            item.Index = -1;
-            item.Parent = null;
-            bool success = InnerList.Remove(item);
-            if (success)
-                item.Dispose();
-            return success;
-        }
-
-        /// <summary>
-        /// Removes the <see cref="ControlCollection{TContainer}"/> item at the specified index.
+        /// Removes the <see cref="ControlCollection{T}"/> item at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the item to remove.</param>
-        public virtual void RemoveAt(int index) => Remove(InnerList[index]);
+        public virtual void RemoveAt(int index)
+        {
+            if (isReadOnly) throw new NotSupportedException("Cannot remove items while the collection is read-only.");
+
+            T child = this[index];
+            size--;
+            child.Index = -1;
+            child.Parent = null;
+            if (index < size)
+                Array.Copy(controls, index + 1, controls, index, size - 1);
+            controls[size] = default;
+            child.Dispose();
+        }
+
+        /// <summary>
+        /// Removes the first occurrence of a specific <see cref="T"/> from the <see cref="ControlCollection{T}"/>.
+        /// </summary>
+        /// <param name="item">The <see cref="Control"/> to remove from the <see cref="ControlCollection{T}"/>.</param>
+        /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ControlCollection{T}"/>.</returns>
+        public virtual bool Remove(T value)
+        {
+            if (!Contains(value))
+                return false;
+
+            int index = IndexOf(value);
+            if (index >= 0)
+            {
+                RemoveAt(index);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>A new object that is a copy of this instance.</returns>
+        public object Clone() => MemberwiseClone();
 
         /// <summary>
         /// Gets or sets the element at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the element to get or set.</param>
         /// <returns>The element at the specified index.</returns>
-        public Control this[int index]
+        public virtual T this[int index]
         {
-            get => InnerList[index];
-            set => throw new NotImplementedException();
+            get
+            {
+                if (index < 0 || index >= size) throw new ArgumentOutOfRangeException(nameof(index));
+                return controls[index];
+            }
         }
 
-        private class ControlCollectionEnumerator : IEnumerator<Control>
+        private sealed class ControlCollectionEnumerator : IEnumerator, IEnumerator<T>, ICloneable
         {
-            private int curIndex;
-            private ControlCollection<TContainer> curControls;
+            private ControlCollection<T> collection;
+            private T current;
+            private int index;
+            private bool disposed = false;
 
-            public ControlCollectionEnumerator(ControlCollection<TContainer> controls)
+            internal ControlCollectionEnumerator(ControlCollection<T> collection)
             {
-                curControls = controls;
-                curIndex = -1;
+                this.collection = collection;
+                index = -1;
             }
 
             public bool MoveNext()
             {
-                if (++curIndex >= curControls.Count)
-                    return false;
-                else
-                    Current = curControls[curIndex];
-                return true;
+                if (index < (collection.Count - 1))
+                {
+                    index++;
+                    current = collection[index];
+                    return true;
+                }
+
+                index = collection.Count;
+                return false;
             }
 
-            public void Reset() => curIndex = -1;
+            object IEnumerator.Current => Current;
 
-            public Control Current { get; private set; }
-
-            object IEnumerator.Current
+            public T Current
             {
                 get
                 {
-                    if (curIndex == -1) return null;
-                    return Current;
+                    if (index == -1 || index >= collection.Count) throw new InvalidOperationException("index is out of range.");
+                    return current;
                 }
             }
 
-            public void Dispose() { }
+            public void Reset()
+            {
+                current = default;
+                index = -1;
+            }
+
+            public object Clone() => MemberwiseClone();
+            
+            public void Dispose() => Dispose(true);
+
+            void Dispose(bool disposing)
+            {
+                if (!disposed)
+                {
+                    if (disposing)
+                        collection.Clear();
+                    disposed = true;
+                }
+            }
         }
     }
 }

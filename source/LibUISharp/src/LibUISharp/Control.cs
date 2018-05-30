@@ -8,7 +8,7 @@ namespace LibUISharp
     //TODO: uiControlEnabledToUser(IntPtr).
     //TODO: Re-add control caching.
     /// <summary>
-    /// Defines the base class for controls, which are <see cref="LibuiComponent"/>s with visual representation.
+    /// Defines the base class for controls, which are <see cref="UIComponent"/> objects with visual representation.
     /// </summary>
     public abstract class Control : UIComponent<SafeControlHandle>, IUIComponent
     {

@@ -14,6 +14,7 @@ namespace LibUISharp.Drawing
         /// Represents a color that is <see langword="null"/>.
         /// </summary>
         public static readonly Color Empty = new Color();
+
         /// <summary>
         /// Initializes a new <see cref="Color"/> structure from an argb value.
         /// </summary>
@@ -66,10 +67,18 @@ namespace LibUISharp.Drawing
         /// </summary>
         public bool IsEmpty => this == Empty;
 
-        /// <inheritdoc cref="Equals(object)"/>
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="color">The <see cref="Color"/> to compare with the current instance.</param>
+        /// <returns><see langword="true"/> if <paramref name="color"/> and this instance are the same type and represent the same value; otherwise, <see langword="false"/>.</returns>
         public bool Equals(Color color) => R == color.R && G == color.G && B == color.B && A == color.A;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns><see langword="true"/> if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, <see langword="false"/>.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is Color))
@@ -77,7 +86,10 @@ namespace LibUISharp.Drawing
             return Equals((Color)obj);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
         public override int GetHashCode() => unchecked(this.GetHashCode(R, G, B, A));
 
         private static float sRgbToScRgb(byte bval)
@@ -108,6 +120,11 @@ namespace LibUISharp.Drawing
         /// <returns><see langword="true"/> if the two <see cref="Color"/> structures are different; otherwise, <see langword="false"/>.</returns>
         public static bool operator !=(Color left, Color right) => !(left == right);
 
+        /// <summary>
+        /// Converts the specified <see cref="Color"/> structure to a <see cref="SolidBrush"/> structure.
+        /// </summary>
+        /// <param name="color">The <see cref="Color"/> to be converted.</param>
+        /// <returns>The <see cref="SolidBrush"/> that results from the conversion.</returns>
         public static explicit operator SolidBrush(Color color) => new SolidBrush(color);
     }
 }

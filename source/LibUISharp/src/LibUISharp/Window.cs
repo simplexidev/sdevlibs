@@ -23,19 +23,19 @@ namespace LibUISharp
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class, with the options of specifying
-        /// the window's width, height, title, and whether or not it has a <see cref="MenuStrip"/>.
+        /// the window's width, height, title, and whether or not it has a <see cref="Menu"/>.
         /// </summary>
         /// <param name="width">The width of the window.</param>
         /// <param name="height">The height of the window.</param>
         /// <param name="title">The title at the top of the window.</param>
-        /// <param name="hasMenuStrip">Whether or not the window will have a menu.</param>
-        public Window(int width = 500, int height = 300, string title = null, bool hasMenuStrip = false) : base()
+        /// <param name="hasMenu">Whether or not the window will have a menu.</param>
+        public Window(int width = 500, int height = 300, string title = null, bool hasMenu = false) : base()
         {
             if (string.IsNullOrEmpty(title))
                 title = "LibUISharp";
 
             IntPtr strPtr = title.ToLibuiString();
-            Handle = new SafeControlHandle(LibuiLibrary.uiNewWindow(strPtr, width, height, hasMenuStrip));
+            Handle = new SafeControlHandle(LibuiLibrary.uiNewWindow(strPtr, width, height, hasMenu));
             Marshal.FreeHGlobal(strPtr);
 
             WindowCache.Add(Handle, this);
@@ -46,12 +46,12 @@ namespace LibUISharp
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class, with the options of specifying
-        /// the window's size, title, and whether or not it has a <see cref="MenuStrip"/>.
+        /// the window's size, title, and whether or not it has a <see cref="Menu"/>.
         /// </summary>
         /// <param name="size">The size of the window.</param>
         /// <param name="title">The title at the top of the window.</param>
-        /// <param name="hasMenuStrip">Whether or not the window will have a menu.</param>
-        public Window(Size size, string title = null, bool hasMenuStrip = false) : this(size.Width, size.Height, title, hasMenuStrip) { }
+        /// <param name="hasMenu">Whether or not the window will have a menu.</param>
+        public Window(Size size, string title = null, bool hasMenu = false) : this(size.Width, size.Height, title, hasMenu) { }
 
         /// <summary>
         /// Occurs when the window is closing.
@@ -230,8 +230,8 @@ namespace LibUISharp
             if (w == null)
                 w = Application.MainWindow;
 
-            IntPtr titlePtr = title.ToLibuiString();
-            IntPtr descriptionPtr = description.ToLibuiString();
+            IntPtr titlePtr = (title ?? string.Empty).ToLibuiString();
+            IntPtr descriptionPtr = (description ?? string.Empty).ToLibuiString();
             if (isError)
                 LibuiLibrary.uiMsgBoxError(w.Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
             else
@@ -244,7 +244,6 @@ namespace LibUISharp
         /// Displays a dialog allowing a user to select a file to save to.
         /// </summary>
         /// <param name="path">The file's path selected by the user to save to.</param>
-        /// <param name="w">The dialog's parent window.</param>
         /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
         public bool ShowSaveFileDialog(out string path) => ShowSaveFileDialog(out path, this);
 

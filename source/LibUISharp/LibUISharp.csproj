@@ -34,29 +34,19 @@
     <Compile Include="src\LibUISharp\SafeHandles\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="runtimes\win7-x64\native\libui.dll">
+    <Content Include="lib\win-x64\libui.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>runtimes\win7-x64\native\libui.dll</Link>
+      <Link>lib\win-x64\libui.dll</Link>
       <Pack>true</Pack>
     </Content>
-    <Content Include="runtimes\linux-x64\native\libui.so">
+    <Content Include="lib\linux-x64\libui.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>runtimes\linux-x64\native\libui.so</Link>
+      <Link>lib\linux-x64\libui.so</Link>
       <Pack>true</Pack>
     </Content>
-    <Content Include="runtimes\linux-x64\native\libui.so.0">
+    <Content Include="lib\osx-x64\libui.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>runtimes\linux-x64\native\libui.so.0</Link>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="runtimes\osx-x64\native\libui.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>runtimes\osx-x64\native\libui.dylib</Link>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="runtimes\osx-x64\native\libui.A.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>runtimes\osx-x64\native\libui.A.dylib</Link>
+      <Link>lib\osx-x64\libui.dylib</Link>
       <Pack>true</Pack>
     </Content>
   </ItemGroup>
@@ -69,12 +59,11 @@
     <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
     <Authors>Thomas Corwin, et al.</Authors>
     <Copyright>2018 (c) Thomas Corwin</Copyright>
-    <Version>0.4.0-alpha-5</Version>
+    <Version>0.4.0-alpha</Version>
     <PackageId>$(MSBuildProjectName)</PackageId>
     <Description>LibUI Bindings for .NET Core (C#)</Description>
     <PackageTags>libui;ui;gui;drawing;desktop;cross-platform;netcore;netstandard</PackageTags>
     <PackageReleaseNotes>Version $(Version)</PackageReleaseNotes>
-    <PackageIconUrl></PackageIconUrl>
     <PackageProjectUrl>https://github.com/tom-corwin/LibUISharp</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>

@@ -1,5 +1,4 @@
-﻿// uiTextItalic
-namespace LibUISharp.Drawing
+﻿namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies the style of a font as normal, italic or oblique.

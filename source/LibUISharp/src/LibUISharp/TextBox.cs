@@ -18,7 +18,7 @@ namespace LibUISharp
         /// </summary>
         protected TextBoxBase()
         {
-            if (!(this is MultilineTextBox))
+            if (!(this is TextBlock))
             {
                 if (this is PasswordBox)
                     Handle = new SafeControlHandle(LibuiLibrary.uiNewPasswordEntry());
@@ -41,7 +41,7 @@ namespace LibUISharp
         {
             get
             {
-                if (this is MultilineTextBox)
+                if (this is TextBlock)
                     text = LibuiLibrary.uiMultilineEntryText(Handle.DangerousGetHandle()).ToStringEx();
                 else
                     text = LibuiLibrary.uiEntryText(Handle.DangerousGetHandle()).ToStringEx();
@@ -52,7 +52,7 @@ namespace LibUISharp
                 if (text != value)
                 {
                     IntPtr strPtr = value.ToLibuiString();
-                    if (this is MultilineTextBox)
+                    if (this is TextBlock)
                         LibuiLibrary.uiMultilineEntrySetText(Handle.DangerousGetHandle(), strPtr);
                     else
                         LibuiLibrary.uiEntrySetText(Handle.DangerousGetHandle(), strPtr);
@@ -69,7 +69,7 @@ namespace LibUISharp
         {
             get
             {
-                if (this is MultilineTextBox)
+                if (this is TextBlock)
                     readOnly = LibuiLibrary.uiMultilineEntryReadOnly(Handle.DangerousGetHandle());
                 else
                     readOnly = LibuiLibrary.uiEntryReadOnly(Handle.DangerousGetHandle());
@@ -79,7 +79,7 @@ namespace LibUISharp
             {
                 if (readOnly != value)
                 {
-                    if (this is MultilineTextBox)
+                    if (this is TextBlock)
                         LibuiLibrary.uiMultilineEntrySetReadOnly(Handle.DangerousGetHandle(), value);
                     else
                         LibuiLibrary.uiEntrySetReadOnly(Handle.DangerousGetHandle(), value);
@@ -93,7 +93,7 @@ namespace LibUISharp
         /// </summary>
         protected override void InitializeEvents()
         {
-            if (this is MultilineTextBox)
+            if (this is TextBlock)
                 LibuiLibrary.uiMultilineEntryOnChanged(Handle.DangerousGetHandle(), (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
             else
                 LibuiLibrary.uiEntryOnChanged(Handle.DangerousGetHandle(), (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
@@ -142,15 +142,15 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that can be used to display or edit multiple lines of text.
     /// </summary>
-    public class MultilineTextBox : TextBoxBase
+    public class TextBlock : TextBoxBase
     {
-        private MultilineTextBox() { }
+        private TextBlock() { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditableComboBox"/> class.
         /// </summary>
         /// <param name="wordWrap">Whether or not the lines of text are wrapped to fit within the <see cref="EditableComboBox"/> sides.</param>
-        public MultilineTextBox(bool wordWrap = true)
+        public TextBlock(bool wordWrap = true)
         {
             if (wordWrap)
                 Handle = new SafeControlHandle(LibuiLibrary.uiNewMultilineEntry());

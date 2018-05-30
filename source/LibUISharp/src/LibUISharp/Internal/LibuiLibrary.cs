@@ -11,20 +11,9 @@ namespace LibUISharp.Internal
 
         private static class FunctionLoader
         {
-            private static readonly string[] WinNTLibNames = new[] 
-            {
-                @"runtimes\win7-x64\native\libui.dll"
-            };
-            private static readonly string[] LinuxLibNames = new[] 
-            {
-                @"runtimes/linux-x64/native/libui.so",
-                @"runtimes/linux-x64/native/libui.so.0"
-            };
-            private static readonly string[] MacOSLibNames = new[]
-            {
-                @"runtimes/osx-x64/native/libui.dylib",
-                @"runtimes/osx-x64/native/libui.A.dylib"
-            };
+            private const string WinNTLibNames = @"lib\win-x64\libui.dll";
+            private const string LinuxLibNames = @"lib/linux-x64/libui.so";
+            private const string MacOSLibNames = @"lib/osx-x64/libui.dylib";
 
             private static NativeLibrary LibuiNativeLibrary
             {
@@ -506,7 +495,7 @@ namespace LibUISharp.Internal
         public static IntPtr uiNewEditableCombobox() => FunctionLoader.Load<uiNewEditableCombobox_t>("uiNewEditableCombobox")();
         #endregion
 
-        #region uiRadioButtons (RadioButtonGroup)
+        #region uiRadioButtons (RadioButtonList)
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiRadioButtonsAppend_t(IntPtr r, IntPtr text);
         public static void uiRadioButtonsAppend(IntPtr r, IntPtr text) => FunctionLoader.Load<uiRadioButtonsAppend_t>("uiRadioButtonsAppend")(r, text);
@@ -554,6 +543,7 @@ namespace LibUISharp.Internal
         public static void uiDateTimePickerSetTime(IntPtr d, tm time) => FunctionLoader.Load<uiDateTimePickerSetTime_t>("uiDateTimePickerSetTime")(d, time);
 
 #endif
+        #region uiDateTimePicker/uiDatePicker/uiTimePicker (DateTimePicker/DatePicker/TimePicker)
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiDateTimePickerOnChanged_t(IntPtr d, uiDateTimePickerOnChanged_tf f, IntPtr data);
         [UnmanagedFunctionPointer(Convention)]
@@ -571,7 +561,9 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewTimePicker_t();
         public static IntPtr uiNewTimePicker() => FunctionLoader.Load<uiNewTimePicker_t>("uiNewTimePicker")();
+        #endregion
 
+        #region uiMultilineEntry (TextBlock)
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiMultilineEntryText_t(IntPtr e);
         public static IntPtr uiMultilineEntryText(IntPtr e) => FunctionLoader.Load<uiMultilineEntryText_t>("uiMultilineEntryText")(e);
@@ -605,7 +597,9 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewNonWrappingMultilineEntry_t();
         public static IntPtr uiNewNonWrappingMultilineEntry() => FunctionLoader.Load<uiNewNonWrappingMultilineEntry_t>("uiNewNonWrappingMultilineEntry")();
+        #endregion
 
+        #region uiMenuItem/uiMenu (MenuItem/Menu)
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiMenuItemEnable_t(IntPtr m);
         public static void uiMenuItemEnable(IntPtr m) => FunctionLoader.Load<uiMenuItemEnable_t>("uiMenuItemEnable")(m);
@@ -655,7 +649,9 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewMenu_t(IntPtr name);
         public static IntPtr uiNewMenu(IntPtr name) => FunctionLoader.Load<uiNewMenu_t>("uiNewMenu")(name);
+        #endregion
 
+        #region uiOpenFile/uiSaveFile/uiMsgBox/uiMsgBoxError (Window Dialog Functions)
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiOpenFile_t(IntPtr parent);
         public static IntPtr uiOpenFile(IntPtr parent) => FunctionLoader.Load<uiOpenFile_t>("uiOpenFile")(parent);
@@ -671,6 +667,7 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiMsgBoxError_t(IntPtr parent, IntPtr title, IntPtr description);
         public static void uiMsgBoxError(IntPtr parent, IntPtr title, IntPtr description) => FunctionLoader.Load<uiMsgBoxError_t>("uiMsgBoxError")(parent, title, description);
+        #endregion
 
         [StructLayout(Layout)]
         internal class uiAreaHandler
@@ -694,13 +691,14 @@ namespace LibUISharp.Internal
             uiWindowResizeEdgeBottomRight
         }
 
+        #region uiArea (Surface)
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiAreaSetSize_t(IntPtr a, int width, int height);
         public static void uiAreaSetSize(IntPtr a, int width, int height) => FunctionLoader.Load<uiAreaSetSize_t>("uiAreaSetSize")(a, width, height);
 
         [UnmanagedFunctionPointer(Convention)]
-        private delegate void uiAreaQueueReDrawAll_t(IntPtr a);
-        public static void uiAreaQueueReDrawAll(IntPtr a) => FunctionLoader.Load<uiAreaQueueReDrawAll_t>("uiAreaQueueReDrawAll")(a);
+        private delegate void uiAreaQueueRedrawAll_t(IntPtr a);
+        public static void uiAreaQueueRedrawAll(IntPtr a) => FunctionLoader.Load<uiAreaQueueRedrawAll_t>("uiAreaQueueRedrawAll")(a);
 
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiAreaScrollTo_t(IntPtr a, double x, double y, double width, double height);
@@ -721,6 +719,7 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewScrollingArea_t(uiAreaHandler ah, int width, int height);
         public static IntPtr uiNewScrollingArea(uiAreaHandler ah, int width, int height) => FunctionLoader.Load<uiNewScrollingArea_t>("uiNewScrollingArea")(ah, width, height);
+        #endregion
 
         [StructLayout(Layout)]
         public struct uiAreaDrawParams
@@ -822,6 +821,7 @@ namespace LibUISharp.Internal
             public double DashPhase;
         }
 
+        #region uiDrawPath/uiDrawContext/uiDrawMatrix (Path/Context/Matrix)
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiDrawNewPath_t(uiDrawFillMode fillMode);
         public static IntPtr uiDrawNewPath(uiDrawFillMode fillMode) => FunctionLoader.Load<uiDrawNewPath_t>("uiDrawNewPath")(fillMode);
@@ -925,7 +925,9 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiDrawRestore_t(IntPtr context);
         public static void uiDrawRestore(IntPtr context) => FunctionLoader.Load<uiDrawRestore_t>("uiDrawRestore")(context);
+        #endregion
 
+        #region uiAttribute (TextAttribute)
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiFreeAttribute_t(IntPtr a);
         public static void uiFreeAttribute(IntPtr a) => FunctionLoader.Load<uiFreeAttribute_t>("uiFreeAttribute")(a);
@@ -1068,7 +1070,9 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiAttributeUnderline__t(IntPtr a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha);
         public static void uiAttributeUnderline(IntPtr a, out uiUnderlineColor u, out double r, out double g, out double b, out double alpha) => FunctionLoader.Load<uiAttributeUnderline__t>("uiAttributeUnderline")(a, out u, out r, out g, out b, out alpha);
+        #endregion
 
+        #region uiOpenTypeFeatures (FontFeatures)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate uiForEach uiOpenTypeFeaturesForEachFunc(IntPtr otf, byte a, byte b, byte c, byte d, uint value, IntPtr data);
 
@@ -1107,7 +1111,9 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiAttributeFeatures_t(IntPtr a);
         public static IntPtr uiAttributeFeatures(IntPtr a) => FunctionLoader.Load<uiAttributeFeatures_t>("uiAttributeFeatures")(a);
+        #endregion
 
+        #region uiAttributedString (AttributedText)
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate uiForEach uiAttributedStringForEachAttributeFunc(IntPtr s, IntPtr a, UIntPtr start, UIntPtr end, IntPtr data);
 
@@ -1158,6 +1164,7 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate UIntPtr uiAttributedStringGraphemeToByteIndex_t(IntPtr s, UIntPtr pos);
         public static UIntPtr uiAttributedStringGraphemeToByteIndex(IntPtr s, UIntPtr pos) => FunctionLoader.Load<uiAttributedStringGraphemeToByteIndex_t>("uiAttributedStringGraphemeToByteIndex")(s, pos);
+        #endregion
 
         [StructLayout(Layout)]
         public struct uiFontDescriptor
@@ -1185,6 +1192,7 @@ namespace LibUISharp.Internal
             public uiDrawTextAlign Align;
         }
 
+        #region uiDrawTextLayout/uiDrawText (uiTextLayout/Context.DrawText)
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiDrawNewTextLayout_t(uiDrawTextLayoutParams param);
         public static IntPtr uiDrawNewTextLayout(uiDrawTextLayoutParams param) => FunctionLoader.Load<uiDrawNewTextLayout_t>("uiDrawNewTextLayout")(param);
@@ -1200,7 +1208,9 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiDrawTextLayoutExtents_t(IntPtr tl, out double width, out double height);
         public static void uiDrawTextLayoutExtents(IntPtr tl, out double width, out double height) => FunctionLoader.Load<uiDrawTextLayoutExtents_t>("uiDrawTextLayoutExtents")(tl, out width, out height);
+        #endregion
 
+        #region uiFontButton (FontPicker)
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiFontButtonFont_t(IntPtr b, out uiFontDescriptor desc);
         public static void uiFontButtonFont(IntPtr b, out uiFontDescriptor desc) => FunctionLoader.Load<uiFontButtonFont_t>("uiFontButtonFont")(b, out desc);
@@ -1218,6 +1228,7 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiFreeFontButtonFont_t(uiFontDescriptor desc);
         public static void uiFreeFontButtonFont(uiFontDescriptor desc) => FunctionLoader.Load<uiFreeFontButtonFont_t>("uiFreeFontButtonFont")(desc);
+        #endregion
 
         [Flags]
         public enum uiModifiers : uint
@@ -1300,6 +1311,7 @@ namespace LibUISharp.Internal
             public bool Up;
         }
 
+        #region uiColorButton (ColorPicker)
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiColorButtonColor_t(IntPtr b, out double red, out double green, out double blue, out double alpha);
         public static void uiColorButtonColor(IntPtr b, out double red, out double green, out double blue, out double alpha) => FunctionLoader.Load<uiColorButtonColor_t>("uiColorButtonColor")(b, out red, out blue, out green, out alpha);
@@ -1317,7 +1329,9 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewColorButton_t();
         public static IntPtr uiNewColorButton() => FunctionLoader.Load<uiNewColorButton_t>("uiNewColorButton")();
+        #endregion
 
+        #region uiForm (Form)
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiFormAppend_t(IntPtr f, IntPtr label, IntPtr c, bool stretchy);
         public static void uiFormAppend(IntPtr f, IntPtr label, IntPtr c, bool stretchy) => FunctionLoader.Load<uiFormAppend_t>("uiFormAppend")(f, label, c, stretchy);
@@ -1337,6 +1351,7 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewForm_t();
         public static IntPtr uiNewForm() => FunctionLoader.Load<uiNewForm_t>("uiNewForm")();
+        #endregion
 
         public enum uiAlign : uint
         {
@@ -1354,6 +1369,7 @@ namespace LibUISharp.Internal
             uiAtBottom
         }
 
+        #region uiGrid (Grid)
         [UnmanagedFunctionPointer(Convention)]
         private delegate void uiGridAppend_t(IntPtr g, IntPtr c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
         public static void uiGridAppend(IntPtr g, IntPtr c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign) => FunctionLoader.Load<uiGridAppend_t>("uiGridAppend")(g, c, left, top, xspan, yspan, hexpand, halign, vexpand, valign);
@@ -1373,5 +1389,6 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Convention)]
         private delegate IntPtr uiNewGrid_t();
         public static IntPtr uiNewGrid() => FunctionLoader.Load<uiNewGrid_t>("uiNewGrid")();
+        #endregion
     }
 }
