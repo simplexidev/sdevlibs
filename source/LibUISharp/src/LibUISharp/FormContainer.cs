@@ -4,7 +4,7 @@ using LibUISharp.SafeHandles;
 namespace LibUISharp
 {
     /// <summary>
-    /// Represents a container control that lists controls horizontally with a corresponding label.
+    /// Represents a container control that lists controls vertically with a corresponding label.
     /// </summary>
     public class FormContainer : ContainerControl<Control, FormContainerItemCollection>
     {
