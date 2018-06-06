@@ -1,5 +1,4 @@
-﻿using LibUISharp.Internal;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace LibUISharp.Drawing
@@ -8,7 +7,7 @@ namespace LibUISharp.Drawing
     /// Represents an ARGB (alpha, red, green, blue) color.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct Color
+    public readonly struct Color : IEquatable<Color>
     {
         /// <summary>
         /// Represents a color that is <see langword="null"/>.

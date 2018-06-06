@@ -1,17 +1,15 @@
 ﻿using System;
-using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp.Drawing
 {
-    // uiDrawTextLayout
-    public class TextLayout : UIComponent<SafeTextLayoutHandle>, IUIComponent
+    public class TextLayout : UIComponent
     {
         private bool disposed = false;
 
         public TextLayout(TextLayoutOptions options)
         {
-            Handle = new SafeTextLayoutHandle(LibuiLibrary.uiDrawNewTextLayout((options.ToLibuiDrawTextLayoutParams())));
+            Handle = Libui.uiDrawNewTextLayout(options.Native);
             Options = options;
         }
 
@@ -21,43 +19,20 @@ namespace LibUISharp.Drawing
         {
             get
             {
-                LibuiLibrary.uiDrawTextLayoutExtents(Handle.DangerousGetHandle(), out double w, out double h);
+                Libui.uiDrawTextLayoutExtents(this, out double w, out double h);
                 return new SizeD(w, h);
             }
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!disposed)
             {
-                if (disposing)
-                    if (!Handle.IsInvalid)
-                        Handle.Dispose();
+                if (disposing && Handle != IntPtr.Zero)
+                    Libui.uiDrawFreeTextLayout(this);
                 disposed = true;
+                base.Dispose(disposing);
             }
         }
-    }
-
-    // uiDrawTextLayoutParams
-    public readonly struct TextLayoutOptions
-    {
-        public TextLayoutOptions(AttributedText text, Font defaultFont, double width, TextAlignment alignment)
-        {
-            Text = text;
-            DefaultFont = defaultFont;
-            Width = width;
-            Alignment = alignment;
-        }
-
-        public AttributedText Text { get; }
-        public Font DefaultFont { get; }
-        public double Width { get; }
-        public TextAlignment Alignment { get; }
     }
 }

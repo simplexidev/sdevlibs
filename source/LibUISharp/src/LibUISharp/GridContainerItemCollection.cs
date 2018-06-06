@@ -1,6 +1,6 @@
 ﻿using LibUISharp.Drawing;
-using LibUISharp.Internal;
 using System;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -57,8 +57,8 @@ namespace LibUISharp
                 throw new ArgumentNullException(nameof(item));
             if (Contains(item))
                 throw new InvalidOperationException("Cannot add a Control that is already contained in this GridContainerItemCollection.");
-            alignment.ToLibuiAligns(out LibuiLibrary.uiAlign halign, out LibuiLibrary.uiAlign valign);
-            LibuiLibrary.uiGridAppend(Owner.Handle.DangerousGetHandle(), item.Handle.DangerousGetHandle(), x, y, width, height, hexpand, halign, vexpand, valign);
+            ToUIAligns(alignment, out Libui.uiAlign halign, out Libui.uiAlign valign);
+            Libui.uiGridAppend(Owner, item, x, y, width, height, hexpand, halign, vexpand, valign);
             base.Add(item);
         }
         /// <summary>
@@ -97,8 +97,8 @@ namespace LibUISharp
                 throw new ArgumentNullException(nameof(item));
             if (Contains(item))
                 throw new InvalidOperationException("Cannot add a Control that is already contained in this GridContainerItemCollection.");
-            alignment.ToLibuiAligns(out LibuiLibrary.uiAlign halign, out LibuiLibrary.uiAlign valign);
-            LibuiLibrary.uiGridInsertAt(Owner.Handle.DangerousGetHandle(), item.Handle.DangerousGetHandle(), item.Handle.DangerousGetHandle(), (LibuiLibrary.uiAt)relativeAlignment, width, height, hexpand, halign, vexpand, valign);
+            ToUIAligns(alignment, out Libui.uiAlign halign, out Libui.uiAlign valign);
+            Libui.uiGridInsertAt(Owner, item, existing, relativeAlignment, width, height, hexpand, halign, vexpand, valign);
             base.AddAt(existing.Index, item);
         }
 
@@ -108,5 +108,70 @@ namespace LibUISharp
         /// <param name="item">The <see cref="Control"/> to remove from the <see cref="GridContainerItemCollection"/>.</param>
         /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="GridContainerItemCollection"/>.</returns>
         public override bool Remove(Control item) => throw new NotSupportedException();
+
+        private static void ToUIAligns(Alignment a, out Libui.uiAlign hAlign, out Libui.uiAlign vAlign)
+        {
+            switch (a)
+            {
+                case Alignment.Fill:
+                    vAlign = Libui.uiAlign.uiAlignFill;
+                    hAlign = Libui.uiAlign.uiAlignFill;
+                    break;
+                case Alignment.Center:
+                    vAlign = Libui.uiAlign.uiAlignCenter;
+                    hAlign = Libui.uiAlign.uiAlignCenter;
+                    break;
+                case Alignment.Top:
+                    vAlign = Libui.uiAlign.uiAlignStart;
+                    hAlign = Libui.uiAlign.uiAlignFill;
+                    break;
+                case Alignment.TopLeft:
+                    vAlign = Libui.uiAlign.uiAlignStart;
+                    hAlign = Libui.uiAlign.uiAlignStart;
+                    break;
+                case Alignment.TopCenter:
+                    vAlign = Libui.uiAlign.uiAlignStart;
+                    hAlign = Libui.uiAlign.uiAlignCenter;
+                    break;
+                case Alignment.TopRight:
+                    vAlign = Libui.uiAlign.uiAlignStart;
+                    hAlign = Libui.uiAlign.uiAlignEnd;
+                    break;
+                case Alignment.Left:
+                    vAlign = Libui.uiAlign.uiAlignFill;
+                    hAlign = Libui.uiAlign.uiAlignStart;
+                    break;
+                case Alignment.LeftCenter:
+                    vAlign = Libui.uiAlign.uiAlignCenter;
+                    hAlign = Libui.uiAlign.uiAlignStart;
+                    break;
+                case Alignment.Right:
+                    vAlign = Libui.uiAlign.uiAlignFill;
+                    hAlign = Libui.uiAlign.uiAlignEnd;
+                    break;
+                case Alignment.RightCenter:
+                    vAlign = Libui.uiAlign.uiAlignCenter;
+                    hAlign = Libui.uiAlign.uiAlignEnd;
+                    break;
+                case Alignment.Bottom:
+                    vAlign = Libui.uiAlign.uiAlignEnd;
+                    hAlign = Libui.uiAlign.uiAlignFill;
+                    break;
+                case Alignment.BottomLeft:
+                    vAlign = Libui.uiAlign.uiAlignEnd;
+                    hAlign = Libui.uiAlign.uiAlignStart;
+                    break;
+                case Alignment.BottomCenter:
+                    vAlign = Libui.uiAlign.uiAlignEnd;
+                    hAlign = Libui.uiAlign.uiAlignCenter;
+                    break;
+                case Alignment.BottomRight:
+                    vAlign = Libui.uiAlign.uiAlignEnd;
+                    hAlign = Libui.uiAlign.uiAlignEnd;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("hAlign|vAlign");
+            }
+        }
     }
 }

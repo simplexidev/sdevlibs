@@ -10,11 +10,11 @@ namespace LibUISharpDemos.ControlGallery
         private readonly NumbersTab numbersTab = new NumbersTab();
         private readonly DataChoosersTab dataChoosersTab = new DataChoosersTab();
 
-        public MainWindow() : base(new Size(640, 480), "LibUISharp Control Gallery", true) => InitializeComponent();
+        public MainWindow() : base("LibUISharp Control Gallery", new Size(640, 480), true) => InitializeComponent();
 
         protected override void InitializeComponent()
         {
-            Margins = true;
+            IsMargined = true;
             Child = tabControl;
 
             tabControl.Items.Add(basicControlsTab);

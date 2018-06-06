@@ -1,5 +1,4 @@
-﻿using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
+﻿using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -8,29 +7,29 @@ namespace LibUISharp
     /// </summary>
     public class GridContainer : ContainerControl<Control, GridContainerItemCollection>
     {
-        private bool padding;
+        private bool isPadded;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GridContainer"/> class.
         /// </summary>
-        public GridContainer() => Handle = new SafeControlHandle(LibuiLibrary.uiNewGrid());
+        public GridContainer() => Handle = Libui.uiNewGrid();
         
         /// <summary>
         /// Gets or sets a value indiating whether this <see cref="FormContainer"/> has interior padding or not.
         /// </summary>
-        public bool Padding
+        public bool IsPadded
         {
             get
             {
-                padding = LibuiLibrary.uiGridPadded(Handle.DangerousGetHandle());
-                return padding;
+                isPadded = Libui.uiGridPadded(this);
+                return isPadded;
             }
             set
             {
-                if (padding != value)
+                if (isPadded != value)
                 {
-                    LibuiLibrary.uiGridSetPadded(Handle.DangerousGetHandle(), value);
-                    padding = value;
+                    Libui.uiGridSetPadded(this, value);
+                    isPadded = value;
                 }
             }
         }

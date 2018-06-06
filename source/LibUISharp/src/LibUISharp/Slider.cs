@@ -1,6 +1,5 @@
 ﻿using System;
-using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -18,7 +17,7 @@ namespace LibUISharp
         /// <param name="max">The maximum this <see cref="Slider"/> object's value can be.</param>
         public Slider(int min, int max)
         {
-            Handle = new SafeControlHandle(LibuiLibrary.uiNewSlider(min, max));
+            Handle = Libui.uiNewSlider(min, max);
             MinimumValue = min;
             MaximumValue = max;
             InitializeEvents();
@@ -46,14 +45,14 @@ namespace LibUISharp
         {
             get
             {
-                value = LibuiLibrary.uiSliderValue(Handle.DangerousGetHandle());
+                value = Libui.uiSliderValue(this);
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    LibuiLibrary.uiSliderSetValue(Handle.DangerousGetHandle(), value);
+                    Libui.uiSliderSetValue(this, value);
                     this.value = value;
                 }
             }
@@ -68,6 +67,6 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component.
         /// </summary>
-        protected sealed override void InitializeEvents() => LibuiLibrary.uiSliderOnChanged(Handle.DangerousGetHandle(), (slider, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.uiSliderOnChanged(this, (slider, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
     }
 }

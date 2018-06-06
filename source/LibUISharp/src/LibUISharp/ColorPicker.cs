@@ -1,7 +1,6 @@
 ﻿using System;
 using LibUISharp.Drawing;
-using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -17,7 +16,7 @@ namespace LibUISharp
         /// </summary>
         public ColorPicker()
         {
-            Handle = new SafeControlHandle(LibuiLibrary.uiNewColorButton());
+            Handle = Libui.uiNewColorButton();
             color = Color.Empty;
             InitializeEvents();
         }
@@ -34,7 +33,7 @@ namespace LibUISharp
         {
             get
             {
-                LibuiLibrary.uiColorButtonColor(Handle.DangerousGetHandle(), out double red, out double green, out double blue, out double alpha);
+                Libui.uiColorButtonColor(this, out double red, out double green, out double blue, out double alpha);
                 color = new Color(red, green, blue, alpha);
                 return color;
             }
@@ -42,7 +41,7 @@ namespace LibUISharp
             {
                 if (color != value)
                 {
-                    LibuiLibrary.uiColorButtonSetColor(Handle.DangerousGetHandle(), value.R, value.G, value.B, value.A);
+                    Libui.uiColorButtonSetColor(this, value.R, value.G, value.B, value.A);
                     color = value;
                 }
             }
@@ -51,7 +50,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => LibuiLibrary.uiColorButtonOnChanged(Handle.DangerousGetHandle(), (button, data) => { OnColorChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.uiColorButtonOnChanged(this, (button, data) => { OnColorChanged(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>
         /// Raises the <see cref="ColorChanged"/> event.

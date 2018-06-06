@@ -1,7 +1,5 @@
-﻿using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
-using System;
-using System.Runtime.InteropServices;
+﻿using System;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -18,9 +16,7 @@ namespace LibUISharp
         /// <param name="text">The text to be displayed by this button.</param>
         public Button(string text)
         {
-            IntPtr strPtr = text.ToLibuiString();
-            Handle = new SafeControlHandle(LibuiLibrary.uiNewButton(strPtr));
-            Marshal.FreeHGlobal(strPtr);
+            Handle = Libui.uiNewButton(text);
             this.text = text;
             InitializeEvents();
         }
@@ -37,16 +33,14 @@ namespace LibUISharp
         {
             get
             {
-                text = LibuiLibrary.uiButtonText(Handle.DangerousGetHandle()).ToStringEx();
+                text = Libui.uiButtonText(this);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    IntPtr strPtr = value.ToLibuiString();
-                    LibuiLibrary.uiButtonSetText(Handle.DangerousGetHandle(), strPtr);
-                    Marshal.FreeHGlobal(strPtr);
+                    Libui.uiButtonSetText(this, value);
                     text = value;
                 }
             }
@@ -55,7 +49,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => LibuiLibrary.uiButtonOnClicked(Handle.DangerousGetHandle(), (button, data) => { OnClick(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.uiButtonOnClicked(this, (button, data) => { OnClick(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>
         /// Raises the <see cref="Click"/> event.

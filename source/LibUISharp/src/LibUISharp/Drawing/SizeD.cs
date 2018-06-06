@@ -1,5 +1,4 @@
-﻿using LibUISharp.Internal;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace LibUISharp.Drawing
 {
@@ -62,7 +61,11 @@ namespace LibUISharp.Drawing
         /// <returns>The <see cref="SizeD"/> that is the result of the addition operation.</returns>
         public static SizeD Subtract(SizeD sz1, SizeD sz2) => new SizeD(sz1.Width - sz2.Width, sz1.Height - sz2.Height);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns>true if obj and this instance are the same type and represent the same value; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is SizeD))
@@ -70,11 +73,24 @@ namespace LibUISharp.Drawing
             return Equals((SizeD)obj);
         }
 
-        /// <inheritdoc cref="Equals(object)"/>
-        public bool Equals(SizeD point) => Width == point.Width && Height == point.Height;
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="size">The size to compare with the current instance.</param>
+        /// <returns>true if obj and this instance are the same type and represent the same value; otherwise, false.</returns>
+        public bool Equals(SizeD size) => Width == size.Width && Height == size.Height;
 
-        /// <inheritdoc/>  
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
         public override int GetHashCode() => unchecked(this.GetHashCode(Width, Height));
+
+        /// <summary>
+        /// Converts this size to a human-readable string.
+        /// </summary>
+        /// <returns>A string that represents this size.</returns>
+        public override string ToString() => $"[{Width}, {Height}]";
 
 
         /// <summary>

@@ -1,11 +1,9 @@
 ﻿using LibUISharp.Drawing;
-using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -15,32 +13,28 @@ namespace LibUISharp
     public class Window : Control
     {
         private Control child;
-        private bool margins, fullscreen, borderless;
+        private bool isMargined, fullscreen, borderless;
         private Size size;
         private string title;
         private bool disposed = false;
-        private static readonly Dictionary<SafeControlHandle, Window> WindowCache = new Dictionary<SafeControlHandle, Window>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class, with the options of specifying
         /// the window's width, height, title, and whether or not it has a <see cref="Menu"/>.
         /// </summary>
+        /// <param name="title">The title at the top of the window.</param>
         /// <param name="width">The width of the window.</param>
         /// <param name="height">The height of the window.</param>
-        /// <param name="title">The title at the top of the window.</param>
         /// <param name="hasMenu">Whether or not the window will have a menu.</param>
-        public Window(int width = 500, int height = 300, string title = null, bool hasMenu = false) : base()
+        public Window(string title = "", int width = 600, int height = 400, bool hasMenu = false)
         {
-            if (string.IsNullOrEmpty(title))
-                title = "LibUISharp";
+            Handle = Libui.uiNewWindow(title, width, height, hasMenu);
 
-            IntPtr strPtr = title.ToLibuiString();
-            Handle = new SafeControlHandle(LibuiLibrary.uiNewWindow(strPtr, width, height, hasMenu));
-            Marshal.FreeHGlobal(strPtr);
-
-            WindowCache.Add(Handle, this);
             this.title = title;
+            Console.Title = title;
             size = new Size(width, height);
+            HasMenu = hasMenu;
+
             InitializeEvents();
         }
 
@@ -48,10 +42,10 @@ namespace LibUISharp
         /// Initializes a new instance of the <see cref="Window"/> class, with the options of specifying
         /// the window's size, title, and whether or not it has a <see cref="Menu"/>.
         /// </summary>
-        /// <param name="size">The size of the window.</param>
         /// <param name="title">The title at the top of the window.</param>
+        /// <param name="size">The size of the window.</param>
         /// <param name="hasMenu">Whether or not the window will have a menu.</param>
-        public Window(Size size, string title = null, bool hasMenu = false) : this(size.Width, size.Height, title, hasMenu) { }
+        public Window(string title, Size size, bool hasMenu = false) : this(title, size.Width, size.Height, hasMenu) { }
 
         /// <summary>
         /// Occurs when the window is closing.
@@ -64,27 +58,23 @@ namespace LibUISharp
         public EventHandler SizeChanged;
 
         /// <summary>
+        /// Gets whether or not this window has a menu.
+        /// </summary>
+        public bool HasMenu { get; }
+
+        /// <summary>
         /// Gets or sets the title of this window.
         /// </summary>
         public string Title
         {
-            get
-            {
-                title = LibuiLibrary.uiWindowTitle(Handle.DangerousGetHandle()).ToStringEx();
-                return title;
-            }
+            get => title = Libui.uiWindowTitle(this);
             set
             {
                 if (title != value)
                 {
-                    if (string.IsNullOrEmpty(value))
-                        title = "LibUISharp";
-                    else
-                        title = value;
-
-                    IntPtr strPtr = title.ToLibuiString();
-                    LibuiLibrary.uiWindowSetTitle(Handle.DangerousGetHandle(), strPtr);
-                    Marshal.FreeHGlobal(strPtr);
+                    Libui.uiWindowSetTitle(this, value);
+                    title = value;
+                    Console.Title = title;
                 }
             }
         }
@@ -96,7 +86,7 @@ namespace LibUISharp
         {
             get
             {
-                LibuiLibrary.uiWindowContentSize(Handle.DangerousGetHandle(), out int w, out int h);
+                Libui.uiWindowContentSize(this, out int w, out int h);
                 size = new Size(w, h);
                 return size;
             }
@@ -104,7 +94,7 @@ namespace LibUISharp
             {
                 if (size != value)
                 {
-                    LibuiLibrary.uiWindowSetContentSize(Handle.DangerousGetHandle(), value.Width, value.Height);
+                    Libui.uiWindowSetContentSize(this, value.Width, value.Height);
                     size = value;
                 }
             }
@@ -127,14 +117,14 @@ namespace LibUISharp
         {
             get
             {
-                fullscreen = LibuiLibrary.uiWindowFullscreen(Handle.DangerousGetHandle());
+                fullscreen = Libui.uiWindowFullscreen(this);
                 return fullscreen;
             }
             set
             {
                 if (fullscreen != value)
                 {
-                    LibuiLibrary.uiWindowSetFullscreen(Handle.DangerousGetHandle(), value);
+                    Libui.uiWindowSetFullscreen(this, value);
                     fullscreen = value;
                 }
             }
@@ -147,14 +137,14 @@ namespace LibUISharp
         {
             get
             {
-                borderless = LibuiLibrary.uiWindowBorderless(Handle.DangerousGetHandle());
+                borderless = Libui.uiWindowBorderless(this);
                 return borderless;
             }
             set
             {
                 if (borderless != value)
                 {
-                    LibuiLibrary.uiWindowSetBorderless(Handle.DangerousGetHandle(), value);
+                    Libui.uiWindowSetBorderless(this, value);
                     borderless = value;
                 }
             }
@@ -168,47 +158,34 @@ namespace LibUISharp
             get => child;
             set
             {
-                if (!Handle.IsInvalid)
+                if (Handle != IntPtr.Zero)
                 {
-                    if (value == null)
-                        throw new UIException("Cannot add a null Control to a Window.");
-                    LibuiLibrary.uiWindowSetChild(Handle.DangerousGetHandle(), value.Handle.DangerousGetHandle());
+                    if (value == null) throw new UIException("Cannot add a null Control to a Window.");
+                    Libui.uiWindowSetChild(this, value);
+                    child = value;
                 }
-                child = value;
             }
         }
 
         /// <summary>
         /// Gets or sets whether this window has margins between its child control and its border.
         /// </summary>
-        public bool Margins
+        public bool IsMargined
         {
             get
             {
-                margins = LibuiLibrary.uiWindowMargined(Handle.DangerousGetHandle());
-                return margins;
+                isMargined = Libui.uiWindowMargined(this);
+                return isMargined;
             }
             set
             {
-                if (margins != value)
+                if (isMargined != value)
                 {
-                    LibuiLibrary.uiWindowSetMargined(Handle.DangerousGetHandle(), value);
-                    margins = value;
+                    Libui.uiWindowSetMargined(this, value);
+                    isMargined = value;
                 }
             }
         }
-
-        /// <summary>
-        /// Raises the <see cref="WindowClosing"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="CancelEventArgs"/> containing the event data.</param>
-        protected virtual void OnWindowClosing(CancelEventArgs e) => WindowClosing?.Invoke(this, e);
-
-        /// <summary>
-        /// Raises the <see cref="SizeChanged"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> containing the event data.</param>
-        protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
 
         /// <summary>
         /// Displays a dialog showing a message, or optionally, an error.
@@ -227,17 +204,12 @@ namespace LibUISharp
         /// <param name="isError">Whether the message is displayed as an error.</param>
         public static void ShowMessageBox(Window w, string title, string description = null, bool isError = false)
         {
-            if (w == null)
-                w = Application.MainWindow;
-
-            IntPtr titlePtr = (title ?? string.Empty).ToLibuiString();
-            IntPtr descriptionPtr = (description ?? string.Empty).ToLibuiString();
+            if (w == null) w = Application.MainWindow;
+            
             if (isError)
-                LibuiLibrary.uiMsgBoxError(w.Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
+                Libui.uiMsgBoxError(w, title, description);
             else
-                LibuiLibrary.uiMsgBox(w.Handle.DangerousGetHandle(), titlePtr, descriptionPtr);
-            Marshal.FreeHGlobal(titlePtr);
-            Marshal.FreeHGlobal(descriptionPtr);
+                Libui.uiMsgBox(w, title, description);
         }
 
         /// <summary>
@@ -262,11 +234,9 @@ namespace LibUISharp
         /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
         public static bool ShowSaveFileDialog(out string path, Window w)
         {
-            if (w == null)
-                w = Application.MainWindow;
+            if (w == null) w = Application.MainWindow;
 
-            path = LibuiLibrary.uiSaveFile(w.Handle.DangerousGetHandle()).ToStringEx();
-
+            path = Libui.uiSaveFile(w);
             if (string.IsNullOrEmpty(path))
                 return false;
             else
@@ -315,11 +285,9 @@ namespace LibUISharp
         /// <returns><see langword="true"/> if the file exists, else <see langword="false"/>.</returns>
         public static bool ShowOpenFileDialog(out string path, Window w)
         {
-            if (w == null)
-                w = Application.MainWindow;
+            if (w == null) w = Application.MainWindow;
 
-            path = LibuiLibrary.uiOpenFile(w.Handle.DangerousGetHandle()).ToStringEx();
-
+            path = Libui.uiOpenFile(w);
             if (string.IsNullOrEmpty(path))
                 return false;
             else
@@ -352,26 +320,37 @@ namespace LibUISharp
         public void Close()
         {
             Hide();
-            WindowCache.Remove(Handle);
             Dispose();
         }
+
+        /// <summary>
+        /// Raises the <see cref="WindowClosing"/> event.
+        /// </summary>
+        /// <param name="e">A <see cref="CancelEventArgs"/> containing the event data.</param>
+        protected virtual void OnWindowClosing(CancelEventArgs e) => WindowClosing?.Invoke(this, e);
+
+        /// <summary>
+        /// Raises the <see cref="SizeChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> containing the event data.</param>
+        protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
 
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
         protected sealed override void InitializeEvents()
         {
-            if (Handle.IsInvalid)
+            if (Handle == IntPtr.Zero)
                 throw new TypeInitializationException(nameof(Window), new InvalidComObjectException());
 
-            LibuiLibrary.uiWindowOnClosing(Handle.DangerousGetHandle(), (window, data) =>
+            Libui.uiWindowOnClosing(this, (window, data) =>
             {
                 CancelEventArgs args = new CancelEventArgs();
                 OnWindowClosing(args);
                 bool cancel = args.Cancel;
                 if (!cancel)
                 {
-                    if (WindowCache.Count > 1 && this != Application.MainWindow)
+                    if (this != Application.MainWindow)
                         Close();
                     else
                         Application.Current.Shutdown();
@@ -379,7 +358,7 @@ namespace LibUISharp
                 return !cancel;
             }, IntPtr.Zero);
 
-            LibuiLibrary.uiWindowOnContentSizeChanged(Handle.DangerousGetHandle(), (window, data) => { OnSizeChanged(EventArgs.Empty); }, IntPtr.Zero);
+            Libui.uiWindowOnContentSizeChanged(this, (window, data) => { OnSizeChanged(EventArgs.Empty); }, IntPtr.Zero);
         }
 
         /// <summary>

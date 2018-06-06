@@ -1,6 +1,5 @@
 ﻿using System;
-using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -18,7 +17,7 @@ namespace LibUISharp
         /// <param name="max">The maximum this <see cref="SpinBox"/> object's value can be.</param>
         public SpinBox(int min, int max)
         {
-            Handle = new SafeControlHandle(LibuiLibrary.uiNewSpinbox(min, max));
+            Handle = Libui.uiNewSpinbox(min, max);
             MinimumValue = min;
             MaximumValue = max;
             InitializeEvents();
@@ -46,14 +45,14 @@ namespace LibUISharp
         {
             get
             {
-                value = LibuiLibrary.uiSpinboxValue(Handle.DangerousGetHandle());
+                value = Libui.uiSpinboxValue(this);
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    LibuiLibrary.uiSpinboxSetValue(Handle.DangerousGetHandle(), value);
+                    Libui.uiSpinboxSetValue(this, value);
                     this.value = value;
                 }
             }
@@ -68,6 +67,6 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component.
         /// </summary>
-        protected sealed override void InitializeEvents() => LibuiLibrary.uiSpinboxOnChanged(Handle.DangerousGetHandle(), (spinbox, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.uiSpinboxOnChanged(this, (spinbox, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
     }
 }

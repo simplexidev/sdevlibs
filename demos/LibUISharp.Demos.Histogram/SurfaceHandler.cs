@@ -31,7 +31,7 @@ namespace LibUISharp.Demos.Histogram
             spinBoxList = spinBoxes;
         }
 
-        public void Draw(SurfaceBase surface, ref DrawEventArgs e)
+        public void Draw(Surface surface, ref DrawEventArgs e)
         {
             brush = Brushes.White;
             path = new Path(FillMode.Winding);
@@ -51,7 +51,8 @@ namespace LibUISharp.Demos.Histogram
             e.Context.Stroke(path, brush, strokeOptions);
             path.Dispose();
 
-            Matrix matrix = Matrix.SetIdentity();
+            Matrix matrix = new Matrix();
+            matrix.SetIdentity();
             matrix.Translate(xoffLeft, yoffTop);
             e.Context.Transform(matrix);
 
@@ -131,7 +132,7 @@ namespace LibUISharp.Demos.Histogram
                 (y <= ytest + pointRadius);
         }
 
-        public void MouseEvent(SurfaceBase surface, ref MouseEventArgs e)
+        public void MouseEvent(Surface surface, ref MouseEventArgs e)
         {
             GraphSize(e.SurfaceSize.Width, e.SurfaceSize.Height, out double graphWidth, out double graphHeight);
             PointLocations(graphWidth, graphHeight, out double[] xs, out double[] ys);
@@ -148,8 +149,8 @@ namespace LibUISharp.Demos.Histogram
             surface.QueueRedrawAll();
         }
 
-        public bool KeyEvent(SurfaceBase surface, ref KeyEventArgs e) => false;
-        public void MouseCrossed(SurfaceBase surface, MouseCrossedEventArgs e) { }
-        public void DragBroken(SurfaceBase surface) { }
+        public bool KeyEvent(Surface surface, ref KeyEventArgs e) => false;
+        public void MouseCrossed(Surface surface, MouseCrossedEventArgs e) { }
+        public void DragBroken(Surface surface) { }
     }
 }

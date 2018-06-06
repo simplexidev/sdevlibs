@@ -3,7 +3,7 @@
     /// <summary>
     /// Identifies the underline style of text.
     /// </summary>
-    public enum UnderlineStyle : long
+    public enum UnderlineStyle
     {
         /// <summary>
         /// No underline.

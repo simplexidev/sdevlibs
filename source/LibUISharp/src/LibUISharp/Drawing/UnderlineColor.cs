@@ -1,7 +1,6 @@
-﻿// uiUnderlineColor
-namespace LibUISharp.Drawing
+﻿namespace LibUISharp.Drawing
 {
-    public enum UnderlineColor : long
+    public enum UnderlineColor
     {
         Custom = 0,
         Spelling = 1,

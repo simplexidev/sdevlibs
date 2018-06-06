@@ -1,6 +1,5 @@
-﻿using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
-using System;
+﻿using System;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -9,7 +8,7 @@ namespace LibUISharp
     /// </summary>
     public class StackContainer : ContainerControl<Control, StackContainerItemCollection>
     {
-        private bool padding;
+        private bool isPadded;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StackContainer"/> class with the specified orientation.
@@ -20,10 +19,10 @@ namespace LibUISharp
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    Handle = new SafeControlHandle(LibuiLibrary.uiNewHorizontalBox());
+                    Handle = Libui.uiNewHorizontalBox();
                     break;
                 case Orientation.Vertical:
-                    Handle = new SafeControlHandle(LibuiLibrary.uiNewVerticalBox());
+                    Handle = Libui.uiNewVerticalBox();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(orientation));
@@ -37,21 +36,21 @@ namespace LibUISharp
         public Orientation Orientation { get; }
 
         /// <summary>
-        /// Gets or sets a value indiating whether this <see cref="StackContainer"/> has interior padding or not.
+        /// Gets or sets a value indiating whether this <see cref="StackContainer"/> has interior isPadded or not.
         /// </summary>
-        public bool Padding
+        public bool IsPadded
         {
             get
             {
-                padding = LibuiLibrary.uiBoxPadded(Handle.DangerousGetHandle());
-                return padding;
+                isPadded = Libui.uiBoxPadded(this);
+                return isPadded;
             }
             set
             {
-                if (padding != value)
+                if (isPadded != value)
                 {
-                    LibuiLibrary.uiBoxSetPadded(Handle.DangerousGetHandle(), value);
-                    padding = value;
+                    Libui.uiBoxSetPadded(this, value);
+                    isPadded = value;
                 }
             }
         }

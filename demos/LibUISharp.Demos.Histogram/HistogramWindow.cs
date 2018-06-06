@@ -6,17 +6,17 @@ namespace LibUISharp.Demos.Histogram
 {
     public class HistogramWindow : Window
     {
-        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { Padding = true };
-        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { Padding = true };
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { IsPadded = true };
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { IsPadded = true };
         private List<SpinBox> spinBoxList = new List<SpinBox>();
         private ColorPicker colorPicker = new ColorPicker() { Color = Colors.Blue };
         private Surface histogramSurface;
 
-        public HistogramWindow() : base(640, 480, "LibUISharp Histogram Demo", true) => InitializeComponent();
+        public HistogramWindow() : base("LibUISharp Histogram Demo", 640, 480, true) => InitializeComponent();
 
         protected override void InitializeComponent()
         {
-            Margins = true;
+            IsMargined = true;
             Child = hPanel;
             
             hPanel.Items.Add(vPanel);

@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies how content is positioned in a container.
     /// </summary>
-    public enum Alignment : long
+    public enum Alignment
     {
         /// <summary>
         /// The contents fills the container.

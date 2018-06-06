@@ -1,6 +1,5 @@
-﻿using LibUISharp.Internal;
-using System;
-using System.Runtime.InteropServices;
+﻿using System;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -32,9 +31,7 @@ namespace LibUISharp
             if (Contains(item))
                 throw new InvalidOperationException("cannot add the same control.");
             if (item == null) return;
-            IntPtr strPtr = label.ToLibuiString();
-            LibuiLibrary.uiFormAppend(Owner.Handle.DangerousGetHandle(), strPtr, item.Handle.DangerousGetHandle(), stretches);
-            Marshal.FreeHGlobal(strPtr);
+            Libui.uiFormAppend(Owner, label, item, stretches);
             base.Add(item);
         }
 
@@ -52,7 +49,7 @@ namespace LibUISharp
         /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="FormContainerItemCollection"/>.</returns>
         public override bool Remove(Control item)
         {
-            LibuiLibrary.uiFormDelete(Owner.Handle.DangerousGetHandle(), item.Index);
+            Libui.uiFormDelete(Owner, item.Index);
             return base.Remove(item);
         }
     }

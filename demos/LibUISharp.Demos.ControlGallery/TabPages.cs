@@ -5,14 +5,14 @@ namespace LibUISharpDemos.ControlGallery
 {
     public sealed class BasicControlsTab : TabPage
     {
-        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { Padding = true };
-        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { Padding = true };
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { IsPadded = true };
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { IsPadded = true };
         private Button button = new Button("Button");
         private CheckBox checkBox = new CheckBox("CheckBox");
         private Label label = new Label("This is a Label. Right now, labels can only span one line.");
         private Separator hSeparator = new Separator(Orientation.Horizontal);
-        private GroupBox groupBox = new GroupBox("Entries") { Margins = true };
-        private FormContainer form = new FormContainer { Padding = true };
+        private GroupBox groupBox = new GroupBox("Entries") { IsMargined = true };
+        private FormContainer form = new FormContainer { IsPadded = true };
         private TextBox textBox = new TextBox();
         private PasswordBox passwordBox = new PasswordBox();
         private SearchBox searchBox = new SearchBox();
@@ -23,7 +23,7 @@ namespace LibUISharpDemos.ControlGallery
 
         protected override void InitializeComponent()
         {
-            Margins = true;
+            IsMargined = true;
             Child = vPanel;
 
             vPanel.Items.Add(hPanel);
@@ -43,15 +43,15 @@ namespace LibUISharpDemos.ControlGallery
 
     public sealed class NumbersTab : TabPage
     {
-        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { Padding = true };
-        private GroupBox groupBox = new GroupBox("Numbers") { Margins = true };
-        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { Padding = true };
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { IsPadded = true };
+        private GroupBox groupBox = new GroupBox("Numbers") { IsMargined = true };
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { IsPadded = true };
         private SpinBox spinBox = new SpinBox(0, 100);
         private Slider slider = new Slider(0, 100);
         private ProgressBar progressBar = new ProgressBar();
         private ProgressBar iProgressBar = new ProgressBar() { Value = -1 };
-        private GroupBox groupBox2 = new GroupBox("Lists") { Margins = true };
-        private StackContainer vPanel2 = new StackContainer(Orientation.Vertical) { Padding = true };
+        private GroupBox groupBox2 = new GroupBox("Lists") { IsMargined = true };
+        private StackContainer vPanel2 = new StackContainer(Orientation.Vertical) { IsPadded = true };
         private ComboBox comboBox = new ComboBox();
         private EditableComboBox editableComboBox = new EditableComboBox();
         private RadioButtonList radioButtonList = new RadioButtonList();
@@ -60,7 +60,7 @@ namespace LibUISharpDemos.ControlGallery
 
         protected override void InitializeComponent()
         {
-            Margins = true;
+            IsMargined = true;
             Child = hPanel;
 
             hPanel.Items.Add(groupBox, true);
@@ -101,8 +101,8 @@ namespace LibUISharpDemos.ControlGallery
 
     public sealed class DataChoosersTab : TabPage
     {
-        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { Padding = true };
-        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { Padding = true };
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { IsPadded = true };
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { IsPadded = true };
         private DatePicker datePicker = new DatePicker();
         private TimePicker timePicker = new TimePicker();
         private DateTimePicker dateTimePicker = new DateTimePicker();
@@ -110,14 +110,14 @@ namespace LibUISharpDemos.ControlGallery
         private ColorPicker colorPicker = new ColorPicker();
         private Separator hSeparator = new Separator(Orientation.Horizontal);
 
-        private StackContainer vPanel2 = new StackContainer(Orientation.Vertical) { Padding = true };
-        private GridContainer gridFile = new GridContainer() { Padding = true };
+        private StackContainer vPanel2 = new StackContainer(Orientation.Vertical) { IsPadded = true };
+        private GridContainer gridFile = new GridContainer() { IsPadded = true };
         private Button buttonOpenFile = new Button("Open File");
-        private TextBox textboxOpenFile = new TextBox() { ReadOnly = true };
+        private TextBox textboxOpenFile = new TextBox() { IsReadOnly = true };
         private Button buttonSaveFile = new Button("Save File");
-        private TextBox textboxSaveFile = new TextBox() { ReadOnly = true };
+        private TextBox textboxSaveFile = new TextBox() { IsReadOnly = true };
 
-        private StackContainer hPanelMessages = new StackContainer(Orientation.Horizontal) { Padding = true };
+        private StackContainer hPanelMessages = new StackContainer(Orientation.Horizontal) { IsPadded = true };
         private Button buttonMessage = new Button("Message Box");
         private Button buttonMessageErr = new Button("Message Box (Error)");
 
@@ -125,7 +125,7 @@ namespace LibUISharpDemos.ControlGallery
 
         protected override void InitializeComponent()
         {
-            Margins = true;
+            IsMargined = true;
             Child = hPanel;
 
             hPanel.Items.Add(vPanel);

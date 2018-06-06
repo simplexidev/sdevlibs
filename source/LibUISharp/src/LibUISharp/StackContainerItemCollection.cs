@@ -1,5 +1,5 @@
-﻿using LibUISharp.Internal;
-using System;
+﻿using System;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -29,7 +29,7 @@ namespace LibUISharp
         {
             if (Contains(item)) throw new InvalidOperationException("Cannot add the same control more than once.");
             if (item == null) return;
-            LibuiLibrary.uiBoxAppend(Owner.Handle.DangerousGetHandle(), item.Handle.DangerousGetHandle(), stretches);
+            Libui.uiBoxAppend(Owner, item, stretches);
             base.Add(item);
         }
         
@@ -47,7 +47,7 @@ namespace LibUISharp
         /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="StackContainerItemCollection"/>.</returns>
         public override bool Remove(Control item)
         {
-            LibuiLibrary.uiBoxDelete(Owner.Handle.DangerousGetHandle(), item.Index);
+            Libui.uiBoxDelete(Owner, item.Index);
             return base.Remove(item);
         }
     }

@@ -1,5 +1,4 @@
-﻿using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
+﻿using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -8,29 +7,29 @@ namespace LibUISharp
     /// </summary>
     public class FormContainer : ContainerControl<Control, FormContainerItemCollection>
     {
-        private bool padding;
+        private bool isPadded;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormContainer"/> class.
         /// </summary>
-        public FormContainer() => Handle = new SafeControlHandle(LibuiLibrary.uiNewForm());
+        public FormContainer() => Handle = Libui.uiNewForm();
 
         /// <summary>
         /// Gets or sets a value indiating whether this <see cref="FormContainer"/> has interior padding or not.
         /// </summary>
-        public bool Padding
+        public bool IsPadded
         {
             get
             {
-                padding = LibuiLibrary.uiFormPadded(Handle.DangerousGetHandle());
-                return padding;
+                isPadded = Libui.uiFormPadded(this);
+                return isPadded;
             }
             set
             {
-                if (padding != value)
+                if (isPadded != value)
                 {
-                    LibuiLibrary.uiFormSetPadded(Handle.DangerousGetHandle(), value);
-                    padding = value;
+                    Libui.uiFormSetPadded(this, value);
+                    isPadded = value;
                 }
             }
         }

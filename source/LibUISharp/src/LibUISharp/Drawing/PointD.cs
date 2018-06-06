@@ -1,5 +1,4 @@
-﻿using LibUISharp.Internal;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace LibUISharp.Drawing
 {
@@ -77,7 +76,11 @@ namespace LibUISharp.Drawing
         /// <param name="sz">The <see cref="SizeD"/> to subtract from <paramref name="pt"/>.</param>
         public static PointD Subtract(PointD pt, SizeD sz) => new PointD(pt.X - sz.Width, pt.Y - sz.Height);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns>true if obj and this instance are the same type and represent the same value; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is PointD))
@@ -85,11 +88,24 @@ namespace LibUISharp.Drawing
             return Equals((PointD)obj);
         }
 
-        /// <inheritdoc cref="Equals(object)"/>
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="point">The point to compare with the current instance.</param>
+        /// <returns>true if obj and this instance are the same type and represent the same value; otherwise, false.</returns>
         public bool Equals(PointD point) => X == point.X && Y == point.Y;
 
-        /// <inheritdoc/>  
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
         public override int GetHashCode() => unchecked(this.GetHashCode(X, Y));
+
+        /// <summary>
+        /// Converts this point to a human-readable string.
+        /// </summary>
+        /// <returns>A string that represents this point.</returns>
+        public override string ToString() => $"[{X}, {Y}]";
 
         /// <summary>
         /// Translates a <see cref="PointD"/> by a given <see cref="Size"/>.

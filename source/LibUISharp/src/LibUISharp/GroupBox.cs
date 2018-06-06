@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -11,19 +9,15 @@ namespace LibUISharp
     public class GroupBox : Control
     {
         private string title;
-        private bool margins;
+        private bool isMargined;
         private Control child;
+        private bool disposed = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupBox"/> class with the specified title.
         /// </summary>
-        /// <param name="title"></param>
-        public GroupBox(string title)
-        {
-            IntPtr strPtr = title.ToLibuiString();
-            Handle = new SafeControlHandle(LibuiLibrary.uiNewGroup(strPtr));
-            Marshal.FreeHGlobal(strPtr);
-        }
+        /// <param name="title">The title of this <see cref="GroupBox"/>.</param>
+        public GroupBox(string title) => Handle = Libui.uiNewGroup(title);
 
         /// <summary>
         /// Gets or sets the title for this <see cref="GroupBox"/> control.
@@ -32,16 +26,14 @@ namespace LibUISharp
         {
             get
             {
-                title = LibuiLibrary.uiGroupTitle(Handle.DangerousGetHandle()).ToStringEx();
+                title = Libui.uiGroupTitle(this);
                 return title;
             }
             set
             {
                 if (title != value)
                 {
-                    IntPtr strPtr = value.ToLibuiString();
-                    LibuiLibrary.uiGroupSetTitle(Handle.DangerousGetHandle(), strPtr);
-                    Marshal.FreeHGlobal(strPtr);
+                    Libui.uiGroupSetTitle(this, value);
                     title = value;
                 }
             }
@@ -50,19 +42,19 @@ namespace LibUISharp
         /// <summary>
         /// Gets or sets a value indicating whether or not this <see cref="TabPage"/> has outer margins.
         /// </summary>
-        public bool Margins
+        public bool IsMargined
         {
             get
             {
-                margins = LibuiLibrary.uiGroupMargined(Handle.DangerousGetHandle());
-                return margins;
+                isMargined = Libui.uiGroupMargined(this);
+                return isMargined;
             }
             set
             {
-                if (margins != value)
+                if (isMargined != value)
                 {
-                    LibuiLibrary.uiGroupSetMargined(Handle.DangerousGetHandle(), value);
-                    margins = value;
+                    Libui.uiGroupSetMargined(this, value);
+                    isMargined = value;
                 }
             }
         }
@@ -77,13 +69,7 @@ namespace LibUISharp
             {
                 if (child != value)
                 {
-                    IntPtr ptr;
-                    if (value.Handle.IsInvalid)
-                        ptr = IntPtr.Zero;
-                    else
-                        ptr = value.Handle.DangerousGetHandle();
-
-                    LibuiLibrary.uiGroupSetChild(Handle.DangerousGetHandle(), ptr);
+                    Libui.uiGroupSetChild(this, value);
                     child = value;
                 }
             }
@@ -92,15 +78,19 @@ namespace LibUISharp
         /// <summary>
         /// Runs cleanup operations and destroys the control.
         /// </summary>
-        protected override void Destroy()
+        protected override void Dispose(bool disposing)
         {
-            if (Child != null)
+            if (!disposed)
             {
-                Control child = Child;
-                Child = null;
-                child.Dispose();
+                if (disposing && Child != null)
+                {
+                    Control child = Child;
+                    Child = null;
+                    child.Dispose();
+                }
+                disposed = true;
+                base.Dispose(disposing);
             }
-            base.Destroy();
         }
     }
 }

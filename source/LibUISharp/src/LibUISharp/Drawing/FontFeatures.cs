@@ -1,32 +1,28 @@
 ﻿using System;
-using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
+using static LibUISharp.Native.NativeMethods;
 
-// uiOpenTypeFeatures
 namespace LibUISharp.Drawing
 {
-    //TODO: Setup the ForEachFunc. Not sure how to do that yet.
-    public class FontFeatures : UIComponent<SafeFontFeaturesHandle>, IUIComponent, ICloneable
+    //TODO: Setup the ForEachFunc.
+    public class FontFeatures : UIComponent, ICloneable
     {
         private bool disposed = false;
 
         public FontFeatures()
         {
-            Handle = new SafeFontFeaturesHandle(LibuiLibrary.uiNewOpenTypeFeatures());
+            Handle = Libui.uiNewOpenTypeFeatures();
             InitializeEvents();
         }
 
-        internal FontFeatures(SafeFontFeaturesHandle safeHandle)
+        internal FontFeatures(IntPtr handle)
         {
-            Handle = safeHandle;
+            Handle = handle;
             InitializeEvents();
         }
 
-        //TODO: public event EventHandler ForEachFeature;
+        // public event EventHandler ForEachFeature;
 
-        public void Add(byte a, byte b, byte c, byte d, long value) => LibuiLibrary.uiOpenTypeFeaturesAdd(Handle.DangerousGetHandle(), a, b, c, d, (uint)value);
-
-        public void Add(char a, char b, char c, char d, long value) => Add((byte)a, (byte)b, (byte)c, (byte)d, value);
+        public void Add(char a, char b, char c, char d, long value) => Libui.uiOpenTypeFeaturesAdd(this, a, b, c, d, (uint)value);
 
         public void Add(string feature, long value)
         {
@@ -37,9 +33,7 @@ namespace LibUISharp.Drawing
             Add(chars[0], chars[1], chars[2], chars[3], value);
         }
 
-        public void Remove(byte a, byte b, byte c, byte d) => LibuiLibrary.uiOpenTypeFeaturesRemove(Handle.DangerousGetHandle(), a, b, c, d);
-
-        public void Remove(char a, char b, char c, char d) => Remove((byte)a, (byte)b, (byte)c, (byte)d);
+        public void Remove(char a, char b, char c, char d) => Libui.uiOpenTypeFeaturesRemove(this, a, b, c, d);
 
         public void Remove(string feature)
         {
@@ -50,14 +44,12 @@ namespace LibUISharp.Drawing
             Remove(chars[0], chars[1], chars[2], chars[3]);
         }
 
-        public int TryGetValue(byte a, byte b, byte c, byte d, out long value)
+        public int TryGetValue(char a, char b, char c, char d, out long value)
         {
-            var result = LibuiLibrary.uiOpenTypeFeaturesGet(Handle.DangerousGetHandle(), a, b, c, d, out uint uintValue);
+            int result = Libui.uiOpenTypeFeaturesGet(this, a, b, c, d, out uint uintValue);
             value = uintValue;
             return result;
         }
-
-        public int TryGetValue(char a, char b, char c, char d, out long value) => TryGetValue((byte)a, (byte)b, (byte)c, (byte)d, out value);
 
         public int TryGetValue(string feature, out long value)
         {
@@ -68,31 +60,22 @@ namespace LibUISharp.Drawing
             return TryGetValue(chars[0], chars[1], chars[2], chars[3], out value);
         }
 
-        //TODO: protected virtual void OnForEachFeature(EventArgs e) => ForEachFeature?.Invoke(this, e);
-
         object ICloneable.Clone() => Clone();
 
-        public FontFeatures Clone() => new FontFeatures(new SafeFontFeaturesHandle(LibuiLibrary.uiOpenTypeFeaturesClone(Handle.DangerousGetHandle())));
+        public FontFeatures Clone() => new FontFeatures(Libui.uiOpenTypeFeaturesClone(this));
 
-        protected override void InitializeEvents()
-        {
-            //TODO: uiOpenTypeFeaturesForEach(Handle, (otf, a, b, c, d, value, data) => { OnForEachFeature(EventArgs.Empty); });
-        }
+        // protected override void InitializeEvents() => Libui.uiOpenTypeFeaturesForEach(Handle, (otf, a, b, c, d, value, data) => { OnForEachFeature(EventArgs.Empty); });
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        // protected virtual void OnForEachFeature(EventArgs e) => ForEachFeature?.Invoke(this, e);
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!disposed)
             {
-                if (disposing)
-                    if (!Handle.IsInvalid)
-                        Handle.Dispose();
+                if (disposing && Handle != IntPtr.Zero)
+                    Libui.uiFreeOpenTypeFeatures(this);
                 disposed = true;
+                base.Dispose(disposing);
             }
         }
     }

@@ -1,40 +1,27 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp.Drawing
 {
-    //TODO: This isn't what this should be. Needs 100% redone.
-    public class AttributedText : UIComponent<SafeAttributedTextHandle>, IUIComponent
+    //TODO: This is a WIP, mostly just a dummy class for now.
+    public class AttributedText : UIComponent
     {
         private bool disposed = false;
 
-        public AttributedText(string text)
-        {
-            IntPtr strPtr = text.ToLibuiString();
-            Handle = new SafeAttributedTextHandle(LibuiLibrary.uiNewAttributedString(strPtr));
-            Marshal.FreeHGlobal(strPtr);
-        }
+        public AttributedText(string text) => Handle = Libui.uiNewAttributedString(text);
 
-        public string Text => LibuiLibrary.uiAttributedStringString(Handle.DangerousGetHandle()).ToStringEx();
+        public string Text => Libui.uiAttributedStringString(this);
 
-        public long Len() => LibuiLibrary.uiAttributedStringLen(Handle.DangerousGetHandle()).ToUInt32();
+        public long Len() => Libui.uiAttributedStringLen(this).ToUInt32();
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!disposed)
             {
-                if (disposing)
-                    if (!Handle.IsInvalid)
-                        Handle.Dispose();
+                if (disposing && Handle != IntPtr.Zero)
+                    Libui.uiFreeAttributedString(this);
                 disposed = true;
+                base.Dispose(disposing);
             }
         }
     }

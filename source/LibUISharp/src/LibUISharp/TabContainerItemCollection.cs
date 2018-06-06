@@ -1,6 +1,5 @@
-﻿using LibUISharp.Internal;
-using System;
-using System.Runtime.InteropServices;
+﻿using System;
+using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp
 {
@@ -23,9 +22,7 @@ namespace LibUISharp
         {
             if (item == null) throw new ArgumentException("You cannot add a null TabPage to a TabContainer.");
             base.Add(item);
-            IntPtr strPtr = item.Name.ToLibuiString();
-            LibuiLibrary.uiTabAppend(Owner.Handle.DangerousGetHandle(), strPtr, item.Handle.DangerousGetHandle());
-            Marshal.FreeHGlobal(strPtr);
+            Libui.uiTabAppend(Owner, item.Name, item);
             item.DelayRender();
         }
 
@@ -38,9 +35,7 @@ namespace LibUISharp
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
             base.AddAt(index, item);
-            IntPtr strPtr = item.Name.ToLibuiString();
-            LibuiLibrary.uiTabInsertAt(Owner.Handle.DangerousGetHandle(), strPtr, index, item.Handle.DangerousGetHandle());
-            Marshal.FreeHGlobal(strPtr);
+            Libui.uiTabInsertAt(Owner, item.Name, index, item);
             item.DelayRender();
         }
 
@@ -52,7 +47,7 @@ namespace LibUISharp
         public override bool Remove(TabPage item)
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
-            LibuiLibrary.uiTabDelete(Owner.Handle.DangerousGetHandle(), item.Index);
+            Libui.uiTabDelete(Owner, item.Index);
             return base.Remove(item);
         }
     }

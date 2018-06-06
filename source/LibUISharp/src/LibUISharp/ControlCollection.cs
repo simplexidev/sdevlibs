@@ -5,16 +5,10 @@ using System.Collections.Generic;
 namespace LibUISharp
 {
     /// <summary>
-    /// Defines methods to maniplulate collections of <see cref="Control"/> object.
-    /// </summary>
-    /// <typeparam name="T">The type of <see cref="Control"/> in this collection.</typeparam>
-    internal interface IControlCollection<T> : ICollection, ICollection<T>, IEnumerable, IEnumerable<T> { }
-
-    /// <summary>
     /// Represents a collection of child <see cref="Control"/> objects inside of a <see cref="ContainerControl"/>.
     /// </summary>
     /// <typeparam name="T">The type of <see cref="Control"/> in this collection.</typeparam>
-    public abstract class ControlCollection<T> : IControlCollection<T>
+    public abstract partial class ControlCollection<T> : ICollection, ICollection<T>, IEnumerable, IEnumerable<T>
         where T : Control
     {
         private readonly int defaultCapacity = 4;
@@ -229,64 +223,6 @@ namespace LibUISharp
             {
                 if (index < 0 || index >= size) throw new ArgumentOutOfRangeException(nameof(index));
                 return innerArray[index];
-            }
-        }
-
-        private sealed class ControlCollectionEnumerator : IEnumerator, IEnumerator<T>, ICloneable
-        {
-            private ControlCollection<T> collection;
-            private T current;
-            private int index;
-            private bool disposed = false;
-
-            internal ControlCollectionEnumerator(ControlCollection<T> collection)
-            {
-                this.collection = collection;
-                index = -1;
-            }
-
-            public bool MoveNext()
-            {
-                if (index < (collection.Count - 1))
-                {
-                    index++;
-                    current = collection[index];
-                    return true;
-                }
-
-                index = collection.Count;
-                return false;
-            }
-
-            object IEnumerator.Current => Current;
-
-            public T Current
-            {
-                get
-                {
-                    if (index == -1 || index >= collection.Count) throw new InvalidOperationException("index is out of range.");
-                    return current;
-                }
-            }
-
-            public void Reset()
-            {
-                current = default;
-                index = -1;
-            }
-
-            public object Clone() => MemberwiseClone();
-
-            public void Dispose() => Dispose(true);
-
-            private void Dispose(bool disposing)
-            {
-                if (!disposed)
-                {
-                    if (disposing)
-                        collection.Clear();
-                    disposed = true;
-                }
             }
         }
     }
