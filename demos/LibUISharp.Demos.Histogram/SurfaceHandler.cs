@@ -20,6 +20,7 @@ namespace LibUISharp.Demos.Histogram
             Join = LineJoin.Miter,
             Thickness = 2
         };
+
         private ColorPicker colorPicker;
         private List<SpinBox> spinBoxList;
 
@@ -123,9 +124,9 @@ namespace LibUISharp.Demos.Histogram
 
         private bool InPoint(double x, double y, double xtest, double ytest)
         {
-            // TODO switch to using a matrix
-            x -= xoffLeft;
-            y -= yoffTop;
+            Matrix m = new Matrix();
+            m.SetIdentity();
+            m.Translate(x -= xoffLeft, y -= yoffTop);
             return (x >= xtest - pointRadius) &&
                 (x <= xtest + pointRadius) &&
                 (y >= ytest - pointRadius) &&

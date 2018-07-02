@@ -19,3 +19,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Native.NativeMethods.Libui.uiFontDescriptor")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Native.NativeMethods.Libui.uiForEach")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Native.NativeMethods.Libui.uiInitOptions")]
+
+//TODO: https://stackoverflow.com/questions/1431359/event-action-vs-event-eventhandler
+//TODO: http://www.paulrohde.com/events-eventhandler-or-action/

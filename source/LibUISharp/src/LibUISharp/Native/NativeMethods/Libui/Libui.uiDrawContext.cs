@@ -1,3 +1,4 @@
+using LibUISharp.Drawing;
 using System;
 using System.Runtime.InteropServices;
 
@@ -19,8 +20,8 @@ namespace LibUISharp.Native
 
             // _UI_EXTERN void uiDrawTransform(uiDrawContext* c, uiDrawMatrix* m);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate void uiDrawTransform_t(IntPtr context, uiDrawMatrix matrix);
-            public static void uiDrawTransform(IntPtr context, uiDrawMatrix matrix) => FunctionLoader.LoadLibuiFunc<uiDrawTransform_t>("uiDrawTransform")(context, matrix);
+            private delegate void uiDrawTransform_t(IntPtr context, Matrix matrix);
+            public static void uiDrawTransform(IntPtr context, Matrix matrix) => FunctionLoader.LoadLibuiFunc<uiDrawTransform_t>("uiDrawTransform")(context, matrix);
 
             // _UI_EXTERN void uiDrawClip(uiDrawContext* c, uiDrawPath* path);
             [UnmanagedFunctionPointer(Convention)]

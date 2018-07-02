@@ -51,7 +51,7 @@ namespace LibUISharp.Drawing
         /// Applies a transform <see cref="Matrix"/> to this <see cref="Context"/>.
         /// </summary>
         /// <param name="matrix"></param>
-        public void Transform(Matrix matrix) => Libui.uiDrawTransform(this, matrix.Native);
+        public void Transform(Matrix matrix) => Libui.uiDrawTransform(this, matrix);
 
         /// <summary>
         /// Draws a <see cref="TextLayout"/> at the given location in this <see cref="Context"/>.

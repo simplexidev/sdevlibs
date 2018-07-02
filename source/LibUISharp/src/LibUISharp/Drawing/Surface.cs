@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading;
 using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp.Drawing
@@ -108,7 +109,11 @@ namespace LibUISharp.Drawing
         /// <summary>
         /// Queues a redraw of the surface.
         /// </summary>
-        public void QueueRedrawAll() => Libui.uiAreaQueueRedrawAll(this);
+        public void QueueRedrawAll()
+        {
+            Thread.Sleep(200);
+            Libui.uiAreaQueueRedrawAll(this);
+        }
 
         /// <summary>
         /// Scrolls the surface view to the specified location and size.
