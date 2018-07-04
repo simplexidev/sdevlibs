@@ -116,11 +116,14 @@ namespace LibUISharp
                 throw new UIException(error);
             }
 
+            // This must be possible on Linux and macOS.
+#if !DEBUG
             if (PlatformHelper.IsWinNT)
             {
                 IntPtr ptr = WinAPI.GetConsoleWindow();
                 WinAPI.ShowWindow(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
             }
+#endif
         }
 
         /// <summary>
