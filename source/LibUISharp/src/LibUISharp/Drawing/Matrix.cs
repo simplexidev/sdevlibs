@@ -9,11 +9,34 @@ namespace LibUISharp.Drawing
     [StructLayout(LayoutKind.Sequential)]
     public sealed class Matrix
     {
+        /// <summary>
+        /// Represents a specific value in this <see cref="Matrix"/>.
+        /// </summary>
         public double M11 = 1;
+
+        /// <summary>
+        /// Represents a specific value in this <see cref="Matrix"/>.
+        /// </summary>
         public double M12 = 0;
+
+        /// <summary>
+        /// Represents a specific value in this <see cref="Matrix"/>.
+        /// </summary>
         public double M21 = 0;
+
+        /// <summary>
+        /// Represents a specific value in this <see cref="Matrix"/>.
+        /// </summary>
         public double M22 = 1;
+
+        /// <summary>
+        /// Represents a specific value in this <see cref="Matrix"/>.
+        /// </summary>
         public double M31 = 0;
+
+        /// <summary>
+        /// Represents a specific value in this <see cref="Matrix"/>.
+        /// </summary>
         public double M32 = 0;
 
         /// <summary>
