@@ -18,13 +18,7 @@ namespace LibUISharp.Drawing
         /// Initializes a new <see cref="Color"/> structure from an argb value.
         /// </summary>
         /// <param name="argb">An argb value.</param>
-        public Color(long argb)
-        {
-            A = sRgbToScRgb((byte)((argb & 0xFF000000) >> 24));
-            R = sRgbToScRgb((byte)((argb & 0x00FF0000) >> 16));
-            G = sRgbToScRgb((byte)((argb & 0x0000FF00) >> 8));
-            B = sRgbToScRgb((byte)(argb & 0x000000FF));
-        }
+        public Color(long argb) : this(((argb >> 16) & 0xFF) / 255.0, ((argb >> 8) & 0xFF) / 255.0, (argb & 0xFF) / 255.0, ((argb >> 24) & 0xFF) / 255.0) { }
 
         /// <summary>
         /// Initializes a new <see cref="Color"/> structure from red, green, blue, and optionally alpha component values.
@@ -90,18 +84,6 @@ namespace LibUISharp.Drawing
         /// </summary>
         /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
         public override int GetHashCode() => unchecked(this.GetHashCode(R, G, B, A));
-
-        private static float sRgbToScRgb(byte bval)
-        {
-            float num = bval / 255f;
-            if (num <= 0.0)
-                return 0f;
-            if (num <= 0.04045)
-                return num / 12.92f;
-            if (num < 1f)
-                return (float)Math.Pow((num + 0.055) / 1.055, 2.4);
-            return 1f;
-        }
 
         /// <summary>
         /// Tests whether two specified <see cref="Color"/> structures are equivalent.
