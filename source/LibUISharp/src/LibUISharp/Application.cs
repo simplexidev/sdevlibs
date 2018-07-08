@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Text;
 using static LibUISharp.Native.NativeMethods;
 
@@ -14,7 +15,7 @@ namespace LibUISharp
     {
         private static object _lock = new object();
         private static bool created = false;
-        private static Libui.uiInitOptions Options = new Libui.uiInitOptions() { Size = UIntPtr.Zero };
+        private static StartupOptions Options = new StartupOptions();
         private bool disposed = false;
         private static readonly Queue<Action> queue = new Queue<Action>();
 
@@ -23,6 +24,7 @@ namespace LibUISharp
         /// </summary>
         public Application()
         {
+            //QUESTION: Is the next line necessary?
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             lock (_lock)
             {
@@ -150,5 +152,15 @@ namespace LibUISharp
                 base.Dispose(disposing);
             }
         }
+    }
+
+    [UIType("uiInitOptions")]
+    [StructLayout(LayoutKind.Sequential)]
+    internal class StartupOptions
+    {
+        public UIntPtr Size;
+
+        public StartupOptions() : this(UIntPtr.Zero) { }
+        public StartupOptions(UIntPtr size) => Size = size;
     }
 }

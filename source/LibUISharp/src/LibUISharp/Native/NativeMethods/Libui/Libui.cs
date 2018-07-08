@@ -12,8 +12,8 @@ namespace LibUISharp.Native
 
             // _UI_EXTERN const char *uiInit(uiInitOptions *options);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate string uiInit_t(ref uiInitOptions options);
-            internal static string uiInit(ref uiInitOptions options) => FunctionLoader.LoadLibuiFunc<uiInit_t>("uiInit")(ref options);
+            private delegate string uiInit_t(ref StartupOptions options);
+            internal static string uiInit(ref StartupOptions options) => FunctionLoader.LoadLibuiFunc<uiInit_t>("uiInit")(ref options);
 
             // _UI_EXTERN void uiUninit(void);
             [UnmanagedFunctionPointer(Convention)]
