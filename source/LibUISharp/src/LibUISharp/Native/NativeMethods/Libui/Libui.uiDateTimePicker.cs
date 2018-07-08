@@ -9,13 +9,13 @@ namespace LibUISharp.Native
         {
             // _UI_EXTERN void uiDateTimePickerTime(uiDateTimePicker *d, struct tm *time);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate void uiDateTimePickerTime_t(IntPtr d, out tm time);
-            public static void uiDateTimePickerTime(IntPtr d, out tm time) => FunctionLoader.LoadLibuiFunc<uiDateTimePickerTime_t>("uiDateTimePickerTime")(d, out time);
+            private delegate void uiDateTimePickerTime_t(IntPtr d, out UIDateTime time);
+            public static void uiDateTimePickerTime(IntPtr d, out UIDateTime time) => FunctionLoader.LoadLibuiFunc<uiDateTimePickerTime_t>("uiDateTimePickerTime")(d, out time);
 
             // _UI_EXTERN void uiDateTimePickerSetTime(uiDateTimePicker *d, const struct tm *time);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate void uiDateTimePickerSetTime_t(IntPtr d, tm time);
-            public static void uiDateTimePickerSetTime(IntPtr d, tm time) => FunctionLoader.LoadLibuiFunc<uiDateTimePickerSetTime_t>("uiDateTimePickerSetTime")(d, time);
+            private delegate void uiDateTimePickerSetTime_t(IntPtr d, UIDateTime time);
+            public static void uiDateTimePickerSetTime(IntPtr d, UIDateTime time) => FunctionLoader.LoadLibuiFunc<uiDateTimePickerSetTime_t>("uiDateTimePickerSetTime")(d, time);
 
             // _UI_EXTERN void uiDateTimePickerOnChanged(uiDateTimePicker *d, void (*f)(uiDateTimePicker *, void *), void *data);
             [UnmanagedFunctionPointer(Convention)]
