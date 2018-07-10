@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.Drawing
 {
+    //TODO: Maybe add CYMK/HSL/HSV colors too.
     /// <summary>
     /// Represents an ARGB (alpha, red, green, blue) color.
     /// </summary>
@@ -63,21 +64,21 @@ namespace LibUISharp.Drawing
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
         /// </summary>
-        /// <param name="color">The <see cref="Color"/> to compare with the current instance.</param>
-        /// <returns><see langword="true"/> if <paramref name="color"/> and this instance are the same type and represent the same value; otherwise, <see langword="false"/>.</returns>
-        public bool Equals(Color color) => R == color.R && G == color.G && B == color.B && A == color.A;
-
-        /// <summary>
-        /// Indicates whether this instance and a specified object are equal.
-        /// </summary>
         /// <param name="obj">The object to compare with the current instance.</param>
-        /// <returns><see langword="true"/> if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, <see langword="false"/>.</returns>
+        /// <returns>true if obj and this instance are the same type and represent the same value; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is Color))
                 return false;
             return Equals((Color)obj);
         }
+
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="color">The <see cref="Color"/> to compare with the current instance.</param>
+        /// <returns><see langword="true"/> if <paramref name="color"/> and this instance are the same type and represent the same value; otherwise, <see langword="false"/>.</returns>
+        public bool Equals(Color color) => R == color.R && G == color.G && B == color.B && A == color.A;
 
         /// <summary>
         /// Returns the hash code for this instance.

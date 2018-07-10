@@ -7,7 +7,7 @@ namespace LibUISharp.Drawing
     /// Represents an ordered pair of integers that defines a size in a two-dimensional plane.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Size
+    public struct Size : IEquatable<Size>
     {
         /// <summary>
         /// Represents a <see cref="Size"/> that has <see cref="Width"/> and <see cref="Height"/> values set to zero.

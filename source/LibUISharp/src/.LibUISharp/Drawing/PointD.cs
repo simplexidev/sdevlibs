@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace LibUISharp.Drawing
 {
@@ -6,7 +7,7 @@ namespace LibUISharp.Drawing
     /// Represents an ordered pair of double-precision floating-point x- and y-coordinates that defines a point in a two-dimensional plane.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct PointD
+    public struct PointD : IEquatable<PointD>
     {
         /// <summary>
         /// Represents a <see cref="PointD"/> that has <see cref="X"/> and <see cref="Y"/> values set to zero.

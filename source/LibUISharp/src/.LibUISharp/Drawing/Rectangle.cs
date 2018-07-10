@@ -5,7 +5,7 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Stores a set of four integers that represent the location and size of a rectangle.
     /// </summary>
-    public struct Rectangle
+    public struct Rectangle : IEquatable<Rectangle>
     {
         /// <summary>
         /// Represents a <see cref="Rectangle"/> that has it's values set to zero.

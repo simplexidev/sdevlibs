@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace LibUISharp.Drawing
 {
@@ -6,7 +7,7 @@ namespace LibUISharp.Drawing
     /// Represents an ordered pair of double-precision floating-point numbers that defines a size in a two-dimensional plane.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct SizeD
+    public struct SizeD : IEquatable<SizeD>
     {
         /// <summary>
         /// Represents a <see cref="SizeD"/> that has <see cref="Width"/> and <see cref="Height"/> values set to zero.

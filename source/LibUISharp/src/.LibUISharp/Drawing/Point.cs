@@ -7,7 +7,7 @@ namespace LibUISharp.Drawing
     /// Represents an ordered pair of integer x- and y-coordinates that defines a point in a two-dimensional plane.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Point
+    public struct Point : IEquatable<Point>
     {
         /// <summary>
         /// Represents a <see cref="Point"/> that has <see cref="X"/> and <see cref="Y"/> values set to zero.
