@@ -13,57 +13,19 @@ Currently, I don't have the free time to make LibUISharp complete on my own. Bec
 
 ## Features
 
-LibUISharp allows you to create native, cross-platform graphical user interface (GUI) applications containing various controls, such as a `Button` or a `TabControl`, 
+LibUISharp allows you to create native, cross-platform graphical user interface (GUI) applications containing various controls, such as a `Button` or a `TabControl`.
 
 Check out the demos in the `demos\` folder for examples.
 
-### Controls
-
-* Button
-* CheckBox
-* ColorPicker
-* ComboBox
-* DateTimePicker
-* FontPicker
-* Form
-* Grid
-* GroupBox
-* Label
-* MenuStrip/MenuStripItem
-* MessageBox
-* StackPanel
-* ProgressBar
-* RadioButtonGroup
-* Separator
-* Slider
-* SpinBox
-* TextBox
-* TabControl
-* Window
-
-### Drawing/Text
-* AttributedText
-* Brush
-* Context
-* Font
-* FontFeatures
-* Path
-* Surface
-* TextAttribute
-* TextLayout
-
 ## Supported Platforms
 
-LibUISharp supports 64-bit Windows, macOS, and Linux <sub>[[source](https://github.com/dotnet/core/blob/master/release-notes/2.0/2.0-supported-os.md)]</sub>:
+LibUISharp supports 64-bit Windows, macOS (with lmited testing), and Linux (tested with Debian-based systems):
 
-| Operating System                                     | Version                                           | Architecture | Prerequiusites |
-| :--------------------------------------------------- | :------------------------------------------------ | :----------- | :------------- |
-| Windows Client<br/>Windows Server                    | 7 SP1+, 8.1, 10 Build 1607+<br/>2008 R2 SP1+      | x64<br/>x64  |                |
-| Mac OS X                                             | 10.12+                                            | x64          |                |
-| Red Hat Enterprise Linux<br/>CentOS</br>Oracle Linux | 6, 7<br/>7<br/>7                                  | x64          | GTK+ 3.10+     |
-| Fedora                                               | 26, 27                                            | x64          | GTK+ 3.10+     |
-| Debian<br/>Ubuntu</br>Linux Mint                     | 8.7+, 9<br/>14.04, 16.04, 17.10, 18.04<br/>17, 18 | x64          | GTK+ 3.10+     |
-| openSUSE<br/>SUSE Enterprise Linux (SLES)            | 42.3+<br/>12 SP2+                                 | x64          | GTK+ 3.10+     |
+| Operating System                                     | Version                                           | Prerequiusites |
+| :--------------------------------------------------- | :------------------------------------------------ | :------------- |
+| Windows Client<br/>Windows Server                    | 7 SP1+, 8.1, 10 Build 1607+<br/>2008 R2 SP1+      |                |
+| Mac OS X                                             | 10.12+                                            |                |
+| Debian<br/>Ubuntu</br>Linux Mint                     | 8.7+, 9<br/>14.04, 16.04, 17.10, 18.04<br/>17, 18 | GTK+ 3.10+     |
 
 ## Obtaining the Library
 
@@ -82,11 +44,11 @@ or just by running a couple simple commands. Use the steps below to get started!
 
 ### Prerequisites
 
-| Operating System | Prerequisites                                                                                                    |
-| :--------------- | :--------------------------------------------------------------------------------------------------------------- |
+| Operating System | Prerequisites                                                                                                            |
+| :--------------- | :----------------------------------------------------------------------------------------------------------------------- |
 | Windows 7/8.1/10 | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio 2017 (v15.6.x)<br/>Visual Studio Code (With the C# extension) |
-| Mac OS X         | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                          |
-| Linux            | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                          |
+| Mac OS X         | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                                  |
+| Linux            | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                                  |
 
 ### Build Using Visual Studio (Windows)
 
@@ -94,10 +56,6 @@ or just by running a couple simple commands. Use the steps below to get started!
 
 1. Open the `LibUISharp.sln` file.
 2. Then, navigate to the `Build>Build Solution` menu item.
-
-### Build Using Visual Studio Code (Windows/MacOS/Linux)
-
-***This section is to-be-written. For now, refer to the next section.***
 
 ### Build Using a CLI
 
@@ -109,4 +67,4 @@ Run the following command in a command-line interface in the root directory of t
 
 Contributing is as easy as filing an issue, fixing a bug, or suggesting a new feature.
 
-Please see the [CONTRIBUTING.md](https://github.com/tom-corwin/LibUISharp/blob/master/CONTRIBUTING.md) file for more information.
+Although the document is a work in progress, please see the [CONTRIBUTING.md](https://github.com/tom-corwin/LibUISharp/blob/master/CONTRIBUTING.md) file for more information on contributing.
