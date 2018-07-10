@@ -1,23 +1,25 @@
-﻿using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
+using System;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
-    /// Represents a control that inputs a linear value.
+    /// Represents a spin box (also known as an up-down control) that displays numeric values.
     /// </summary>
-    public class Slider : Control
+    [LibuiType("uiSpinbox")]
+    public class SpinBox : Control
     {
         private int value;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Slider"/> class with the specified minimum and maximum values.
+        /// Initializes a new instance of the <see cref="SpinBox"/> class with the specified minimum and maximum values.
         /// </summary>
-        /// <param name="min">The minimum this <see cref="Slider"/> object's value can be.</param>
-        /// <param name="max">The maximum this <see cref="Slider"/> object's value can be.</param>
-        public Slider(int min, int max)
+        /// <param name="min">The minimum this <see cref="SpinBox"/> object's value can be.</param>
+        /// <param name="max">The maximum this <see cref="SpinBox"/> object's value can be.</param>
+        public SpinBox(int min = 0, int max = 100)
         {
-            Handle = Libui.uiNewSlider(min, max);
+            Handle = Libui.Call<Libui.uiNewSpinbox>()(min, max);
             MinimumValue = min;
             MaximumValue = max;
             InitializeEvents();
@@ -29,30 +31,30 @@ namespace LibUISharp
         public event EventHandler ValueChanged;
 
         /// <summary>
-        /// Gets this <see cref="Slider"/> object's minimum value.
+        /// Gets this <see cref="SpinBox"/> object's minimum value.
         /// </summary>
         public int MinimumValue { get; }
 
         /// <summary>
-        /// Gets this <see cref="Slider"/> object's maximum value.
+        /// Gets this <see cref="SpinBox"/> object's maximum value.
         /// </summary>
         public int MaximumValue { get; }
 
         /// <summary>
-        /// Gets or sets the current value of this <see cref="Slider"/>.
+        /// Gets or sets the current value of this <see cref="SpinBox"/>.
         /// </summary>
         public int Value
         {
             get
             {
-                value = Libui.uiSliderValue(this);
+                value = Libui.Call<Libui.uiSpinboxValue>()(this);
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    Libui.uiSliderSetValue(this, value);
+                    Libui.Call<Libui.uiSpinboxSetValue>()(this, value);
                     this.value = value;
                 }
             }
@@ -67,6 +69,6 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiSliderOnChanged(this, (slider, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiSpinboxOnChanged>()(this, (spinbox, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
     }
 }

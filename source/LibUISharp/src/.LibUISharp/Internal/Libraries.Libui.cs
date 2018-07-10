@@ -355,6 +355,107 @@ namespace LibUISharp.Internal
             [UnmanagedFunctionPointer(Convention)]
             internal delegate IntPtr uiNewGroup(string title);
 
+
+            // _UI_EXTERN int uiSpinboxValue(uiSpinbox *s);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate int uiSpinboxValue(IntPtr s);
+
+            // _UI_EXTERN void uiSpinboxSetValue(uiSpinbox *s, int value);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiSpinboxSetValue(IntPtr s, int value);
+
+            // _UI_EXTERN void uiSpinboxOnChanged(uiSpinbox *s, void (*f)(uiSpinbox *s, void *data), void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiSpinboxOnChanged(IntPtr s, uiSpinboxOnChanged_f f, IntPtr data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiSpinboxOnChanged_f(IntPtr s, IntPtr data);
+
+            // _UI_EXTERN uiSpinbox *uiNewSpinbox(int min, int max);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewSpinbox(int min, int max);
+
+            // _UI_EXTERN int uiSliderValue(uiSlider *s);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate int uiSliderValue(IntPtr s);
+
+            // _UI_EXTERN void uiSliderSetValue(uiSlider *s, int value);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiSliderSetValue(IntPtr s, int value);
+
+            // _UI_EXTERN void uiSliderOnChanged(uiSlider *s, void (*f)(uiSlider *s, void *data), void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiSliderOnChanged(IntPtr s, uiSliderOnChanged_f f, IntPtr data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiSliderOnChanged_f(IntPtr s, IntPtr data);
+
+            // _UI_EXTERN uiSlider *uiNewSlider(int min, int max);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewSlider(int min, int max);
+
+            // _UI_EXTERN int uiProgressBarValue(uiProgressBar* p);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate int uiProgressBarValue(IntPtr p);
+
+            // _UI_EXTERN void uiProgressBarSetValue(uiProgressBar* p, int n);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiProgressBarSetValue(IntPtr p, int n);
+
+            // _UI_EXTERN uiProgressBar * uiNewProgressBar(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewProgressBar();
+
+            // _UI_EXTERN uiSeparator *uiNewHorizontalSeparator(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewHorizontalSeparator();
+
+            // _UI_EXTERN uiSeparator *uiNewVerticalSeparator(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewVerticalSeparator();
+
+            // _UI_EXTERN void uiComboboxAppend(uiCombobox *c, const char *text);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiComboboxAppend(IntPtr c, string text);
+
+            // _UI_EXTERN int uiComboboxSelected(uiCombobox *c);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate int uiComboboxSelected(IntPtr c);
+
+            // _UI_EXTERN void uiComboboxSetSelected(uiCombobox *c, int n);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiComboboxSetSelected(IntPtr c, int n);
+
+            // _UI_EXTERN void uiComboboxOnSelected(uiCombobox *c, void (*f)(uiCombobox *c, void *data), void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiComboboxOnSelected(IntPtr c, uiComboboxOnSelected_f f, IntPtr data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiComboboxOnSelected_f(IntPtr c, IntPtr data);
+
+            // _UI_EXTERN uiCombobox *uiNewCombobox(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewCombobox();
+
+            // _UI_EXTERN void uiEditableComboboxAppend(uiEditableCombobox *c, const char *text);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiEditableComboboxAppend(IntPtr c, string text);
+
+            // _UI_EXTERN char *uiEditableComboboxText(uiEditableCombobox *c);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate string uiEditableComboboxText(IntPtr c);
+
+            // _UI_EXTERN void uiEditableComboboxSetText(uiEditableCombobox *c, const char *text);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiEditableComboboxSetText(IntPtr c, string text);
+
+            // _UI_EXTERN void uiEditableComboboxOnChanged(uiEditableCombobox *c, void (*f)(uiEditableCombobox *c, void *data), void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiEditableComboboxOnChanged(IntPtr c, uiEditableComboboxOnChanged_f f, IntPtr data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiEditableComboboxOnChanged_f(IntPtr c, IntPtr data);
+
+            // _UI_EXTERN uiEditableCombobox *uiNewEditableCombobox(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewEditableCombobox();
+
             // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // _UI_EXTERN char *uiOpenFile(uiWindow *parent);

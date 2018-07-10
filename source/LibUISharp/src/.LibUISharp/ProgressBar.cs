@@ -1,10 +1,12 @@
-﻿using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a control that indicates the progress of an operation.
     /// </summary>
+    [LibuiType("uiProgressBar")]
     public class ProgressBar : Control
     {
         private int value;
@@ -12,7 +14,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgressBar"/> class.
         /// </summary>
-        public ProgressBar() => Handle = Libui.uiNewProgressBar();
+        public ProgressBar() => Handle = Libui.Call<Libui.uiNewProgressBar>()();
 
         /// <summary>
         /// Gets or sets the current value of this <see cref="ProgressBar"/>.
@@ -21,14 +23,14 @@ namespace LibUISharp
         {
             get
             {
-                value = Libui.uiProgressBarValue(this);
+                value = Libui.Call<Libui.uiProgressBarValue>()(this);
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    Libui.uiProgressBarSetValue(this, value);
+                    Libui.Call<Libui.uiProgressBarSetValue>()(this, value);
                     this.value = value;
                 }
             }
