@@ -1,16 +1,17 @@
 ﻿using LibUISharp.Drawing;
+using LibUISharp.Internal;
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.InteropServices;
-using static LibUISharp.Native.NativeMethods;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a window that makes up an application's user interface.
     /// </summary>
-    public class Window : Control
+    [LibuiType("uiWindow")]
+    public partial class Window : Control
     {
         private Control child;
         private bool isMargined, fullscreen, borderless;
@@ -28,7 +29,7 @@ namespace LibUISharp
         /// <param name="hasMenu">Whether or not the window will have a menu.</param>
         public Window(string title = "", int width = 600, int height = 400, bool hasMenu = false)
         {
-            Handle = Libui.uiNewWindow(title, width, height, hasMenu);
+            Handle = Libui.Call<Libui.uiNewWindow>()(title, width, height, hasMenu);
 
             this.title = title;
             Console.Title = title;
@@ -67,12 +68,12 @@ namespace LibUISharp
         /// </summary>
         public string Title
         {
-            get => title = Libui.uiWindowTitle(this);
+            get => title = Libui.Call<Libui.uiWindowTitle>()(this);
             set
             {
                 if (title != value)
                 {
-                    Libui.uiWindowSetTitle(this, value);
+                    Libui.Call<Libui.uiWindowSetTitle>()(this, value);
                     title = value;
                     Console.Title = title;
                 }
@@ -86,7 +87,7 @@ namespace LibUISharp
         {
             get
             {
-                Libui.uiWindowContentSize(this, out int w, out int h);
+                Libui.Call<Libui.uiWindowContentSize>()(this, out int w, out int h);
                 size = new Size(w, h);
                 return size;
             }
@@ -94,7 +95,7 @@ namespace LibUISharp
             {
                 if (size != value)
                 {
-                    Libui.uiWindowSetContentSize(this, value.Width, value.Height);
+                    Libui.Call<Libui.uiWindowSetContentSize>()(this, value.Width, value.Height);
                     size = value;
                 }
             }
@@ -117,14 +118,14 @@ namespace LibUISharp
         {
             get
             {
-                fullscreen = Libui.uiWindowFullscreen(this);
+                fullscreen = Libui.Call<Libui.uiWindowFullscreen>()(this);
                 return fullscreen;
             }
             set
             {
                 if (fullscreen != value)
                 {
-                    Libui.uiWindowSetFullscreen(this, value);
+                    Libui.Call<Libui.uiWindowSetFullscreen>()(this, value);
                     fullscreen = value;
                 }
             }
@@ -137,14 +138,14 @@ namespace LibUISharp
         {
             get
             {
-                borderless = Libui.uiWindowBorderless(this);
+                borderless = Libui.Call<Libui.uiWindowBorderless>()(this);
                 return borderless;
             }
             set
             {
                 if (borderless != value)
                 {
-                    Libui.uiWindowSetBorderless(this, value);
+                    Libui.Call<Libui.uiWindowSetBorderless>()(this, value);
                     borderless = value;
                 }
             }
@@ -161,7 +162,7 @@ namespace LibUISharp
                 if (Handle != IntPtr.Zero)
                 {
                     if (value == null) throw new UIException("Cannot add a null Control to a Window.");
-                    Libui.uiWindowSetChild(this, value);
+                    Libui.Call<Libui.uiWindowSetChild>()(this, value);
                     child = value;
                 }
             }
@@ -174,143 +175,16 @@ namespace LibUISharp
         {
             get
             {
-                isMargined = Libui.uiWindowMargined(this);
+                isMargined = Libui.Call<Libui.uiWindowMargined>()(this);
                 return isMargined;
             }
             set
             {
                 if (isMargined != value)
                 {
-                    Libui.uiWindowSetMargined(this, value);
+                    Libui.Call<Libui.uiWindowSetMargined>()(this, value);
                     isMargined = value;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Displays a dialog showing a message, or optionally, an error.
-        /// </summary>
-        /// <param name="title">The title of the message dialog.</param>
-        /// <param name="description">The description of the message dialog.</param>
-        /// <param name="isError">Whether the message is displayed as an error.</param>
-        public void ShowMessageBox(string title, string description = null, bool isError = false) => ShowMessageBox(this, title, description, isError);
-
-        /// <summary>
-        /// Displays a dialog showing a message, or optionally, an error.
-        /// </summary>
-        /// <param name="w">The dialog's parent window.</param>
-        /// <param name="title">The title of the message dialog.</param>
-        /// <param name="description">The description of the message dialog.</param>
-        /// <param name="isError">Whether the message is displayed as an error.</param>
-        public static void ShowMessageBox(Window w, string title, string description = null, bool isError = false)
-        {
-            if (w == null) w = Application.MainWindow;
-            
-            if (isError)
-                Libui.uiMsgBoxError(w, title, description);
-            else
-                Libui.uiMsgBox(w, title, description);
-        }
-
-        /// <summary>
-        /// Displays a dialog allowing a user to select a file to save to.
-        /// </summary>
-        /// <param name="path">The file's path selected by the user to save to.</param>
-        /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
-        public bool ShowSaveFileDialog(out string path) => ShowSaveFileDialog(out path, this);
-
-        /// <summary>
-        /// Displays a dialog allowing a user to select a file to save to.
-        /// </summary>
-        /// <param name="writeStream">The file selected by the user as a writable stream.</param>
-        /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
-        public bool ShowSaveFileDialog(out Stream writeStream) => ShowSaveFileDialog(out writeStream, this);
-
-        /// <summary>
-        /// Displays a dialog allowing a user to select a file to save to.
-        /// </summary>
-        /// <param name="path">The file's path selected by the user to save to.</param>
-        /// <param name="w">The dialog's parent window.</param>
-        /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
-        public static bool ShowSaveFileDialog(out string path, Window w)
-        {
-            if (w == null) w = Application.MainWindow;
-
-            path = Libui.uiSaveFile(w);
-            if (string.IsNullOrEmpty(path))
-                return false;
-            else
-                return true;
-        }
-
-        /// <summary>
-        /// Displays a dialog allowing a user to select a file to save to.
-        /// </summary>
-        /// <param name="writeStream">The file selected by the user as a writable stream.</param>
-        /// <param name="w">The dialog's parent window.</param>
-        /// <returns><see langword="true"/> if the file can be saved to, else <see langword="false"/>.</returns>
-        public static bool ShowSaveFileDialog(out Stream writeStream, Window w)
-        {
-            if (ShowSaveFileDialog(out string path, w))
-            {
-                writeStream = File.OpenWrite(path);
-                return true;
-            }
-            else
-            {
-                writeStream = null;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Displays a dialog allowing a user to select a file to open.
-        /// </summary>
-        /// <param name="path">The file's path selected by the user.</param>
-        /// <returns><see langword="true"/> if the file exists, else <see langword="false"/>.</returns>
-        public bool ShowOpenFileDialog(out string path) => ShowOpenFileDialog(out path, this);
-
-        /// <summary>
-        /// Displays a dialog allowing a user to select a file to open.
-        /// </summary>
-        /// <param name="readStream">The file selected by the user as a readable stream.</param>
-        /// <returns><see langword="true"/> if the file exists, else <see langword="false"/>.</returns>
-        public bool ShowOpenFileDialog(out Stream readStream) => ShowOpenFileDialog(out readStream, this);
-
-        /// <summary>
-        /// Displays a dialog allowing a user to select a file to open.
-        /// </summary>
-        /// <param name="path">The file's path selected by the user.</param>
-        /// <param name="w">The dialog's parent window.</param>
-        /// <returns><see langword="true"/> if the file exists, else <see langword="false"/>.</returns>
-        public static bool ShowOpenFileDialog(out string path, Window w)
-        {
-            if (w == null) w = Application.MainWindow;
-
-            path = Libui.uiOpenFile(w);
-            if (string.IsNullOrEmpty(path))
-                return false;
-            else
-                return true;
-        }
-
-        /// <summary>
-        /// Displays a dialog allowing a user to select a file to open.
-        /// </summary>
-        /// <param name="readStream">The file selected by the user as a readable stream.</param>
-        /// <param name="w">The dialog's parent window.</param>
-        /// <returns><see langword="true"/> if the file exists, else <see langword="false"/>.</returns>
-        public static bool ShowOpenFileDialog(out Stream readStream, Window w)
-        {
-            if (ShowOpenFileDialog(out string path, w))
-            {
-                readStream = File.OpenRead(path);
-                return true;
-            }
-            else
-            {
-                readStream = null;
-                return false;
             }
         }
 
@@ -343,7 +217,7 @@ namespace LibUISharp
             if (Handle == IntPtr.Zero)
                 throw new TypeInitializationException(nameof(Window), new InvalidComObjectException());
 
-            Libui.uiWindowOnClosing(this, (window, data) =>
+            Libui.Call<Libui.uiWindowOnClosing>()(this, (window, data) =>
             {
                 CancelEventArgs args = new CancelEventArgs();
                 OnWindowClosing(args);
@@ -358,7 +232,7 @@ namespace LibUISharp
                 return !cancel;
             }, IntPtr.Zero);
 
-            Libui.uiWindowOnContentSizeChanged(this, (window, data) => { OnSizeChanged(EventArgs.Empty); }, IntPtr.Zero);
+            Libui.Call<Libui.uiWindowOnContentSizeChanged>()(this, (window, data) => { OnSizeChanged(EventArgs.Empty); }, IntPtr.Zero);
         }
 
         /// <summary>

@@ -30,9 +30,9 @@
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
-    <Compile Include="src\LibUISharp\Native\*.cs" />
-    <Compile Include="src\LibUISharp\Native\NativeMethods\*.cs" />
-    <Compile Include="src\LibUISharp\Native\NativeMethods\Libui\*.cs" />
+    <Compile Include="src\LibUISharp\Internal\*.cs" />
+    <Compile Include="src\LibUISharp\Internal\NM\*.cs" />
+    <Compile Include="src\LibUISharp\Internal\NM\Libui\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\libui.dll">
@@ -50,6 +50,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ref\*.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\.LibUISharp\Application.cs" />
+    <Compile Include="src\.LibUISharp\Button.cs" />
+    <Compile Include="src\.LibUISharp\CheckBox.cs" />
+    <Compile Include="src\.LibUISharp\ContainerControl.cs" />
+    <Compile Include="src\.LibUISharp\Control.cs" />
+    <Compile Include="src\.LibUISharp\GroupBox.cs" />
+    <Compile Include="src\.LibUISharp\Internal\ObjectExtensions.cs" />
+    <Compile Include="src\.LibUISharp\Internal\Libraries.cs" />
+    <Compile Include="src\.LibUISharp\Internal\Libraries.Kernel32.cs" />
+    <Compile Include="src\.LibUISharp\Internal\Libraries.Libui.cs" />
+    <Compile Include="src\.LibUISharp\Internal\Libraries.User32.cs" />
+    <Compile Include="src\.LibUISharp\Internal\PlatformHelper.cs" />
+    <Compile Include="src\.LibUISharp\Internal\LibuiTypeAttribute.cs" />
+    <Compile Include="src\.LibUISharp\Label.cs" />
+    <Compile Include="src\.LibUISharp\StackContainer.cs" />
+    <Compile Include="src\.LibUISharp\TabContainer.cs" />
+    <Compile Include="src\.LibUISharp\TextBox.cs" />
+    <Compile Include="src\.LibUISharp\UIComponent.cs" />
+    <Compile Include="src\.LibUISharp\UIException.cs" />
+    <Compile Include="src\.LibUISharp\Window.cs" />
+    <Compile Include="src\.LibUISharp\Window.Dialogs.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.1.0" />

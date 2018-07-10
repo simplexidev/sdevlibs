@@ -1,11 +1,13 @@
-﻿using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
+using System;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a basic button control with text.
     /// </summary>
+    [LibuiType("uiButton")]
     public class Button : Control
     {
         private string text;
@@ -16,7 +18,7 @@ namespace LibUISharp
         /// <param name="text">The text to be displayed by this button.</param>
         public Button(string text)
         {
-            Handle = Libui.uiNewButton(text);
+            Handle = Libui.Call<Libui.uiNewButton>()(text);
             this.text = text;
             InitializeEvents();
         }
@@ -33,14 +35,14 @@ namespace LibUISharp
         {
             get
             {
-                text = Libui.uiButtonText(this);
+                text = Libui.Call<Libui.uiButtonText>()(this);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    Libui.uiButtonSetText(this, value);
+                    Libui.Call<Libui.uiButtonSetText>()(this, value);
                     text = value;
                 }
             }
@@ -49,7 +51,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiButtonOnClicked(this, (button, data) => { OnClick(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiButtonOnClicked>()(this, (button, data) => { OnClick(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>
         /// Raises the <see cref="Click"/> event.

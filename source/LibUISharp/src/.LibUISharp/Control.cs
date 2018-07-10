@@ -1,11 +1,13 @@
-﻿using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
+using System;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Defines the base class for controls, which are <see cref="UIComponent"/> objects with visual representation.
     /// </summary>
+    [LibuiType("uiControl")]
     public abstract class Control : UIComponent
     {
         private bool enabled, visible;
@@ -37,7 +39,7 @@ namespace LibUISharp
         /// </summary>
         public virtual bool Enabled
         {
-            get => Libui.uiControlEnabled(this);
+            get => Libui.Call<Libui.uiControlEnabled>()(this);
             set
             {
                 if (enabled == value) return;
@@ -45,13 +47,13 @@ namespace LibUISharp
                 else Disable();
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the control and all its child controls are displayed.
         /// </summary>
         public virtual bool Visible
         {
-            get => Libui.uiControlVisible(this);
+            get => Libui.Call<Libui.uiControlVisible>()(this);
             set
             {
                 if (visible == value) return;
@@ -68,7 +70,7 @@ namespace LibUISharp
             get
             {
                 if (Handle != IntPtr.Zero)
-                    return Libui.uiControlToplevel(Handle);
+                    return Libui.Call<Libui.uiControlToplevel>()(Handle);
                 return false;
             }
         }
@@ -80,7 +82,7 @@ namespace LibUISharp
         {
             if (!enabled)
             {
-                Libui.uiControlEnable(this);
+                Libui.Call<Libui.uiControlEnable>()(this);
                 enabled = true;
             }
         }
@@ -92,7 +94,7 @@ namespace LibUISharp
         {
             if (enabled)
             {
-                Libui.uiControlDisable(this);
+                Libui.Call<Libui.uiControlDisable>()(this);
                 enabled = false;
             }
         }
@@ -104,7 +106,7 @@ namespace LibUISharp
         {
             if (!visible)
             {
-                Libui.uiControlShow(this);
+                Libui.Call<Libui.uiControlShow>()(this);
                 visible = true;
             }
         }
@@ -116,7 +118,7 @@ namespace LibUISharp
         {
             if (visible)
             {
-                Libui.uiControlHide(this);
+                Libui.Call<Libui.uiControlHide>()(this);
                 visible = false;
             }
         }
@@ -135,7 +137,7 @@ namespace LibUISharp
             if (!disposed)
             {
                 if (disposing && Handle != IntPtr.Zero)
-                    Libui.uiControlDestroy(this);
+                    Libui.Call<Libui.uiControlDestroy>()(this);
                 disposed = true;
                 base.Dispose(disposing);
             }

@@ -4,18 +4,19 @@ using System.Collections.Generic;
 namespace LibUISharp
 {
     /// <summary>
-    /// The base implementation for a Libui component.
+    /// The base implementation for a UI component.
     /// </summary>
     public abstract class UIComponent : IDisposable
     {
-        private IntPtr handle;
+        private IntPtr handle = IntPtr.Zero;
         private bool disposed = false;
         private Dictionary<IntPtr, UIComponent> componentCache = new Dictionary<IntPtr, UIComponent>();
 
         /// <summary>
         /// Gets this control's native handle.
         /// </summary>
-        internal protected IntPtr Handle {
+        internal protected IntPtr Handle
+        {
             get => handle;
             private protected set
             {

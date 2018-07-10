@@ -1,11 +1,13 @@
-﻿using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
+using System;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a control that a user can set and clear.
     /// </summary>
+    [LibuiType("uiCheckbox")]
     public class CheckBox : Control
     {
         private string text;
@@ -17,7 +19,7 @@ namespace LibUISharp
         /// <param name="text">The text specified by the <see cref="CheckBox"/>.</param>
         public CheckBox(string text)
         {
-            Handle = Libui.uiNewCheckbox(text);
+            Handle = Libui.Call<Libui.uiNewCheckbox>()(text);
             this.text = text;
             InitializeEvents();
         }
@@ -35,14 +37,14 @@ namespace LibUISharp
         {
             get
             {
-                text = Libui.uiCheckboxText(this);
+                text = Libui.Call<Libui.uiCheckboxText>()(this);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    Libui.uiCheckboxSetText(this, value);
+                    Libui.Call<Libui.uiCheckboxSetText>()(this, value);
                     text = value;
                 }
             }
@@ -55,14 +57,14 @@ namespace LibUISharp
         {
             get
             {
-                @checked = Libui.uiCheckboxChecked(this);
+                @checked = Libui.Call<Libui.uiCheckboxChecked>()(this);
                 return @checked;
             }
             set
             {
                 if (@checked != value)
                 {
-                    Libui.uiCheckboxSetChecked(this, value);
+                    Libui.Call<Libui.uiCheckboxSetChecked>()(this, value);
                     @checked = value;
                 }
             }
@@ -71,7 +73,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiCheckboxOnToggled(this, (checkbox, data) => { OnToggled(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiCheckboxOnToggled>()(this, (checkbox, data) => { OnToggled(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>
         /// Called when the <see cref="Toggled"/> event is raised.

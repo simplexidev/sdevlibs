@@ -1,10 +1,11 @@
-﻿using LibUISharp.Native;
+﻿#if !DEBUG
+using LibUISharp.Internal;
+#endif
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Text;
-using static LibUISharp.Native.NativeMethods;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
@@ -25,7 +26,6 @@ namespace LibUISharp
         public Application()
         {
             //QUESTION: Is the next line necessary?
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             lock (_lock)
             {
                 if (created)
@@ -65,7 +65,7 @@ namespace LibUISharp
             try
             {
                 QueueMain(action);
-                Libui.uiMain();
+                Libui.Call<Libui.uiMain>()();
             }
             catch (Exception)
             {
@@ -80,12 +80,8 @@ namespace LibUISharp
         /// <param name="action">The <see cref="Action"/> to run.</param>
         public static void QueueMain(Action action)
         {
-            /*lock (_lock)
-            {
-                Libui.uiQueueMain(data => { action?.Invoke(); }, IntPtr.Zero);
-            }*/
             queue.Enqueue(action);
-            Libui.uiQueueMain(data =>
+            Libui.Call<Libui.uiQueueMain>()(data =>
             {
                 lock (_lock)
                 {
@@ -95,26 +91,26 @@ namespace LibUISharp
             }, new IntPtr(queue.Count));
         }
 
-        private void Steps() => Libui.uiMainSteps();
+        private void Steps() => Libui.Call<Libui.uiMainSteps>()();
 
-        private bool Step(bool wait) => Libui.uiMainStep(wait);
+        private bool Step(bool wait) => Libui.Call<Libui.uiMainStep>()(wait);
 
         /// <summary>
         /// Shut down this application.
         /// </summary>
-        public void Shutdown() => Libui.uiQuit();
+        public void Shutdown() => Libui.Call<Libui.uiQuit>()();
 
         /// <summary>
         /// Initializes this UI component.
         /// </summary>
         protected sealed override void InitializeComponent()
         {
-            string error = Libui.uiInit(ref Options);
+            string error = Libui.Call<Libui.uiInit>()(ref Options);
 
             if (!string.IsNullOrEmpty(error))
             {
                 Console.WriteLine(error);
-                Libui.uiFreeInitError(error);
+                Libui.Call<Libui.uiFreeInitError>()(error);
                 throw new UIException(error);
             }
 
@@ -122,8 +118,8 @@ namespace LibUISharp
 #if !DEBUG
             if (PlatformHelper.IsWinNT)
             {
-                IntPtr ptr = WinAPI.GetConsoleWindow();
-                WinAPI.ShowWindow(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
+                IntPtr ptr = Kernel32.Call<Kernel32.GetConsoleWindow>()();
+                Kernel32.Call<Kernel32.ShowWindow>()(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
             }
 #endif
         }
@@ -131,7 +127,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiOnShouldQuit(data =>
+        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiOnShouldQuit>()(data =>
             {
                 CancelEventArgs args = new CancelEventArgs();
                 Exiting?.Invoke(this, args);
@@ -147,14 +143,14 @@ namespace LibUISharp
             if (disposing)
             {
                 if (!disposed)
-                    Libui.uiUnInit();
+                    Libui.Call<Libui.uiUnInit>()();
                 disposed = true;
                 base.Dispose(disposing);
             }
         }
     }
 
-    [UIType("uiInitOptions")]
+    [LibuiStruct("uiInitOptions")]
     [StructLayout(LayoutKind.Sequential)]
     internal class StartupOptions
     {

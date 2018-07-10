@@ -6,11 +6,10 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that can be used to display or edit multiple lines of text.
     /// </summary>
-    public class TextBlock : TextBoxBase
+    public class TextBlock : Control
     {
         private string text;
         private bool isReadOnly;
-        private TextBlock() { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBlock"/> class.
@@ -25,6 +24,11 @@ namespace LibUISharp
             WordWrap = wordWrap;
             InitializeEvents();
         }
+
+        /// <summary>
+        /// Occurs when the <see cref="Text"/> property is changed.
+        /// </summary>
+        public event EventHandler<TextChangedEventArgs> TextChanged;
 
         /// <summary>
         /// Gets whether or not this <see cref="TextBlock"/> wraps it's text to fit within it's sides.
@@ -52,7 +56,7 @@ namespace LibUISharp
         /// <summary>
         /// Gets or sets the displayed text.
         /// </summary>
-        public override string Text
+        public string Text
         {
             get
             {
@@ -72,7 +76,7 @@ namespace LibUISharp
         /// <summary>
         /// Gets or sets whether the text is read-only or not.
         /// </summary>
-        public override bool IsReadOnly
+        public bool IsReadOnly
         {
             get
             {
@@ -93,5 +97,11 @@ namespace LibUISharp
         /// Initializes this UI component's events.
         /// </summary>
         protected override void InitializeEvents() => Libui.uiMultilineEntryOnChanged(this, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
+
+        /// <summary>
+        /// Called when the <see cref="TextChanged"/> event is raised.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
+        protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
     }
 }

@@ -3,6 +3,7 @@
     /// <summary>
     /// Specifies how content is positioned in a container.
     /// </summary>
+    [UIType("uiAlign")]
     public enum Alignment
     {
         /// <summary>

@@ -1,11 +1,12 @@
-﻿using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a control that creates a container that has a border and a title for user-interface (UI) content.
     /// </summary>
+    [LibuiType("uiGroup")]
     public class GroupBox : Control
     {
         private string title;
@@ -17,7 +18,7 @@ namespace LibUISharp
         /// Initializes a new instance of the <see cref="GroupBox"/> class with the specified title.
         /// </summary>
         /// <param name="title">The title of this <see cref="GroupBox"/>.</param>
-        public GroupBox(string title) => Handle = Libui.uiNewGroup(title);
+        public GroupBox(string title) => Handle = Libui.Call<Libui.uiNewGroup>()(title);
 
         /// <summary>
         /// Gets or sets the title for this <see cref="GroupBox"/> control.
@@ -26,14 +27,14 @@ namespace LibUISharp
         {
             get
             {
-                title = Libui.uiGroupTitle(this);
+                title = Libui.Call<Libui.uiGroupTitle>()(this);
                 return title;
             }
             set
             {
                 if (title != value)
                 {
-                    Libui.uiGroupSetTitle(this, value);
+                    Libui.Call<Libui.uiGroupSetTitle>()(this, value);
                     title = value;
                 }
             }
@@ -46,14 +47,14 @@ namespace LibUISharp
         {
             get
             {
-                isMargined = Libui.uiGroupMargined(this);
+                isMargined = Libui.Call<Libui.uiGroupMargined>()(this);
                 return isMargined;
             }
             set
             {
                 if (isMargined != value)
                 {
-                    Libui.uiGroupSetMargined(this, value);
+                    Libui.Call<Libui.uiGroupSetMargined>()(this, value);
                     isMargined = value;
                 }
             }
@@ -69,7 +70,7 @@ namespace LibUISharp
             {
                 if (child != value)
                 {
-                    Libui.uiGroupSetChild(this, value);
+                    Libui.Call<Libui.uiGroupSetChild>()(this, value);
                     child = value;
                 }
             }

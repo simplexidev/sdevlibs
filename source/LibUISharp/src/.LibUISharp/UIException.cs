@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace LibUISharp
 {
     /// <summary>
-    /// Represents UI-related errors.
+    /// Represents a UI-related exception.
     /// </summary>
     [Serializable]
-    public class UIException : Exception
+    public class UIException : ExternalException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UIException"/> class.
