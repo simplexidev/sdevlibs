@@ -14,9 +14,9 @@ namespace LibUISharp.Internal
             {
                 get
                 {
-                    if (PlatformHelper.IsWinNT) return new NativeLibrary(@"lib\libui.dll");
-                    else if (PlatformHelper.IsLinux) return new NativeLibrary(@"lib/libui.so");
-                    else if (PlatformHelper.IsMacOS) return new NativeLibrary(@"lib/libui.dylib");
+                    if (PlatformHelper.IsWinNT) return new NativeLibrary("libui.dll");
+                    else if (PlatformHelper.IsLinux) return new NativeLibrary("libui.so");
+                    else if (PlatformHelper.IsMacOS) return new NativeLibrary("libui.dylib");
                     else throw new PlatformNotSupportedException();
                 }
             }

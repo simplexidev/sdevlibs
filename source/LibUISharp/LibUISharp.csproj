@@ -35,50 +35,30 @@
     <Compile Include="src\LibUISharp\Internal\NM\Libui\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\libui.dll">
+    <!-- These entries will be removed after 'api-chages' is merged. -->
+    <Compile Include="src\.LibUISharp\*.cs" />
+    <Compile Include="src\.LibUISharp\Drawing\*.cs" />
+    <Compile Include="src\.LibUISharp\Internal\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\WinNT\libui.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes\win-x64\native</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="lib\libui.so">
+    <Content Include="lib\Linux\libui.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes\linux-x64\native</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="lib\libui.dylib">
+    <Content Include="lib\MacOS\libui.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes\osx-x64\native</PackagePath>
       <Pack>true</Pack>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ref\*.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="src\.LibUISharp\Application.cs" />
-    <Compile Include="src\.LibUISharp\Button.cs" />
-    <Compile Include="src\.LibUISharp\CheckBox.cs" />
-    <Compile Include="src\.LibUISharp\ComboBox.cs" />
-    <Compile Include="src\.LibUISharp\ContainerControl.cs" />
-    <Compile Include="src\.LibUISharp\Control.cs" />
-    <Compile Include="src\.LibUISharp\EditableComboBox.cs" />
-    <Compile Include="src\.LibUISharp\GroupBox.cs" />
-    <Compile Include="src\.LibUISharp\Internal\ObjectExtensions.cs" />
-    <Compile Include="src\.LibUISharp\Internal\Libraries.cs" />
-    <Compile Include="src\.LibUISharp\Internal\Libraries.Kernel32.cs" />
-    <Compile Include="src\.LibUISharp\Internal\Libraries.Libui.cs" />
-    <Compile Include="src\.LibUISharp\Internal\Libraries.User32.cs" />
-    <Compile Include="src\.LibUISharp\Internal\PlatformHelper.cs" />
-    <Compile Include="src\.LibUISharp\Internal\LibuiTypeAttribute.cs" />
-    <Compile Include="src\.LibUISharp\Label.cs" />
-    <Compile Include="src\.LibUISharp\ProgressBar.cs" />
-    <Compile Include="src\.LibUISharp\Separator.cs" />
-    <Compile Include="src\.LibUISharp\Slider.cs" />
-    <Compile Include="src\.LibUISharp\SpinBox.cs" />
-    <Compile Include="src\.LibUISharp\StackContainer.cs" />
-    <Compile Include="src\.LibUISharp\TabContainer.cs" />
-    <Compile Include="src\.LibUISharp\TextBox.cs" />
-    <Compile Include="src\.LibUISharp\UIComponent.cs" />
-    <Compile Include="src\.LibUISharp\UIException.cs" />
-    <Compile Include="src\.LibUISharp\Window.cs" />
-    <Compile Include="src\.LibUISharp\Window.Dialogs.cs" />
+    <None Include="ref\ui.h" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.1.0" />
