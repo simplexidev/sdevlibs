@@ -1,11 +1,13 @@
-﻿using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
+using System;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a control that encapsulates a group of radio buttons.
     /// </summary>
+    [LibuiType("uiRadioButtons")]
     public class RadioButtonList : Control
     {
         private int index;
@@ -15,7 +17,7 @@ namespace LibUISharp
         /// </summary>
         public RadioButtonList()
         {
-            Handle = Libui.uiNewRadioButtons();
+            Handle = Libui.Call<Libui.uiNewRadioButtons>()();
             InitializeEvents();
         }
 
@@ -31,14 +33,14 @@ namespace LibUISharp
         {
             get
             {
-                index = Libui.uiRadioButtonsSelected(this);
+                index = Libui.Call<Libui.uiRadioButtonsSelected>()(this);
                 return index;
             }
             set
             {
                 if (index != value)
                 {
-                    Libui.uiRadioButtonsSetSelected(this, value);
+                    Libui.Call<Libui.uiRadioButtonsSetSelected>()(this, value);
                     index = value;
                 }
             }
@@ -48,7 +50,7 @@ namespace LibUISharp
         /// Adds a radio button to the end of the list.
         /// </summary>
         /// <param name="item">The text of the radio button to be added to the end of the list.</param>
-        public void Add(string item) => Libui.uiRadioButtonsAppend(this, item);
+        public void Add(string item) => Libui.Call<Libui.uiRadioButtonsAppend>()(this, item);
 
         /// <summary>
         /// Adds radio buttons to the end of the list.
@@ -76,6 +78,6 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiRadioButtonsOnSelected(this, (btn, data) => { OnSelectedIndexChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiRadioButtonsOnSelected>()(this, (btn, data) => { OnSelectedIndexChanged(EventArgs.Empty); }, IntPtr.Zero);
     }
 }

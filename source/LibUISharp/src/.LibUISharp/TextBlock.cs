@@ -1,11 +1,13 @@
-﻿using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
+using System;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a control that can be used to display or edit multiple lines of text.
     /// </summary>
+    [LibuiType("uiMultilineEntry")]
     public class TextBlock : Control
     {
         private string text;
@@ -18,9 +20,9 @@ namespace LibUISharp
         public TextBlock(bool wordWrap = true)
         {
             if (wordWrap)
-                Handle = Libui.uiNewMultilineEntry();
+                Handle = Libui.Call<Libui.uiNewMultilineEntry>()();
             else
-                Handle = Libui.uiNewNonWrappingMultilineEntry();
+                Handle = Libui.Call<Libui.uiNewNonWrappingMultilineEntry>()();
             WordWrap = wordWrap;
             InitializeEvents();
         }
@@ -39,7 +41,7 @@ namespace LibUISharp
         /// Adds the specified line of text to the end of the text currently contained in this <see cref="TextBlock"/>.
         /// </summary>
         /// <param name="line">The line to add.</param>
-        public void Append(string line) => Libui.uiMultilineEntryAppend(this, line);
+        public void Append(string line) => Libui.Call<Libui.uiMultilineEntryAppend>()(this, line);
 
         /// <summary>
         /// Adds the specified lines of text to the end of the text currently contained in this <see cref="EditableComboBox"/>.
@@ -60,14 +62,14 @@ namespace LibUISharp
         {
             get
             {
-                text = Libui.uiMultilineEntryText(this);
+                text = Libui.Call<Libui.uiMultilineEntryText>()(this);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    Libui.uiMultilineEntrySetText(this, value);
+                    Libui.Call<Libui.uiMultilineEntrySetText>()(this, value);
                     text = value;
                 }
             }
@@ -80,14 +82,14 @@ namespace LibUISharp
         {
             get
             {
-                isReadOnly = Libui.uiMultilineEntryReadOnly(this);
+                isReadOnly = Libui.Call<Libui.uiMultilineEntryReadOnly>()(this);
                 return isReadOnly;
             }
             set
             {
                 if (isReadOnly != value)
                 {
-                    Libui.uiEntrySetReadOnly(this, value);
+                    Libui.Call<Libui.uiEntrySetReadOnly>()(this, value);
                     isReadOnly = value;
                 }
             }
@@ -96,7 +98,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected override void InitializeEvents() => Libui.uiMultilineEntryOnChanged(this, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected override void InitializeEvents() => Libui.Call<Libui.uiMultilineEntryOnChanged>()(this, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>
         /// Called when the <see cref="TextChanged"/> event is raised.

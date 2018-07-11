@@ -1,12 +1,14 @@
-﻿using System;
+﻿using LibUISharp.Internal;
+using System;
 using System.Runtime.InteropServices;
-using static LibUISharp.Native.NativeMethods;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Implements the basic functonality required by a date-time picker.
     /// </summary>
+    [LibuiType("uiDateTimePicker")]
     public abstract class DateTimePickerBase : Control
     {
         private DateTime dateTime;
@@ -28,7 +30,7 @@ namespace LibUISharp
         {
             get
             {
-                Libui.uiDateTimePickerTime(this, out UIDateTime time);
+                Libui.Call<Libui.uiDateTimePickerTime>()(this, out UIDateTime time);
                 dateTime = UIDateTime.ToDateTime(time);
                 return dateTime;
             }
@@ -36,7 +38,7 @@ namespace LibUISharp
             {
                 if (dateTime != value)
                 {
-                    Libui.uiDateTimePickerSetTime(this, UIDateTime.FromDateTime(value));
+                    Libui.Call<Libui.uiDateTimePickerSetTime>()(this, UIDateTime.FromDateTime(value));
                     dateTime = value;
                 }
             }
@@ -45,7 +47,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiDateTimePickerOnChanged(this, (d, data) => { OnDateTimeChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiDateTimePickerOnChanged>()(this, (d, data) => { OnDateTimeChanged(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>
         /// Called when the <see cref="DateTimeChanged"/> event is raised.
@@ -56,7 +58,6 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that allows the user to select and display a date.
     /// </summary>
-    [UIType("uiDateTimePicker")]
     public class DatePicker : DateTimePickerBase
     {
         /// <summary>
@@ -64,7 +65,7 @@ namespace LibUISharp
         /// </summary>
         public DatePicker() : base()
         {
-            Handle = Libui.uiNewDatePicker();
+            Handle = Libui.Call<Libui.uiNewDatePicker>()();
             InitializeEvents();
         }
 
@@ -87,7 +88,6 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that allows the user to select and display a time.
     /// </summary>
-    [UIType("uiDateTimePicker")]
     public class TimePicker : DateTimePickerBase
     {
         /// <summary>
@@ -95,7 +95,7 @@ namespace LibUISharp
         /// </summary>
         public TimePicker() : base()
         {
-            Handle = Libui.uiNewTimePicker();
+            Handle = Libui.Call<Libui.uiNewTimePicker>()();
             InitializeEvents();
         }
 
@@ -118,7 +118,6 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that allows the user to select and display a date and time.
     /// </summary>
-    [UIType("uiDateTimePicker")]
     public class DateTimePicker : DateTimePickerBase
     {
         /// <summary>
@@ -126,7 +125,7 @@ namespace LibUISharp
         /// </summary>
         public DateTimePicker() : base()
         {
-            Handle = Libui.uiNewDateTimePicker();
+            Handle = Libui.Call<Libui.uiNewDateTimePicker>()();
             InitializeEvents();
         }
 
@@ -161,7 +160,7 @@ namespace LibUISharp
         public int Second => DateTime.Second;
     }
 
-    [UIType("tm")]
+    [LibuiType("tm")]
     [StructLayout(LayoutKind.Sequential)]
     internal class UIDateTime
     {

@@ -456,7 +456,137 @@ namespace LibUISharp.Internal
             [UnmanagedFunctionPointer(Convention)]
             internal delegate IntPtr uiNewEditableCombobox();
 
-            // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // _UI_EXTERN void uiRadioButtonsAppend(uiRadioButtons *r, const char *text);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiRadioButtonsAppend(IntPtr r, string text);
+
+            // _UI_EXTERN int uiRadioButtonsSelected(uiRadioButtons *r);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate int uiRadioButtonsSelected(IntPtr r);
+
+            // _UI_EXTERN void uiRadioButtonsSetSelected(uiRadioButtons *r, int n);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiRadioButtonsSetSelected(IntPtr r, int n);
+
+            // _UI_EXTERN void uiRadioButtonsOnSelected(uiRadioButtons *r, void (*f)(uiRadioButtons *, void *), void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiRadioButtonsOnSelected(IntPtr r, uiRadioButtonsOnSelected_f f, IntPtr data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiRadioButtonsOnSelected_f(IntPtr r, IntPtr data);
+
+            // _UI_EXTERN uiRadioButtons *uiNewRadioButtons(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewRadioButtons();
+
+            // _UI_EXTERN void uiDateTimePickerTime(uiDateTimePicker *d, struct tm *time);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDateTimePickerTime(IntPtr d, out UIDateTime time);
+
+            // _UI_EXTERN void uiDateTimePickerSetTime(uiDateTimePicker *d, const struct tm *time);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDateTimePickerSetTime(IntPtr d, UIDateTime time);
+
+            // _UI_EXTERN void uiDateTimePickerOnChanged(uiDateTimePicker *d, void (*f)(uiDateTimePicker *, void *), void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDateTimePickerOnChanged(IntPtr d, uiDateTimePickerOnChanged_f f, IntPtr data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDateTimePickerOnChanged_f(IntPtr d, IntPtr data);
+
+            // _UI_EXTERN uiDateTimePicker *uiNewDateTimePicker(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewDateTimePicker();
+
+            // _UI_EXTERN uiDateTimePicker *uiNewDatePicker(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewDatePicker();
+
+            // _UI_EXTERN uiDateTimePicker *uiNewTimePicker(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewTimePicker();
+
+            // _UI_EXTERN char *uiMultilineEntryText(uiMultilineEntry *e);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate string uiMultilineEntryText(IntPtr e);
+
+            // _UI_EXTERN void uiMultilineEntrySetText(uiMultilineEntry *e, const char *text);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMultilineEntrySetText(IntPtr e, string text);
+
+            // _UI_EXTERN void uiMultilineEntryAppend(uiMultilineEntry *e, const char *text);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMultilineEntryAppend(IntPtr e, string text);
+
+            // _UI_EXTERN void uiMultilineEntryOnChanged(uiMultilineEntry *e, void (*f)(uiMultilineEntry *e, void *data), void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMultilineEntryOnChanged(IntPtr e, uiMultilineEntryOnChanged_f f, IntPtr data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMultilineEntryOnChanged_f(IntPtr e, IntPtr data);
+
+            // _UI_EXTERN int uiMultilineEntryReadOnly(uiMultilineEntry *e);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate bool uiMultilineEntryReadOnly(IntPtr e);
+
+            // _UI_EXTERN void uiMultilineEntrySetReadOnly(uiMultilineEntry *e, int readonly);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMultilineEntrySetReadOnly(IntPtr e, bool @readonly);
+
+            // _UI_EXTERN uiMultilineEntry *uiNewMultilineEntry(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewMultilineEntry();
+
+            // _UI_EXTERN uiMultilineEntry *uiNewNonWrappingMultilineEntry(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewNonWrappingMultilineEntry();
+
+            // _UI_EXTERN void uiMenuItemEnable(uiMenuItem *m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMenuItemEnable(IntPtr m);
+
+            // _UI_EXTERN void uiMenuItemDisable(uiMenuItem *m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMenuItemDisable(IntPtr m);
+
+            // _UI_EXTERN void uiMenuItemOnClicked(uiMenuItem *m, void (*f)(uiMenuItem *sender, uiWindow *window, void *data), void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMenuItemOnClicked(IntPtr m, uiMenuItemOnClicked_f f, IntPtr data);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void uiMenuItemOnClicked_f(IntPtr menuItem, IntPtr window, IntPtr data);
+
+            // _UI_EXTERN int uiMenuItemChecked(uiMenuItem *m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate bool uiMenuItemChecked(IntPtr m);
+
+            // _UI_EXTERN void uiMenuItemSetChecked(uiMenuItem *m, int checked);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMenuItemSetChecked(IntPtr m, bool @checked);
+
+            // _UI_EXTERN uiMenuItem *uiMenuAppendItem(uiMenu *m, const char *name);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiMenuAppendItem(IntPtr m, string name);
+
+            // _UI_EXTERN uiMenuItem *uiMenuAppendCheckItem(uiMenu *m, const char *name);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiMenuAppendCheckItem(IntPtr m, string name);
+
+            // _UI_EXTERN uiMenuItem *uiMenuAppendQuitItem(uiMenu *m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiMenuAppendQuitItem(IntPtr m);
+
+            // _UI_EXTERN uiMenuItem *uiMenuAppendPreferencesItem(uiMenu *m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiMenuAppendPreferencesItem(IntPtr m);
+
+            // _UI_EXTERN uiMenuItem *uiMenuAppendAboutItem(uiMenu *m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiMenuAppendAboutItem(IntPtr m);
+
+            // _UI_EXTERN void uiMenuAppendSeparator(uiMenu *m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiMenuAppendSeparator(IntPtr m);
+
+            // _UI_EXTERN uiMenu *uiNewMenu(const char *name);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewMenu(string name);
 
             // _UI_EXTERN char *uiOpenFile(uiWindow *parent);
             [UnmanagedFunctionPointer(Convention)]
