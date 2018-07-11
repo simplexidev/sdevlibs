@@ -11,13 +11,12 @@ namespace LibUISharp
     /// Represents a window that makes up an application's user interface.
     /// </summary>
     [LibuiType("uiWindow")]
-    public partial class Window : Control
+    public partial class Window : SingleContainer<Window, Control>
     {
         private Control child;
         private bool isMargined, fullscreen, borderless;
         private Size size;
         private string title;
-        private bool disposed = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class, with the options of specifying
@@ -154,9 +153,8 @@ namespace LibUISharp
         /// <summary>
         /// Gets or sets the child <see cref="Control"/> of this window.
         /// </summary>
-        public Control Child
+        public override Control Child
         {
-            get => child;
             set
             {
                 if (Handle != IntPtr.Zero)
@@ -233,27 +231,6 @@ namespace LibUISharp
             }, IntPtr.Zero);
 
             Libui.Call<Libui.uiWindowOnContentSizeChanged>()(this, (window, data) => { OnSizeChanged(EventArgs.Empty); }, IntPtr.Zero);
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        /// <param name="disposing">Whether or not this control is disposing.</param>
-        protected sealed override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    if (child != null)
-                    {
-                        child.Dispose();
-                        child = null;
-                    }
-                }
-                disposed = true;
-                base.Dispose(disposing);
-            }
         }
     }
 }

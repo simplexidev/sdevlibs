@@ -8,23 +8,23 @@ namespace LibUISharp
     /// Represents a control that contains multiple <see cref="TabPage"/> objects that share the same space on the screen.
     /// </summary>
     [LibuiType("uiTab")]
-    public class TabContainer : ContainerControl<TabPage, TabContainer.ItemCollection>
+    public class TabContainer : MultiContainer<TabContainer, TabContainer.ControlCollection, TabPage>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TabContainer"/> class.
         /// </summary>
         public TabContainer() => Handle = Libui.Call<Libui.uiNewTab>()();
-        
+
         /// <summary>
         /// Represents a collection of child <see cref="TabPage"/> objects inside of a <see cref="TabContainer"/>.
         /// </summary>
-        public class ItemCollection : ControlCollection<TabPage>
+        public new class ControlCollection : MultiContainer<TabContainer, ControlCollection, TabPage>.ControlCollection
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="ItemCollection"/> class with the specified parent.
             /// </summary>
             /// <param name="parent">The parent <see cref="TabContainer"/> of this <see cref="ItemCollection"/>.</param>
-            public ItemCollection(TabContainer parent) : base(parent) { }
+            public ControlCollection(TabContainer parent) : base(parent) { }
 
             /// <summary>
             /// Adds a <see cref="TabPage"/> to the end of the <see cref="ItemCollection"/>.
@@ -47,7 +47,7 @@ namespace LibUISharp
             {
                 if (item == null) throw new ArgumentNullException(nameof(item));
                 base.AddAt(index, item);
-                Libui.Call<Libui.uiTabInsertAt > ()(Owner, item.Name, index, item);
+                Libui.Call<Libui.uiTabInsertAt>()(Owner, item.Name, index, item);
                 item.DelayRender();
             }
 
@@ -59,7 +59,7 @@ namespace LibUISharp
             public override bool Remove(TabPage item)
             {
                 if (item == null) throw new ArgumentNullException(nameof(item));
-                Libui.Call<Libui.uiTabDelete > ()(Owner, item.Index);
+                Libui.Call<Libui.uiTabDelete>()(Owner, item.Index);
                 return base.Remove(item);
             }
         }
@@ -68,7 +68,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a single tab page in a <see cref="TabContainer"/>.
     /// </summary>
-    public class TabPage : Control
+    public class TabPage : SingleContainer<TabPage, Control>
     {
         private Control childField;
         private bool initialized = false;
@@ -97,12 +97,11 @@ namespace LibUISharp
         public string Name { get; }
 
         /// <summary>
-        /// Gets the child contained in this <see cref="TabPage"/>.
+        /// Sets the child contained in this <see cref="TabPage"/>.
         /// </summary>
-        public Control Child
+        public override Control Child
         {
-            get => childField;
-            protected set
+            set
             {
                 if (childField != value)
                 {
@@ -121,7 +120,7 @@ namespace LibUISharp
             {
                 if (Parent != null && Parent != IntPtr.Zero)
                 {
-                    isMargined = Libui.Call<Libui.uiTabMargined > ()(Parent, Index);
+                    isMargined = Libui.Call<Libui.uiTabMargined>()(Parent, Index);
                     initialized = true;
                 }
                 return isMargined;
@@ -131,7 +130,7 @@ namespace LibUISharp
                 if (isMargined != value)
                 {
                     if (Parent != null && Parent != IntPtr.Zero)
-                        Libui.Call<Libui.uiTabSetMargined > ()(Parent, Index, value);
+                        Libui.Call<Libui.uiTabSetMargined>()(Parent, Index, value);
                     isMargined = value;
                 }
             }
@@ -143,7 +142,7 @@ namespace LibUISharp
         protected internal override void DelayRender()
         {
             if (!initialized && isMargined)
-                Libui.Call<Libui.uiTabSetMargined > ()(Parent, Index, isMargined);
+                Libui.Call<Libui.uiTabSetMargined>()(Parent, Index, isMargined);
         }
     }
 }

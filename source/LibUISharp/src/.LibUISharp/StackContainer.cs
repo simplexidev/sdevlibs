@@ -3,12 +3,12 @@ using System;
 using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
-{
+{ 
     /// <summary>
     /// Arranges child elements into a single line that can be oriented horizontally or vertically.
     /// </summary>
     [LibuiType("uiBox")]
-    public class StackContainer : ContainerControl<Control, StackContainer.ItemCollection>
+    public class StackContainer : MultiContainer<StackContainer, StackContainer.ControlCollection, Control>
     {
         private bool isPadded;
 
@@ -60,24 +60,24 @@ namespace LibUISharp
         /// <summary>
         /// Represents a collection of child <see cref="Control"/>s inside of a <see cref="StackContainer"/>.
         /// </summary>
-        public sealed class ItemCollection : ControlCollection<Control>
+        public new class ControlCollection : MultiContainer<StackContainer, ControlCollection, Control>.ControlCollection
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="ItemCollection"/> class with the specified parent.
+            /// Initializes a new instance of the <see cref="ControlCollection"/> class with the specified parent.
             /// </summary>
-            /// <param name="owner">The parent <see cref="StackContainer"/> of this <see cref="ItemCollection"/>.</param>
-            public ItemCollection(StackContainer owner) : base(owner) { }
+            /// <param name="owner">The parent <see cref="StackContainer"/> of this <see cref="ControlCollection"/>.</param>
+            public ControlCollection(StackContainer owner) : base(owner) { }
 
             /// <summary>
-            /// Adds a <see cref="Control"/> to the end of the <see cref="ItemCollection"/>.
+            /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="ItemCollection"/>.</param>
+            /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param>
             public override void Add(Control item) => Add(item, false);
 
             /// <summary>
-            /// Adds a <see cref="Control"/> to the end of the <see cref="ItemCollection"/>.
+            /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="ItemCollection"/>.</param>
+            /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param>
             /// <param name="stretches">Whether or not <paramref name="item"/> stretches the area of the parent <see cref="Control"/></param>
             public void Add(Control item, bool stretches = false)
             {
@@ -88,17 +88,17 @@ namespace LibUISharp
             }
 
             /// <summary>
-            /// <see cref="ItemCollection"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
+            /// <see cref="ControlCollection"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
             /// </summary>
             /// <param name="index">The zero-based index at which item should be inserted.</param>
-            /// <param name="item">The <see cref="Control"/> to insert into the <see cref="ItemCollection"/>.</param>
+            /// <param name="item">The <see cref="Control"/> to insert into the <see cref="ControlCollection"/>.</param>
             public override void AddAt(int index, Control item) => throw new NotSupportedException();
 
             /// <summary>
-            /// Removes the first occurrence of a specific <see cref="Control"/> from the <see cref="ItemCollection"/>.
+            /// Removes the first occurrence of a specific <see cref="Control"/> from the <see cref="ControlCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="Control"/> to remove from the <see cref="ItemCollection"/>.</param>
-            /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ItemCollection"/>.</returns>
+            /// <param name="item">The <see cref="Control"/> to remove from the <see cref="ControlCollection"/>.</param>
+            /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ControlCollection"/>.</returns>
             public override bool Remove(Control item)
             {
                 Libui.Call<Libui.uiBoxDelete>()(Owner, item.Index);
