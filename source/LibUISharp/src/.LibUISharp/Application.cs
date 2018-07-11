@@ -1,6 +1,4 @@
-﻿#if !DEBUG
-using LibUISharp.Internal;
-#endif
+﻿using LibUISharp.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +23,6 @@ namespace LibUISharp
         /// </summary>
         public Application()
         {
-            //QUESTION: Is the next line necessary?
             lock (_lock)
             {
                 if (created)
@@ -150,7 +147,7 @@ namespace LibUISharp
         }
     }
 
-    [LibuiStruct("uiInitOptions")]
+    [LibuiType("uiInitOptions")]
     [StructLayout(LayoutKind.Sequential)]
     internal class StartupOptions
     {
