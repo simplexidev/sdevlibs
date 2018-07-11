@@ -71,38 +71,38 @@ namespace LibUISharp
             /// <summary>
             /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param>
-            public override void Add(Control item) => Add(item, false);
+            /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param>
+            public override void Add(Control child) => Add(child, false);
 
             /// <summary>
             /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param>
-            /// <param name="stretches">Whether or not <paramref name="item"/> stretches the area of the parent <see cref="Control"/></param>
-            public void Add(Control item, bool stretches = false)
+            /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param>
+            /// <param name="stretches">Whether or not <paramref name="child"/> stretches the area of the parent <see cref="Control"/></param>
+            public void Add(Control child, bool stretches = false)
             {
-                if (Contains(item)) throw new InvalidOperationException("Cannot add the same control more than once.");
-                if (item == null) return;
-                Libui.Call<Libui.uiBoxAppend>()(Owner, item, stretches);
-                base.Add(item);
+                if (Contains(child)) throw new InvalidOperationException("Cannot add the same control more than once.");
+                if (child == null) return;
+                Libui.Call<Libui.uiBoxAppend>()(Owner, child, stretches);
+                base.Add(child);
             }
 
             /// <summary>
             /// <see cref="ControlCollection"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
             /// </summary>
-            /// <param name="index">The zero-based index at which item should be inserted.</param>
-            /// <param name="item">The <see cref="Control"/> to insert into the <see cref="ControlCollection"/>.</param>
-            public override void AddAt(int index, Control item) => throw new NotSupportedException();
+            /// <param name="index">The zero-based index at which child should be inserted.</param>
+            /// <param name="child">The <see cref="Control"/> to insert into the <see cref="ControlCollection"/>.</param>
+            public override void AddAt(int index, Control child) => throw new NotSupportedException();
 
             /// <summary>
             /// Removes the first occurrence of a specific <see cref="Control"/> from the <see cref="ControlCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="Control"/> to remove from the <see cref="ControlCollection"/>.</param>
-            /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ControlCollection"/>.</returns>
-            public override bool Remove(Control item)
+            /// <param name="child">The <see cref="Control"/> to remove from the <see cref="ControlCollection"/>.</param>
+            /// <returns>true if child is successfully removed; otherwise, false. This method also returns false if child was not found in the <see cref="ControlCollection"/>.</returns>
+            public override bool Remove(Control child)
             {
-                Libui.Call<Libui.uiBoxDelete>()(Owner, item.Index);
-                return base.Remove(item);
+                Libui.Call<Libui.uiBoxDelete>()(Owner, child.Index);
+                return base.Remove(child);
             }
         }
     }

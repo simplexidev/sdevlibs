@@ -151,7 +151,7 @@ namespace LibUISharp
         }
 
         /// <summary>
-        /// Gets or sets the child <see cref="Control"/> of this window.
+        /// Sets the child <see cref="Control"/> of this window.
         /// </summary>
         public override Control Child
         {

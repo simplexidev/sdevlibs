@@ -60,7 +60,7 @@ namespace LibUISharp
         }
 
         /// <summary>
-        /// Gets or sets this <see cref="GroupBox"/> object's child <see cref="Control"/>.
+        /// Sets this <see cref="GroupBox"/> object's child <see cref="Control"/>.
         /// </summary>
         public override Control Child
         {
