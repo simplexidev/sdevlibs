@@ -1,20 +1,9 @@
 ﻿using LibUISharp.Internal;
 using System;
-using System.Collections.Generic;
 using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
-    public enum MenuItemType
-    {
-        Basic,
-        Checkable,
-        Preferences,
-        About,
-        Quit,
-        Separator
-    }
-
     /// <summary>
     /// Represents a menu control that enables you to hierarchically organize elements associated with commands and event handlers.
     /// </summary>
@@ -35,121 +24,132 @@ namespace LibUISharp
         /// Gets the name of this <see cref="Menu"/>.
         /// </summary>
         public string Name { get; }
-        
+
         /// <summary>
-        /// Represents a collection of child <see cref="Control"/>s inside of a <see cref="StackContainer"/>.
+        /// Represents a collection of child <see cref="Control"/>s inside of a <see cref="Menu"/>.
         /// </summary>
         public new class ControlCollection : MultiContainer<Menu, ControlCollection, MenuItemBase>.ControlCollection
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="ControlCollection"/> class with the specified parent.
             /// </summary>
-            /// <param name="owner">The parent <see cref="StackContainer"/> of this <see cref="ControlCollection"/>.</param>
+            /// <param name="owner">The parent <see cref="Menu"/> of this <see cref="ControlCollection"/>.</param>
             public ControlCollection(Menu owner) : base(owner) { }
 
-            /// <summary>
-            /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection"/>.
-            /// </summary>
-            /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param>
-            public override void Add(MenuItemBase child)
+            private new void Add(MenuItemBase child)
             {
                 if (Contains(child)) throw new InvalidOperationException("Cannot add the same control more than once.");
-                if (child == null) return;
 
-                if (child is MenuItem)
+                if (child == null)
                 {
-                    MenuItem c = child as MenuItem;
-                    Libui.Call<Libui.uiMenuAppendItem>()(Owner, c.Name);
-                }
-                else if (child is CheckMenuItem)
-                {
-                    CheckMenuItem c = child as CheckMenuItem;
-                    Libui.Call<Libui.uiMenuAppendCheckItem>()(Owner, c.Name);
-                }
-                else if (child is PreferencesMenuItem)
-                {
-                    PreferencesMenuItem c = child as PreferencesMenuItem;
-                    Libui.Call<Libui.uiMenuAppendPreferencesItem>()(Owner);
-                }
-                else if (child is AboutMenuItem)
-                {
-                    AboutMenuItem c = child as AboutMenuItem;
-                    Libui.Call<Libui.uiMenuAppendAboutItem>()(Owner);
-                }
-                else if (child is QuitMenuItem)
-                {
-                    QuitMenuItem c = child as QuitMenuItem;
-                    Libui.Call<Libui.uiMenuAppendQuitItem>()(Owner);
+                    Libui.Call<Libui.uiMenuAppendSeparator>()(Owner);
+                    return;
                 }
                 base.Add(child);
             }
 
             /// <summary>
+            /// Adds a <see cref="MenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// </summary>
+            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param> 
+            /// <param name="click">The action invoked when the child is clicked.</param> 
+            public void AddItem(string name, Action<IntPtr> click = null)
+            {
+                MenuItem item = new MenuItem(Libui.Call<Libui.uiMenuAppendItem>()(Owner, name), name);
+                if (click != null)
+                {
+                    item.Clicked += (sender, args) =>
+                    {
+                        if (args != null)
+                            click(args.Data);
+                    };
+                }
+                Add(item);
+            }
+
+            /// <summary>
+            /// Adds a <see cref="CheckMenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// </summary>
+            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param> 
+            /// <param name="click">The action invoked when the child is clicked.</param> 
+            public void AddCheckItem(string name, Action<IntPtr> click = null)
+            {
+                CheckMenuItem item = new CheckMenuItem(Libui.Call<Libui.uiMenuAppendCheckItem>()(Owner, name), name);
+                if (click != null)
+                {
+                    item.Clicked += (sender, args) =>
+                    {
+                        if (args != null)
+                            click(args.Data);
+                    };
+                }
+                Add(item);
+            }
+
+            /// <summary>
+            /// Adds a <see cref="PreferencesMenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// </summary>
+            /// <param name="click">The action invoked when the child is clicked.</param> 
+            public void AddPreferencesItem(Action<IntPtr> click = null)
+            {
+                PreferencesMenuItem item = new PreferencesMenuItem(Libui.Call<Libui.uiMenuAppendPreferencesItem>()(Owner));
+                if (click != null)
+                {
+                    item.Clicked += (sender, args) =>
+                    {
+                        if (args != null)
+                            click(args.Data);
+                    };
+                }
+                Add(item);
+            }
+
+            /// <summary>
+            /// Adds a <see cref="AboutMenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// </summary>
+            /// <param name="click">The action invoked when the child is clicked.</param> 
+            public void AddAboutItem(Action<IntPtr> click = null)
+            {
+                AboutMenuItem item = new AboutMenuItem(Libui.Call<Libui.uiMenuAppendAboutItem>()(Owner));
+                if (click != null)
+                {
+                    item.Clicked += (sender, args) =>
+                    {
+                        if (args != null)
+                            click(args.Data);
+                    };
+                }
+                Add(item);
+            }
+
+            /// <summary>
+            /// Adds a <see cref="QuitMenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// </summary>
+            public void AddQuitItem()
+            {
+                QuitMenuItem item = new QuitMenuItem(Libui.Call<Libui.uiMenuAppendQuitItem>()(Owner));
+                Add(item);
+            }
+
+            /// <summary>
+            /// Adds a separator to the end of the <see cref="ControlCollection"/>.
+            /// </summary>
+            public void AddSeparator() => Add(null);
+            
+            /// <summary>
             /// <see cref="ControlCollection"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
             /// </summary>
             /// <param name="index">The zero-based index at which child should be inserted.</param>
             /// <param name="child">The <see cref="Control"/> to insert into the <see cref="ControlCollection"/>.</param>
-            public override void AddAt(int index, MenuItemBase child) => throw new NotSupportedException();
+            private new void AddAt(int index, MenuItemBase child) => throw new NotSupportedException();
 
             /// <summary>
             /// <see cref="ControlCollection"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
             /// </summary>
             /// <param name="child">The <see cref="Control"/> to remove from the <see cref="ControlCollection"/>.</param>
             /// <returns>true if child is successfully removed; otherwise, false. This method also returns false if child was not found in the <see cref="ControlCollection"/>.</returns>
-            public override bool Remove(MenuItemBase child) => throw new NotSupportedException();
+            private new bool Remove(MenuItemBase child) => throw new NotSupportedException();
         }
-
-        /// <summary>
-        /// Adds a new <see cref="PreferencesMenuItem"/> to the list.
-        /// </summary>
-        /// <param name="click">The action invoked when the child is clicked.</param>
-        public void AddPreferencesItem(Action<IntPtr> click = null)
-        {
-            PreferencesMenuItem child = new PreferencesMenuItem(Libui.Call<Libui.uiMenuAppendPreferencesItem>()(this));
-
-            if (click != null)
-            {
-                child.Clicked += (sender, args) =>
-                {
-                    if (args != null)
-                        click(args.Data);
-                };
-            }
-            Items.Add(child);
-        }
-
-        /// <summary>
-        /// Adds a new <see cref="AboutMenuItem"/> to the list.
-        /// </summary>
-        /// <param name="click">The action invoked when the child is clicked.</param>
-        public void AddAboutItem(Action<IntPtr> click = null)
-        {
-            AboutMenuItem child = new AboutMenuItem(Libui.Call<Libui.uiMenuAppendAboutItem>()(this));
-
-            if (click != null)
-            {
-                child.Clicked += (sender, args) =>
-                {
-                    if (args != null)
-                        click(args.Data);
-                };
-            }
-            Items.Add(child);
-        }
-
-        /// <summary>
-        /// Adds a new <see cref="QuitMenuItem"/> to the list.
-        /// </summary>
-        public void AddQuitItem()
-        {
-            QuitMenuItem child = new QuitMenuItem(Libui.Call<Libui.uiMenuAppendQuitItem>()(this));
-            Items.Add(child);
-        }
-
-        /// <summary>
-        /// Adds a new separator child to the list.
-        /// </summary>
-        public void AddSeparator() => Libui.Call<Libui.uiMenuAppendSeparator>()(this);
     }
 
     /// <summary>

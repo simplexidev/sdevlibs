@@ -157,7 +157,7 @@ namespace LibUISharp
             /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection{TContainer, TChild}"/>.
             /// </summary>
             /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection{TContainer, TChild}"/>.</param>
-            public virtual void Add(TChild child)
+            protected virtual void Add(TChild child)
             {
                 if (child == null) throw new ArgumentNullException(nameof(child));
                 if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlCollection.");
@@ -183,7 +183,7 @@ namespace LibUISharp
             /// </summary>
             /// <param name="index">The zero-based index at which item should be inserted.</param>
             /// <param name="child">The <see cref="Control"/> to insert into the <see cref="ControlCollection{TContainer, TChild}"/>.</param>
-            public virtual void AddAt(int index, TChild child)
+            protected virtual void AddAt(int index, TChild child)
             {
                 if (child == null) throw new ArgumentNullException(nameof(child));
                 if (index < 0 || index > size) throw new ArgumentOutOfRangeException(nameof(index));
@@ -212,7 +212,7 @@ namespace LibUISharp
             /// </summary>
             /// <param name="child">The <see cref="Control"/> to remove from the <see cref="ControlCollection{TContainer, TChild}"/>.</param>
             /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ControlCollection{TContainer, TChild}"/>.</returns>
-            public virtual bool Remove(TChild child)
+            protected virtual bool Remove(TChild child)
             {
                 if (isReadOnly) throw new NotSupportedException("Cannot remove items while the collection is read-only.");
                 if (!Contains(child))
@@ -309,6 +309,7 @@ namespace LibUISharp
 
             void ICollection<TChild>.Add(TChild child) => Add(child);
             void ICollection<TChild>.CopyTo(TChild[] array, int index) => CopyTo(array, index);
+            bool ICollection<TChild>.Remove(TChild child) => Remove(child);
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <summary>

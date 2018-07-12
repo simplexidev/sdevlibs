@@ -29,38 +29,38 @@ namespace LibUISharp
             /// <summary>
             /// Adds a <see cref="TabPage"/> to the end of the <see cref="ItemCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="TabPage"/> to be added to the end of the <see cref="ItemCollection"/>.</param>
-            public override void Add(TabPage item)
+            /// <param name="child">The <see cref="TabPage"/> to be added to the end of the <see cref="ItemCollection"/>.</param>
+            public new void Add(TabPage child)
             {
-                if (item == null) throw new ArgumentException("You cannot add a null TabPage to a TabContainer.");
-                base.Add(item);
-                Libui.Call<Libui.uiTabAppend>()(Owner, item.Name, item);
-                item.DelayRender();
+                if (child == null) throw new ArgumentException("You cannot add a null TabPage to a TabContainer.");
+                base.Add(child);
+                Libui.Call<Libui.uiTabAppend>()(Owner, child.Name, child);
+                child.DelayRender();
             }
 
             /// <summary>
             /// Adds a <see cref="TabPage"/> to the <see cref="ItemCollection"/> at the specified index.
             /// </summary>
-            /// <param name="index">The zero-based index at which item should be inserted.</param>
-            /// <param name="item">The <see cref="TabPage"/> to insert into the <see cref="ItemCollection"/>.</param>
-            public override void AddAt(int index, TabPage item)
+            /// <param name="index">The zero-based index at which child should be inserted.</param>
+            /// <param name="child">The <see cref="TabPage"/> to insert into the <see cref="ItemCollection"/>.</param>
+            public new void AddAt(int index, TabPage child)
             {
-                if (item == null) throw new ArgumentNullException(nameof(item));
-                base.AddAt(index, item);
-                Libui.Call<Libui.uiTabInsertAt>()(Owner, item.Name, index, item);
-                item.DelayRender();
+                if (child == null) throw new ArgumentNullException(nameof(child));
+                base.AddAt(index, child);
+                Libui.Call<Libui.uiTabInsertAt>()(Owner, child.Name, index, child);
+                child.DelayRender();
             }
 
             /// <summary>
             /// Removes the first occurrence of a specific <see cref="TabPage"/> from the <see cref="ItemCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="TabPage"/> to remove from the <see cref="ItemCollection"/>.</param>
-            /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ItemCollection"/>.</returns>
-            public override bool Remove(TabPage item)
+            /// <param name="child">The <see cref="TabPage"/> to remove from the <see cref="ItemCollection"/>.</param>
+            /// <returns>true if child is successfully removed; otherwise, false. This method also returns false if child was not found in the <see cref="ItemCollection"/>.</returns>
+            public new bool Remove(TabPage child)
             {
-                if (item == null) throw new ArgumentNullException(nameof(item));
-                Libui.Call<Libui.uiTabDelete>()(Owner, item.Index);
-                return base.Remove(item);
+                if (child == null) throw new ArgumentNullException(nameof(child));
+                Libui.Call<Libui.uiTabDelete>()(Owner, child.Index);
+                return base.Remove(child);
             }
         }
     }
@@ -70,7 +70,7 @@ namespace LibUISharp
     /// </summary>
     public class TabPage : SingleContainer<TabPage, Control>
     {
-        private Control childField;
+        private Control child;
         private bool initialized = false;
         private bool isMargined;
 
@@ -103,10 +103,10 @@ namespace LibUISharp
         {
             set
             {
-                if (childField != value)
+                if (child != value)
                 {
-                    childField = value;
-                    Handle = childField.Handle;
+                    child = value;
+                    Handle = child.Handle;
                 }
             }
         }

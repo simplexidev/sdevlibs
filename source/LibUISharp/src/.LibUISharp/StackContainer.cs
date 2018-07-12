@@ -72,7 +72,7 @@ namespace LibUISharp
             /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection"/>.
             /// </summary>
             /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param>
-            public override void Add(Control child) => Add(child, false);
+            private new void Add(Control child) => Add(child, false);
 
             /// <summary>
             /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection"/>.
@@ -92,14 +92,14 @@ namespace LibUISharp
             /// </summary>
             /// <param name="index">The zero-based index at which child should be inserted.</param>
             /// <param name="child">The <see cref="Control"/> to insert into the <see cref="ControlCollection"/>.</param>
-            public override void AddAt(int index, Control child) => throw new NotSupportedException();
+            private new void AddAt(int index, Control child) => throw new NotSupportedException();
 
             /// <summary>
             /// Removes the first occurrence of a specific <see cref="Control"/> from the <see cref="ControlCollection"/>.
             /// </summary>
             /// <param name="child">The <see cref="Control"/> to remove from the <see cref="ControlCollection"/>.</param>
             /// <returns>true if child is successfully removed; otherwise, false. This method also returns false if child was not found in the <see cref="ControlCollection"/>.</returns>
-            public override bool Remove(Control child)
+            public new bool Remove(Control child)
             {
                 Libui.Call<Libui.uiBoxDelete>()(Owner, child.Index);
                 return base.Remove(child);
