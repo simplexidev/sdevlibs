@@ -69,7 +69,6 @@ namespace LibUISharp.Drawing
             }
         }
 
-
         /// <summary>
         /// Gets or sets the x-coordinate of the upper-left corner of this <see cref="Rectangle"/>.
         /// </summary>
@@ -388,8 +387,7 @@ namespace LibUISharp.Drawing
                     Height = value.Height;
             }
         }
-
-
+        
         /// <summary>
         /// Gets or sets the x-coordinate of the upper-left corner of this <see cref="RectangleD"/>.
         /// </summary>

@@ -267,7 +267,6 @@ namespace LibUISharp.Drawing
         /// <returns>A string that represents this size.</returns>
         public override string ToString() => $"[{Width}, {Height}]";
 
-
         /// <summary>
         /// Adds the specified <see cref="SizeD"/> to the other specified <see cref="SizeD"/>.
         /// </summary>
