@@ -603,6 +603,68 @@ namespace LibUISharp.Internal
             // _UI_EXTERN void uiMsgBoxError(uiWindow *parent, const char *title, const char *description);
             [UnmanagedFunctionPointer(Convention)]
             internal delegate void uiMsgBoxError(IntPtr parent, string title, string description);
+
+            // ========================================================================
+
+
+
+            // _UI_EXTERN void uiColorButtonColor(uiColorButton* b, double* r, double* g, double* bl, double* a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiColorButtonColor(IntPtr b, out double red, out double green, out double blue, out double alpha);
+
+            // _UI_EXTERN void uiColorButtonSetColor(uiColorButton* b, double r, double g, double bl, double a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiColorButtonSetColor(IntPtr b, double red, double green, double blue, double alpha);
+
+            // _UI_EXTERN void uiColorButtonOnChanged(uiColorButton* b, void (* f)(uiColorButton*, void*), void* data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiColorButtonOnChanged(IntPtr b, uiColorButtonOnChanged_f f, IntPtr data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiColorButtonOnChanged_f(IntPtr b, IntPtr data);
+
+            // _UI_EXTERN uiColorButton *uiNewColorButton(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewColorButton();
+
+            // _UI_EXTERN void uiFormAppend(uiForm* f, const char* label, uiControl *c, int stretchy);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFormAppend(IntPtr f, string label, IntPtr c, bool stretchy);
+
+            // _UI_EXTERN void uiFormDelete(uiForm* f, int index);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFormDelete(IntPtr f, int index);
+
+            // _UI_EXTERN int uiFormPadded(uiForm* f);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate bool uiFormPadded(IntPtr f);
+
+            // _UI_EXTERN void uiFormSetPadded(uiForm* f, int padded);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFormSetPadded(IntPtr f, bool padded);
+
+            // _UI_EXTERN uiForm *uiNewForm(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewForm();
+
+            // _UI_EXTERN void uiGridAppend(uiGrid* g, uiControl* c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiGridAppend(IntPtr g, IntPtr c, int left, int top, int xspan, int yspan, int hexpand, AlignmentInternal halign, int vexpand, AlignmentInternal valign);
+
+            // _UI_EXTERN void uiGridInsertAt(uiGrid* g, uiControl* c, uiControl* existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiGridInsertAt(IntPtr g, IntPtr c, IntPtr existing, RelativeAlignment at, int xspan, int yspan, int hexpand, AlignmentInternal halign, int vexpand, AlignmentInternal valign);
+
+            // _UI_EXTERN int uiGridPadded(uiGrid* g);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate bool uiGridPadded(IntPtr g);
+
+            // _UI_EXTERN void uiGridSetPadded(uiGrid* g, int padded);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiGridSetPadded(IntPtr g, bool padded);
+
+            // _UI_EXTERN uiGrid *uiNewGrid(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewGrid();
         }
     }
 }

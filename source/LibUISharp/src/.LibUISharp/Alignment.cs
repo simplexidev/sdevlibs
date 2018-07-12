@@ -1,9 +1,19 @@
-﻿namespace LibUISharp
+﻿using LibUISharp.Internal;
+
+namespace LibUISharp
 {
+    [LibuiType("uiAlign")]
+    internal enum AlignmentInternal : long
+    {
+        Fill,
+        Start,
+        Center,
+        End
+    }
+
     /// <summary>
     /// Specifies how content is positioned in a container.
     /// </summary>
-    [UIType("uiAlign")]
     public enum Alignment
     {
         /// <summary>
