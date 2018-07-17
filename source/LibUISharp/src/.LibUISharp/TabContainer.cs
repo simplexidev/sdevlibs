@@ -8,7 +8,7 @@ namespace LibUISharp
     /// Represents a control that contains multiple <see cref="TabPage"/> objects that share the same space on the screen.
     /// </summary>
     [LibuiType("uiTab")]
-    public class TabContainer : MultiContainer<TabContainer, TabContainer.ControlCollection, TabPage>
+    public class TabContainer : MultiContainer<TabContainer, TabContainer.ControlList, TabPage>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TabContainer"/> class.
@@ -18,49 +18,52 @@ namespace LibUISharp
         /// <summary>
         /// Represents a collection of child <see cref="TabPage"/> objects inside of a <see cref="TabContainer"/>.
         /// </summary>
-        public new class ControlCollection : MultiContainer<TabContainer, ControlCollection, TabPage>.ControlCollection
+        public class ControlList : ControlListBase
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="ItemCollection"/> class with the specified parent.
+            /// Initializes a new instance of the <see cref="ControlList"/> class with the specified parent.
             /// </summary>
-            /// <param name="parent">The parent <see cref="TabContainer"/> of this <see cref="ItemCollection"/>.</param>
-            public ControlCollection(TabContainer parent) : base(parent) { }
+            /// <param name="owner">The parent <see cref="StackContainer"/> of this <see cref="ControlList"/>.</param>
+            public ControlList(TabContainer owner) : base(owner) { }
 
             /// <summary>
-            /// Adds a <see cref="TabPage"/> to the end of the <see cref="ItemCollection"/>.
+            /// Adds a <see cref="TabPage"/> to the end of the <see cref="ControlList"/>.
             /// </summary>
-            /// <param name="child">The <see cref="TabPage"/> to be added to the end of the <see cref="ItemCollection"/>.</param>
-            public new void Add(TabPage child)
+            /// <param name="label">The text beside the child <see cref="TabPage"/>.</param>
+            /// <param name="child">The <see cref="TabPage"/> to be added to the end of the <see cref="ControlList"/>.</param>
+            /// <param name="stretches">Whether or not <paramref name="child"/> stretches the area of the parent <see cref="TabPage"/></param>
+            public override void Add(TabPage child)
             {
-                if (child == null) throw new ArgumentException("You cannot add a null TabPage to a TabContainer.");
                 base.Add(child);
                 Libui.Call<Libui.uiTabAppend>()(Owner, child.Name, child);
                 child.DelayRender();
             }
 
             /// <summary>
-            /// Adds a <see cref="TabPage"/> to the <see cref="ItemCollection"/> at the specified index.
+            /// Adds a <see cref="TabPage"/> to the <see cref="ControlList"/> at the specified index.
             /// </summary>
             /// <param name="index">The zero-based index at which child should be inserted.</param>
-            /// <param name="child">The <see cref="TabPage"/> to insert into the <see cref="ItemCollection"/>.</param>
-            public new void AddAt(int index, TabPage child)
+            /// <param name="child">The <see cref="TabPage"/> to insert into the <see cref="ControlList"/>.</param>
+            public override void Insert(int index, TabPage child)
             {
-                if (child == null) throw new ArgumentNullException(nameof(child));
-                base.AddAt(index, child);
+                base.Insert(index, child);
                 Libui.Call<Libui.uiTabInsertAt>()(Owner, child.Name, index, child);
                 child.DelayRender();
             }
 
             /// <summary>
-            /// Removes the first occurrence of a specific <see cref="TabPage"/> from the <see cref="ItemCollection"/>.
+            /// Removes the first occurrence of a specific <see cref="TabPage"/> from the <see cref="ControlList"/>.
             /// </summary>
-            /// <param name="child">The <see cref="TabPage"/> to remove from the <see cref="ItemCollection"/>.</param>
-            /// <returns>true if child is successfully removed; otherwise, false. This method also returns false if child was not found in the <see cref="ItemCollection"/>.</returns>
+            /// <param name="child">The <see cref="TabPage"/> to remove from the <see cref="ControlList"/>.</param>
+            /// <returns>true if child is successfully removed; otherwise, false. This method also returns false if child was not found in the <see cref="ControlList"/>.</returns>
             public new bool Remove(TabPage child)
             {
-                if (child == null) throw new ArgumentNullException(nameof(child));
-                Libui.Call<Libui.uiTabDelete>()(Owner, child.Index);
-                return base.Remove(child);
+                if (base.Remove(child))
+                {
+                    Libui.Call<Libui.uiTabDelete>()(Owner, child.Index);
+                    return true;
+                }
+                return false;
             }
         }
     }

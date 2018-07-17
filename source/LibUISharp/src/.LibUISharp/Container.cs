@@ -57,7 +57,7 @@ namespace LibUISharp
 
     internal interface IMultiContainer<TContainer, out TCollection, TChild>
         where TContainer : MultiContainer<TContainer, TCollection, TChild>
-        where TCollection : MultiContainer<TContainer, TCollection, TChild>.ControlCollection
+        where TCollection : MultiContainer<TContainer, TCollection, TChild>.ControlListBase
         where TChild : Control
     {
         TCollection Children { get; }
@@ -66,11 +66,11 @@ namespace LibUISharp
     /// <summary>
     /// Represents a <see cref="Container"/> that contains a collection of child <see cref="Control"/> objects.
     /// </summary>
-    /// <typeparam name="TCollection">The type of <see cref="ControlCollection{TChild}"/>.</typeparam>
+    /// <typeparam name="TCollection">The type of <see cref="ControlListBase{TChild}"/>.</typeparam>
     /// <typeparam name="TChild">The type of the child <see cref="Control"/>.</typeparam>
     public abstract class MultiContainer<TContainer, TCollection, TChild> : Container, IMultiContainer<TContainer, TCollection, TChild>
         where TContainer : MultiContainer<TContainer, TCollection, TChild>
-        where TCollection : MultiContainer<TContainer, TCollection, TChild>.ControlCollection
+        where TCollection : MultiContainer<TContainer, TCollection, TChild>.ControlListBase
         where TChild : Control
     {
         private TCollection children;
@@ -104,11 +104,7 @@ namespace LibUISharp
             }
         }
 
-        /// <summary>
-        /// Represents a collection of child <see cref="Control"/> objects inside of a <see cref="MultiContainer{TContainer, TCollection, TChild}"/>.
-        /// </summary>
-        /// <typeparam name="TChild">The type of <see cref="Control"/> in this collection.</typeparam>
-        public abstract class ControlCollection : ICollection, ICollection<TChild>, IEnumerable, IEnumerable<TChild>
+        public abstract class ControlListBase : IList, IList<TChild>, ICollection, ICollection<TChild>, IEnumerable, IEnumerable<TChild>
         {
             private readonly int defaultCapacity = 4;
             private readonly int growFactor = 2;
@@ -117,50 +113,42 @@ namespace LibUISharp
             private int size;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ControlCollection{TContainer, TChild}"/> class with the specified owner.
+            /// Initializes a new instance of the <see cref="ControlListBase"/> class with the specified owner.
             /// </summary>
-            /// <param name="owner">The owner <see cref="Control"/> of this <see cref="ControlCollection{TContainer, TChild}"/>.</param>
-            protected ControlCollection(TContainer owner) => Owner = owner ?? throw new ArgumentNullException(nameof(owner));
+            /// <param name="owner">The owner <see cref="Control"/> of this <see cref="ControlListBase"/>.</param>
+            protected ControlListBase(TContainer owner) => Owner = owner ?? throw new ArgumentNullException(nameof(owner));
 
-            internal ControlCollection(TContainer owner, int defaultCapacity, int growFactor) : this(owner)
+            internal ControlListBase(TContainer owner, int defaultCapacity, int growFactor) : this(owner)
             {
                 this.defaultCapacity = defaultCapacity;
                 this.growFactor = growFactor;
             }
 
             /// <summary>
-            /// Gets this <see cref="ControlCollection{TContainer, TChild}"/>'s owner <see cref="Control"/>.
+            /// Gets this <see cref="ControlListBase"/>'s owner <see cref="Control"/>.
             /// </summary>
             protected TContainer Owner { get; }
 
+            //TODO: Implement this.
             /// <summary>
-            /// Gets the number of elements contained in the <see cref="ControlCollection{TContainer, TChild}"/>.
+            /// Gets the number of elements contained in the <see cref="ControlListBase"/>.
             /// </summary>
             public int Count { get; }
 
             /// <summary>
-            /// Gets a value indicating whether the <see cref="ControlCollection{TContainer, TChild}"/> is read-only.
+            /// Gets a value indicating whether the <see cref="ControlListBase"/> is read-only.
             /// </summary>
             public bool IsReadOnly => isReadOnly == false;
 
             /// <summary>
-            /// Gets a value indicating whether access to the <see cref="ControlCollection{TContainer, TChild}"/> is synchronized (thread safe).
+            /// Adds a <see cref="Control"/> to the end of the <see cref="ControlListBase"/>.
             /// </summary>
-            public bool IsSynchronized => false;
-
-            /// <summary>
-            /// Gets an object that can be used to synchronize access to the <see cref="ControlCollection{TContainer, TChild}"/>
-            /// </summary>
-            public object SyncRoot => this;
-
-            /// <summary>
-            /// Adds a <see cref="Control"/> to the end of the <see cref="ControlCollection{TContainer, TChild}"/>.
-            /// </summary>
-            /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlCollection{TContainer, TChild}"/>.</param>
-            protected virtual void Add(TChild child)
+            /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlListBase"/>.</param>
+            public virtual void Add(TChild child)
             {
                 if (child == null) throw new ArgumentNullException(nameof(child));
-                if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlCollection.");
+                if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlListBase.");
+                if (Contains(child)) throw new InvalidOperationException("Cannot add the same control more than once.");
 
                 if (innerArray == null)
                     innerArray = new TChild[defaultCapacity];
@@ -179,14 +167,16 @@ namespace LibUISharp
             }
 
             /// <summary>
-            /// Adds a control to the <see cref="ControlCollection{TContainer, TChild}"/> at the specified index.
+            /// Adds a control to the <see cref="ControlListBase"/> at the specified index.
             /// </summary>
             /// <param name="index">The zero-based index at which item should be inserted.</param>
-            /// <param name="child">The <see cref="Control"/> to insert into the <see cref="ControlCollection{TContainer, TChild}"/>.</param>
-            protected virtual void AddAt(int index, TChild child)
+            /// <param name="child">The <see cref="Control"/> to insert into the <see cref="ControlListBase"/>.</param>
+            public virtual void Insert(int index, TChild child)
             {
-                if (child == null) throw new ArgumentNullException(nameof(child));
                 if (index < 0 || index > size) throw new ArgumentOutOfRangeException(nameof(index));
+                if (child == null) throw new ArgumentNullException(nameof(child));
+                if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlListBase.");
+                if (Contains(child)) throw new InvalidOperationException("Cannot add the same control more than once.");
 
                 if (innerArray == null)
                     innerArray = new TChild[defaultCapacity];
@@ -208,15 +198,15 @@ namespace LibUISharp
             }
 
             /// <summary>
-            /// Removes the first occurrence of a specific <see cref="Control"/> from the <see cref="ControlCollection{TContainer, TChild}"/>.
+            /// Removes the first occurrence of a specific <see cref="Control"/> from the <see cref="ControlListBase"/>.
             /// </summary>
-            /// <param name="child">The <see cref="Control"/> to remove from the <see cref="ControlCollection{TContainer, TChild}"/>.</param>
-            /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ControlCollection{TContainer, TChild}"/>.</returns>
-            protected virtual bool Remove(TChild child)
+            /// <param name="child">The <see cref="Control"/> to remove from the <see cref="ControlListBase"/>.</param>
+            /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ControlListBase"/>.</returns>
+            public virtual bool Remove(TChild child)
             {
                 if (isReadOnly) throw new NotSupportedException("Cannot remove items while the collection is read-only.");
-                if (!Contains(child))
-                    return false;
+                if (child == null) throw new ArgumentNullException(nameof(child));
+                if (!Contains(child)) return false;
 
                 int index = IndexOf(child);
                 if (index >= 0)
@@ -235,7 +225,7 @@ namespace LibUISharp
             }
 
             /// <summary>
-            /// Removes all elements from the <see cref="ControlCollection{TContainer, TChild}"/>.
+            /// Removes all elements from the <see cref="ControlListBase"/>.
             /// </summary>
             public void Clear()
             {
@@ -250,10 +240,10 @@ namespace LibUISharp
             }
 
             /// <summary>
-            /// Determines whether a <see cref="Control"/> is in the <see cref="ControlCollection{TContainer, TChild}"/>.
+            /// Determines whether a <see cref="Control"/> is in the <see cref="ControlListBase"/>.
             /// </summary>
-            /// <param name="child">The <see cref="Control"/> to locate in the <see cref="ControlCollection{TContainer, TChild}"/>.</param>
-            /// <returns>true if item is found in the <see cref="ControlCollection{TContainer, TChild}"/>; otherwise, false.</returns>
+            /// <param name="child">The <see cref="Control"/> to locate in the <see cref="ControlListBase"/>.</param>
+            /// <returns>true if item is found in the <see cref="ControlListBase"/>; otherwise, false.</returns>
             public bool Contains(TChild child)
             {
                 if (innerArray == null || child == null)
@@ -269,9 +259,9 @@ namespace LibUISharp
             }
 
             /// <summary>
-            /// Copies the entire <see cref="ControlCollection{TContainer, TChild}"/> to a compatible one-dimensional array, starting at the specified index of the target array.
+            /// Copies the entire <see cref="ControlListBase"/> to a compatible one-dimensional array, starting at the specified index of the target array.
             /// </summary>
-            /// <param name="array">The one-dimensional <see cref="Array"/> that is the destination of the elements copied from <see cref="ControlCollection{TContainer, TChild}"/>. The <see cref="Array"/> must have zero-based indexing.</param>
+            /// <param name="array">The one-dimensional <see cref="Array"/> that is the destination of the elements copied from <see cref="ControlListBase"/>. The <see cref="Array"/> must have zero-based indexing.</param>
             /// <param name="index">The zero-based index in <paramref name="array"/> at which copying begins.</param>
             public void CopyTo(Array array, int index)
             {
@@ -284,15 +274,9 @@ namespace LibUISharp
             }
 
             /// <summary>
-            /// Returns an enumerator that iterates through a collection.
+            /// Determines the index of a specific value in the <see cref="ControlListBase"/>.
             /// </summary>
-            /// <returns>An <see cref="IEnumerator{TChild}"/> object that can be used to iterate through the collection.</returns>
-            public IEnumerator<TChild> GetEnumerator() => new ControlCollectionEnumerator(this);
-
-            /// <summary>
-            /// Determines the index of a specific value in the <see cref="ControlCollection{TContainer, TChild}"/>.
-            /// </summary>
-            /// <param name="value">The control to locate in the <see cref="ControlCollection{TContainer, TChild}"/>.</param>
+            /// <param name="value">The control to locate in the <see cref="ControlListBase"/>.</param>
             /// <returns>The index of item if found in the list; otherwise, -1.</returns>
             public int IndexOf(TChild value)
             {
@@ -307,13 +291,8 @@ namespace LibUISharp
                     isReadOnly = readOnly;
             }
 
-            void ICollection<TChild>.Add(TChild child) => Add(child);
-            void ICollection<TChild>.CopyTo(TChild[] array, int index) => CopyTo(array, index);
-            bool ICollection<TChild>.Remove(TChild child) => Remove(child);
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
             /// <summary>
-            /// Gets or sets the element at the specified index.
+            /// Gets the element at the specified index.
             /// </summary>
             /// <param name="index">The zero-based index of the element to get or set.</param>
             /// <returns>The element at the specified index.</returns>
@@ -326,29 +305,80 @@ namespace LibUISharp
                 }
             }
 
-            private sealed class ControlCollectionEnumerator : IEnumerator, IEnumerator<TChild>, ICloneable
+            #region IList<TChild> Implementation
+            int IList.Add(object value)
             {
-                private ControlCollection collection;
+                try
+                {
+                    Add((TChild)value);
+                }
+                catch
+                {
+                    return -1;
+                }
+                return IndexOf((TChild)value);
+            }
+            void ICollection<TChild>.Add(TChild item) => Add(item);
+            void IList.Clear() => Clear();
+            void ICollection<TChild>.Clear() => Clear();
+            bool IList.Contains(object value) => Contains((TChild)value);
+            bool ICollection<TChild>.Contains(TChild item) => Contains(item);
+            void ICollection.CopyTo(Array array, int index) => CopyTo(array, index);
+            void ICollection<TChild>.CopyTo(TChild[] array, int arrayIndex) => CopyTo(array, arrayIndex);
+            IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TChild>)this).GetEnumerator();
+            IEnumerator<TChild> IEnumerable<TChild>.GetEnumerator() => new ControlListEnumerator(this);
+            int IList.IndexOf(object value) => IndexOf((TChild)value);
+            int IList<TChild>.IndexOf(TChild item) => IndexOf(item);
+            void IList.Insert(int index, object value) => Insert(index, (TChild)value);
+            void IList<TChild>.Insert(int index, TChild item) => Insert(index, item);
+            void IList.Remove(object value) => Remove((TChild)value);
+            bool ICollection<TChild>.Remove(TChild item) => Remove(item);
+            void IList.RemoveAt(int index) => throw new NotSupportedException();
+            void IList<TChild>.RemoveAt(int index) => throw new NotSupportedException();
+
+            object IList.this[int index]
+            {
+                get => (object)this[index];
+                set => throw new NotSupportedException();
+            }
+            TChild IList<TChild>.this[int index]
+            {
+                get => this[index];
+                set => throw new NotSupportedException();
+            }
+
+            int ICollection.Count => Count;
+            int ICollection<TChild>.Count => Count;
+            bool IList.IsFixedSize => IsReadOnly;
+            bool IList.IsReadOnly => IsReadOnly;
+            bool ICollection<TChild>.IsReadOnly => IsReadOnly;
+            bool ICollection.IsSynchronized => false;
+            object ICollection.SyncRoot => this;
+            #endregion
+
+            private sealed class ControlListEnumerator : IEnumerator<TChild>, ICloneable
+            {
+                private ControlListBase list;
                 private TChild current;
                 private int index;
                 private bool disposed = false;
 
-                internal ControlCollectionEnumerator(ControlCollection collection)
+                internal ControlListEnumerator(ControlListBase list)
                 {
-                    this.collection = collection;
+                    this.list = list;
                     index = -1;
                 }
 
                 public bool MoveNext()
                 {
-                    if (index < (collection.Count - 1))
+                    if (index < (list.Count - 1))
                     {
                         index++;
-                        current = collection[index];
+                        current = list[index];
                         return true;
                     }
 
-                    index = collection.Count;
+                    index = list.Count;
                     return false;
                 }
 
@@ -358,7 +388,8 @@ namespace LibUISharp
                 {
                     get
                     {
-                        if (index == -1 || index >= collection.Count) throw new InvalidOperationException("index is out of range.");
+                        if (index == -1 || index >= list.Count)
+                            throw new InvalidOperationException("index is out of range.");
                         return current;
                     }
                 }
@@ -378,7 +409,7 @@ namespace LibUISharp
                     if (!disposed)
                     {
                         if (disposing)
-                            collection.Clear();
+                            list.Clear();
                         disposed = true;
                     }
                 }

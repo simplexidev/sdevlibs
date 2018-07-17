@@ -7,20 +7,20 @@ namespace LibUISharp
     /// Represents a control that creates a container that has a border and a title for user-interface (UI) content.
     /// </summary>
     [LibuiType("uiGroup")]
-    public class GroupBox : SingleContainer<GroupBox, Control>
+    public class GroupContainer : SingleContainer<GroupContainer, Control>
     {
         private Control child;
         private string title;
         private bool isMargined;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupBox"/> class with the specified title.
+        /// Initializes a new instance of the <see cref="GroupContainer"/> class with the specified title.
         /// </summary>
-        /// <param name="title">The title of this <see cref="GroupBox"/>.</param>
-        public GroupBox(string title) => Handle = Libui.Call<Libui.uiNewGroup>()(title);
+        /// <param name="title">The title of this <see cref="GroupContainer"/>.</param>
+        public GroupContainer(string title) => Handle = Libui.Call<Libui.uiNewGroup>()(title);
 
         /// <summary>
-        /// Gets or sets the title for this <see cref="GroupBox"/> control.
+        /// Gets or sets the title for this <see cref="GroupContainer"/> control.
         /// </summary>
         public string Title
         {
@@ -60,7 +60,7 @@ namespace LibUISharp
         }
 
         /// <summary>
-        /// Sets this <see cref="GroupBox"/> object's child <see cref="Control"/>.
+        /// Sets this <see cref="GroupContainer"/> object's child <see cref="Control"/>.
         /// </summary>
         public override Control Child
         {

@@ -3,62 +3,42 @@ using System;
 using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
-{ 
+{
     /// <summary>
-    /// Arranges child elements into a single line that can be oriented horizontally or vertically.
+    /// Represents a container control that lists controls vertically with a corresponding label.
     /// </summary>
-    [LibuiType("uiBox")]
-    public class StackContainer : MultiContainer<StackContainer, StackContainer.ControlList, Control>
+    [LibuiType("uiForm")]
+    public class FormContainer : MultiContainer<FormContainer, FormContainer.ControlList, Control>
     {
         private bool isPadded;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StackContainer"/> class with the specified orientation.
+        /// Initializes a new instance of the <see cref="FormContainer"/> class.
         /// </summary>
-        /// <param name="orientation">The orientation controls are placed in the <see cref="StackContainer"/>.</param>
-        public StackContainer(Orientation orientation)
-        {
-            switch (orientation)
-            {
-                case Orientation.Horizontal:
-                    Handle = Libui.Call<Libui.uiNewHorizontalBox>()();
-                    break;
-                case Orientation.Vertical:
-                    Handle = Libui.Call<Libui.uiNewVerticalBox>()();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(orientation));
-            }
-            Orientation = orientation;
-        }
+        public FormContainer() => Handle = Libui.Call<Libui.uiNewForm>()();
 
         /// <summary>
-        /// Gets the dimension be which child controls are placed.
-        /// </summary>
-        public Orientation Orientation { get; }
-
-        /// <summary>
-        /// Gets or sets a value indiating whether this <see cref="StackContainer"/> has interior isPadded or not.
+        /// Gets or sets a value indiating whether this <see cref="FormContainer"/> has interior padding or not.
         /// </summary>
         public bool IsPadded
         {
             get
             {
-                isPadded = Libui.Call<Libui.uiBoxPadded>()(this);
+                isPadded = Libui.Call<Libui.uiFormPadded>()(this);
                 return isPadded;
             }
             set
             {
                 if (isPadded != value)
                 {
-                    Libui.Call<Libui.uiBoxSetPadded>()(this, value);
+                    Libui.Call<Libui.uiFormSetPadded>()(this, value);
                     isPadded = value;
                 }
             }
         }
 
         /// <summary>
-        /// Represents a collection of child <see cref="Control"/> objects inside of a <see cref="StackContainer"/>.
+        /// Represents a collection of child <see cref="Control"/> objects inside of a <see cref="FormContainer"/>.
         /// </summary>
         public class ControlList : ControlListBase
         {
@@ -66,23 +46,24 @@ namespace LibUISharp
             /// Initializes a new instance of the <see cref="ControlList"/> class with the specified parent.
             /// </summary>
             /// <param name="owner">The parent <see cref="StackContainer"/> of this <see cref="ControlList"/>.</param>
-            public ControlList(StackContainer owner) : base(owner) { }
+            public ControlList(FormContainer owner) : base(owner) { }
 
             /// <summary>
-            /// Adds a <see cref="Control"/> to the end of the <see cref="ControlList"/>.
+            /// <see cref="ControlList"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
             /// </summary>
             /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlList"/>.</param>
-            public override void Add(Control child) => Add(child, false);
+            public override void Add(Control child) => throw new NotSupportedException();
 
             /// <summary>
             /// Adds a <see cref="Control"/> to the end of the <see cref="ControlList"/>.
             /// </summary>
+            /// <param name="label">The text beside the child <see cref="Control"/>.</param>
             /// <param name="child">The <see cref="Control"/> to be added to the end of the <see cref="ControlList"/>.</param>
             /// <param name="stretches">Whether or not <paramref name="child"/> stretches the area of the parent <see cref="Control"/></param>
-            public void Add(Control child, bool stretches)
+            public void Add(string label, Control child, bool stretches = false)
             {
                 base.Add(child);
-                Libui.Call<Libui.uiBoxAppend>()(Owner, child, stretches);
+                Libui.Call<Libui.uiFormAppend>()(Owner, label, child, stretches);
             }
 
             /// <summary>
@@ -101,7 +82,7 @@ namespace LibUISharp
             {
                 if (base.Remove(child))
                 {
-                    Libui.Call<Libui.uiBoxDelete>()(Owner, child.Index);
+                    Libui.Call<Libui.uiFormDelete>()(Owner, child.Index);
                     return true;
                 }
                 return false;
