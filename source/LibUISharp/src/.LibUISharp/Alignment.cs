@@ -3,7 +3,7 @@
 namespace LibUISharp
 {
     [LibuiType("uiAlign")]
-    internal enum AlignmentInternal : long
+    internal enum NativeAlignment : long
     {
         Fill,
         Start,
