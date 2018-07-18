@@ -648,11 +648,11 @@ namespace LibUISharp.Internal
 
             // _UI_EXTERN void uiGridAppend(uiGrid* g, uiControl* c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
             [UnmanagedFunctionPointer(Convention)]
-            internal delegate void uiGridAppend(IntPtr g, IntPtr c, int left, int top, int xspan, int yspan, int hexpand, AlignmentInternal halign, int vexpand, AlignmentInternal valign);
+            internal delegate void uiGridAppend(IntPtr g, IntPtr c, int left, int top, int xspan, int yspan, int hexpand, NativeAlignment halign, int vexpand, NativeAlignment valign);
 
             // _UI_EXTERN void uiGridInsertAt(uiGrid* g, uiControl* c, uiControl* existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
             [UnmanagedFunctionPointer(Convention)]
-            internal delegate void uiGridInsertAt(IntPtr g, IntPtr c, IntPtr existing, RelativeAlignment at, int xspan, int yspan, int hexpand, AlignmentInternal halign, int vexpand, AlignmentInternal valign);
+            internal delegate void uiGridInsertAt(IntPtr g, IntPtr c, IntPtr existing, RelativeAlignment at, int xspan, int yspan, int hexpand, NativeAlignment halign, int vexpand, NativeAlignment valign);
 
             // _UI_EXTERN int uiGridPadded(uiGrid* g);
             [UnmanagedFunctionPointer(Convention)]
