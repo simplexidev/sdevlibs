@@ -40,7 +40,7 @@ namespace LibUISharp.Drawing
         public double M32 = 0;
 
         /// <summary>
-        /// Sets this <see cref="Matrix"/> struture's identity. After calling this, applying the matrix has no visual sequence. This must be called before any transformations are performed on this <see cref="Matrix"/>.
+        /// Sets this <see cref="Matrix"/> structure's identity. After calling this, applying the matrix has no visual sequence. This must be called before any transformations are performed on this <see cref="Matrix"/>.
         /// </summary>
         public void SetIdentity() => Libui.uiDrawMatrixSetIdentity(this);
 

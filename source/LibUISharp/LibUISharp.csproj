@@ -31,14 +31,14 @@
     <Compile Include="src\LibUISharp\*.cs" />
     <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Internal\*.cs" />
-    <Compile Include="src\LibUISharp\Internal\NM\*.cs" />
-    <Compile Include="src\LibUISharp\Internal\NM\Libui\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <!-- These entries will be removed after 'api-chages' is merged. -->
-    <Compile Include="src\.LibUISharp\*.cs" />
-    <Compile Include="src\.LibUISharp\Drawing\*.cs" />
-    <Compile Include="src\.LibUISharp\Internal\*.cs" />
+    <!-- These files are ones that need finished before this PR is merged. -->
+    <None Include="src\.LibUISharp\*.cs" />
+    <None Include="src\.LibUISharp\Drawing\*.cs" />
+    <None Include="src\.LibUISharp\Internal\*.cs" />
+    <None Include="src\.LibUISharp\Internal\NM\*.cs" />
+    <None Include="src\.LibUISharp\Internal\NM\Libui\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\WinNT\libui.dll">

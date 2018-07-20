@@ -4,6 +4,10 @@ using static LibUISharp.Native.NativeMethods;
 
 namespace LibUISharp.Drawing
 {
+    public class SurfaceHandler_
+    {
+        public virtual void Draw(Surface surface, ref DrawEventArgs args) { }
+    }
     /// <summary>
     /// Defines the events for a drawable surface.
     /// </summary>

@@ -38,7 +38,7 @@ namespace LibUISharp
         public Orientation Orientation { get; }
 
         /// <summary>
-        /// Gets or sets a value indiating whether this <see cref="StackContainer"/> has interior isPadded or not.
+        /// Gets or sets a value indicating whether this <see cref="StackContainer"/> has interior isPadded or not.
         /// </summary>
         public bool IsPadded
         {

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using LibUISharp.Internal;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
-using static LibUISharp.Native.NativeMethods;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp.Drawing
 {
@@ -123,9 +124,20 @@ namespace LibUISharp.Drawing
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         public void ScrollTo(double x, double y, double width, double height) => Libui.uiAreaScrollTo(this, x, y, width, height);
-        
+
         public void BeginUserWindowMove() => Libui.uiAreaBeginUserWindowMove(this);
 
         public void BeginUserWindowResize(WindowEdge edge) => Libui.uiAreaBeginUserWindowResize(this, edge);
+    }
+
+    [LibuiType("uiAreaHandler")]
+    [StructLayout(Layout)]
+    internal class SurfaceEventHandler
+    {
+        public IntPtr Draw;
+        public IntPtr MouseEvent;
+        public IntPtr MouseCrossed;
+        public IntPtr DragBroken;
+        public IntPtr KeyEvent;
     }
 }

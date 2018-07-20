@@ -8,7 +8,7 @@ namespace LibUISharp
     /// Represents a menu control that enables you to hierarchically organize elements associated with commands and event handlers.
     /// </summary>
     [LibuiType("uiMenu")]
-    public class Menu : MultiContainer<Menu, Menu.ControlCollection, MenuItemBase>
+    public class Menu : MultiContainer<Menu, Menu.MenuItemList, MenuItemBase>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Menu"/> class with the specified name.
@@ -28,32 +28,26 @@ namespace LibUISharp
         /// <summary>
         /// Represents a collection of child <see cref="Control"/>s inside of a <see cref="Menu"/>.
         /// </summary>
-        public new class ControlCollection : MultiContainer<Menu, ControlCollection, MenuItemBase>.ControlCollection
+        public class MenuItemList : ControlListBase
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="ControlCollection"/> class with the specified parent.
+            /// Initializes a new instance of the <see cref="MenuItemList"/> class with the specified parent.
             /// </summary>
-            /// <param name="owner">The parent <see cref="Menu"/> of this <see cref="ControlCollection"/>.</param>
-            public ControlCollection(Menu owner) : base(owner) { }
-
-            private new void Add(MenuItemBase child)
-            {
-                if (Contains(child)) throw new InvalidOperationException("Cannot add the same control more than once.");
-
-                if (child == null)
-                {
-                    Libui.Call<Libui.uiMenuAppendSeparator>()(Owner);
-                    return;
-                }
-                base.Add(child);
-            }
+            /// <param name="owner">The parent <see cref="Menu"/> of this <see cref="MenuItemList"/>.</param>
+            public MenuItemList(Menu owner) : base(owner) { }
 
             /// <summary>
-            /// Adds a <see cref="MenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// <see cref="MenuItemList"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
             /// </summary>
-            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param> 
-            /// <param name="click">The action invoked when the child is clicked.</param> 
-            public void AddItem(string name, Action<IntPtr> click = null)
+            /// <param name="child">The <see cref="MenuItemBase"/> to be added to the end of the <see cref="MenuItemList"/>.</param>
+            public override void Add(MenuItemBase child) => throw new NotSupportedException();
+            
+            /// <summary>
+            /// Adds a <see cref="MenuItem"/> to the end of the <see cref="MenuItemList"/>.
+            /// </summary>
+            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="MenuItemList"/>.</param> 
+            /// <param name="click">The action invoked when the child is clicked.</param>
+            public void Add(string name, Action<IntPtr> click = null)
             {
                 MenuItem item = new MenuItem(Libui.Call<Libui.uiMenuAppendItem>()(Owner, name), name);
                 if (click != null)
@@ -64,17 +58,17 @@ namespace LibUISharp
                             click(args.Data);
                     };
                 }
-                Add(item);
+                base.Add(item);
             }
 
             /// <summary>
-            /// Adds a <see cref="CheckMenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// Adds a <see cref="CheckableMenuItem"/> to the end of the <see cref="MenuItemList"/>.
             /// </summary>
-            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="ControlCollection"/>.</param> 
+            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="MenuItemList"/>.</param> 
             /// <param name="click">The action invoked when the child is clicked.</param> 
-            public void AddCheckItem(string name, Action<IntPtr> click = null)
+            public void AddCheckable(string name, Action<IntPtr> click = null)
             {
-                CheckMenuItem item = new CheckMenuItem(Libui.Call<Libui.uiMenuAppendCheckItem>()(Owner, name), name);
+                CheckableMenuItem item = new CheckableMenuItem(Libui.Call<Libui.uiMenuAppendCheckItem>()(Owner, name), name);
                 if (click != null)
                 {
                     item.Clicked += (sender, args) =>
@@ -83,14 +77,14 @@ namespace LibUISharp
                             click(args.Data);
                     };
                 }
-                Add(item);
+                base.Add(item);
             }
 
             /// <summary>
-            /// Adds a <see cref="PreferencesMenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// Adds a <see cref="PreferencesMenuItem"/> to the end of the <see cref="MenuItemList"/>.
             /// </summary>
             /// <param name="click">The action invoked when the child is clicked.</param> 
-            public void AddPreferencesItem(Action<IntPtr> click = null)
+            public void AddPreferences(Action<IntPtr> click = null)
             {
                 PreferencesMenuItem item = new PreferencesMenuItem(Libui.Call<Libui.uiMenuAppendPreferencesItem>()(Owner));
                 if (click != null)
@@ -101,14 +95,14 @@ namespace LibUISharp
                             click(args.Data);
                     };
                 }
-                Add(item);
+                base.Add(item);
             }
 
             /// <summary>
-            /// Adds a <see cref="AboutMenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// Adds a <see cref="AboutMenuItem"/> to the end of the <see cref="MenuItemList"/>.
             /// </summary>
             /// <param name="click">The action invoked when the child is clicked.</param> 
-            public void AddAboutItem(Action<IntPtr> click = null)
+            public void AddAbout(Action<IntPtr> click = null)
             {
                 AboutMenuItem item = new AboutMenuItem(Libui.Call<Libui.uiMenuAppendAboutItem>()(Owner));
                 if (click != null)
@@ -119,36 +113,36 @@ namespace LibUISharp
                             click(args.Data);
                     };
                 }
-                Add(item);
+                base.Add(item);
             }
 
             /// <summary>
-            /// Adds a <see cref="QuitMenuItem"/> to the end of the <see cref="ControlCollection"/>.
+            /// Adds a <see cref="QuitMenuItem"/> to the end of the <see cref="MenuItemList"/>.
             /// </summary>
-            public void AddQuitItem()
+            public void AddQuit()
             {
                 QuitMenuItem item = new QuitMenuItem(Libui.Call<Libui.uiMenuAppendQuitItem>()(Owner));
-                Add(item);
+                base.Add(item);
             }
 
             /// <summary>
-            /// Adds a separator to the end of the <see cref="ControlCollection"/>.
+            /// Adds a separator to the end of the <see cref="MenuItemList"/>.
             /// </summary>
-            public void AddSeparator() => Add(null);
-            
-            /// <summary>
-            /// <see cref="ControlCollection"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
-            /// </summary>
-            /// <param name="index">The zero-based index at which child should be inserted.</param>
-            /// <param name="child">The <see cref="Control"/> to insert into the <see cref="ControlCollection"/>.</param>
-            private new void AddAt(int index, MenuItemBase child) => throw new NotSupportedException();
+            public void AddSeparator() => Libui.Call<Libui.uiMenuAppendSeparator>()(Owner);
 
             /// <summary>
-            /// <see cref="ControlCollection"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
+            /// <see cref="MenuItemList"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
             /// </summary>
-            /// <param name="child">The <see cref="Control"/> to remove from the <see cref="ControlCollection"/>.</param>
-            /// <returns>true if child is successfully removed; otherwise, false. This method also returns false if child was not found in the <see cref="ControlCollection"/>.</returns>
-            private new bool Remove(MenuItemBase child) => throw new NotSupportedException();
+            /// <param name="index">The zero-based index at which child should be inserted.</param>
+            /// <param name="child">The <see cref="Control"/> to insert into the <see cref="MenuItemList"/>.</param>
+            public override void Insert(int index, MenuItemBase child) => throw new NotSupportedException();
+
+            /// <summary>
+            /// <see cref="MenuItemList"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
+            /// </summary>
+            /// <param name="child">The <see cref="Control"/> to remove from the <see cref="MenuItemList"/>.</param>
+            /// <returns>true if child is successfully removed; otherwise, false. This method also returns false if child was not found in the <see cref="MenuItemList"/>.</returns>
+            public override bool Remove(MenuItemBase child) => throw new NotSupportedException();
         }
     }
 
@@ -247,19 +241,19 @@ namespace LibUISharp
     /// <summary>
     /// Represents a checkable menu child in a <see cref="Menu"/>.
     /// </summary>
-    public sealed class CheckMenuItem : MenuItemBase
+    public sealed class CheckableMenuItem : MenuItemBase
     {
         private bool @checked;
 
         /// <summary>
-        /// Initializes a new instance of a <see cref="CheckMenuItem"/> class from the specified handle with the specified name.
+        /// Initializes a new instance of a <see cref="CheckableMenuItem"/> class from the specified handle with the specified name.
         /// </summary>
         /// <param name="handle">The specified handle.</param>
         /// <param name="name">The menu child's name.</param>
-        internal CheckMenuItem(IntPtr handle, string name) : base(handle) => Name = name;
+        internal CheckableMenuItem(IntPtr handle, string name) : base(handle) => Name = name;
 
         /// <summary>
-        /// Gets or sets the state of this <see cref="CheckMenuItem"/>.
+        /// Gets or sets the state of this <see cref="CheckableMenuItem"/>.
         /// </summary>
         public bool Checked
         {

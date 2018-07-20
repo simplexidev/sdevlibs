@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
+[assembly: ComVisible(false)]
 
 // Style
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Scope = "type", Target = "~T:LibUISharp.Native.NativeMethods.Libui.tm")]
