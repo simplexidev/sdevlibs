@@ -4,11 +4,26 @@ namespace LibUISharpDemos.ControlGallery
 {
     internal class Program
     {
+        // This MUST be static, or dotnet itself will crash.
+        private static Menu menu;
+
         private static void Main()
         {
+            // Initialize application.
             Application app = new Application();
-            Window w = new MainWindow();
-            app.Run(w);
+
+            // Create the menu and add it's items.
+            menu = new Menu("Demo");
+            menu.Children.Add("MenuItem 1");
+            menu.Children.AddCheckable("CheckableMenuItem 1");
+            menu.Children.AddSeparator();
+            menu.Children.AddPreferences();
+            menu.Children.AddAbout();
+            menu.Children.AddSeparator();
+            menu.Children.AddQuit();
+
+            // Run the window.
+            app.Run(new MainWindow());
         }
     }
 }

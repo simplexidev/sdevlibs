@@ -17,9 +17,9 @@ namespace LibUISharpDemos.ControlGallery
             IsMargined = true;
             Child = tabControl;
 
-            tabControl.Items.Add(basicControlsTab);
-            tabControl.Items.Add(numbersTab);
-            tabControl.Items.Add(dataChoosersTab);
+            tabControl.Children.Add(basicControlsTab);
+            tabControl.Children.Add(numbersTab);
+            tabControl.Children.Add(dataChoosersTab);
         }
     }
 }
