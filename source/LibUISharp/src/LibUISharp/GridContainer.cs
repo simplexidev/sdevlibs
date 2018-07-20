@@ -129,7 +129,6 @@ namespace LibUISharp
                 Libui.Call<Libui.uiGridInsertAt>()(Owner, child, existing, relativeAlignment, width, height, hexpand, halign, vexpand, valign);
             }
 
-
             /// <summary>
             /// <see cref="ControlList"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
             /// </summary>
