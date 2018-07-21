@@ -1,4 +1,5 @@
-﻿using NativeLibraryLoader;
+﻿using LibUISharp.Drawing;
+using NativeLibraryLoader;
 using System;
 using System.Runtime.InteropServices;
 
@@ -22,7 +23,7 @@ namespace LibUISharp.Internal
             }
 
             internal static T Call<T>() => Call<T>(typeof(T).Name);
-            internal static T Call<T>(string name) => LoadCall<T>(Library, name);
+            internal static T Call<T>(string name) => NativeCall<T>(Library, name);
 
             // _UI_EXTERN const char *uiInit(uiInitOptions *options);
             [UnmanagedFunctionPointer(Convention)]
@@ -604,9 +605,43 @@ namespace LibUISharp.Internal
             [UnmanagedFunctionPointer(Convention)]
             internal delegate void uiMsgBoxError(IntPtr parent, string title, string description);
 
+            // _UI_EXTERN void uiAreaSetSize(uiArea *a, int width, int height);
+            [UnmanagedFunctionPointer(Convention)]
+            private delegate void uiAreaSetSize_t(IntPtr a, int width, int height);
+
+            // _UI_EXTERN void uiAreaQueueRedrawAll(uiArea *a);
+            [UnmanagedFunctionPointer(Convention)]
+            private delegate void uiAreaQueueRedrawAll_t(IntPtr a);
+
+            // _UI_EXTERN void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height);
+            [UnmanagedFunctionPointer(Convention)]
+            private delegate void uiAreaScrollTo_t(IntPtr a, double x, double y, double width, double height);
+
+            // _UI_EXTERN void uiAreaBeginUserWindowMove(uiArea *a);
+            [UnmanagedFunctionPointer(Convention)]
+            private delegate void uiAreaBeginUserWindowMove_t(IntPtr a);
+
+            // _UI_EXTERN void uiAreaBeginUserWindowResize(uiArea *a, uiWindowResizeEdge edge);
+            [UnmanagedFunctionPointer(Convention)]
+            private delegate void uiAreaBeginUserWindowResize_t(IntPtr a, WindowEdge edge);
+
+            // _UI_EXTERN uiArea *uiNewArea(uiAreaHandler *ah);
+            [UnmanagedFunctionPointer(Convention)]
+            private delegate IntPtr uiNewArea_t(NativeSurfaceHandler ah);
+
+            // _UI_EXTERN uiArea *uiNewScrollingArea(uiAreaHandler *ah, int width, int height);
+            [UnmanagedFunctionPointer(Convention)]
+            private delegate IntPtr uiNewScrollingArea_t(NativeSurfaceHandler ah, int width, int height);
+
             // ========================================================================
 
+            // ========================================================================
 
+            // ========================================================================
+
+            // ========================================================================
+
+            // ========================================================================
 
             // _UI_EXTERN void uiColorButtonColor(uiColorButton* b, double* r, double* g, double* bl, double* a);
             [UnmanagedFunctionPointer(Convention)]

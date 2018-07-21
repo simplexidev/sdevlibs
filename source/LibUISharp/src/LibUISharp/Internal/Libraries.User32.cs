@@ -20,7 +20,7 @@ namespace LibUISharp.Internal
             }
 
             public static T Call<T>() => Call<T>(typeof(T).Name);
-            public static T Call<T>(string name) => LoadCall<T>(Library, name);
+            public static T Call<T>(string name) => NativeCall<T>(Library, name);
 
             // BOOL WINAPI ShowWindow(_In_ HWND hWnd, _In_ int nCmdShow);
             [UnmanagedFunctionPointer(Convention)]

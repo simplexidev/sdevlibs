@@ -13,7 +13,7 @@ Currently, I don't have the free time to make LibUISharp complete on my own. Bec
 
 ## Features
 
-LibUISharp allows you to create native, cross-platform graphical user interface (GUI) applications containing various controls, such as a `Button` or a `TabControl`.
+LibUISharp allows you to create native, cross-platform graphical user interface (GUI) applications containing various controls, such as a `Button` or a `TabControl`, laid out in containers, such as a `GroupContainer`, or a `StackContainer`.
 
 Check out the demos in the `demos\` folder for examples.
 
@@ -31,7 +31,7 @@ LibUISharp supports 64-bit Windows, macOS (with lmited testing), and Linux (test
 
 LibUISharp is almost up-to-par with libui and is now available on NuGet!
 
-Just add this line to you project file:
+Just add this line to you `csproj` project file:
 
 ```
 <PackageReference Include="LibUISharp" Version="0.4.0-build-*" />
@@ -39,16 +39,16 @@ Just add this line to you project file:
 
 ## Building From Source
 
-LibUISharp is built with .NET Core, so you can build LibUISharp with either Visual Studio, Visual Studio Code,
+LibUISharp is built with .NET Core 2.1, so you can build LibUISharp with either Visual Studio, Visual Studio Code,
 or just by running a couple simple commands. Use the steps below to get started!
 
 ### Prerequisites
 
 | Operating System | Prerequisites                                                                                                            |
 | :--------------- | :----------------------------------------------------------------------------------------------------------------------- |
-| Windows 7/8.1/10 | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio 2017 (v15.6.x)<br/>Visual Studio Code (With the C# extension) |
-| Mac OS X         | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                                  |
-| Linux            | .NET Core 2.0 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                                  |
+| Windows 7/8.1/10 | .NET Core 2.1 SDK<br/><br/>**Optional:**<br/>Visual Studio 2017 (v15.7.x)<br/>Visual Studio Code (With the C# extension) |
+| Mac OS X         | .NET Core 2.1 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                                  |
+| Linux            | .NET Core 2.1 SDK<br/><br/>**Optional:**<br/>Visual Studio Code (With the C# extension)                                  |
 
 ### Build Using Visual Studio (Windows)
 
