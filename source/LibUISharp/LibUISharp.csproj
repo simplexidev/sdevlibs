@@ -70,8 +70,8 @@
     <Copyright>2018 (c) Thomas Corwin</Copyright>
     <Version>0.4.0-alpha</Version>
     <PackageId>$(MSBuildProjectName)</PackageId>
-    <Description>LibUI Bindings for .NET Core (C#)</Description>
-    <PackageTags>libui;ui;gui;drawing;desktop;cross-platform;netcore;netstandard</PackageTags>
+    <Description>C# bindings for https://github.com/andlabs/libui targeting .NET Standard.</Description>
+    <PackageTags>libui;netstandard20;ui;drawing;desktop;cross-platform</PackageTags>
     <PackageReleaseNotes>Version $(Version)</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/tom-corwin/LibUISharp</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md</PackageLicenseUrl>
