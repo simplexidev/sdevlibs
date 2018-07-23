@@ -52,7 +52,9 @@ or just by running a couple simple commands. Use the steps below to get started!
 
 Run the following command in a command-line interface in the root directory of this repository:
 
-1. `dotnet build LibUISharp.sln`
+```
+dotnet build LibUISharp.sln
+```
 
 ## Contributing
 
