@@ -7,7 +7,7 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Defines a text font.
     /// </summary>
-    [LibuiType("uiFontDescriptor")]
+    [NativeType("uiFontDescriptor")]
     [Serializable]
     [StructLayout(Libraries.Libui.StructLayout)]
     public class Font : IEquatable<Font>

@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that is used to separate user-interface (UI) content.
     /// </summary>
-    [LibuiType("uiSeparator")]
+    [NativeType("uiSeparator")]
     public class Separator : Control
     {
         /// <summary>

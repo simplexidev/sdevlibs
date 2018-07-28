@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a basic button control with text.
     /// </summary>
-    [LibuiType("uiButton")]
+    [NativeType("uiButton")]
     public class Button : Control
     {
         private string text;

@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a spin box (also known as an up-down control) that displays numeric values.
     /// </summary>
-    [LibuiType("uiSpinbox")]
+    [NativeType("uiSpinbox")]
     public class SpinBox : Control
     {
         private int value;

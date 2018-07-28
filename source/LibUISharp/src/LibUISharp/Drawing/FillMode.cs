@@ -1,8 +1,13 @@
-﻿namespace LibUISharp.Drawing
+﻿using System;
+using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies how the interior of a closed path is filled.
     /// </summary>
+    [NativeType("uiDrawFillMode")]
+    [Serializable]
     public enum FillMode
     {
         /// <summary>

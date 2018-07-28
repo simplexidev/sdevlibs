@@ -1,8 +1,13 @@
-﻿namespace LibUISharp.Drawing
+﻿using System;
+using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies the available cap styles for the end of <see cref="Path"/>s that are contained in a <see cref="StrokeOptions"/> object.
     /// </summary>
+    [NativeType("uiDrawLineCap")]
+    [Serializable]
     public enum LineCap : long
     {
         /// <summary>

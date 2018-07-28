@@ -1,8 +1,13 @@
-﻿namespace LibUISharp.Drawing
+﻿using System;
+using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies how to join consecutive line or curve segments in a figure that are contained in a <see cref="StrokeOptions"/> object.
     /// </summary>
+    [NativeType("uiDrawLineJoin")]
+    [Serializable]
     public enum LineJoin : long
     {
         /// <summary>

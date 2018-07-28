@@ -8,7 +8,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a container control that allows for specific sizes and positions for each child control.
     /// </summary>
-    [LibuiType("uiGrid")]
+    [NativeType("uiGrid")]
     public class GridContainer : MultiContainer<GridContainer, GridContainer.ControlList, Control>
     {
         private bool isPadded;

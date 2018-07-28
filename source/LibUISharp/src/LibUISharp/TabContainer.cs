@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that contains multiple <see cref="TabPage"/> objects that share the same space on the screen.
     /// </summary>
-    [LibuiType("uiTab")]
+    [NativeType("uiTab")]
     public class TabContainer : MultiContainer<TabContainer, TabContainer.ControlList, TabPage>
     {
         /// <summary>

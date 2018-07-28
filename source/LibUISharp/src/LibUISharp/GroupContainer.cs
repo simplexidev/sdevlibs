@@ -6,7 +6,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that creates a container that has a border and a title for user-interface (UI) content.
     /// </summary>
-    [LibuiType("uiGroup")]
+    [NativeType("uiGroup")]
     public class GroupContainer : SingleContainer<GroupContainer, Control>
     {
         private Control child;

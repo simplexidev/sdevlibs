@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Defines the base class for controls, which are <see cref="UIComponent"/> objects with visual representation.
     /// </summary>
-    [LibuiType("uiControl")]
+    [NativeType("uiControl")]
     public abstract class Control : UIComponent
     {
         private bool enabled, visible;

@@ -1,8 +1,13 @@
-﻿namespace LibUISharp.Drawing
+﻿using System;
+using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies how a font will be stretched compared to the normal aspect ratio of that font.
     /// </summary>
+    [NativeType("uiTextStretch")]
+    [Serializable]
     public enum FontStretch : long
     {
         /// <summary>

@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Arranges child elements into a single line that can be oriented horizontally or vertically.
     /// </summary>
-    [LibuiType("uiBox")]
+    [NativeType("uiBox")]
     public class StackContainer : MultiContainer<StackContainer, StackContainer.ControlList, Control>
     {
         private bool isPadded;

@@ -8,7 +8,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a common button that allows a user to choose a <see cref="Drawing.Color"/>.
     /// </summary>
-    [LibuiType("uiColorButton")]
+    [NativeType("uiColorButton")]
     public class ColorPicker : Control
     {
         private Color color;

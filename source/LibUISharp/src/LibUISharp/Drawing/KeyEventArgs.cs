@@ -7,7 +7,7 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Provides key data for an event.
     /// </summary>
-    [LibuiType("uiAreaKeyEvent")]
+    [NativeType("uiAreaKeyEvent")]
     [Serializable]
     [StructLayout(Libraries.Libui.StructLayout)]
     public struct KeyEventArgs

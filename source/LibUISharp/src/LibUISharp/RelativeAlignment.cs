@@ -7,7 +7,7 @@ namespace LibUISharp
     /// Specifies how contents are positioned in relation to other content.
     /// </summary>
     [Serializable]
-    [LibuiType("uiAt")]
+    [NativeType("uiAt")]
     public enum RelativeAlignment : long
     {
         /// <summary>

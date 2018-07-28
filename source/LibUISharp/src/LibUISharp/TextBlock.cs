@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that can be used to display or edit multiple lines of text.
     /// </summary>
-    [LibuiType("uiMultilineEntry")]
+    [NativeType("uiMultilineEntry")]
     public class TextBlock : Control
     {
         private string text;

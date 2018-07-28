@@ -147,7 +147,7 @@ namespace LibUISharp
         }
     }
 
-    [LibuiType("uiInitOptions")]
+    [NativeType("uiInitOptions")]
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal class StartupOptions

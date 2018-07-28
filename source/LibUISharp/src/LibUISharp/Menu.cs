@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a menu control that enables you to hierarchically organize elements associated with commands and event handlers.
     /// </summary>
-    [LibuiType("uiMenu")]
+    [NativeType("uiMenu")]
     public class Menu : MultiContainer<Menu, Menu.MenuItemList, MenuItemBase>
     {
         /// <summary>
@@ -149,7 +149,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a base implementation for a menu child contained in a <see cref="Menu"/>.
     /// </summary>
-    [LibuiType("uiMenuItem")]
+    [NativeType("uiMenuItem")]
     public abstract class MenuItemBase : Control
     {
         private bool enabled;

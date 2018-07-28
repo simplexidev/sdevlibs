@@ -80,7 +80,7 @@ namespace LibUISharp
     }
 
     [Serializable]
-    [LibuiType("uiAlign")]
+    [NativeType("uiAlign")]
     internal enum NativeAlignment : long
     {
         Fill,

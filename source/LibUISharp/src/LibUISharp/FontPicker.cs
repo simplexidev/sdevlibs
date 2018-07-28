@@ -8,7 +8,7 @@ namespace LibUISharp
     /// <summary>
     /// A button that allows a user to select a font.
     /// </summary>
-    [LibuiType("uiFontButton")]
+    [NativeType("uiFontButton")]
     public class FontPicker : Control
     {
         private Font font;

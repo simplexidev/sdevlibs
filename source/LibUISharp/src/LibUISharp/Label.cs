@@ -6,7 +6,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a standard label, which contains and shows text.
     /// </summary>
-    [LibuiType("uiLabel")]
+    [NativeType("uiLabel")]
     public class Label : Control
     {
         private string text;

@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a container control that lists controls vertically with a corresponding label.
     /// </summary>
-    [LibuiType("uiForm")]
+    [NativeType("uiForm")]
     public class FormContainer : MultiContainer<FormContainer, FormContainer.ControlList, Control>
     {
         private bool isPadded;

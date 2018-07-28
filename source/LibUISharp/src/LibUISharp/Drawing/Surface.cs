@@ -10,7 +10,7 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Represents a drawable surface.
     /// </summary>
-    [LibuiType("uiArea")]
+    [NativeType("uiArea")]
     public class Surface
     {
         protected private Dictionary<IntPtr, Surface> Surfaces = new Dictionary<IntPtr, Surface>();
@@ -198,7 +198,7 @@ namespace LibUISharp.Drawing
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    [LibuiType("uiAreaHandler")]
+    [NativeType("uiAreaHandler")]
     internal class NativeSurfaceHandler
     {
         public IntPtr Draw;

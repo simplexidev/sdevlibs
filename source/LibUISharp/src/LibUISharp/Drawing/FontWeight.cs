@@ -1,8 +1,13 @@
-﻿namespace LibUISharp.Drawing
+﻿using System;
+using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies the desity of a font, in terms of the lightness or heaviness of the strokes.
     /// </summary>
+    [NativeType("uiTextWeight")]
+    [Serializable]
     public enum FontWeight : long
     {
         /// <summary>

@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a base implementation of controls that can be used to display and edit one line of text.
     /// </summary>
-    [LibuiType("uiEntry")]
+    [NativeType("uiEntry")]
     public abstract class TextBoxBase : Control
     {
         private string text;

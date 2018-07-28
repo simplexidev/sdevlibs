@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a selection control with a drop-down list that can be shown or hidden by clicking the arrow on the control.
     /// </summary>
-    [LibuiType("uiCombobox")]
+    [NativeType("uiCombobox")]
     public class ComboBox : Control
     {
         private int index = -1;

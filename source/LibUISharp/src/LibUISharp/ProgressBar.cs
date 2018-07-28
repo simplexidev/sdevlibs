@@ -6,7 +6,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that indicates the progress of an operation.
     /// </summary>
-    [LibuiType("uiProgressBar")]
+    [NativeType("uiProgressBar")]
     public class ProgressBar : Control
     {
         private int value;

@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that a user can set and clear.
     /// </summary>
-    [LibuiType("uiCheckbox")]
+    [NativeType("uiCheckbox")]
     public class CheckBox : Control
     {
         private string text;

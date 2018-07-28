@@ -8,7 +8,7 @@ namespace LibUISharp
     /// <summary>
     /// Implements the basic functonality required by a date-time picker.
     /// </summary>
-    [LibuiType("uiDateTimePicker")]
+    [NativeType("uiDateTimePicker")]
     public abstract class DateTimePickerBase : Control
     {
         private DateTime dateTime;
@@ -160,7 +160,7 @@ namespace LibUISharp
         public int Second => DateTime.Second;
     }
 
-    [LibuiType("tm")]
+    [NativeType("tm")]
     [StructLayout(LayoutKind.Sequential)]
     internal class UIDateTime
     {

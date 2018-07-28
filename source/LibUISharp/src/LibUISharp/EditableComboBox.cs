@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a selection control with a drop-down list that can be shown or hidden by clicking the arrow on the control, and can be typed into.
     /// </summary>
-    [LibuiType("uiEditableCombobox")]
+    [NativeType("uiEditableCombobox")]
     public class EditableComboBox : Control
     {
         private string text;

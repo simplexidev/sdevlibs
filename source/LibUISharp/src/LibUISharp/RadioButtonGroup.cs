@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that encapsulates a group of radio buttons.
     /// </summary>
-    [LibuiType("uiRadioButtons")]
+    [NativeType("uiRadioButtons")]
     public class RadioButtonList : Control
     {
         private int index;

@@ -10,7 +10,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a window that makes up an application's user interface.
     /// </summary>
-    [LibuiType("uiWindow")]
+    [NativeType("uiWindow")]
     public partial class Window : SingleContainer<Window, Control>
     {
         private Control child;

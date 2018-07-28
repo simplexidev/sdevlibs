@@ -7,7 +7,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a control that inputs a linear value.
     /// </summary>
-    [LibuiType("uiSlider")]
+    [NativeType("uiSlider")]
     public class Slider : Control
     {
         private int value;
