@@ -8,7 +8,7 @@ namespace LibUISharp.Internal
     {
         internal static class User32
         {
-            private const CallingConvention Convention = CallingConvention.StdCall;
+            internal const CallingConvention Convention = CallingConvention.StdCall;
 
             private static NativeLibrary Library
             {
@@ -19,8 +19,8 @@ namespace LibUISharp.Internal
                 }
             }
 
-            public static T Call<T>() => Call<T>(typeof(T).Name);
-            public static T Call<T>(string name) => NativeCall<T>(Library, name);
+            internal static T Call<T>() => Call<T>(typeof(T).Name);
+            internal static T Call<T>(string name) => NativeCall<T>(Library, name);
 
             // BOOL WINAPI ShowWindow(_In_ HWND hWnd, _In_ int nCmdShow);
             [UnmanagedFunctionPointer(Convention)]
