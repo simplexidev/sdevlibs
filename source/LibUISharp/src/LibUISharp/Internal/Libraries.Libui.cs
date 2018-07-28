@@ -932,7 +932,7 @@ namespace LibUISharp.Internal
 
             // _UI_EXTERN void uiFontButtonFont(uiFontButton *b, uiFontDescriptor *desc);
             [UnmanagedFunctionPointer(Convention)]
-            internal delegate void uiFontButtonFont(IntPtr b, out uiFontDescriptor desc);
+            internal delegate void uiFontButtonFont(IntPtr b, out Font desc);
 
             // _UI_EXTERN void uiFontButtonOnChanged(uiFontButton *b, void (*f)(uiFontButton *, void *), void *data);
             [UnmanagedFunctionPointer(Convention)]
@@ -946,7 +946,7 @@ namespace LibUISharp.Internal
 
             // _UI_EXTERN void uiFreeFontButtonFont(uiFontDescriptor *desc);
             [UnmanagedFunctionPointer(Convention)]
-            internal delegate void uiFreeFontButtonFont(uiFontDescriptor desc);
+            internal delegate void uiFreeFontButtonFont(Font desc);
 
             // _UI_EXTERN void uiColorButtonColor(uiColorButton* b, double* r, double* g, double* bl, double* a);
             [UnmanagedFunctionPointer(Convention)]

@@ -11,7 +11,7 @@ namespace LibUISharp.Drawing
     /// Represents a drawable surface.
     /// </summary>
     [NativeType("uiArea")]
-    public class Surface
+    public class Surface : Control
     {
         protected private Dictionary<IntPtr, Surface> Surfaces = new Dictionary<IntPtr, Surface>();
         private Size size;

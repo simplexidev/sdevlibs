@@ -45,14 +45,14 @@ namespace LibUISharp.Drawing
         /// <param name="weight">The font weight.</param>
         /// <param name="style">The style of the font.</param>
         /// <param name="stretch">The width of the font.</param>
-        public Font(string family, double size, FontWeight weight = FontWeight.Normal, FontStyle style = FontStyle.Normal, FontStretch stretch = FontStretch.Normal) => Native = new Libui.uiFontDescriptor()
+        public Font(string family, double size, FontWeight weight = FontWeight.Normal, FontStyle style = FontStyle.Normal, FontStretch stretch = FontStretch.Normal)
         {
-            Family = family,
-            Size = size,
-            Weight = weight,
-            Style = style,
-            Stretch = stretch
-        };
+            Family = family;
+            Size = size;
+            Weight = weight;
+            Style = style;
+            Stretch = stretch;
+        }
 
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.

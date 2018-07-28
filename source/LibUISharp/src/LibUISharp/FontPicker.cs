@@ -35,7 +35,7 @@ namespace LibUISharp
         {
             get
             {
-                Libui.Call<Libui.uiFontButtonFont>()(this, out font.Native);
+                Libui.Call<Libui.uiFontButtonFont>()(this, out font);
                 return font;
             }
         }
@@ -63,7 +63,7 @@ namespace LibUISharp
                 {
                     if (Font != null)
                     {
-                        Libui.Call<Libui.uiFreeFontButtonFont>()(font.Native);
+                        Libui.Call<Libui.uiFreeFontButtonFont>()(font);
                         font = null;
                     }
                 }
