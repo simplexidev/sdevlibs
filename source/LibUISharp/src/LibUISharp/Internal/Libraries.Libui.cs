@@ -1,7 +1,7 @@
-﻿using LibUISharp.Drawing;
-using NativeLibraryLoader;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
+using LibUISharp.Drawing;
+using NativeLibraryLoader;
 
 namespace LibUISharp.Internal
 {
@@ -10,8 +10,9 @@ namespace LibUISharp.Internal
         internal static class Libui
         {
             internal const CallingConvention Convention = CallingConvention.Cdecl;
+            internal const LayoutKind StructLayout = LayoutKind.Sequential;
 
-            internal static NativeLibrary Library
+            private static NativeLibrary Library
             {
                 get
                 {
@@ -607,41 +608,345 @@ namespace LibUISharp.Internal
 
             // _UI_EXTERN void uiAreaSetSize(uiArea *a, int width, int height);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate void uiAreaSetSize_t(IntPtr a, int width, int height);
+            internal delegate void uiAreaSetSize(IntPtr a, int width, int height);
 
             // _UI_EXTERN void uiAreaQueueRedrawAll(uiArea *a);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate void uiAreaQueueRedrawAll_t(IntPtr a);
+            internal delegate void uiAreaQueueRedrawAll(IntPtr a);
 
             // _UI_EXTERN void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate void uiAreaScrollTo_t(IntPtr a, double x, double y, double width, double height);
+            internal delegate void uiAreaScrollTo(IntPtr a, double x, double y, double width, double height);
 
             // _UI_EXTERN void uiAreaBeginUserWindowMove(uiArea *a);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate void uiAreaBeginUserWindowMove_t(IntPtr a);
+            internal delegate void uiAreaBeginUserWindowMove(IntPtr a);
 
             // _UI_EXTERN void uiAreaBeginUserWindowResize(uiArea *a, uiWindowResizeEdge edge);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate void uiAreaBeginUserWindowResize_t(IntPtr a, WindowEdge edge);
+            internal delegate void uiAreaBeginUserWindowResize(IntPtr a, WindowEdge edge);
 
             // _UI_EXTERN uiArea *uiNewArea(uiAreaHandler *ah);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate IntPtr uiNewArea_t(NativeSurfaceHandler ah);
+            internal delegate IntPtr uiNewArea(NativeSurfaceHandler ah);
 
             // _UI_EXTERN uiArea *uiNewScrollingArea(uiAreaHandler *ah, int width, int height);
             [UnmanagedFunctionPointer(Convention)]
-            private delegate IntPtr uiNewScrollingArea_t(NativeSurfaceHandler ah, int width, int height);
+            internal delegate IntPtr uiNewScrollingArea(NativeSurfaceHandler ah, int width, int height);
 
             // ========================================================================
-
+            // ============IMPLEMENTATIONS FOR CALLS BELOW ARE NOT FINISHED============
             // ========================================================================
 
-            // ========================================================================
+            // _UI_EXTERN uiDrawPath *uiDrawNewPath(uiDrawFillMode fillMode);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiDrawNewPath(FillMode fillMode);
+
+            // _UI_EXTERN void uiDrawFreePath(uiDrawPath *p);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawFreePath(IntPtr p);
+
+            // _UI_EXTERN void uiDrawPathNewFigure(uiDrawPath *p, double x, double y);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawPathNewFigure(IntPtr p, double x, double y);
+
+            // _UI_EXTERN void uiDrawPathNewFigureWithArc(uiDrawPath *p, double xCenter, double yCenter, double radius, double startAngle, double sweep, int negative);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawPathNewFigureWithArc(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
+
+            // _UI_EXTERN void uiDrawPathLineTo(uiDrawPath *p, double x, double y);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawPathLineTo(IntPtr p, double x, double y);
+
+            // _UI_EXTERN void uiDrawPathArcTo(uiDrawPath *p, double xCenter, double yCenter, double radius, double startAngle, double sweep, int negative);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawPathArcTo(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
+
+            // _UI_EXTERN void uiDrawPathBezierTo(uiDrawPath *p, double c1x, double c1y, double c2x, double c2y, double endX, double endY);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawPathBezierTo(IntPtr p, double c1x, double c1y, double c2x, double c2y, double endX, double endY);
+
+            // _UI_EXTERN void uiDrawPathCloseFigure(uiDrawPath *p);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawPathCloseFigure(IntPtr p);
+
+            // _UI_EXTERN void uiDrawPathAddRectangle(uiDrawPath *p, double x, double y, double width, double height);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawPathAddRectangle(IntPtr p, double x, double y, double width, double height);
+
+            // _UI_EXTERN void uiDrawPathEnd(uiDrawPath *p);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawPathEnd(IntPtr p);
+
+            // _UI_EXTERN void uiDrawStroke(uiDrawContext* c, uiDrawPath* path, uiDrawBrush* b, uiDrawStrokeParams* p);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawStroke(IntPtr context, IntPtr path, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParam);
+
+            // _UI_EXTERN void uiDrawFill(uiDrawContext* c, uiDrawPath* path, uiDrawBrush* b);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawFill(IntPtr context, IntPtr path, ref uiDrawBrush brush);
+
+            // _UI_EXTERN void uiDrawMatrixSetIdentity(uiDrawMatrix* m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawMatrixSetIdentity(Matrix matrix);
+
+            // _UI_EXTERN void uiDrawMatrixTranslate(uiDrawMatrix* m, double x, double y);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawMatrixTranslate(Matrix matrix, double x, double y);
+
+            // _UI_EXTERN void uiDrawMatrixScale(uiDrawMatrix* m, double xCenter, double yCenter, double x, double y);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawMatrixScale(Matrix matrix, double xCenter, double yCenter, double x, double y);
+
+            // _UI_EXTERN void uiDrawMatrixRotate(uiDrawMatrix* m, double x, double y, double amount);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawMatrixRotate(Matrix matrix, double x, double y, double amount);
+
+            // _UI_EXTERN void uiDrawMatrixSkew(uiDrawMatrix* m, double x, double y, double xamount, double yamount);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawMatrixSkew(Matrix matrix, double x, double y, double xamount, double yamount);
+
+            // _UI_EXTERN void uiDrawMatrixMultiply(uiDrawMatrix* dest, uiDrawMatrix* src);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawMatrixMultiply(Matrix dest, Matrix src);
+
+            // _UI_EXTERN int uiDrawMatrixInvertible(uiDrawMatrix* m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate bool uiDrawMatrixInvertible(Matrix matrix);
+
+            // _UI_EXTERN int uiDrawMatrixInvert(uiDrawMatrix* m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate int uiDrawMatrixInvert(Matrix matrix);
+
+            // _UI_EXTERN void uiDrawMatrixTransformPoint(uiDrawMatrix* m, double* x, double* y);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawMatrixTransformPoint(Matrix matrix, out double x, out double y);
+
+            // _UI_EXTERN void uiDrawMatrixTransformSize(uiDrawMatrix* m, double* x, double* y);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawMatrixTransformSize(Matrix matrix, out double x, out double y);
+
+            // _UI_EXTERN void uiDrawTransform(uiDrawContext* c, uiDrawMatrix* m);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawTransform(IntPtr context, Matrix matrix);
+
+            // _UI_EXTERN void uiDrawClip(uiDrawContext* c, uiDrawPath* path);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawClip(IntPtr context, IntPtr path);
+
+            // _UI_EXTERN void uiDrawSave(uiDrawContext* c);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawSave(IntPtr context);
+
+            // _UI_EXTERN void uiDrawRestore(uiDrawContext* c);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawRestore(IntPtr context);
+
+            // _UI_EXTERN void uiFreeAttribute(uiAttribute *a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFreeAttribute(IntPtr a);
+
+            // _UI_EXTERN uiAttributeType uiAttributeGetType(const uiAttribute *a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate uiAttributeType uiAttributeGetType(IntPtr a);
+
+            // _UI_EXTERN uiAttribute *uiNewFamilyAttribute(const char *family);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewFamilyAttribute(string family);
+
+            // _UI_EXTERN const char *uiAttributeFamily(const uiAttribute *a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate string uiAttributeFamily(IntPtr a);
+
+            // _UI_EXTERN uiAttribute *uiNewSizeAttribute(double size);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewSizeAttribute(double size);
+
+            // _UI_EXTERN double uiAttributeSize(const uiAttribute *a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate double uiAttributeSize(IntPtr a);
+
+            // _UI_EXTERN uiAttribute *uiNewWeightAttribute(uiTextWeight weight);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewWeightAttribute(FontWeight weight);
+
+            // _UI_EXTERN uiTextWeight uiAttributeWeight(const uiAttribute *a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate FontWeight uiAttributeWeight(IntPtr a);
+
+            // _UI_EXTERN uiAttribute *uiNewItalicAttribute(uiTextItalic italic);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewItalicAttribute(FontStyle italic);
+
+            // _UI_EXTERN uiTextItalic uiAttributeItalic(const uiAttribute *a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate FontStyle uiAttributeItalic(IntPtr a);
+
+            // _UI_EXTERN uiAttribute *uiNewStretchAttribute(uiTextStretch stretch);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewStretchAttribute(FontStretch stretch);
+
+            // _UI_EXTERN uiTextStretch uiAttributeStretch(const uiAttribute *a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate FontStretch uiAttributeStretch(IntPtr a);
+
+            // _UI_EXTERN uiAttribute *uiNewColorAttribute(double r, double g, double b, double a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewColorAttribute(double r, double g, double b, double a);
+
+            // _UI_EXTERN void uiAttributeColor(const uiAttribute *a, double *r, double *g, double *b, double *alpha);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiAttributeColor(IntPtr a, out double r, out double g, out double b, out double alpha);
+
+            // _UI_EXTERN uiAttribute *uiNewBackgroundAttribute(double r, double g, double b, double a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewBackgroundAttribute(double r, double g, double b, double a);
+
+            // _UI_EXTERN uiAttribute *uiNewUnderlineAttribute(uiUnderline u);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewUnderlineAttribute(UnderlineStyle u);
+
+            // _UI_EXTERN uiUnderline uiAttributeUnderline(const uiAttribute *a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate UnderlineStyle uiAttributeUnderline(IntPtr a);
+
+            // _UI_EXTERN uiAttribute *uiNewUnderlineColorAttribute(uiUnderlineColor u, double r, double g, double b, double a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewUnderlineColorAttribute(UnderlineColor u, double r, double g, double b, double a);
+
+            // _UI_EXTERN void uiAttributeUnderlineColor(const uiAttribute *a, uiUnderlineColor *u, double *r, double *g, double *b, double *alpha);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiAttributeUnderlineColor(IntPtr a, out UnderlineColor u, out double r, out double g, out double b, out double alpha);
+
+            // typedef uiForEach (*uiOpenTypeFeaturesForEachFunc)(const uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32 value, void *data);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate uiForEach uiOpenTypeFeaturesForEachFunc(IntPtr otf, char a, char b, char c, char d, uint value, IntPtr data);
+
+            // _UI_EXTERN uiOpenTypeFeatures *uiNewOpenTypeFeatures(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewOpenTypeFeatures();
+
+            // _UI_EXTERN void uiFreeOpenTypeFeatures(uiOpenTypeFeatures *otf);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFreeOpenTypeFeatures(IntPtr otf);
+
+            // _UI_EXTERN uiOpenTypeFeatures *uiOpenTypeFeaturesClone(const uiOpenTypeFeatures *otf);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiOpenTypeFeaturesClone(IntPtr otf);
+
+            // _UI_EXTERN void uiOpenTypeFeaturesAdd(uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32 value);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiOpenTypeFeaturesAdd(IntPtr otf, char a, char b, char c, char d, uint value);
+
+            // _UI_EXTERN void uiOpenTypeFeaturesRemove(uiOpenTypeFeatures *otf, char a, char b, char c, char d);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiOpenTypeFeaturesRemove(IntPtr otf, char a, char b, char c, char d);
+
+            // _UI_EXTERN int uiOpenTypeFeaturesGet(const uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32 *value);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate int uiOpenTypeFeaturesGet(IntPtr otf, char a, char b, char c, char d, out uint value);
+
+            // _UI_EXTERN void uiOpenTypeFeaturesForEach(const uiOpenTypeFeatures *otf, uiOpenTypeFeaturesForEachFunc f, void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiOpenTypeFeaturesForEach(IntPtr otf, uiOpenTypeFeaturesForEachFunc f, IntPtr data);
+
+            // _UI_EXTERN uiAttribute *uiNewFeaturesAttribute(const uiOpenTypeFeatures *otf);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewFeaturesAttribute(IntPtr otf);
+
+            // _UI_EXTERN const uiOpenTypeFeatures *uiAttributeFeatures(const uiAttribute *a);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiAttributeFeatures(IntPtr a);
+
+            // typedef uiForEach(*uiAttributedStringForEachAttributeFunc)(const uiAttributedString* s, const uiAttribute* a, size start, size end, void* data);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate uiForEach uiAttributedStringForEachAttributeFunc(IntPtr s, IntPtr a, UIntPtr start, UIntPtr end, IntPtr data);
+
+            // _UI_EXTERN uiAttributedString *uiNewAttributedString(const char* initialString);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewAttributedString(string initialString);
+
+            // _UI_EXTERN void uiFreeAttributedString(uiAttributedString* s);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFreeAttributedString(IntPtr s);
+
+            // _UI_EXTERN const char* uiAttributedStringString(const uiAttributedString* s);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate string uiAttributedStringString(IntPtr s);
+
+            // _UI_EXTERN size uiAttributedStringLen(const uiAttributedString* s);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate UIntPtr uiAttributedStringLen(IntPtr s);
+
+            // _UI_EXTERN void uiAttributedStringAppendUnattributed(uiAttributedString* s, const char* str);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiAttributedStringAppendUnattributed(IntPtr s, IntPtr str);
+
+            // _UI_EXTERN void uiAttributedStringInsertAtUnattributed(uiAttributedString* s, const char* str, size at);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiAttributedStringInsertAtUnattributed(IntPtr s, IntPtr str, UIntPtr at);
+
+            // _UI_EXTERN void uiAttributedStringDelete(uiAttributedString* s, size start, size end);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiAttributedStringDelete(IntPtr s, UIntPtr start, UIntPtr end);
+
+            // _UI_EXTERN void uiAttributedStringSetAttribute(uiAttributedString* s, uiAttribute* a, size start, size end);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiAttributedStringSetAttribute(IntPtr s, IntPtr a, UIntPtr start, UIntPtr end);
+
+            // _UI_EXTERN void uiAttributedStringForEachAttribute(const uiAttributedString* s, uiAttributedStringForEachAttributeFunc f, void* data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiAttributedStringForEachAttribute(IntPtr s, uiAttributedStringForEachAttributeFunc f, IntPtr data);
+
+            // _UI_EXTERN size uiAttributedStringNumGraphemes(uiAttributedString* s);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate UIntPtr uiAttributedStringNumGraphemes(IntPtr s);
+
+            // _UI_EXTERN size uiAttributedStringByteIndexToGrapheme(uiAttributedString* s, size pos);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate UIntPtr uiAttributedStringByteIndexToGrapheme(IntPtr s, UIntPtr pos);
+
+            // _UI_EXTERN size uiAttributedStringGraphemeToByteIndex(uiAttributedString* s, size pos);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate UIntPtr uiAttributedStringGraphemeToByteIndex(IntPtr s, UIntPtr pos);
+
+            // _UI_EXTERN uiDrawTextLayout *uiDrawNewTextLayout(uiDrawTextLayoutParams *params);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiDrawNewTextLayout(uiDrawTextLayoutParams param);
+
+            // _UI_EXTERN void uiDrawFreeTextLayout(uiDrawTextLayout *tl);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawFreeTextLayout(IntPtr tl);
+
+            // _UI_EXTERN void uiDrawText(uiDrawContext *c, uiDrawTextLayout *tl, double x, double y);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawText(IntPtr c, IntPtr tl, double x, double y);
+
+            // _UI_EXTERN void uiDrawTextLayoutExtents(uiDrawTextLayout *tl, double *width, double *height);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiDrawTextLayoutExtents(IntPtr tl, out double width, out double height);
 
             // ========================================================================
-
+            // ============IMPLEMENTATIONS FOR CALLS ABOVE ARE NOT FINISHED============
             // ========================================================================
+
+            // _UI_EXTERN void uiFontButtonFont(uiFontButton *b, uiFontDescriptor *desc);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFontButtonFont(IntPtr b, out uiFontDescriptor desc);
+
+            // _UI_EXTERN void uiFontButtonOnChanged(uiFontButton *b, void (*f)(uiFontButton *, void *), void *data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFontButtonOnChanged(IntPtr b, uiFontButtonOnChanged_f f, IntPtr data);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFontButtonOnChanged_f(IntPtr b, IntPtr data);
+
+            // _UI_EXTERN uiFontButton *uiNewFontButton(void);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate IntPtr uiNewFontButton();
+
+            // _UI_EXTERN void uiFreeFontButtonFont(uiFontDescriptor *desc);
+            [UnmanagedFunctionPointer(Convention)]
+            internal delegate void uiFreeFontButtonFont(uiFontDescriptor desc);
 
             // _UI_EXTERN void uiColorButtonColor(uiColorButton* b, double* r, double* g, double* bl, double* a);
             [UnmanagedFunctionPointer(Convention)]

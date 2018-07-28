@@ -1,5 +1,5 @@
-﻿using LibUISharp.Internal;
-using System;
+﻿using System;
+using LibUISharp.Internal;
 using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
@@ -41,11 +41,11 @@ namespace LibUISharp
             /// </summary>
             /// <param name="child">The <see cref="MenuItemBase"/> to be added to the end of the <see cref="MenuItemList"/>.</param>
             public override void Add(MenuItemBase child) => throw new NotSupportedException();
-            
+
             /// <summary>
             /// Adds a <see cref="MenuItem"/> to the end of the <see cref="MenuItemList"/>.
             /// </summary>
-            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="MenuItemList"/>.</param> 
+            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="MenuItemList"/>.</param>
             /// <param name="click">The action invoked when the child is clicked.</param>
             public void Add(string name, Action<IntPtr> click = null)
             {
@@ -64,8 +64,8 @@ namespace LibUISharp
             /// <summary>
             /// Adds a <see cref="CheckableMenuItem"/> to the end of the <see cref="MenuItemList"/>.
             /// </summary>
-            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="MenuItemList"/>.</param> 
-            /// <param name="click">The action invoked when the child is clicked.</param> 
+            /// <param name="name">The name of the <see cref="Control"/> to be added to the end of the <see cref="MenuItemList"/>.</param>
+            /// <param name="click">The action invoked when the child is clicked.</param>
             public void AddCheckable(string name, Action<IntPtr> click = null)
             {
                 CheckableMenuItem item = new CheckableMenuItem(Libui.Call<Libui.uiMenuAppendCheckItem>()(Owner, name), name);
@@ -83,7 +83,7 @@ namespace LibUISharp
             /// <summary>
             /// Adds a <see cref="PreferencesMenuItem"/> to the end of the <see cref="MenuItemList"/>.
             /// </summary>
-            /// <param name="click">The action invoked when the child is clicked.</param> 
+            /// <param name="click">The action invoked when the child is clicked.</param>
             public void AddPreferences(Action<IntPtr> click = null)
             {
                 PreferencesMenuItem item = new PreferencesMenuItem(Libui.Call<Libui.uiMenuAppendPreferencesItem>()(Owner));
@@ -101,7 +101,7 @@ namespace LibUISharp
             /// <summary>
             /// Adds a <see cref="AboutMenuItem"/> to the end of the <see cref="MenuItemList"/>.
             /// </summary>
-            /// <param name="click">The action invoked when the child is clicked.</param> 
+            /// <param name="click">The action invoked when the child is clicked.</param>
             public void AddAbout(Action<IntPtr> click = null)
             {
                 AboutMenuItem item = new AboutMenuItem(Libui.Call<Libui.uiMenuAppendAboutItem>()(Owner));

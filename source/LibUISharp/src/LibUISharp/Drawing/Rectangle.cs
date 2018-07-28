@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Stores a set of four integers that represent the location and size of a rectangle.
     /// </summary>
+    [Serializable]
+    [StructLayout(Libraries.Libui.StructLayout)]
     public struct Rectangle : IEquatable<Rectangle>
     {
         /// <summary>
@@ -324,6 +328,8 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Stores a set of four double-precision floating-point numbers that represent the location and size of a rectangle.
     /// </summary>
+    [Serializable]
+    [StructLayout(Libraries.Libui.StructLayout)]
     public struct RectangleD : IEquatable<RectangleD>
     {
         /// <summary>

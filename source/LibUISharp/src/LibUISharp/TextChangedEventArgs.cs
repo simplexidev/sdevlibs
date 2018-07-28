@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace LibUISharp
+﻿namespace LibUISharp
 {
     /// <summary>
     /// Provides text data for an event.
     /// </summary>
-    public class TextChangedEventArgs : EventArgs
+    public class TextChangedEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextChangedEventArgs"/> class.

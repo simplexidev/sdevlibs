@@ -1,8 +1,11 @@
-﻿namespace LibUISharp
+﻿using System;
+
+namespace LibUISharp
 {
     /// <summary>
     /// Defines the different orientations that a control or layout can have.
     /// </summary>
+    [Serializable]
     public enum Orientation
     {
         /// <summary>

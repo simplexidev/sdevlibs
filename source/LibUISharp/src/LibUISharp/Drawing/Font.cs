@@ -1,14 +1,41 @@
 ﻿using System;
-using static LibUISharp.Native.NativeMethods;
+using System.Runtime.InteropServices;
+using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Defines a text font.
     /// </summary>
+    [LibuiType("uiFontDescriptor")]
+    [Serializable]
+    [StructLayout(Libraries.Libui.StructLayout)]
     public class Font : IEquatable<Font>
     {
-        internal Libui.uiFontDescriptor Native;
+        /// <summary>
+        /// Gets the font family of this <see cref="Font"/>.
+        /// </summary>
+        public readonly string Family;
+
+        /// <summary>
+        /// Gets the size of this <see cref="Font"/>.
+        /// </summary>
+        public readonly double Size;
+
+        /// <summary>
+        /// Gets the weight of this <see cref="Font"/>.
+        /// </summary>
+        public readonly FontWeight Weight;
+
+        /// <summary>
+        /// Gets the style of this <see cref="Font"/>.
+        /// </summary>
+        public readonly FontStyle Style;
+
+        /// <summary>
+        /// Gets the stretch (width) of this <see cref="Font"/>.
+        /// </summary>
+        public readonly FontStretch Stretch;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Font"/> structure
@@ -26,31 +53,6 @@ namespace LibUISharp.Drawing
             Style = style,
             Stretch = stretch
         };
-
-        /// <summary>
-        /// Gets the font family of this <see cref="Font"/>.
-        /// </summary>
-        public string Family => Native.Family;
-
-        /// <summary>
-        /// Gets the size of this <see cref="Font"/>.
-        /// </summary>
-        public double Size => Native.Size;
-
-        /// <summary>
-        /// Gets the weight of this <see cref="Font"/>.
-        /// </summary>
-        public FontWeight Weight => Native.Weight;
-
-        /// <summary>
-        /// Gets the style of this <see cref="Font"/>.
-        /// </summary>
-        public FontStyle Style => Native.Style;
-
-        /// <summary>
-        /// Gets the stretch (width) of this <see cref="Font"/>.
-        /// </summary>
-        public FontStretch Stretch => Native.Stretch;
 
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.

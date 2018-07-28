@@ -1,4 +1,5 @@
-﻿using LibUISharp.Internal;
+﻿using System;
+using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
@@ -6,6 +7,7 @@ namespace LibUISharp.Drawing
     /// Represents extension keys on a keyboard, including the number pad and function keys.
     /// </summary>
     [LibuiType("uiExtKey")]
+    [Serializable]
     public enum ExtensionKey
     {
         /// <summary>

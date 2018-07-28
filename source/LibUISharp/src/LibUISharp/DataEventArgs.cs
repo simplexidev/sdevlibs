@@ -5,7 +5,7 @@ namespace LibUISharp
     /// <summary>
     /// Provides pointer data for an event.
     /// </summary>
-    public class DataEventArgs : EventArgs
+    public class DataEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DataEventArgs"/> class.

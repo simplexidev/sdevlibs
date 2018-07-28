@@ -1,12 +1,14 @@
-﻿using LibUISharp.Drawing;
-using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using System;
+using LibUISharp.Drawing;
+using LibUISharp.Internal;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
     /// A button that allows a user to select a font.
     /// </summary>
+    [LibuiType("uiFontButton")]
     public class FontPicker : Control
     {
         private Font font;
@@ -17,7 +19,7 @@ namespace LibUISharp
         /// </summary>
         public FontPicker()
         {
-            Handle = Libui.uiNewFontButton();
+            Handle = Libui.Call<Libui.uiNewFontButton>()();
             InitializeEvents();
         }
 
@@ -25,7 +27,7 @@ namespace LibUISharp
         /// Occurs when the <see cref="Font"/> property is changed.
         /// </summary>
         public event EventHandler FontChanged;
-        
+
         /// <summary>
         /// Gets the currently selected font.
         /// </summary>
@@ -33,7 +35,7 @@ namespace LibUISharp
         {
             get
             {
-                Libui.uiFontButtonFont(this, out font.Native);
+                Libui.Call<Libui.uiFontButtonFont>()(this, out font.Native);
                 return font;
             }
         }
@@ -41,7 +43,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiFontButtonOnChanged(this, (button, data) => { OnFontChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiFontButtonOnChanged>()(this, (button, data) => { OnFontChanged(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>
         /// Raises the <see cref="FontChanged"/> event.
@@ -61,7 +63,7 @@ namespace LibUISharp
                 {
                     if (Font != null)
                     {
-                        Libui.uiFreeFontButtonFont(font.Native);
+                        Libui.Call<Libui.uiFreeFontButtonFont>()(font.Native);
                         font = null;
                     }
                 }

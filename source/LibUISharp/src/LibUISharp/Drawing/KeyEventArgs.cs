@@ -1,13 +1,15 @@
-﻿using LibUISharp.Internal;
+﻿using System;
 using System.Runtime.InteropServices;
+using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Provides key data for an event.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
     [LibuiType("uiAreaKeyEvent")]
+    [Serializable]
+    [StructLayout(Libraries.Libui.StructLayout)]
     public struct KeyEventArgs
     {
         /// <summary>

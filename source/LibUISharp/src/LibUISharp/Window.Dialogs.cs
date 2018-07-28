@@ -125,7 +125,7 @@ namespace LibUISharp
         public static void ShowMessageBox(Window w, string title, string description = null, bool isError = false)
         {
             if (w == null) w = Application.MainWindow;
-            
+
             if (isError)
                 Libui.Call<Libui.uiMsgBoxError>()(w, title, description);
             else

@@ -1,10 +1,12 @@
-﻿using LibUISharp.Internal;
+﻿using System;
+using LibUISharp.Internal;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Specifies how contents are positioned in relation to other content.
     /// </summary>
+    [Serializable]
     [LibuiType("uiAt")]
     public enum RelativeAlignment : long
     {

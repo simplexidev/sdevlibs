@@ -29,7 +29,7 @@ namespace LibUISharp
         /// Occurs when the <see cref="Checked"/> property is changed.
         /// </summary>
         public event EventHandler Toggled;
-        
+
         /// <summary>
         /// Gets or sets the text shown by this <see cref="CheckBox"/>.
         /// </summary>

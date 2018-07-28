@@ -10,7 +10,7 @@ namespace LibUISharp
     {
         private IntPtr handle = IntPtr.Zero;
         private bool disposed = false;
-        private Dictionary<IntPtr, UIComponent> componentCache = new Dictionary<IntPtr, UIComponent>();
+        private static Dictionary<IntPtr, UIComponent> componentCache = new Dictionary<IntPtr, UIComponent>();
 
         /// <summary>
         /// Gets this control's native handle.

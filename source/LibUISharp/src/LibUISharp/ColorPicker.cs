@@ -1,6 +1,6 @@
-﻿using LibUISharp.Drawing;
+﻿using System;
+using LibUISharp.Drawing;
 using LibUISharp.Internal;
-using System;
 using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp

@@ -1,8 +1,8 @@
-﻿using LibUISharp.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using LibUISharp.Internal;
 using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
@@ -148,6 +148,7 @@ namespace LibUISharp
     }
 
     [LibuiType("uiInitOptions")]
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal class StartupOptions
     {

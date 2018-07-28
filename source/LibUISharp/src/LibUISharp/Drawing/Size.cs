@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Represents an ordered pair of integers that defines a size in a two-dimensional plane.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
+    [StructLayout(Libraries.Libui.StructLayout)]
     public struct Size : IEquatable<Size>
     {
         /// <summary>
@@ -180,7 +182,8 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Represents an ordered pair of double-precision floating-point numbers that defines a size in a two-dimensional plane.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
+    [StructLayout(Libraries.Libui.StructLayout)]
     public struct SizeD : IEquatable<SizeD>
     {
         /// <summary>

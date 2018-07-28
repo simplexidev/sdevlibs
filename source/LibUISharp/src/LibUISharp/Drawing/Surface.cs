@@ -1,8 +1,8 @@
-﻿using LibUISharp.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
+using LibUISharp.Internal;
 using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp.Drawing
@@ -10,6 +10,7 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Represents a drawable surface.
     /// </summary>
+    [LibuiType("uiArea")]
     public class Surface
     {
         protected private Dictionary<IntPtr, Surface> Surfaces = new Dictionary<IntPtr, Surface>();

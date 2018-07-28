@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Represents an ordered pair of integer x- and y-coordinates that defines a point in a two-dimensional plane.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
+    [StructLayout(Libraries.Libui.StructLayout)]
     public struct Point : IEquatable<Point>
     {
         /// <summary>
@@ -181,7 +183,8 @@ namespace LibUISharp.Drawing
     /// <summary>
     /// Represents an ordered pair of double-precision floating-point x- and y-coordinates that defines a point in a two-dimensional plane.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
+    [StructLayout(Libraries.Libui.StructLayout)]
     public struct PointD : IEquatable<PointD>
     {
         /// <summary>

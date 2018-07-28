@@ -1,9 +1,9 @@
-﻿using LibUISharp.Internal;
-using System;
+﻿using System;
+using LibUISharp.Internal;
 using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
-{ 
+{
     /// <summary>
     /// Arranges child elements into a single line that can be oriented horizontally or vertically.
     /// </summary>
