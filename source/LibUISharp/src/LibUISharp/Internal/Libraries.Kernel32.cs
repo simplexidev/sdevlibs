@@ -1,6 +1,6 @@
-﻿using NativeLibraryLoader;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
+using NativeLibraryLoader;
 
 namespace LibUISharp.Internal
 {

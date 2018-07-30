@@ -161,30 +161,62 @@ namespace LibUISharp
     }
 
     [NativeType("tm")]
-    [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
+    [StructLayout(Libui.StructLayout)]
     internal class UIDateTime
     {
-        public int Second;
-        public int Minute;
-        public int Hour;
-        public int Day;
-        public int Month;
-        public int Year;
-        private readonly int DayOfWeek;
-        private readonly int DayOfYear;
-        public readonly int IsDST;
+#pragma warning disable IDE0032 // Use auto property
+#pragma warning disable IDE0044 // Add readonly modifier
+        private int sec, min, hour, day, mon, year;
+        private readonly int wday, yday; // Must be uninitialized.
+        private readonly int isdst = -1; //Must be -1.
+#pragma warning restore IDE0032 // Use auto property
+#pragma warning restore IDE0044 // Add readonly modifier
 
         public UIDateTime(int year, int month, int day, int hour, int minute, int second)
         {
-            Second = second;
-            Minute = minute;
-            Hour = hour;
-            Day = day;
-            Month = month;
-            Year = year;
-            // DayOfWeek = null;
-            // DayOfYear = null;
-            IsDST = -1;
+            sec = second;
+            min = minute;
+            this.hour = hour;
+            this.day = day;
+            mon = month;
+            this.year = year;
+        }
+
+        public int Second
+        {
+            get => sec;
+            set => sec = value;
+        }
+
+        public int Minute
+        {
+            get => min;
+            set => min = value;
+        }
+
+        public int Hour
+        {
+            get => hour;
+            set => hour = value;
+        }
+
+        public int Day
+        {
+            get => day;
+            set => day = value;
+        }
+
+        public int Month
+        {
+            get => mon;
+            set => mon = value;
+        }
+
+        public int Year
+        {
+            get => year;
+            set => year = value;
         }
 
         public static DateTime ToDateTime(UIDateTime dt) => new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);

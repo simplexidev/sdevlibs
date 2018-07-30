@@ -1,16 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using static LibUISharp.Native.NativeMethods;
+using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Represents a stroke to draw with.
     /// </summary>
+    [NativeType("uiDrawBrush")]
+    [Serializable]
+    [StructLayout(Libraries.Libui.StructLayout)]
     public class StrokeOptions
     {
-        internal Libui.uiDrawStrokeParams Native = new Libui.uiDrawStrokeParams();
-        private double[] dashes;
+#pragma warning disable IDE0044 // Add readonly modifier
+#pragma warning disable IDE0032 // Use auto property
+        private LineCap cap;
+        private LineJoin join;
+        private double thickness, miterLimit;
+        private IntPtr dashesPtr;
+        private UIntPtr numDashes;
+        private double dashPhase;
+#pragma warning restore IDE0044 // Add readonly modifier
+#pragma warning restore IDE0032 // Use auto property
+
+        private List<double> dashes;
 
         /// <summary>
         /// The default miter limit.
@@ -27,17 +41,17 @@ namespace LibUISharp.Drawing
         /// </summary>
         public LineCap Cap
         {
-            get => Native.Cap;
-            set => Native.Cap = value;
+            get => cap;
+            set => cap = value;
         }
 
         /// <summary>
-        /// Gets or sets how two lines commecting at an angle should be joined.
+        /// Gets or sets how two lines connecting at an angle should be joined.
         /// </summary>
         public LineJoin Join
         {
-            get => Native.Join;
-            set => Native.Join = value;
+            get => join;
+            set => join = value;
         }
 
         /// <summary>
@@ -45,8 +59,8 @@ namespace LibUISharp.Drawing
         /// </summary>
         public double Thickness
         {
-            get => Native.Thickness;
-            set => Native.Thickness = value;
+            get => thickness;
+            set => thickness = value;
         }
 
         /// <summary>
@@ -54,23 +68,23 @@ namespace LibUISharp.Drawing
         /// </summary>
         public double MiterLimit
         {
-            get => Native.MiterLimit;
-            set => Native.MiterLimit = value;
+            get => miterLimit;
+            set => miterLimit = value;
         }
 
         /// <summary>
         /// Gets or sets the dashing style specified as an array of numbers.
         /// </summary>
-        public double[] Dashes
+        public List<double> Dashes
         {
             get => dashes;
             set
             {
-                if (value != null && value.Length != 0)
+                if (value != null && value.Count != 0)
                 {
-                    int length = value.Length;
-                    Native.Dashes = Marshal.UnsafeAddrOfPinnedArrayElement(value, 0);
-                    Native.NumDashes = (UIntPtr)length;
+                    int length = value.Count;
+                    dashesPtr = Marshal.UnsafeAddrOfPinnedArrayElement(value.ToArray(), 0);
+                    numDashes = (UIntPtr)length;
                     dashes = value;
                 }
             }
@@ -81,8 +95,8 @@ namespace LibUISharp.Drawing
         /// </summary>
         public double DashPhase
         {
-            get => Native.DashPhase;
-            set => Native.DashPhase = value;
+            get => dashPhase;
+            set => dashPhase = value;
         }
     }
 }

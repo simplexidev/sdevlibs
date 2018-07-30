@@ -36,8 +36,7 @@ namespace LibUISharp.Drawing
                 MouseEvent = (IntPtr surfaceHandler, IntPtr surface, ref MouseEventArgs args) =>
                 {
                     Surface realSurface = Surfaces[surface];
-                    MouseEventArgs a = new MouseEventArgs(new PointD(args.X, args.Y), new SizeD(args.AreaWidth, args.AreaHeight), args.Up, args.Down, args.Count, args.Modifiers, args.Held1To64);
-                    events.MouseEvent(realSurface, ref a);
+                    events.MouseEvent(realSurface, ref args);
                 },
                 MouseCrossed = (IntPtr surfaceHandler, IntPtr surface, bool left) =>
                 {
@@ -53,8 +52,7 @@ namespace LibUISharp.Drawing
                 KeyEvent = (IntPtr surfaceHandler, IntPtr surface, ref KeyEventArgs args) =>
                 {
                     Surface realSurface = Surfaces[surface];
-                    KeyEventArgs a = new KeyEventArgs(args.Key, args.Extension, args.Modifier, args.Modifiers, args.Up);
-                    return events.KeyEvent(realSurface, ref a);
+                    return events.KeyEvent(realSurface, ref args);
                 }
             };
 

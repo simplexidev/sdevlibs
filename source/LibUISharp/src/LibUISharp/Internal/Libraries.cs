@@ -1,5 +1,5 @@
-﻿using NativeLibraryLoader;
-using System;
+﻿using System;
+using NativeLibraryLoader;
 
 namespace LibUISharp.Internal
 {
@@ -9,7 +9,7 @@ namespace LibUISharp.Internal
         {
             if (library == null) throw new ArgumentNullException(nameof(library));
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-#if DEBUG
+#if DEBUG_NATIVECALL
             Console.WriteLine($"[NativeCall] Calling native method: '{name}'");
 #endif
             return library.LoadFunction<T>(name);

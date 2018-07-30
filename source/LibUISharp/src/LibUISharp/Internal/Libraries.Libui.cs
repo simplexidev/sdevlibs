@@ -680,11 +680,11 @@ namespace LibUISharp.Internal
 
             // _UI_EXTERN void uiDrawStroke(uiDrawContext* c, uiDrawPath* path, uiDrawBrush* b, uiDrawStrokeParams* p);
             [UnmanagedFunctionPointer(Convention)]
-            internal delegate void uiDrawStroke(IntPtr context, IntPtr path, ref uiDrawBrush brush, ref uiDrawStrokeParams strokeParam);
+            internal delegate void uiDrawStroke(IntPtr context, IntPtr path, ref Brush brush, ref StrokeOptions strokeParam);
 
             // _UI_EXTERN void uiDrawFill(uiDrawContext* c, uiDrawPath* path, uiDrawBrush* b);
             [UnmanagedFunctionPointer(Convention)]
-            internal delegate void uiDrawFill(IntPtr context, IntPtr path, ref uiDrawBrush brush);
+            internal delegate void uiDrawFill(IntPtr context, IntPtr path, ref Brush brush);
 
             // _UI_EXTERN void uiDrawMatrixSetIdentity(uiDrawMatrix* m);
             [UnmanagedFunctionPointer(Convention)]

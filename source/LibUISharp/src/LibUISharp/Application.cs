@@ -152,9 +152,16 @@ namespace LibUISharp
     [StructLayout(LayoutKind.Sequential)]
     internal class StartupOptions
     {
-        public UIntPtr Size;
+        private UIntPtr size;
 
-        public StartupOptions() : this(UIntPtr.Zero) { }
-        public StartupOptions(UIntPtr size) => Size = size;
+        public StartupOptions() : this(0) { }
+        public StartupOptions(uint size) => Size = size;
+        public StartupOptions(UIntPtr size) => this.size = size;
+
+        public uint Size
+        {
+            get => (uint)size;
+            private set => size = new UIntPtr(value);
+        }
     }
 }
