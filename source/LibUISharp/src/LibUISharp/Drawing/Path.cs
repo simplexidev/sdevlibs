@@ -1,11 +1,13 @@
 ﻿using System;
-using static LibUISharp.Native.NativeMethods;
+using LibUISharp.Internal;
+using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Represents a geometric path in a <see cref="Context"/>.
     /// </summary>
+    [NativeType("uiDrawPath")]
     public class Path : UIComponent
     {
         private bool disposed = false;
@@ -14,14 +16,14 @@ namespace LibUISharp.Drawing
         /// Initializes a new instance of the <see cref="Path"/> class with the specified <see cref="FillMode"/>.
         /// </summary>
         /// <param name="mode">The <see cref="FillMode"/> specifying how the initialized <see cref="Path"/> should be filled.</param>
-        public Path(FillMode mode) => Handle = Libui.uiDrawNewPath(mode);
+        public Path(FillMode mode) => Handle = Libui.Call<Libui.uiDrawNewPath>()(mode);
 
         /// <summary>
         /// Starts a new figure in this <see cref="Path"/> with the specified current x- and y-coordinates.
         /// </summary>
         /// <param name="x">The current x-coordinate.</param>
         /// <param name="y">The current y-coordinate.</param>
-        public void NewFigure(double x, double y) => Libui.uiDrawPathNewFigure(this, x, y);
+        public void NewFigure(double x, double y) => Libui.Call<Libui.uiDrawPathNewFigure>()(this, x, y);
 
         /// <summary>
         /// Starts a new figure in this <see cref="Path"/> with the specified current point.
@@ -38,7 +40,7 @@ namespace LibUISharp.Drawing
         /// <param name="startAngle">The starting angle fpr the arc.</param>
         /// <param name="sweep">The sweep angle.</param>
         /// <param name="negative">Whether the sweep angle should go clockwise (<see langword="false"/>), or counterclockwise (<see langword="true"/>).</param>
-        public void NewFigureWithArc(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative = false) => Libui.uiDrawPathNewFigureWithArc(this, xCenter, yCenter, radius, startAngle, sweep, negative);
+        public void NewFigureWithArc(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative = false) => Libui.Call<Libui.uiDrawPathNewFigureWithArc>()(this, xCenter, yCenter, radius, startAngle, sweep, negative);
 
         /// <summary>
         /// Starts a new figure in this <see cref="Path"/> and adds an arc.
@@ -55,7 +57,7 @@ namespace LibUISharp.Drawing
         /// </summary>
         /// <param name="x">The x-coordinate of the location.</param>
         /// <param name="y">The y-corrdinate of the location</param>
-        public void LineTo(double x, double y) => Libui.uiDrawPathLineTo(this, x, y);
+        public void LineTo(double x, double y) => Libui.Call<Libui.uiDrawPathLineTo>()(this, x, y);
 
         /// <summary>
         /// Connects the last point in the subpath to the specified location with a straight line.
@@ -72,7 +74,7 @@ namespace LibUISharp.Drawing
         /// <param name="startAngle">The starting angle fpr the arc.</param>
         /// <param name="sweep">The sweep angle.</param>
         /// <param name="negative">Whether the sweep angle should go clockwise (<see langword="false"/>), or counterclockwise (<see langword="true"/>).</param>
-        public void ArcTo(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => Libui.uiDrawPathArcTo(this, xCenter, yCenter, radius, startAngle, sweep, negative);
+        public void ArcTo(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => Libui.Call<Libui.uiDrawPathArcTo>()(this, xCenter, yCenter, radius, startAngle, sweep, negative);
 
         /// <summary>
         /// Adds an arc to this <see cref="Path"/>.
@@ -93,7 +95,7 @@ namespace LibUISharp.Drawing
         /// <param name="c2y">The y-coordinate of the second control point.</param>
         /// <param name="endX">The x-coordinate of the end point.</param>
         /// <param name="endY">The y-coordinate of the end point.</param>
-        public void BezierTo(double c1x, double c1y, double c2x, double c2y, double endX, double endY) => Libui.uiDrawPathBezierTo(this, c1x, c1y, c2x, c2y, endX, endY);
+        public void BezierTo(double c1x, double c1y, double c2x, double c2y, double endX, double endY) => Libui.Call<Libui.uiDrawPathBezierTo>()(this, c1x, c1y, c2x, c2y, endX, endY);
 
         /// <summary>
         /// Adds a cubic bezier curve to this <see cref="Path"/>, with the starting point being the last point in the <see cref="Path"/>.
@@ -106,7 +108,7 @@ namespace LibUISharp.Drawing
         /// <summary>
         /// Causes the point of the pen to move back to the start of the current subpath, trying to fraw a straight line from the current point to the start.
         /// </summary>
-        public void CloseFigure() => Libui.uiDrawPathCloseFigure(this);
+        public void CloseFigure() => Libui.Call<Libui.uiDrawPathCloseFigure>()(this);
 
         /// <summary>
         /// Creates a <see cref="Path"/> for a rectangle at the specified location with the specified size.
@@ -115,7 +117,7 @@ namespace LibUISharp.Drawing
         /// <param name="y">The y-coordinate of the rectangle.</param>
         /// <param name="width">The width of the rectangle.</param>
         /// <param name="height">The height of the rectangle.</param>
-        public void AddRectangle(double x, double y, double width, double height) => Libui.uiDrawPathAddRectangle(this, x, y, width, height);
+        public void AddRectangle(double x, double y, double width, double height) => Libui.Call<Libui.uiDrawPathAddRectangle>()(this, x, y, width, height);
 
         /// <summary>
         /// Creates a <see cref="Path"/> for a rectangle at the specified location with the specified size.
@@ -133,7 +135,7 @@ namespace LibUISharp.Drawing
         /// <summary>
         /// Ends this <see cref="Path"/>, leaving the figure open.
         /// </summary>
-        public void End() => Libui.uiDrawPathEnd(this);
+        public void End() => Libui.Call<Libui.uiDrawPathEnd>()(this);
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -144,7 +146,7 @@ namespace LibUISharp.Drawing
             if (!disposed)
             {
                 if (disposing && Handle != IntPtr.Zero)
-                    Libui.uiDrawFreePath(this);
+                    Libui.Call<Libui.uiDrawFreePath>()(this);
                 disposed = true;
                 base.Dispose(disposing);
             }
