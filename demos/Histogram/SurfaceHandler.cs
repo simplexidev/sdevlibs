@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using LibUISharp;
 using LibUISharp.Drawing;
 
-namespace LibUISharp.Demos.Histogram
+namespace Histogram
 {
-    public class SurfaceHandler : ISurfaceHandler
+    public class SurfaceHandler : SurfaceEventHandler
     {
         private const int pointRadius = 5;
         private const int xoffLeft = 20;
@@ -32,7 +32,7 @@ namespace LibUISharp.Demos.Histogram
             spinBoxList = spinBoxes;
         }
 
-        public void Draw(Surface surface, ref DrawEventArgs e)
+        public override void Draw(Surface surface, ref DrawEventArgs e)
         {
             brush = Brushes.White;
             path = new Path(FillMode.Winding);
@@ -42,7 +42,7 @@ namespace LibUISharp.Demos.Histogram
             path.Dispose();
 
             GraphSize(e.SurfaceSize.Width, e.SurfaceSize.Height, out double graphWidth, out double graphHeight);
-            
+
             brush = Brushes.Black;
             path = new Path(FillMode.Winding);
             path.NewFigure(xoffLeft, yoffTop);
@@ -133,7 +133,7 @@ namespace LibUISharp.Demos.Histogram
                 (y <= ytest + pointRadius);
         }
 
-        public void MouseEvent(Surface surface, ref MouseEventArgs e)
+        public override void MouseEvent(Surface surface, ref MouseEventArgs e)
         {
             GraphSize(e.SurfaceSize.Width, e.SurfaceSize.Height, out double graphWidth, out double graphHeight);
             PointLocations(graphWidth, graphHeight, out double[] xs, out double[] ys);
@@ -149,9 +149,5 @@ namespace LibUISharp.Demos.Histogram
             _currentPoint = i;
             surface.QueueRedrawAll();
         }
-
-        public bool KeyEvent(Surface surface, ref KeyEventArgs e) => false;
-        public void MouseCrossed(Surface surface, MouseCrossedEventArgs e) { }
-        public void DragBroken(Surface surface) { }
     }
 }

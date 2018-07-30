@@ -1,4 +1,6 @@
-namespace LibUISharp.Demos.Histogram
+using LibUISharp;
+
+namespace Histogram
 {
     internal class Program
     {

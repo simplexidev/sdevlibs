@@ -1,6 +1,6 @@
 using LibUISharp;
 
-namespace LibUISharpDemos.ControlGallery
+namespace ControlGallery
 {
     internal class Program
     {

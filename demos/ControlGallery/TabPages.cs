@@ -1,7 +1,6 @@
 using LibUISharp;
-using LibUISharp.Drawing;
 
-namespace LibUISharpDemos.ControlGallery
+namespace ControlGallery
 {
     public sealed class BasicControlsTab : TabPage
     {

@@ -59,6 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ref\ui.h" />
+    <None Include="src\LibUISharp\Drawing\Brush.cs" />
+    <None Include="src\LibUISharp\Drawing\Brushes.cs" />
+    <None Include="src\LibUISharp\Drawing\Matrix.cs" />
+    <None Include="src\LibUISharp\Drawing\MouseEventArgs.cs" />
+    <None Include="src\LibUISharp\Drawing\StrokeOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NativeLibraryLoader" Version="1.0.8" />

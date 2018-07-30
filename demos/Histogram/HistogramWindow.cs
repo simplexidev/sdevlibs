@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using LibUISharp;
 using LibUISharp.Drawing;
 
-namespace LibUISharp.Demos.Histogram
+namespace Histogram
 {
     public class HistogramWindow : Window
     {
@@ -18,23 +19,23 @@ namespace LibUISharp.Demos.Histogram
         {
             IsMargined = true;
             Child = hPanel;
-            
-            hPanel.Items.Add(vPanel);
-            
+
+            hPanel.Children.Add(vPanel);
+
             for (int i = 0; i < 10; i++)
             {
                 SpinBox spinBox = new SpinBox(0, 100) { Value = new Random(DateTime.Now.Millisecond).Next(0, 101) };
                 spinBox.ValueChanged += SpinBoxOnValueChanged;
-                vPanel.Items.Add(spinBox);
+                vPanel.Children.Add(spinBox);
                 spinBoxList.Add(spinBox);
             }
-            
+
             colorPicker.ColorChanged += (sender, args) => { histogramSurface.QueueRedrawAll(); };
 
-            vPanel.Items.Add(colorPicker);
+            vPanel.Children.Add(colorPicker);
 
             histogramSurface = new Surface(new SurfaceHandler(colorPicker, spinBoxList));
-            hPanel.Items.Add(histogramSurface, true);
+            hPanel.Children.Add(histogramSurface, true);
         }
 
         private void SpinBoxOnValueChanged(object sender, EventArgs eventArgs) => histogramSurface.QueueRedrawAll();
