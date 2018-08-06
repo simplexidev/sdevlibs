@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
@@ -39,7 +38,7 @@ namespace LibUISharp
         /// </summary>
         public virtual bool Enabled
         {
-            get => Libui.Call<Libui.uiControlEnabled>()(this);
+            get => NativeCalls.ControlEnabled(this);
             set
             {
                 if (enabled == value) return;
@@ -53,7 +52,7 @@ namespace LibUISharp
         /// </summary>
         public virtual bool Visible
         {
-            get => Libui.Call<Libui.uiControlVisible>()(this);
+            get => NativeCalls.ControlVisible(this);
             set
             {
                 if (visible == value) return;
@@ -70,7 +69,7 @@ namespace LibUISharp
             get
             {
                 if (Handle != IntPtr.Zero)
-                    return Libui.Call<Libui.uiControlToplevel>()(Handle);
+                    return NativeCalls.ControlTopLevel(this);
                 return false;
             }
         }
@@ -82,7 +81,7 @@ namespace LibUISharp
         {
             if (!enabled)
             {
-                Libui.Call<Libui.uiControlEnable>()(this);
+                NativeCalls.ControlEnable(this);
                 enabled = true;
             }
         }
@@ -94,7 +93,7 @@ namespace LibUISharp
         {
             if (enabled)
             {
-                Libui.Call<Libui.uiControlDisable>()(this);
+                NativeCalls.ControlDisable(this);
                 enabled = false;
             }
         }
@@ -106,7 +105,7 @@ namespace LibUISharp
         {
             if (!visible)
             {
-                Libui.Call<Libui.uiControlShow>()(this);
+                NativeCalls.ControlShow(this);
                 visible = true;
             }
         }
@@ -118,7 +117,7 @@ namespace LibUISharp
         {
             if (visible)
             {
-                Libui.Call<Libui.uiControlHide>()(this);
+                NativeCalls.ControlHide(this);
                 visible = false;
             }
         }
@@ -137,7 +136,7 @@ namespace LibUISharp
             if (!disposed)
             {
                 if (disposing && Handle != IntPtr.Zero)
-                    Libui.Call<Libui.uiControlDestroy>()(this);
+                    NativeCalls.ControlDestroy(this);
                 disposed = true;
                 base.Dispose(disposing);
             }

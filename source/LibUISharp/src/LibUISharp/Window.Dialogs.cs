@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using static LibUISharp.Internal.Libraries;
+using LibUISharp.Internal;
 
 namespace LibUISharp
 {
@@ -29,7 +29,7 @@ namespace LibUISharp
         {
             if (w == null) w = Application.MainWindow;
 
-            path = Libui.Call<Libui.uiSaveFile>()(w);
+            path = NativeCalls.SaveFile(w);
             if (string.IsNullOrEmpty(path))
                 return false;
             else
@@ -80,7 +80,7 @@ namespace LibUISharp
         {
             if (w == null) w = Application.MainWindow;
 
-            path = Libui.Call<Libui.uiOpenFile>()(w);
+            path = NativeCalls.OpenFile(w);
             if (string.IsNullOrEmpty(path))
                 return false;
             else
@@ -127,9 +127,9 @@ namespace LibUISharp
             if (w == null) w = Application.MainWindow;
 
             if (isError)
-                Libui.Call<Libui.uiMsgBoxError>()(w, title, description);
+                NativeCalls.MsgBoxError(w, title, description);
             else
-                Libui.Call<Libui.uiMsgBox>()(w, title, description);
+                NativeCalls.MsgBox(w, title, description);
         }
     }
 }

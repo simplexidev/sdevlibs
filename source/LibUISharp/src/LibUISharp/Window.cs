@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
@@ -28,7 +27,7 @@ namespace LibUISharp
         /// <param name="hasMenu">Whether or not the window will have a menu.</param>
         public Window(string title = "", int width = 600, int height = 400, bool hasMenu = false)
         {
-            Handle = Libui.Call<Libui.uiNewWindow>()(title, width, height, hasMenu);
+            Handle = NativeCalls.NewWindow(title, width, height, hasMenu);
 
             this.title = title;
             Console.Title = title;
@@ -67,14 +66,13 @@ namespace LibUISharp
         /// </summary>
         public string Title
         {
-            get => title = Libui.Call<Libui.uiWindowTitle>()(this);
+            get => title = NativeCalls.WindowTitle(this);
             set
             {
                 if (title != value)
                 {
-                    Libui.Call<Libui.uiWindowSetTitle>()(this, value);
+                    NativeCalls.WindowSetTitle(this, value);
                     title = value;
-                    Console.Title = title;
                 }
             }
         }
@@ -86,7 +84,7 @@ namespace LibUISharp
         {
             get
             {
-                Libui.Call<Libui.uiWindowContentSize>()(this, out int w, out int h);
+                NativeCalls.WindowContentSize(this, out int w, out int h);
                 size = new Size(w, h);
                 return size;
             }
@@ -94,7 +92,7 @@ namespace LibUISharp
             {
                 if (size != value)
                 {
-                    Libui.Call<Libui.uiWindowSetContentSize>()(this, value.Width, value.Height);
+                    NativeCalls.WindowSetContentSize(this, value.Width, value.Height);
                     size = value;
                 }
             }
@@ -117,14 +115,14 @@ namespace LibUISharp
         {
             get
             {
-                fullscreen = Libui.Call<Libui.uiWindowFullscreen>()(this);
+                fullscreen = NativeCalls.WindowFullscreen(this);
                 return fullscreen;
             }
             set
             {
                 if (fullscreen != value)
                 {
-                    Libui.Call<Libui.uiWindowSetFullscreen>()(this, value);
+                    NativeCalls.WindowSetFullscreen(this, value);
                     fullscreen = value;
                 }
             }
@@ -137,14 +135,14 @@ namespace LibUISharp
         {
             get
             {
-                borderless = Libui.Call<Libui.uiWindowBorderless>()(this);
+                borderless = NativeCalls.WindowBorderless(this);
                 return borderless;
             }
             set
             {
                 if (borderless != value)
                 {
-                    Libui.Call<Libui.uiWindowSetBorderless>()(this, value);
+                    NativeCalls.WindowSetBorderless(this, value);
                     borderless = value;
                 }
             }
@@ -160,7 +158,7 @@ namespace LibUISharp
                 if (Handle != IntPtr.Zero)
                 {
                     if (value == null) throw new UIException("Cannot add a null Control to a Window.");
-                    Libui.Call<Libui.uiWindowSetChild>()(this, value);
+                    NativeCalls.WindowSetChild(this, value);
                     child = value;
                 }
             }
@@ -173,14 +171,14 @@ namespace LibUISharp
         {
             get
             {
-                isMargined = Libui.Call<Libui.uiWindowMargined>()(this);
+                isMargined = NativeCalls.WindowMargined(this);
                 return isMargined;
             }
             set
             {
                 if (isMargined != value)
                 {
-                    Libui.Call<Libui.uiWindowSetMargined>()(this, value);
+                    NativeCalls.WindowSetMargined(this, value);
                     isMargined = value;
                 }
             }
@@ -215,7 +213,7 @@ namespace LibUISharp
             if (Handle == IntPtr.Zero)
                 throw new TypeInitializationException(nameof(Window), new InvalidComObjectException());
 
-            Libui.Call<Libui.uiWindowOnClosing>()(this, (window, data) =>
+            NativeCalls.WindowOnClosing(this, (window, data) =>
             {
                 CancelEventArgs args = new CancelEventArgs();
                 OnWindowClosing(args);
@@ -230,7 +228,7 @@ namespace LibUISharp
                 return !cancel;
             }, IntPtr.Zero);
 
-            Libui.Call<Libui.uiWindowOnContentSizeChanged>()(this, (window, data) => { OnSizeChanged(EventArgs.Empty); }, IntPtr.Zero);
+            NativeCalls.WindowOnContentSizeChanged(this, (window, data) => { OnSizeChanged(EventArgs.Empty); }, IntPtr.Zero);
         }
     }
 }

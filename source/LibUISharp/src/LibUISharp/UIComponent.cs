@@ -6,7 +6,7 @@ namespace LibUISharp
     /// <summary>
     /// The base implementation for a UI component.
     /// </summary>
-    public abstract class UIComponent : IDisposable
+    public abstract class UIComponent : IEquatable<UIComponent>, IDisposable
     {
         private IntPtr handle = IntPtr.Zero;
         private bool disposed = false;
@@ -36,6 +36,37 @@ namespace LibUISharp
         protected virtual void InitializeEvents() { }
 
         /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns>true if obj and this instance are the same type and represent the same value; otherwise, false.</returns>
+        public override bool Equals(object obj)
+        {
+            if (!(obj is UIComponent))
+                return false;
+            return Equals((UIComponent)obj);
+        }
+
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="component">The <see cref="UIComponent"/> to compare with the current instance.</param>
+        /// <returns><see langword="true"/> if <paramref name="component"/> and this instance are the same type and represent the same value; otherwise, <see langword="false"/>.</returns>
+        public bool Equals(UIComponent component) => Handle == component.Handle;
+
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+        public override int GetHashCode() => unchecked(Handle.ToInt32());
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString() => Handle.ToString();
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
@@ -54,8 +85,8 @@ namespace LibUISharp
             {
                 if (disposing && handle != IntPtr.Zero)
                 {
-                    componentCache.Remove(this);
-                    Handle = IntPtr.Zero;
+                    componentCache.Remove(handle);
+                    handle = IntPtr.Zero;
                 }
                 disposed = true;
             }

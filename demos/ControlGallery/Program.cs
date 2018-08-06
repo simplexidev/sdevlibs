@@ -14,7 +14,7 @@ namespace ControlGallery
 
             // Create the menu and add it's items.
             menu = new Menu("Demo");
-            menu.Children.Add("MenuItem 1");
+            menu.Children.Add("MenuItem 1", action => Window.ShowMessageBox(null, "TestMessage", null, false));
             menu.Children.AddCheckable("CheckableMenuItem 1");
             menu.Children.AddSeparator();
             menu.Children.AddPreferences();

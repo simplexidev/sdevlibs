@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
     /// <summary>
-    /// Enacpsulates an application with a user-interface.
+    /// Encapsulates an application with a user-interface.
     /// </summary>
     public sealed class Application : UIComponent
     {
         private static object _lock = new object();
-        private static bool created = false;
+        private static bool initialized = false;
         private static StartupOptions Options = new StartupOptions();
         private bool disposed = false;
         private static readonly Queue<Action> queue = new Queue<Action>();
@@ -25,10 +23,10 @@ namespace LibUISharp
         {
             lock (_lock)
             {
-                if (created)
+                if (initialized)
                     throw new InvalidOperationException("Cannot create more than one Application.");
                 Current = this;
-                created = true;
+                initialized = true;
                 InitializeComponent();
                 InitializeEvents();
             }
@@ -37,7 +35,7 @@ namespace LibUISharp
         /// <summary>
         /// Occurs just before an application shuts down.
         /// </summary>
-        public event EventHandler<CancelEventArgs> Exiting;
+        public event Func<bool, bool> Exiting;
 
         /// <summary>
         /// Gets the current instance of this <see cref="Application"/>.
@@ -62,7 +60,7 @@ namespace LibUISharp
             try
             {
                 QueueMain(action);
-                Libui.Call<Libui.uiMain>()();
+                NativeCalls.Main();
             }
             catch (Exception)
             {
@@ -78,7 +76,7 @@ namespace LibUISharp
         public static void QueueMain(Action action)
         {
             queue.Enqueue(action);
-            Libui.Call<Libui.uiQueueMain>()(data =>
+            NativeCalls.QueueMain(data =>
             {
                 lock (_lock)
                 {
@@ -88,35 +86,40 @@ namespace LibUISharp
             }, new IntPtr(queue.Count));
         }
 
-        private void Steps() => Libui.Call<Libui.uiMainSteps>()();
+        private void Steps() => NativeCalls.MainSteps();
 
-        private bool Step(bool wait) => Libui.Call<Libui.uiMainStep>()(wait);
+        private bool Step(bool wait) => NativeCalls.MainStep(wait);
 
         /// <summary>
-        /// Shut down this application.
+        /// Shuts down this application.
         /// </summary>
-        public void Shutdown() => Libui.Call<Libui.uiQuit>()();
+        public void Shutdown() => NativeCalls.Quit();
 
         /// <summary>
         /// Initializes this UI component.
         /// </summary>
         protected sealed override void InitializeComponent()
         {
-            string error = Libui.Call<Libui.uiInit>()(ref Options);
+            string error = NativeCalls.Init(ref Options);
 
             if (!string.IsNullOrEmpty(error))
             {
                 Console.WriteLine(error);
-                Libui.Call<Libui.uiFreeInitError>()(error);
+                NativeCalls.FreeInitError(error);
                 throw new UIException(error);
             }
 
-            // This must be possible on Linux and macOS.
-#if !DEBUG
+            //TODO: Add to relating PR.
+            /* This will be replaced, since there's no (reasonable) way to perform this
+             * on every platform. See below for more info:
+             * https://github.com/dotnet/cli/issues/296
+             * https://github.com/AvaloniaUI/Avalonia/wiki/Hide-console-window-for-self-contained-.NET-Core-application
+             * https://github.com/jmacato/NSubsys */
+#if !DEBUG_CONSOLE
             if (PlatformHelper.IsWinNT)
             {
-                IntPtr ptr = Kernel32.Call<Kernel32.GetConsoleWindow>()();
-                Kernel32.Call<Kernel32.ShowWindow>()(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
+                IntPtr ptr = NativeCalls.winGetConsoleWindow();
+                NativeCalls.winShowWindow(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
             }
 #endif
         }
@@ -124,12 +127,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiOnShouldQuit>()(data =>
-            {
-                CancelEventArgs args = new CancelEventArgs();
-                Exiting?.Invoke(this, args);
-                return !args.Cancel;
-            }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.OnShouldQuit(data => { return Exiting.Invoke(true); }, IntPtr.Zero);
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -140,7 +138,7 @@ namespace LibUISharp
             if (disposing)
             {
                 if (!disposed)
-                    Libui.Call<Libui.uiUnInit>()();
+                    NativeCalls.UnInit();
                 disposed = true;
                 base.Dispose(disposing);
             }
@@ -150,7 +148,7 @@ namespace LibUISharp
     [NativeType("uiInitOptions")]
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    internal class StartupOptions
+    internal class StartupOptions : IEquatable<StartupOptions>
     {
         private UIntPtr size;
 
@@ -163,5 +161,18 @@ namespace LibUISharp
             get => (uint)size;
             private set => size = new UIntPtr(value);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is StartupOptions))
+                return false;
+            return Equals((StartupOptions)obj);
+        }
+
+        public bool Equals(StartupOptions options) => size == options.size;
+
+        public override int GetHashCode() => unchecked((int)size.ToUInt32());
+
+        public override string ToString() => size.ToString();
     }
 }

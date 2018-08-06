@@ -5,6 +5,7 @@ using LibUISharp.Internal;
 namespace LibUISharp.Drawing
 {
     //TODO: Maybe add CYMK/HSL/HSV colors too.
+    //TODO: ToString() overrides.
     /// <summary>
     /// Represents an ARGB (alpha, red, green, blue) color.
     /// </summary>
