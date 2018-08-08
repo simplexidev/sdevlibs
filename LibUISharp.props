@@ -1,0 +1,39 @@
+<Project>
+  <PropertyGroup>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Optimize>true</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>embedded</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+    <Authors>Thomas Corwin, et al.</Authors>
+    <Copyright>2018 (c) Thomas Corwin</Copyright>
+    <Version>0.4.0-alpha</Version>
+    <PackageId>$(MSBuildProjectName)</PackageId>
+    <Description>C# bindings for https://github.com/andlabs/libui targeting .NET Standard.</Description>
+    <PackageTags>libui;netstandard20;ui;drawing;desktop;cross-platform</PackageTags>
+    <PackageReleaseNotes>Version $(Version)</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/tom-corwin/LibUISharp</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/tom-corwin/LibUISharp/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/tom-corwin/LibUISharp</RepositoryUrl>
+  </PropertyGroup>
+</Project>

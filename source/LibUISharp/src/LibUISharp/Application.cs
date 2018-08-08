@@ -13,8 +13,8 @@ namespace LibUISharp
         private static object _lock = new object();
         private static bool initialized = false;
         private static StartupOptions Options = new StartupOptions();
-        private bool disposed = false;
         private static readonly Queue<Action> queue = new Queue<Action>();
+        private bool disposed = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Application"/> class.
@@ -24,7 +24,7 @@ namespace LibUISharp
             lock (_lock)
             {
                 if (initialized)
-                    throw new InvalidOperationException("Cannot create more than one Application.");
+                    throw new InvalidOperationException("You cannot have more than one instance of the Application class at once.");
                 Current = this;
                 initialized = true;
                 InitializeComponent();
@@ -108,20 +108,6 @@ namespace LibUISharp
                 NativeCalls.FreeInitError(error);
                 throw new UIException(error);
             }
-
-            //TODO: Add to relating PR.
-            /* This will be replaced, since there's no (reasonable) way to perform this
-             * on every platform. See below for more info:
-             * https://github.com/dotnet/cli/issues/296
-             * https://github.com/AvaloniaUI/Avalonia/wiki/Hide-console-window-for-self-contained-.NET-Core-application
-             * https://github.com/jmacato/NSubsys */
-#if !DEBUG_CONSOLE
-            if (PlatformHelper.IsWinNT)
-            {
-                IntPtr ptr = NativeCalls.winGetConsoleWindow();
-                NativeCalls.winShowWindow(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
-            }
-#endif
         }
 
         /// <summary>

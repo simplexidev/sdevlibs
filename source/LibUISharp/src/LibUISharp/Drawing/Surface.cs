@@ -12,7 +12,7 @@ namespace LibUISharp.Drawing
     [NativeType("uiArea")]
     public class Surface : Control
     {
-        protected private Dictionary<IntPtr, Surface> Surfaces = new Dictionary<IntPtr, Surface>();
+        protected private Dictionary<IntPtr, Surface> surfaceCache = new Dictionary<IntPtr, Surface>();
         private Size size;
 
         /// <summary>
@@ -26,11 +26,11 @@ namespace LibUISharp.Drawing
         {
             EventHandler = new NativeSurfaceHandler
             {
-                Draw = (handler, surface, args) => events.Draw(Surfaces[surface], ref args),
-                MouseEvent = (handler, surface, args) => events.MouseEvent(Surfaces[surface], ref args),
-                MouseCrossed = (handler, surface, left) => events.MouseCrossed(Surfaces[surface], left),
-                DragBroken = (handler, surface) => events.DragBroken(Surfaces[surface]),
-                KeyEvent = (handler, surface, args) => events.KeyEvent(Surfaces[surface], ref args)
+                Draw = (handler, surface, args) => events.Draw(surfaceCache[surface], ref args),
+                MouseEvent = (handler, surface, args) => events.MouseEvent(surfaceCache[surface], ref args),
+                MouseCrossed = (handler, surface, left) => events.MouseCrossed(surfaceCache[surface], left),
+                DragBroken = (handler, surface) => events.DragBroken(surfaceCache[surface]),
+                KeyEvent = (handler, surface, args) => events.KeyEvent(surfaceCache[surface], ref args)
             };
 
             IsScrollable = scrollable;
@@ -38,7 +38,7 @@ namespace LibUISharp.Drawing
                 Handle = NativeCalls.NewScrollingArea(EventHandler, width, height);
             else
                 Handle = NativeCalls.NewArea(EventHandler);
-            Surfaces[Handle] = this;
+            surfaceCache[Handle] = this;
         }
 
         internal NativeSurfaceHandler EventHandler { get; }

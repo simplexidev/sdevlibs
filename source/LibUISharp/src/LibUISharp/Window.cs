@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
@@ -7,7 +6,7 @@ using LibUISharp.Internal;
 namespace LibUISharp
 {
     /// <summary>
-    /// Represents a window that makes up an application's user interface.
+    /// Represents a native window that makes up an application's user interface.
     /// </summary>
     [NativeType("uiWindow")]
     public partial class Window : SingleContainer<Window, Control>
@@ -49,12 +48,12 @@ namespace LibUISharp
         /// <summary>
         /// Occurs when the window is closing.
         /// </summary>
-        public EventHandler<CancelEventArgs> WindowClosing;
+        public event Func<bool, bool> Closing;
 
         /// <summary>
         /// Occurs when the <see cref="Size"/> property value changes.
         /// </summary>
-        public EventHandler SizeChanged;
+        public event Action SizeChanged;
 
         /// <summary>
         /// Gets whether or not this window has a menu.
@@ -194,16 +193,15 @@ namespace LibUISharp
         }
 
         /// <summary>
-        /// Raises the <see cref="WindowClosing"/> event.
+        /// Raises the <see cref="Closing"/> event.
         /// </summary>
-        /// <param name="e">A <see cref="CancelEventArgs"/> containing the event data.</param>
-        protected virtual void OnWindowClosing(CancelEventArgs e) => WindowClosing?.Invoke(this, e);
+        /// <param name="cancel">A <see cref="bool"/> containing the event data.</param>
+        protected virtual void OnClosing(bool cancel) => Closing?.Invoke(cancel);
 
         /// <summary>
         /// Raises the <see cref="SizeChanged"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> containing the event data.</param>
-        protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
+        protected virtual void OnSizeChanged() => SizeChanged?.Invoke();
 
         /// <summary>
         /// Initializes this UI component's events.
@@ -215,9 +213,8 @@ namespace LibUISharp
 
             NativeCalls.WindowOnClosing(this, (window, data) =>
             {
-                CancelEventArgs args = new CancelEventArgs();
-                OnWindowClosing(args);
-                bool cancel = args.Cancel;
+                bool cancel = false;
+                OnClosing(cancel);
                 if (!cancel)
                 {
                     if (this != Application.MainWindow)
@@ -228,7 +225,7 @@ namespace LibUISharp
                 return !cancel;
             }, IntPtr.Zero);
 
-            NativeCalls.WindowOnContentSizeChanged(this, (window, data) => { OnSizeChanged(EventArgs.Empty); }, IntPtr.Zero);
+            NativeCalls.WindowOnContentSizeChanged(this, (window, data) => { OnSizeChanged(); }, IntPtr.Zero);
         }
     }
 }
