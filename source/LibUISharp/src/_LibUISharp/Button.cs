@@ -25,7 +25,7 @@ namespace LibUISharp
         /// <summary>
         /// Occurs when the button is clicked.
         /// </summary>
-        public event EventHandler Click;
+        public event Action Click;
 
         /// <summary>
         /// Gets or sets the text within this button.
@@ -50,12 +50,11 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.ButtonOnClicked(this, (button, data) => { OnClick(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.ButtonOnClicked(this, (button, data) => { OnClick(); }, IntPtr.Zero);
 
         /// <summary>
         /// Raises the <see cref="Click"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnClick(EventArgs e) => Click?.Invoke(this, e);
+        protected virtual void OnClick() => Click?.Invoke();
     }
 }

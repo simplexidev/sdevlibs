@@ -29,9 +29,7 @@ namespace LibUISharp
             /// <summary>
             /// Adds a <see cref="TabPage"/> to the end of the <see cref="ControlList"/>.
             /// </summary>
-            /// <param name="label">The text beside the child <see cref="TabPage"/>.</param>
             /// <param name="child">The <see cref="TabPage"/> to be added to the end of the <see cref="ControlList"/>.</param>
-            /// <param name="stretches">Whether or not <paramref name="child"/> stretches the area of the parent <see cref="TabPage"/></param>
             public override void Add(TabPage child)
             {
                 base.Add(child);

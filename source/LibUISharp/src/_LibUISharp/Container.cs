@@ -19,6 +19,7 @@ namespace LibUISharp
     /// <summary>
     /// Represents a <see cref="Container"/> that contains a single child <see cref="Control"/>.
     /// </summary>
+    /// <typeparam name="TContainer">The type of <see cref="SingleContainer{TContainer, TChild}"/>.</typeparam>
     /// <typeparam name="TChild">The type of the child <see cref="Control"/>.</typeparam>
     public abstract class SingleContainer<TContainer, TChild> : Container, ISingleContainer<TContainer, TChild>
         where TContainer : SingleContainer<TContainer, TChild>
@@ -66,7 +67,8 @@ namespace LibUISharp
     /// <summary>
     /// Represents a <see cref="Container"/> that contains a collection of child <see cref="Control"/> objects.
     /// </summary>
-    /// <typeparam name="TCollection">The type of <see cref="ControlListBase{TChild}"/>.</typeparam>
+    /// <typeparam name="TContainer">The type of <see cref="MultiContainer{TContainer, TCollection, TChild}"/>.</typeparam>
+    /// <typeparam name="TCollection">The type of <see cref="ControlListBase"/>.</typeparam>
     /// <typeparam name="TChild">The type of the child <see cref="Control"/>.</typeparam>
     public abstract class MultiContainer<TContainer, TCollection, TChild> : Container, IMultiContainer<TContainer, TCollection, TChild>
         where TContainer : MultiContainer<TContainer, TCollection, TChild>
@@ -104,6 +106,9 @@ namespace LibUISharp
             }
         }
 
+        /// <summary>
+        /// Represents the base class for a collection of <typeparamref name="TChild"/> objects inside of a <see cref="MultiContainer{TContainer, TCollection, TChild}"/>.
+        /// </summary>
         public abstract class ControlListBase : IList, IList<TChild>, ICollection, ICollection<TChild>, IEnumerable, IEnumerable<TChild>
         {
             private readonly int defaultCapacity = 4;

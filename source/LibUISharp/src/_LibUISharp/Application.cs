@@ -148,16 +148,11 @@ namespace LibUISharp
             private set => size = new UIntPtr(value);
         }
 
-        public override bool Equals(object obj)
-        {
-            if (!(obj is StartupOptions))
-                return false;
-            return Equals((StartupOptions)obj);
-        }
+        public override bool Equals(object obj) => (obj is StartupOptions) && Equals((StartupOptions)obj);
 
         public bool Equals(StartupOptions options) => size == options.size;
 
-        public override int GetHashCode() => unchecked((int)size.ToUInt32());
+        public override int GetHashCode() => size.GetHashCode();
 
         public override string ToString() => size.ToString();
     }

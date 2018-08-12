@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
 
 namespace LibUISharp
 {
@@ -21,7 +20,7 @@ namespace LibUISharp
         /// <summary>
         /// Occurs when the <see cref="Text"/> property is changed.
         /// </summary>
-        public event EventHandler<TextChangedEventArgs> TextChanged;
+        public event Action TextChanged;
 
         /// <summary>
         /// Gets or sets the displayed text.
@@ -30,14 +29,14 @@ namespace LibUISharp
         {
             get
             {
-                text = Libui.Call<Libui.uiEntryText>()(this);
+                text = NativeCalls.EntryText(this);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    Libui.Call<Libui.uiEntrySetText>()(this, value);
+                    NativeCalls.EntrySetText(this, value);
                     text = value;
                 }
             }
@@ -50,14 +49,14 @@ namespace LibUISharp
         {
             get
             {
-                isReadOnly = Libui.Call<Libui.uiEntryReadOnly>()(this);
+                isReadOnly = NativeCalls.EntryReadOnly(this);
                 return isReadOnly;
             }
             set
             {
                 if (isReadOnly != value)
                 {
-                    Libui.Call<Libui.uiEntrySetReadOnly>()(this, value);
+                    NativeCalls.EntrySetReadOnly(this, value);
                     isReadOnly = value;
                 }
             }
@@ -66,13 +65,13 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected override void InitializeEvents() => Libui.Call<Libui.uiEntryOnChanged>()(this, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected override void InitializeEvents() => NativeCalls.EntryOnChanged(this, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
 
         /// <summary>
         /// Called when the <see cref="TextChanged"/> event is raised.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
-        protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
+        protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke();
     }
 
     /// <summary>
@@ -85,7 +84,7 @@ namespace LibUISharp
         /// </summary>
         public TextBox() : base()
         {
-            Handle = Libui.Call<Libui.uiNewEntry>()();
+            Handle = NativeCalls.NewEntry();
             InitializeEvents();
         }
     }
@@ -100,7 +99,7 @@ namespace LibUISharp
         /// </summary>
         public PasswordBox() : base()
         {
-            Handle = Libui.Call<Libui.uiNewPasswordEntry>()();
+            Handle = NativeCalls.NewPasswordEntry();
             InitializeEvents();
         }
     }
@@ -115,7 +114,7 @@ namespace LibUISharp
         /// </summary>
         public SearchBox() : base()
         {
-            Handle = Libui.Call<Libui.uiNewSearchEntry>()();
+            Handle = NativeCalls.NewSearchEntry();
             InitializeEvents();
         }
     }

@@ -50,7 +50,7 @@ namespace LibUISharp.Drawing
         /// Initializes a new instance of the <see cref="KeyEventArgs"/> class.
         /// </summary>
         /// <param name="key">The key that was pressed.</param>
-        /// <param name="ext">The extension key that was pressed.</param>
+        /// <param name="extension">The extension key that was pressed.</param>
         /// <param name="modifier">The single modifier that was pressed</param>
         /// <param name="modifiers">The multiple modifier keys that were pressed.</param>
         /// <param name="up">Whether the key was released or not.</param>

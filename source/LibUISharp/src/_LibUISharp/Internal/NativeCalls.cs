@@ -12,7 +12,7 @@ namespace LibUISharp.Internal
         private static T Call<T>() where T : Delegate
         {
 #if DEBUG_NATIVECALLS
-            Console.Write($"[NativeCall] Calling native method '{typeof(T).Name}'.");
+            Console.WriteLine($"[NativeCall] Calling native method '{typeof(T).Name}'.");
 #endif
 #pragma warning disable IDE0022 // Use expression body for methods
             return Libui.LoadFunction<T>(typeof(T).Name);
@@ -188,25 +188,6 @@ namespace LibUISharp.Internal
         internal static IntPtr NewWindow(string title, int width, int height, bool hasMenubar) => Call<uiNewWindow>()(title, width, height, hasMenubar);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void EntryOnChangedEvent(IntPtr e, IntPtr data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void SpinboxOnChangedEvent(IntPtr s, IntPtr data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void SliderOnChangedEvent(IntPtr s, IntPtr data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void ComboboxOnSelectedEvent(IntPtr c, IntPtr data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void EditableComboboxOnChangedEvent(IntPtr c, IntPtr data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void RadioButtonsOnSelectedEvent(IntPtr r, IntPtr data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void DateTimePickerOnChangedEvent(IntPtr d, IntPtr data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void MultilineEntryOnChangedEvent(IntPtr e, IntPtr data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void MenuItemOnClickedEvent(IntPtr menuItem, IntPtr window, IntPtr data);
-
-        [UnmanagedFunctionPointer(Cdecl)]
         private delegate string uiButtonText(IntPtr b);
         internal static string ButtonText(IntPtr b) => Call<uiButtonText>()(b);
 
@@ -272,57 +253,75 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate string uiEntryText(IntPtr e);
+        internal static string EntryText(IntPtr e) => Call<uiEntryText>()(e);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiEntrySetText(IntPtr e, string text);
+        internal static void EntrySetText(IntPtr e, string text) => Call<uiEntrySetText>()(e, text);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiEntryOnChanged(IntPtr e, uiEntryOnChangedEvent f, IntPtr data);
+        private delegate void uiEntryOnChanged(IntPtr e, [MarshalAs(UnmanagedType.FunctionPtr)] Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void EntryOnChanged(IntPtr e, [MarshalAs(UnmanagedType.FunctionPtr)] Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiEntryOnChanged>()(e, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate bool uiEntryReadOnly(IntPtr e);
+        internal static bool EntryReadOnly(IntPtr e) => Call<uiEntryReadOnly>()(e);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiEntrySetReadOnly(IntPtr e, bool @readonly);
+        internal static void EntrySetReadOnly(IntPtr e, bool @readonly) => Call<uiEntrySetReadOnly>()(e, @readonly);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewEntry();
+        internal static IntPtr NewEntry() => Call<uiNewEntry>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewPasswordEntry();
+        internal static IntPtr NewPasswordEntry() => Call<uiNewPasswordEntry>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewSearchEntry();
+        internal static IntPtr NewSearchEntry() => Call<uiNewSearchEntry>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate string uiLabelText(IntPtr l);
+        internal static string LabelText(IntPtr l) => Call<uiLabelText>()(l);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiLabelSetText(IntPtr l, string text);
+        internal static void LabelSetText(IntPtr l, string text) => Call<uiLabelSetText>()(l, text);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewLabel(string text);
+        internal static IntPtr NewLabel(string text) => Call<uiNewLabel>()(text);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiTabAppend(IntPtr t, string name, IntPtr c);
+        internal static void TabAppend(IntPtr t, string name, IntPtr c) => Call<uiTabAppend>()(t, name, c);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiTabInsertAt(IntPtr t, string name, int before, IntPtr c);
+        internal static void TabInsertAt(IntPtr t, string name, int before, IntPtr c) => Call<uiTabInsertAt>()(t, name, before, c);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiTabDelete(IntPtr t, int index);
+        internal static void TabDelete(IntPtr t, int index) => Call<uiTabDelete>()(t, index);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate int uiTabNumPages(IntPtr t);
+        internal static int TabNumPages(IntPtr t) => Call<uiTabNumPages>()(t);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate bool uiTabMargined(IntPtr t, int page);
+        internal static bool TabMargined(IntPtr t, int page) => Call<uiTabMargined>()(t, page);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiTabSetMargined(IntPtr t, int page, bool margined);
+        internal static void TabSetMargined(IntPtr t, int page, bool margined) => Call<uiTabSetMargined>()(t, page, margined);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewTab();
+        internal static IntPtr NewTab() => Call<uiNewTab>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate string uiGroupTitle(IntPtr g);
@@ -470,39 +469,51 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiMenuItemEnable(IntPtr m);
+        internal static void MenuItemEnable(IntPtr m) => Call<uiMenuItemEnable>()(m);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiMenuItemDisable(IntPtr m);
+        internal static void MenuItemDisable(IntPtr m) => Call<uiMenuItemDisable>()(m);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiMenuItemOnClicked(IntPtr m, uiMenuItemOnClickedEvent f, IntPtr data);
+        private delegate void uiMenuItemOnClicked(IntPtr m, Action<IntPtr, IntPtr, IntPtr> f, IntPtr data);
+        internal static void MenuItemOnClicked(IntPtr m, Action<IntPtr, IntPtr, IntPtr> f, IntPtr data) => Call<uiMenuItemOnClicked>()(m, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate bool uiMenuItemChecked(IntPtr m);
+        internal static bool MenuItemChecked(IntPtr m) => Call<uiMenuItemChecked>()(m);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiMenuItemSetChecked(IntPtr m, bool @checked);
+        internal static void MenuItemSetChecked(IntPtr m, bool @checked) => Call<uiMenuItemSetChecked>()(m, @checked);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiMenuAppendItem(IntPtr m, string name);
+        internal static IntPtr MenuAppendItem(IntPtr m, string name) => Call<uiMenuAppendItem>()(m, name);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiMenuAppendCheckItem(IntPtr m, string name);
+        internal static IntPtr MenuAppendCheckItem(IntPtr m, string name) => Call<uiMenuAppendCheckItem>()(m, name);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiMenuAppendQuitItem(IntPtr m);
+        internal static IntPtr MenuAppendQuitItem(IntPtr m) => Call<uiMenuAppendQuitItem>()(m);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiMenuAppendPreferencesItem(IntPtr m);
+        internal static IntPtr MenuAppendPreferencesItem(IntPtr m) => Call<uiMenuAppendPreferencesItem>()(m);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiMenuAppendAboutItem(IntPtr m);
+        internal static IntPtr MenuAppendAboutItem(IntPtr m) => Call<uiMenuAppendAboutItem>()(m);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiMenuAppendSeparator(IntPtr m);
+        internal static void MenuAppendSeparator(IntPtr m) => Call<uiMenuAppendSeparator>()(m);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewMenu(string name);
+        internal static IntPtr NewMenu(string name) => Call<uiNewMenu>()(name);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate string uiOpenFile(IntPtr parent);
@@ -549,7 +560,7 @@ namespace LibUISharp.Internal
         internal static IntPtr NewScrollingArea(NativeSurfaceHandler ah, int width, int height) => Call<uiNewScrollingArea>()(ah, width, height);
 
         // =========================================================================
-        // ======== IMPLEMENTATIONS AND PUBLIC CALLS BELOW ARE NOT FINISHED ========
+        // ======= IMPLEMENTATIONS AND INTERNAL CALLS BELOW ARE NOT FINISHED =======
         // =========================================================================
 
         [UnmanagedFunctionPointer(Cdecl)]
@@ -769,7 +780,7 @@ namespace LibUISharp.Internal
         private delegate void uiDrawTextLayoutExtents(IntPtr tl, out double width, out double height);
 
         // =========================================================================
-        // ======== IMPLEMENTATIONS AND PUBLIC CALLS ABOVE ARE NOT FINISHED ========
+        // ======= IMPLEMENTATIONS AND INTERNAL CALLS ABOVE ARE NOT FINISHED =======
         // =========================================================================
 
         [UnmanagedFunctionPointer(Cdecl)]
