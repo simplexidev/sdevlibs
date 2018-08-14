@@ -12,8 +12,8 @@ namespace LibUISharp.Drawing
     [StructLayout(LayoutKind.Sequential)]
     public class Font : IEquatable<Font>
     {
-#pragma warning disable IDE0044 // Add readonly modifier
 #pragma warning disable IDE0032 // Use auto property
+#pragma warning disable IDE0044 // Add readonly modifier
         private string family;
         private double size;
         private FontWeight weight;

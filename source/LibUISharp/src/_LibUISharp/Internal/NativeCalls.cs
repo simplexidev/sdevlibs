@@ -10,14 +10,14 @@ namespace LibUISharp.Internal
         private const CallingConvention Cdecl = CallingConvention.Cdecl;
 
         private static T Call<T>() where T : Delegate
+#if !DEBUG_NATIVECALLS
+            => Libui.LoadFunction<T>(typeof(T).Name);
+#else
         {
-#if DEBUG_NATIVECALLS
             Console.WriteLine($"[NativeCall] Calling native method '{typeof(T).Name}'.");
-#endif
-#pragma warning disable IDE0022 // Use expression body for methods
             return Libui.LoadFunction<T>(typeof(T).Name);
-#pragma warning restore IDE0022 // Use expression body for methods
         }
+#endif
 
         private static NativeLibrary Libui
         {
@@ -599,33 +599,43 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixSetIdentity(Matrix matrix);
+        internal static void DrawMatrixSetIdentity(Matrix matrix) => Call<uiDrawMatrixSetIdentity>()(matrix);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixTranslate(Matrix matrix, double x, double y);
+        internal static void DrawMatrixTranslate(Matrix matrix, double x, double y) => Call<uiDrawMatrixTranslate>()(matrix, x, y);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixScale(Matrix matrix, double xCenter, double yCenter, double x, double y);
+        internal static void DrawMatrixScale(Matrix matrix, double xCenter, double yCenter, double x, double y) => Call<uiDrawMatrixScale>()(matrix, xCenter, yCenter, x, y);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixRotate(Matrix matrix, double x, double y, double amount);
+        internal static void DrawMatrixRotate(Matrix matrix, double x, double y, double amount) => Call<uiDrawMatrixRotate>()(matrix, x, y, amount);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixSkew(Matrix matrix, double x, double y, double xamount, double yamount);
+        internal static void DrawMatrixSkew(Matrix matrix, double x, double y, double xamount, double yamount) => Call<uiDrawMatrixSkew>()(matrix, x, y, xamount, yamount);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixMultiply(Matrix dest, Matrix src);
+        internal static void DrawMatrixMultiply(Matrix dest, Matrix src) => Call<uiDrawMatrixMultiply>()(dest, src);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate bool uiDrawMatrixInvertible(Matrix matrix);
+        internal static bool DrawMatrixInvertible(Matrix matrix) => Call<uiDrawMatrixInvertible>()(matrix);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate int uiDrawMatrixInvert(Matrix matrix);
+        internal static int DrawMatrixInvert(Matrix matrix) => Call<uiDrawMatrixInvert>()(matrix);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixTransformPoint(Matrix matrix, out double x, out double y);
+        internal static void DrawMatrixTransformPoint(Matrix matrix, out double x, out double y) => Call<uiDrawMatrixTransformPoint>()(matrix, out x, out y);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixTransformSize(Matrix matrix, out double x, out double y);
+        internal static void DrawMatrixTransformSize(Matrix matrix, out double x, out double y) => Call<uiDrawMatrixTransformSize>()(matrix, out x, out y);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawTransform(IntPtr context, Matrix matrix);
