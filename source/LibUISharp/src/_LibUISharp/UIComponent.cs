@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LibUISharp.Internal;
 
 namespace LibUISharp
 {
@@ -13,9 +14,9 @@ namespace LibUISharp
         private static Dictionary<IntPtr, UIComponent> componentCache = new Dictionary<IntPtr, UIComponent>();
 
         /// <summary>
-        /// Gets this control's native handle.
+        /// Gets this UI component's native handle.
         /// </summary>
-        internal protected IntPtr Handle
+        protected internal IntPtr Handle
         {
             get => handle;
             private protected set
@@ -58,7 +59,7 @@ namespace LibUISharp
         /// Returns the hash code for this instance.
         /// </summary>
         /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
-        public override int GetHashCode() => unchecked(Handle.ToInt32());
+        public override int GetHashCode() => unchecked(HashHelper.GenerateHash(Handle));
 
         /// <summary>
         /// Returns a string that represents the current object.

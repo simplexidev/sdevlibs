@@ -48,13 +48,13 @@ namespace LibUISharp
         }
 
         /// <summary>
-        /// Initializes this UI component's events.
-        /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.ButtonOnClicked(this, (button, data) => { OnClick(); }, IntPtr.Zero);
-
-        /// <summary>
         /// Raises the <see cref="Click"/> event.
         /// </summary>
         protected virtual void OnClick() => Click?.Invoke();
+
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
+        protected sealed override void InitializeEvents() => NativeCalls.ButtonOnClicked(this, (button, data) => { OnClick(); }, IntPtr.Zero);
     }
 }

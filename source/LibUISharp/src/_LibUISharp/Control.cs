@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -32,6 +33,11 @@ namespace LibUISharp
         /// Gets the index of this control.
         /// </summary>
         public int Index { get; protected internal set; }
+
+        /// <summary>
+        /// Gets the native handle for this <see cref="Control"/> in the form of a <see cref="SafeControlHandle"/>.
+        /// </summary>
+        public SafeControlHandle SafeHandle => new SafeControlHandle(Handle, false);
 
         /// <summary>
         /// Gets or sets a value indicating whether the control can respond to interaction.

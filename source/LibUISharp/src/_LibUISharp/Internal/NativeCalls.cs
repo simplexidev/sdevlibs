@@ -158,10 +158,8 @@ namespace LibUISharp.Internal
         internal static void WindowOnContentSizeChanged(IntPtr w, [MarshalAs(UnmanagedType.FunctionPtr)] Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiWindowOnContentSizeChanged>()(w, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiWindowOnClosing(IntPtr w, WindowOnClosingEvent f, IntPtr data);
-        internal static void WindowOnClosing(IntPtr w, WindowOnClosingEvent f, IntPtr data) => Call<uiWindowOnClosing>()(w, f, data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate bool WindowOnClosingEvent(IntPtr w, IntPtr data);
+        private delegate void uiWindowOnClosing(IntPtr w, [MarshalAs(UnmanagedType.FunctionPtr)] Func<IntPtr, IntPtr, bool> f, IntPtr data);
+        internal static void WindowOnClosing(IntPtr w, [MarshalAs(UnmanagedType.FunctionPtr)] Func<IntPtr, IntPtr, bool> f, IntPtr data) => Call<uiWindowOnClosing>()(w, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate bool uiWindowBorderless(IntPtr w);
@@ -788,10 +786,8 @@ namespace LibUISharp.Internal
         internal static void FontButtonFont(IntPtr b, out Font desc) => Call<uiFontButtonFont>()(b, out desc);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiFontButtonOnChanged(IntPtr b, FontButtonOnChangedEvent f, IntPtr data);
-        internal static void FontButtonOnChanged(IntPtr b, FontButtonOnChangedEvent f, IntPtr data) => Call<uiFontButtonOnChanged>()(b, f, data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void FontButtonOnChangedEvent(IntPtr b, IntPtr data);
+        private delegate void uiFontButtonOnChanged(IntPtr b, [MarshalAs(UnmanagedType.FunctionPtr)] Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void FontButtonOnChanged(IntPtr b, [MarshalAs(UnmanagedType.FunctionPtr)] Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiFontButtonOnChanged>()(b, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewFontButton();
@@ -810,10 +806,8 @@ namespace LibUISharp.Internal
         internal static void ColorButtonSetColor(IntPtr b, double red, double green, double blue, double alpha) => Call<uiColorButtonSetColor>()(b, red, green, blue, alpha);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiColorButtonOnChanged(IntPtr b, ColorButtonOnChangedEvent f, IntPtr data);
-        internal static void ColorButtonOnChanged(IntPtr b, ColorButtonOnChangedEvent f, IntPtr data) => Call<uiColorButtonOnChanged>()(b, f, data);
-        [UnmanagedFunctionPointer(Cdecl)]
-        internal delegate void ColorButtonOnChangedEvent(IntPtr b, IntPtr data);
+        private delegate void uiColorButtonOnChanged(IntPtr b, [MarshalAs(UnmanagedType.FunctionPtr)] Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void ColorButtonOnChanged(IntPtr b, [MarshalAs(UnmanagedType.FunctionPtr)] Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiColorButtonOnChanged>()(b, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewColorButton();

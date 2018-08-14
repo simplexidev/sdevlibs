@@ -63,15 +63,14 @@ namespace LibUISharp
         }
 
         /// <summary>
-        /// Initializes this UI component's events.
-        /// </summary>
-        protected override void InitializeEvents() => NativeCalls.EntryOnChanged(this, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
-
-        /// <summary>
         /// Called when the <see cref="TextChanged"/> event is raised.
         /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
-        protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke();
+        protected virtual void OnTextChanged() => TextChanged?.Invoke();
+
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
+        protected override void InitializeEvents() => NativeCalls.EntryOnChanged(this, (entry, data) => { OnTextChanged(); }, IntPtr.Zero);
     }
 
     /// <summary>

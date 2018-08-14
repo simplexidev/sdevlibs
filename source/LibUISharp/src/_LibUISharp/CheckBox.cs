@@ -70,13 +70,13 @@ namespace LibUISharp
         }
 
         /// <summary>
-        /// Initializes this UI component's events.
-        /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.CheckboxOnToggled(this, (checkbox, data) => { OnToggled(); }, IntPtr.Zero);
-
-        /// <summary>
         /// Called when the <see cref="Toggled"/> event is raised.
         /// </summary>
         protected virtual void OnToggled() => Toggled?.Invoke();
+
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
+        protected sealed override void InitializeEvents() => NativeCalls.CheckboxOnToggled(this, (checkbox, data) => { OnToggled(); }, IntPtr.Zero);
     }
 }

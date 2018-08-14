@@ -21,6 +21,8 @@ namespace LibUISharp
         /// </summary>
         public Application()
         {
+            // An application does not have a handle, so we just generate a random number for tracking in the componentCache.
+            Handle = new IntPtr((long)HashHelper.GenerateSecureSeed());
             lock (_lock)
             {
                 if (initialized)
@@ -132,7 +134,6 @@ namespace LibUISharp
     }
 
     [NativeType("uiInitOptions")]
-    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal class StartupOptions : IEquatable<StartupOptions>
     {
@@ -148,11 +149,11 @@ namespace LibUISharp
             private set => size = new UIntPtr(value);
         }
 
-        public override bool Equals(object obj) => (obj is StartupOptions) && Equals((StartupOptions)obj);
-
         public bool Equals(StartupOptions options) => size == options.size;
 
-        public override int GetHashCode() => size.GetHashCode();
+        public override bool Equals(object obj) => (obj is StartupOptions) && Equals((StartupOptions)obj);
+
+        public override int GetHashCode() => unchecked(HashHelper.GenerateHash(size));
 
         public override string ToString() => size.ToString();
     }

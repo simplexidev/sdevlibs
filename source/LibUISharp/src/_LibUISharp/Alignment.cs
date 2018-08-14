@@ -6,7 +6,7 @@ namespace LibUISharp
     /// <summary>
     /// Specifies how content is positioned in a container.
     /// </summary>
-    public enum Alignment : long
+    public enum Alignment : int
     {
         /// <summary>
         /// The contents fills the container.
@@ -79,7 +79,6 @@ namespace LibUISharp
         BottomRight = 13
     }
 
-    [Serializable]
     [NativeType("uiAlign")]
     internal enum NativeAlignment : long
     {
