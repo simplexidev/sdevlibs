@@ -557,10 +557,6 @@ namespace LibUISharp.Internal
         private delegate IntPtr uiNewScrollingArea(NativeSurfaceHandler ah, int width, int height);
         internal static IntPtr NewScrollingArea(NativeSurfaceHandler ah, int width, int height) => Call<uiNewScrollingArea>()(ah, width, height);
 
-        // =========================================================================
-        // ======= IMPLEMENTATIONS AND INTERNAL CALLS BELOW ARE NOT FINISHED =======
-        // =========================================================================
-
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiDrawNewPath(FillMode fillMode);
         internal static IntPtr DrawNewPath(FillMode fillMode) => Call<uiDrawNewPath>()(fillMode);
@@ -603,9 +599,11 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawStroke(IntPtr context, IntPtr path, ref Brush brush, ref StrokeOptions strokeParam);
+        private static void DrawStroke(IntPtr context, IntPtr path, ref Brush brush, ref StrokeOptions strokeParam) => Call<uiDrawStroke>()(context, path, ref brush, ref strokeParam);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawFill(IntPtr context, IntPtr path, ref Brush brush);
+        internal static void DrawFill(IntPtr context, IntPtr path, ref Brush brush) => Call<uiDrawFill>()(context, path, ref brush);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixSetIdentity(Matrix matrix);
@@ -646,6 +644,10 @@ namespace LibUISharp.Internal
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawMatrixTransformSize(Matrix matrix, out double x, out double y);
         internal static void DrawMatrixTransformSize(Matrix matrix, out double x, out double y) => Call<uiDrawMatrixTransformSize>()(matrix, out x, out y);
+
+        // =========================================================================
+        // ======= IMPLEMENTATIONS AND INTERNAL CALLS BELOW ARE NOT FINISHED =======
+        // =========================================================================
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawTransform(IntPtr context, Matrix matrix);
