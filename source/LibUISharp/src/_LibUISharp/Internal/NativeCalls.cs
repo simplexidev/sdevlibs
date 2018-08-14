@@ -563,33 +563,43 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiDrawNewPath(FillMode fillMode);
+        internal static IntPtr DrawNewPath(FillMode fillMode) => Call<uiDrawNewPath>()(fillMode);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawFreePath(IntPtr p);
+        internal static void DrawFreePath(IntPtr p) => Call<uiDrawFreePath>()(p);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathNewFigure(IntPtr p, double x, double y);
+        internal static void DrawPathNewFigure(IntPtr p, double x, double y) => Call<uiDrawPathNewFigure>()(p, x, y);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathNewFigureWithArc(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
+        internal static void DrawPathNewFigureWithArc(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => Call<uiDrawPathNewFigureWithArc>()(p, xCenter, yCenter, radius, startAngle, sweep, negative);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathLineTo(IntPtr p, double x, double y);
+        internal static void DrawPathLineTo(IntPtr p, double x, double y) => Call<uiDrawPathLineTo>()(p, x, y);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathArcTo(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative);
+        internal static void DrawPathArcTo(IntPtr p, double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => Call<uiDrawPathArcTo>()(p, xCenter, yCenter, radius, startAngle, sweep, negative);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathBezierTo(IntPtr p, double c1x, double c1y, double c2x, double c2y, double endX, double endY);
+        internal static void DrawPathBezierTo(IntPtr p, double c1x, double c1y, double c2x, double c2y, double endX, double endY) => Call<uiDrawPathBezierTo>()(p, c1x, c1y, c2x, c2y, endX, endY);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathCloseFigure(IntPtr p);
+        internal static void DrawPathCloseFigure(IntPtr p) => Call<uiDrawPathCloseFigure>()(p);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathAddRectangle(IntPtr p, double x, double y, double width, double height);
+        private static void DrawPathAddRectangle(IntPtr p, double x, double y, double width, double height) => Call<uiDrawPathAddRectangle>()(p, x, y, width, height);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathEnd(IntPtr p);
+        internal static void DrawPathEnd(IntPtr p) => Call<uiDrawPathEnd>()(p);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawStroke(IntPtr context, IntPtr path, ref Brush brush, ref StrokeOptions strokeParam);

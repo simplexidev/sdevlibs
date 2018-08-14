@@ -16,7 +16,6 @@
   <ItemGroup>
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
-    <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Internal\*.cs" />
   </ItemGroup>
   <ItemGroup>

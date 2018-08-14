@@ -36,6 +36,7 @@ namespace LibUISharp
 
         /// <summary>
         /// Gets the native handle for this <see cref="Control"/> in the form of a <see cref="SafeControlHandle"/>.
+        /// The returned safe handle is only valid for the life of this instance.
         /// </summary>
         public SafeControlHandle SafeHandle => new SafeControlHandle(Handle, false);
 
