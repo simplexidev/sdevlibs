@@ -24,17 +24,17 @@
     <None Include="ref\*.h" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\WinNT\libui.dll">
+    <Content Include="lib\libui.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes\win-x64\native</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="lib\Linux\libui.so">
+    <Content Include="lib\libui.so.0">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes\linux-x64\native</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="lib\MacOS\libui.dylib">
+    <Content Include="lib\libui.A.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes\osx-x64\native</PackagePath>
       <Pack>true</Pack>
