@@ -1,6 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -17,14 +17,14 @@ namespace LibUISharp
         /// </summary>
         public RadioButtonList()
         {
-            Handle = Libui.Call<Libui.uiNewRadioButtons>()();
+            Handle = new SafeControlHandle(NativeCalls.NewRadioButtons());
             InitializeEvents();
         }
 
         /// <summary>
         /// Occurs when the <see cref="SelectedIndex"/> property is changed.
         /// </summary>
-        public event EventHandler SelectedIndexChanged;
+        public event Action SelectedIndexChanged;
 
         /// <summary>
         /// Gets or sets the index of the selected item in the list.
@@ -33,14 +33,14 @@ namespace LibUISharp
         {
             get
             {
-                index = Libui.Call<Libui.uiRadioButtonsSelected>()(this);
+                index = NativeCalls.RadioButtonsSelected(Handle);
                 return index;
             }
             set
             {
                 if (index != value)
                 {
-                    Libui.Call<Libui.uiRadioButtonsSetSelected>()(this, value);
+                    NativeCalls.RadioButtonsSetSelected(Handle, value);
                     index = value;
                 }
             }
@@ -50,7 +50,7 @@ namespace LibUISharp
         /// Adds a radio button to the end of the list.
         /// </summary>
         /// <param name="item">The text of the radio button to be added to the end of the list.</param>
-        public void Add(string item) => Libui.Call<Libui.uiRadioButtonsAppend>()(this, item);
+        public void Add(string item) => NativeCalls.RadioButtonsAppend(Handle, item);
 
         /// <summary>
         /// Adds radio buttons to the end of the list.
@@ -72,12 +72,11 @@ namespace LibUISharp
         /// <summary>
         /// Called when the <see cref="SelectedIndexChanged"/> event is raised.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnSelectedIndexChanged(EventArgs e) => SelectedIndexChanged?.Invoke(this, e);
+        protected virtual void OnSelectedIndexChanged() => SelectedIndexChanged?.Invoke();
 
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiRadioButtonsOnSelected>()(this, (btn, data) => { OnSelectedIndexChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.RadioButtonsOnSelected(Handle, (btn, data) => { OnSelectedIndexChanged(); }, IntPtr.Zero);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -14,7 +14,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgressBar"/> class.
         /// </summary>
-        public ProgressBar() => Handle = Libui.Call<Libui.uiNewProgressBar>()();
+        public ProgressBar() => Handle = new SafeControlHandle(NativeCalls.NewProgressBar());
 
         /// <summary>
         /// Gets or sets the current value of this <see cref="ProgressBar"/>.
@@ -23,14 +23,14 @@ namespace LibUISharp
         {
             get
             {
-                value = Libui.Call<Libui.uiProgressBarValue>()(this);
+                value = NativeCalls.ProgressBarValue(Handle);
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    Libui.Call<Libui.uiProgressBarSetValue>()(this, value);
+                    NativeCalls.ProgressBarSetValue(Handle, value);
                     this.value = value;
                 }
             }

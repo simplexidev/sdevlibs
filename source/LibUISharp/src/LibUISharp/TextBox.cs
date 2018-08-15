@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -29,14 +30,14 @@ namespace LibUISharp
         {
             get
             {
-                text = NativeCalls.EntryText(this);
+                text = NativeCalls.EntryText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    NativeCalls.EntrySetText(this, value);
+                    NativeCalls.EntrySetText(Handle, value);
                     text = value;
                 }
             }
@@ -49,14 +50,14 @@ namespace LibUISharp
         {
             get
             {
-                isReadOnly = NativeCalls.EntryReadOnly(this);
+                isReadOnly = NativeCalls.EntryReadOnly(Handle);
                 return isReadOnly;
             }
             set
             {
                 if (isReadOnly != value)
                 {
-                    NativeCalls.EntrySetReadOnly(this, value);
+                    NativeCalls.EntrySetReadOnly(Handle, value);
                     isReadOnly = value;
                 }
             }
@@ -70,7 +71,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected override void InitializeEvents() => NativeCalls.EntryOnChanged(this, (entry, data) => { OnTextChanged(); }, IntPtr.Zero);
+        protected override void InitializeEvents() => NativeCalls.EntryOnChanged(Handle, (entry, data) => { OnTextChanged(); }, IntPtr.Zero);
     }
 
     /// <summary>
@@ -83,7 +84,7 @@ namespace LibUISharp
         /// </summary>
         public TextBox() : base()
         {
-            Handle = NativeCalls.NewEntry();
+            Handle = new SafeControlHandle(NativeCalls.NewEntry());
             InitializeEvents();
         }
     }
@@ -98,7 +99,7 @@ namespace LibUISharp
         /// </summary>
         public PasswordBox() : base()
         {
-            Handle = NativeCalls.NewPasswordEntry();
+            Handle = new SafeControlHandle(NativeCalls.NewPasswordEntry());
             InitializeEvents();
         }
     }
@@ -113,7 +114,7 @@ namespace LibUISharp
         /// </summary>
         public SearchBox() : base()
         {
-            Handle = NativeCalls.NewSearchEntry();
+            Handle = new SafeControlHandle(NativeCalls.NewSearchEntry());
             InitializeEvents();
         }
     }

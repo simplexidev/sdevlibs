@@ -1,17 +1,15 @@
-﻿using System;
-using LibUISharp.Internal;
+﻿using LibUISharp.Internal;
 using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
     /// <summary>
-    /// Defines the base class for controls, which are <see cref="UIComponent"/> objects with visual representation.
+    /// Defines the base class for controls, which are <see cref="UIComponent{T}"/> objects with visual representation.
     /// </summary>
     [NativeType("uiControl")]
-    public abstract class Control : UIComponent
+    public abstract class Control : UIComponent<SafeControlHandle>
     {
         private bool enabled, visible;
-        private bool disposed = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -35,17 +33,11 @@ namespace LibUISharp
         public int Index { get; protected internal set; }
 
         /// <summary>
-        /// Gets the native handle for this <see cref="Control"/> in the form of a <see cref="SafeControlHandle"/>.
-        /// The returned safe handle is only valid for the life of this instance.
-        /// </summary>
-        public SafeControlHandle SafeHandle => new SafeControlHandle(Handle, false);
-
-        /// <summary>
         /// Gets or sets a value indicating whether the control can respond to interaction.
         /// </summary>
         public virtual bool Enabled
         {
-            get => NativeCalls.ControlEnabled(this);
+            get => NativeCalls.ControlEnabled(Handle);
             set
             {
                 if (enabled == value) return;
@@ -59,7 +51,7 @@ namespace LibUISharp
         /// </summary>
         public virtual bool Visible
         {
-            get => NativeCalls.ControlVisible(this);
+            get => NativeCalls.ControlVisible(Handle);
             set
             {
                 if (visible == value) return;
@@ -75,8 +67,8 @@ namespace LibUISharp
         {
             get
             {
-                if (Handle != IntPtr.Zero)
-                    return NativeCalls.ControlTopLevel(this);
+                if (!Handle.IsInvalid)
+                    return NativeCalls.ControlTopLevel(Handle);
                 return false;
             }
         }
@@ -88,7 +80,7 @@ namespace LibUISharp
         {
             if (!enabled)
             {
-                NativeCalls.ControlEnable(this);
+                NativeCalls.ControlEnable(Handle);
                 enabled = true;
             }
         }
@@ -100,7 +92,7 @@ namespace LibUISharp
         {
             if (enabled)
             {
-                NativeCalls.ControlDisable(this);
+                NativeCalls.ControlDisable(Handle);
                 enabled = false;
             }
         }
@@ -112,7 +104,7 @@ namespace LibUISharp
         {
             if (!visible)
             {
-                NativeCalls.ControlShow(this);
+                NativeCalls.ControlShow(Handle);
                 visible = true;
             }
         }
@@ -124,7 +116,7 @@ namespace LibUISharp
         {
             if (visible)
             {
-                NativeCalls.ControlHide(this);
+                NativeCalls.ControlHide(Handle);
                 visible = false;
             }
         }
@@ -133,20 +125,5 @@ namespace LibUISharp
         /// Performs pre-rendering operations.
         /// </summary>
         protected internal virtual void DelayRender() { }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        /// <param name="disposing">Whether or not this control is disposing.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing && Handle != IntPtr.Zero)
-                    NativeCalls.ControlDestroy(this);
-                disposed = true;
-                base.Dispose(disposing);
-            }
-        }
     }
 }

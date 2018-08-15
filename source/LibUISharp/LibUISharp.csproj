@@ -16,7 +16,9 @@
   <ItemGroup>
     <Compile Include="src\*.cs" />
     <Compile Include="src\LibUISharp\*.cs" />
+    <Compile Include="src\LibUISharp\Drawing\*.cs" />
     <Compile Include="src\LibUISharp\Internal\*.cs" />
+    <Compile Include="src\LibUISharp\SafeHandles\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ref\*.h" />
@@ -39,14 +41,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup> <!-- These files are ones that need finished before this PR is merged. -->
-    <None Include="src\.LibUISharp\*.cs" />
-    <None Include="src\.LibUISharp\Drawing\*.cs" />
-    <None Include="src\.LibUISharp\Internal\*.cs" />
-    <None Include="src\.LibUISharp\Internal\NM\*.cs" />
-    <None Include="src\.LibUISharp\Internal\NM\Libui\*.cs" />
-    <Compile Include="src\_LibUISharp\*.cs" />
-    <Compile Include="src\_LibUISharp\Drawing\*.cs" />
-    <Compile Include="src\_LibUISharp\Internal\*.cs" />
-    <Compile Include="src\_LibUISharp\SafeHandles\*.cs" />
+    <None Include="src\.todo\LibUISharp\Drawing\*.cs" />
+    <None Include="src\.todo\LibUISharp\Internal\NM\Libui\*.cs" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -18,7 +19,7 @@ namespace LibUISharp
         /// </summary>
         public FontPicker()
         {
-            Handle = NativeCalls.NewFontButton();
+            Handle = new SafeControlHandle(NativeCalls.NewFontButton());
             InitializeEvents();
         }
 
@@ -34,7 +35,7 @@ namespace LibUISharp
         {
             get
             {
-                NativeCalls.FontButtonFont(this, out font);
+                NativeCalls.FontButtonFont(Handle, out font);
                 return font;
             }
         }
@@ -42,7 +43,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.FontButtonOnChanged(this, (button, data) => { OnFontChanged(); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.FontButtonOnChanged(Handle, (button, data) => { OnFontChanged(); }, IntPtr.Zero);
 
         /// <summary>
         /// Raises the <see cref="FontChanged"/> event.
@@ -55,19 +56,17 @@ namespace LibUISharp
         /// <param name="disposing">Whether or not this control is disposing.</param>
         protected override void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed) return;
+            if (disposing)
             {
-                if (disposing && Handle != IntPtr.Zero)
+                if (font != null)
                 {
-                    if (Font != null)
-                    {
-                        NativeCalls.FreeFontButtonFont(font);
-                        font = null;
-                    }
+                    NativeCalls.FreeFontButtonFont(font);
+                    font = null;
                 }
-                disposed = true;
-                base.Dispose(disposing);
             }
+            disposed = true;
+            base.Dispose(disposing);
         }
     }
 }

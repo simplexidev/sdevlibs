@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -17,7 +18,7 @@ namespace LibUISharp
         /// <param name="text">The text to be displayed by this button.</param>
         public Button(string text)
         {
-            Handle = NativeCalls.NewButton(text);
+            Handle = new SafeControlHandle(NativeCalls.NewButton(text));
             this.text = text;
             InitializeEvents();
         }
@@ -34,14 +35,14 @@ namespace LibUISharp
         {
             get
             {
-                text = NativeCalls.ButtonText(this);
+                text = NativeCalls.ButtonText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    NativeCalls.ButtonSetText(this, value);
+                    NativeCalls.ButtonSetText(Handle, value);
                     text = value;
                 }
             }
@@ -55,6 +56,6 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.ButtonOnClicked(this, (button, data) => { OnClick(); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.ButtonOnClicked(Handle, (button, data) => { OnClick(); }, IntPtr.Zero);
     }
 }

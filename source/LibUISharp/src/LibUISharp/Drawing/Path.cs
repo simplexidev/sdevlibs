@@ -8,7 +8,7 @@ namespace LibUISharp.Drawing
     /// Represents a geometric path in a <see cref="Context"/>.
     /// </summary>
     [NativeType("uiDrawPath")]
-    public class Path : UIComponent
+    public class Path : UIComponent<SafePathHandle>
     {
         private bool disposed = false;
 
@@ -16,20 +16,14 @@ namespace LibUISharp.Drawing
         /// Initializes a new instance of the <see cref="Path"/> class with the specified <see cref="FillMode"/>.
         /// </summary>
         /// <param name="mode">The <see cref="FillMode"/> specifying how the initialized <see cref="Path"/> should be filled.</param>
-        public Path(FillMode mode) => Handle = NativeCalls.DrawNewPath(mode);
-
-        /// <summary>
-        /// Gets the native handle for this <see cref="Control"/> in the form of a <see cref="SafePathHandle"/>.
-        /// The returned safe handle is only valid for the life of this instance.
-        /// </summary>
-        public SafePathHandle SafeHandle => new SafePathHandle(Handle, false);
+        public Path(FillMode mode) => Handle = new SafePathHandle(NativeCalls.DrawNewPath(mode));
 
         /// <summary>
         /// Starts a new figure in this <see cref="Path"/> with the specified current x- and y-coordinates.
         /// </summary>
         /// <param name="x">The current x-coordinate.</param>
         /// <param name="y">The current y-coordinate.</param>
-        public void NewFigure(double x, double y) => NativeCalls.DrawPathNewFigure(this, x, y);
+        public void NewFigure(double x, double y) => NativeCalls.DrawPathNewFigure(Handle, x, y);
 
         /// <summary>
         /// Starts a new figure in this <see cref="Path"/> with the specified current point.
@@ -46,7 +40,7 @@ namespace LibUISharp.Drawing
         /// <param name="startAngle">The starting angle fpr the arc.</param>
         /// <param name="sweep">The sweep angle.</param>
         /// <param name="negative">Whether the sweep angle should go clockwise (<see langword="false"/>), or counterclockwise (<see langword="true"/>).</param>
-        public void NewFigureWithArc(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative = false) => NativeCalls.DrawPathNewFigureWithArc(this, xCenter, yCenter, radius, startAngle, sweep, negative);
+        public void NewFigureWithArc(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative = false) => NativeCalls.DrawPathNewFigureWithArc(Handle, xCenter, yCenter, radius, startAngle, sweep, negative);
 
         /// <summary>
         /// Starts a new figure in this <see cref="Path"/> and adds an arc.
@@ -63,7 +57,7 @@ namespace LibUISharp.Drawing
         /// </summary>
         /// <param name="x">The x-coordinate of the location.</param>
         /// <param name="y">The y-corrdinate of the location</param>
-        public void LineTo(double x, double y) => NativeCalls.DrawPathLineTo(this, x, y);
+        public void LineTo(double x, double y) => NativeCalls.DrawPathLineTo(Handle, x, y);
 
         /// <summary>
         /// Connects the last point in the subpath to the specified location with a straight line.
@@ -80,7 +74,7 @@ namespace LibUISharp.Drawing
         /// <param name="startAngle">The starting angle fpr the arc.</param>
         /// <param name="sweep">The sweep angle.</param>
         /// <param name="negative">Whether the sweep angle should go clockwise (<see langword="false"/>), or counterclockwise (<see langword="true"/>).</param>
-        public void ArcTo(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => NativeCalls.DrawPathArcTo(this, xCenter, yCenter, radius, startAngle, sweep, negative);
+        public void ArcTo(double xCenter, double yCenter, double radius, double startAngle, double sweep, bool negative) => NativeCalls.DrawPathArcTo(Handle, xCenter, yCenter, radius, startAngle, sweep, negative);
 
         /// <summary>
         /// Adds an arc to this <see cref="Path"/>.
@@ -101,7 +95,7 @@ namespace LibUISharp.Drawing
         /// <param name="c2y">The y-coordinate of the second control point.</param>
         /// <param name="endX">The x-coordinate of the end point.</param>
         /// <param name="endY">The y-coordinate of the end point.</param>
-        public void BezierTo(double c1x, double c1y, double c2x, double c2y, double endX, double endY) => NativeCalls.DrawPathBezierTo(this, c1x, c1y, c2x, c2y, endX, endY);
+        public void BezierTo(double c1x, double c1y, double c2x, double c2y, double endX, double endY) => NativeCalls.DrawPathBezierTo(Handle, c1x, c1y, c2x, c2y, endX, endY);
 
         /// <summary>
         /// Adds a cubic bezier curve to this <see cref="Path"/>, with the starting point being the last point in the <see cref="Path"/>.
@@ -114,7 +108,7 @@ namespace LibUISharp.Drawing
         /// <summary>
         /// Causes the point of the pen to move back to the start of the current subpath, trying to fraw a straight line from the current point to the start.
         /// </summary>
-        public void CloseFigure() => NativeCalls.DrawPathCloseFigure(this);
+        public void CloseFigure() => NativeCalls.DrawPathCloseFigure(Handle);
 
         /// <summary>
         /// Creates a <see cref="Path"/> for a rectangle at the specified location with the specified size.
@@ -123,7 +117,7 @@ namespace LibUISharp.Drawing
         /// <param name="y">The y-coordinate of the rectangle.</param>
         /// <param name="width">The width of the rectangle.</param>
         /// <param name="height">The height of the rectangle.</param>
-        public void AddRectangle(double x, double y, double width, double height) => NativeCalls.DrawPathAddRectangle(this, x, y, width, height);
+        public void AddRectangle(double x, double y, double width, double height) => NativeCalls.DrawPathAddRectangle(Handle, x, y, width, height);
 
         /// <summary>
         /// Creates a <see cref="Path"/> for a rectangle at the specified location with the specified size.
@@ -141,21 +135,6 @@ namespace LibUISharp.Drawing
         /// <summary>
         /// Ends this <see cref="Path"/>, leaving the figure open.
         /// </summary>
-        public void End() => NativeCalls.DrawPathEnd(this);
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        /// <param name="disposing">Whether or not this control is disposing.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing && Handle != IntPtr.Zero)
-                    NativeCalls.DrawFreePath(this);
-                disposed = true;
-                base.Dispose(disposing);
-            }
-        }
+        public void End() => NativeCalls.DrawPathEnd(Handle);
     }
 }

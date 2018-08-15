@@ -1,5 +1,5 @@
 ﻿using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -17,7 +17,7 @@ namespace LibUISharp
         /// Initializes a new instance of the <see cref="GroupContainer"/> class with the specified title.
         /// </summary>
         /// <param name="title">The title of this <see cref="GroupContainer"/>.</param>
-        public GroupContainer(string title) => Handle = Libui.Call<Libui.uiNewGroup>()(title);
+        public GroupContainer(string title) => Handle = new SafeControlHandle(NativeCalls.NewGroup(title));
 
         /// <summary>
         /// Gets or sets the title for this <see cref="GroupContainer"/> control.
@@ -26,14 +26,14 @@ namespace LibUISharp
         {
             get
             {
-                title = Libui.Call<Libui.uiGroupTitle>()(this);
+                title = NativeCalls.GroupTitle(Handle);
                 return title;
             }
             set
             {
                 if (title != value)
                 {
-                    Libui.Call<Libui.uiGroupSetTitle>()(this, value);
+                    NativeCalls.GroupSetTitle(Handle, value);
                     title = value;
                 }
             }
@@ -46,14 +46,14 @@ namespace LibUISharp
         {
             get
             {
-                isMargined = Libui.Call<Libui.uiGroupMargined>()(this);
+                isMargined = NativeCalls.GroupMargined(Handle);
                 return isMargined;
             }
             set
             {
                 if (isMargined != value)
                 {
-                    Libui.Call<Libui.uiGroupSetMargined>()(this, value);
+                    NativeCalls.GroupSetMargined(Handle, value);
                     isMargined = value;
                 }
             }
@@ -68,7 +68,7 @@ namespace LibUISharp
             {
                 if (child != value)
                 {
-                    Libui.Call<Libui.uiGroupSetChild>()(this, value);
+                    NativeCalls.GroupSetChild(Handle, value.Handle);
                     child = value;
                 }
             }

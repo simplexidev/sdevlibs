@@ -1,6 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -17,14 +17,14 @@ namespace LibUISharp
         /// </summary>
         public ComboBox()
         {
-            Handle = Libui.Call<Libui.uiNewCombobox>()();
+            Handle = new SafeControlHandle(NativeCalls.NewCombobox());
             InitializeEvents();
         }
 
         /// <summary>
         /// Occurs when a drop-down item is selected.
         /// </summary>
-        public event EventHandler Selected;
+        public event Action Selected;
 
         /// <summary>
         /// Gets or sets the selected item by index.
@@ -33,14 +33,14 @@ namespace LibUISharp
         {
             get
             {
-                index = Libui.Call<Libui.uiComboboxSelected>()(this);
+                index = NativeCalls.ComboboxSelected(Handle);
                 return index;
             }
             set
             {
                 if (index != value)
                 {
-                    Libui.Call<Libui.uiComboboxSetSelected>()(this, value);
+                    NativeCalls.ComboboxSetSelected(Handle, value);
                     index = value;
                 }
             }
@@ -50,7 +50,7 @@ namespace LibUISharp
         /// Adds a drop-down item to this <see cref="ComboBox"/>.
         /// </summary>
         /// <param name="item">The item to add to this control.</param>
-        public void Add(string item) => Libui.Call<Libui.uiComboboxAppend>()(this, item);
+        public void Add(string item) => NativeCalls.ComboboxAppend(Handle, item);
 
         /// <summary>
         /// Adds drop-down items to this <see cref="ComboBox"/>.
@@ -67,12 +67,11 @@ namespace LibUISharp
         /// <summary>
         /// Called when the <see cref="Selected"/> event is raised.
         /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnSelected(EventArgs e) => Selected?.Invoke(this, e);
+        protected virtual void OnSelected() => Selected?.Invoke();
 
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiComboboxOnSelected>()(this, (c, data) => { OnSelected(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.ComboboxOnSelected(Handle, (c, data) => { OnSelected(); }, IntPtr.Zero);
     }
 }

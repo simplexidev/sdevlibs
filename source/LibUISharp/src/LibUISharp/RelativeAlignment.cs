@@ -1,5 +1,4 @@
-﻿using System;
-using LibUISharp.Internal;
+﻿using LibUISharp.Internal;
 
 namespace LibUISharp
 {

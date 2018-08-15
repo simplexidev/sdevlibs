@@ -43,16 +43,17 @@ namespace LibUISharp
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <param name="disposing">Whether or not this <see cref="Control"/> is disposing.</param>
-        protected sealed override void Dispose(bool disposing)
+        /// <param name="disposing">Whether or not this <see cref="SingleContainer{TContainer, TChild}"/> is disposing.</param>
+        protected override void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed) return;
+            if (disposing)
             {
-                if (disposing && child != null)
+                if (child != null)
                     child.Dispose();
-                disposed = true;
-                base.Dispose(disposing);
             }
+            disposed = true;
+            base.Dispose(disposing);
         }
     }
 
@@ -95,15 +96,16 @@ namespace LibUISharp
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         /// <param name="disposing">Whether or not this <see cref="Control"/> is disposing.</param>
-        protected sealed override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed) return;
+            if (disposing)
             {
-                if (disposing)
+                if (children != null)
                     children.Clear();
-                disposed = true;
-                base.Dispose(disposing);
             }
+            disposed = true;
+            base.Dispose(disposing);
         }
 
         /// <summary>
@@ -411,12 +413,13 @@ namespace LibUISharp
 
                 private void Dispose(bool disposing)
                 {
-                    if (!disposed)
+                    if (disposed) return;
+                    if (disposing)
                     {
-                        if (disposing)
+                        if (list != null)
                             list.Clear();
-                        disposed = true;
                     }
+                    disposed = true;
                 }
             }
         }

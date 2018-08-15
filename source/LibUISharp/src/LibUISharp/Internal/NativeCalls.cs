@@ -323,147 +323,195 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate string uiGroupTitle(IntPtr g);
+        internal static string GroupTitle(IntPtr g) => Call<uiGroupTitle>()(g);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiGroupSetTitle(IntPtr g, string title);
+        internal static void GroupSetTitle(IntPtr g, string title) => Call<uiGroupSetTitle>()(g, title);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiGroupSetChild(IntPtr g, IntPtr child);
+        internal static void GroupSetChild(IntPtr g, IntPtr child) => Call<uiGroupSetChild>()(g, child);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate bool uiGroupMargined(IntPtr g);
+        internal static bool GroupMargined(IntPtr g) => Call<uiGroupMargined>()(g);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiGroupSetMargined(IntPtr g, bool margined);
+        internal static void GroupSetMargined(IntPtr g, bool margined) => Call<uiGroupSetMargined>()(g, margined);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewGroup(string title);
+        internal static IntPtr NewGroup(string title) => Call<uiNewGroup>()(title);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate int uiSpinboxValue(IntPtr s);
+        internal static int SpinboxValue(IntPtr s) => Call<uiSpinboxValue>()(s);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiSpinboxSetValue(IntPtr s, int value);
+        internal static void SpinboxSetValue(IntPtr s, int value) => Call<uiSpinboxSetValue>()(s, value);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiSpinboxOnChanged(IntPtr s, uiSpinboxOnChangedEvent f, IntPtr data);
+        private delegate void uiSpinboxOnChanged(IntPtr s, Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void SpinboxOnChanged(IntPtr s, Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiSpinboxOnChanged>()(s, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewSpinbox(int min, int max);
+        internal static IntPtr NewSpinbox(int min, int max) => Call<uiNewSpinbox>()(min, max);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate int uiSliderValue(IntPtr s);
+        internal static int SliderValue(IntPtr s) => Call<uiSliderValue>()(s);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiSliderSetValue(IntPtr s, int value);
+        internal static void SliderSetValue(IntPtr s, int value) => Call<uiSliderSetValue>()(s, value);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiSliderOnChanged(IntPtr s, uiSliderOnChangedEvent f, IntPtr data);
+        private delegate void uiSliderOnChanged(IntPtr s, Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void SliderOnChanged(IntPtr s, Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiSliderOnChanged>()(s, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewSlider(int min, int max);
+        internal static IntPtr NewSlider(int min, int max) => Call<uiNewSlider>()(min, max);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate int uiProgressBarValue(IntPtr p);
+        internal static int ProgressBarValue(IntPtr p) => Call<uiProgressBarValue>()(p);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiProgressBarSetValue(IntPtr p, int n);
+        internal static void ProgressBarSetValue(IntPtr p, int n) => Call<uiProgressBarSetValue>()(p, n);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewProgressBar();
+        internal static IntPtr NewProgressBar() => Call<uiNewProgressBar>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewHorizontalSeparator();
+        internal static IntPtr NewHorizontalSeparator() => Call<uiNewHorizontalSeparator>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewVerticalSeparator();
+        internal static IntPtr NewVerticalSeparator() => Call<uiNewVerticalSeparator>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiComboboxAppend(IntPtr c, string text);
+        internal static void ComboboxAppend(IntPtr c, string text) => Call<uiComboboxAppend>()(c, text);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate int uiComboboxSelected(IntPtr c);
+        internal static int ComboboxSelected(IntPtr c) => Call<uiComboboxSelected>()(c);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiComboboxSetSelected(IntPtr c, int n);
+        internal static void ComboboxSetSelected(IntPtr c, int n) => Call<uiComboboxSetSelected>()(c, n);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiComboboxOnSelected(IntPtr c, uiComboboxOnSelectedEvent f, IntPtr data);
+        private delegate void uiComboboxOnSelected(IntPtr c, Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void ComboboxOnSelected(IntPtr c, Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiComboboxOnSelected>()(c, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewCombobox();
+        internal static IntPtr NewCombobox() => Call<uiNewCombobox>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiEditableComboboxAppend(IntPtr c, string text);
+        internal static void EditableComboboxAppend(IntPtr c, string text) => Call<uiEditableComboboxAppend>()(c, text);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate string uiEditableComboboxText(IntPtr c);
+        internal static string EditableComboboxText(IntPtr c) => Call<uiEditableComboboxText>()(c);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiEditableComboboxSetText(IntPtr c, string text);
+        internal static void EditableComboboxSetText(IntPtr c, string text) => Call<uiEditableComboboxSetText>()(c, text);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiEditableComboboxOnChanged(IntPtr c, uiEditableComboboxOnChangedEvent f, IntPtr data);
+        private delegate void uiEditableComboboxOnChanged(IntPtr c, Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void EditableComboboxOnChanged(IntPtr c, Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiEditableComboboxOnChanged>()(c, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewEditableCombobox();
+        internal static IntPtr NewEditableCombobox() => Call<uiNewEditableCombobox>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiRadioButtonsAppend(IntPtr r, string text);
+        internal static void RadioButtonsAppend(IntPtr r, string text) => Call<uiRadioButtonsAppend>()(r, text);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate int uiRadioButtonsSelected(IntPtr r);
+        internal static int RadioButtonsSelected(IntPtr r) => Call<uiRadioButtonsSelected>()(r);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiRadioButtonsSetSelected(IntPtr r, int n);
+        internal static void RadioButtonsSetSelected(IntPtr r, int n) => Call<uiRadioButtonsSetSelected>()(r, n);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiRadioButtonsOnSelected(IntPtr r, uiRadioButtonsOnSelectedEvent f, IntPtr data);
+        private delegate void uiRadioButtonsOnSelected(IntPtr r, Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void RadioButtonsOnSelected(IntPtr r, Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiRadioButtonsOnSelected>()(r, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewRadioButtons();
+        internal static IntPtr NewRadioButtons() => Call<uiNewRadioButtons>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDateTimePickerTime(IntPtr d, out UIDateTime time);
+        internal static void DateTimePickerTime(IntPtr d, out UIDateTime time) => Call<uiDateTimePickerTime>()(d, out time);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDateTimePickerSetTime(IntPtr d, UIDateTime time);
+        internal static void DateTimePickerSetTime(IntPtr d, UIDateTime time) => Call<uiDateTimePickerSetTime>()(d, time);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiDateTimePickerOnChanged(IntPtr d, uiDateTimePickerOnChangedEvent f, IntPtr data);
+        private delegate void uiDateTimePickerOnChanged(IntPtr d, Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void DateTimePickerOnChanged(IntPtr d, Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiDateTimePickerOnChanged>()(d, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewDateTimePicker();
+        internal static IntPtr NewDateTimePicker() => Call<uiNewDateTimePicker>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewDatePicker();
+        internal static IntPtr NewDatePicker() => Call<uiNewDatePicker>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewTimePicker();
+        internal static IntPtr NewTimePicker() => Call<uiNewTimePicker>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate string uiMultilineEntryText(IntPtr e);
+        internal static string MultilineEntryText(IntPtr e) => Call<uiMultilineEntryText>()(e);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiMultilineEntrySetText(IntPtr e, string text);
+        internal static void MultilineEntrySetText(IntPtr e, string text) => Call<uiMultilineEntrySetText>()(e, text);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiMultilineEntryAppend(IntPtr e, string text);
+        internal static void MultilineEntryAppend(IntPtr e, string text) => Call<uiMultilineEntryAppend>()(e, text);
 
         [UnmanagedFunctionPointer(Cdecl)]
-        private delegate void uiMultilineEntryOnChanged(IntPtr e, uiMultilineEntryOnChangedEvent f, IntPtr data);
+        private delegate void uiMultilineEntryOnChanged(IntPtr e, Action<IntPtr, IntPtr> f, IntPtr data);
+        internal static void MultilineEntryOnChanged(IntPtr e, Action<IntPtr, IntPtr> f, IntPtr data) => Call<uiMultilineEntryOnChanged>()(e, f, data);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate bool uiMultilineEntryReadOnly(IntPtr e);
+        internal static bool MultilineEntryReadOnly(IntPtr e) => Call<uiMultilineEntryReadOnly>()(e);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiMultilineEntrySetReadOnly(IntPtr e, bool @readonly);
+        internal static void MultilineEntrySetReadOnly(IntPtr e, bool @readonly) => Call<uiMultilineEntrySetReadOnly>()(e, @readonly);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewMultilineEntry();
+        internal static IntPtr NewMultilineEntry() => Call<uiNewMultilineEntry>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate IntPtr uiNewNonWrappingMultilineEntry();
+        internal static IntPtr NewNonWrappingMultilineEntry() => Call<uiNewNonWrappingMultilineEntry>()();
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiMenuItemEnable(IntPtr m);
@@ -591,7 +639,7 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathAddRectangle(IntPtr p, double x, double y, double width, double height);
-        private static void DrawPathAddRectangle(IntPtr p, double x, double y, double width, double height) => Call<uiDrawPathAddRectangle>()(p, x, y, width, height);
+        internal static void DrawPathAddRectangle(IntPtr p, double x, double y, double width, double height) => Call<uiDrawPathAddRectangle>()(p, x, y, width, height);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawPathEnd(IntPtr p);
@@ -599,7 +647,7 @@ namespace LibUISharp.Internal
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawStroke(IntPtr context, IntPtr path, ref Brush brush, ref StrokeOptions strokeParam);
-        private static void DrawStroke(IntPtr context, IntPtr path, ref Brush brush, ref StrokeOptions strokeParam) => Call<uiDrawStroke>()(context, path, ref brush, ref strokeParam);
+        internal static void DrawStroke(IntPtr context, IntPtr path, ref Brush brush, ref StrokeOptions strokeParam) => Call<uiDrawStroke>()(context, path, ref brush, ref strokeParam);
 
         [UnmanagedFunctionPointer(Cdecl)]
         private delegate void uiDrawFill(IntPtr context, IntPtr path, ref Brush brush);

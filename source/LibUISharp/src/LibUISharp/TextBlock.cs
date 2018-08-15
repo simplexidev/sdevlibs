@@ -1,6 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -20,9 +20,9 @@ namespace LibUISharp
         public TextBlock(bool wordWrap = true)
         {
             if (wordWrap)
-                Handle = Libui.Call<Libui.uiNewMultilineEntry>()();
+                Handle = new SafeControlHandle(NativeCalls.NewMultilineEntry());
             else
-                Handle = Libui.Call<Libui.uiNewNonWrappingMultilineEntry>()();
+                Handle = new SafeControlHandle(NativeCalls.NewNonWrappingMultilineEntry());
             WordWrap = wordWrap;
             InitializeEvents();
         }
@@ -30,7 +30,7 @@ namespace LibUISharp
         /// <summary>
         /// Occurs when the <see cref="Text"/> property is changed.
         /// </summary>
-        public event EventHandler<TextChangedEventArgs> TextChanged;
+        public event Action TextChanged;
 
         /// <summary>
         /// Gets whether or not this <see cref="TextBlock"/> wraps it's text to fit within it's sides.
@@ -41,7 +41,7 @@ namespace LibUISharp
         /// Adds the specified line of text to the end of the text currently contained in this <see cref="TextBlock"/>.
         /// </summary>
         /// <param name="line">The line to add.</param>
-        public void Append(string line) => Libui.Call<Libui.uiMultilineEntryAppend>()(this, line);
+        public void Append(string line) => NativeCalls.MultilineEntryAppend(Handle, line);
 
         /// <summary>
         /// Adds the specified lines of text to the end of the text currently contained in this <see cref="EditableComboBox"/>.
@@ -62,14 +62,14 @@ namespace LibUISharp
         {
             get
             {
-                text = Libui.Call<Libui.uiMultilineEntryText>()(this);
+                text = NativeCalls.MultilineEntryText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    Libui.Call<Libui.uiMultilineEntrySetText>()(this, value);
+                    NativeCalls.MultilineEntrySetText(Handle, value);
                     text = value;
                 }
             }
@@ -82,14 +82,14 @@ namespace LibUISharp
         {
             get
             {
-                isReadOnly = Libui.Call<Libui.uiMultilineEntryReadOnly>()(this);
+                isReadOnly = NativeCalls.MultilineEntryReadOnly(Handle);
                 return isReadOnly;
             }
             set
             {
                 if (isReadOnly != value)
                 {
-                    Libui.Call<Libui.uiEntrySetReadOnly>()(this, value);
+                    NativeCalls.EntrySetReadOnly(Handle, value);
                     isReadOnly = value;
                 }
             }
@@ -98,12 +98,11 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected override void InitializeEvents() => Libui.Call<Libui.uiMultilineEntryOnChanged>()(this, (entry, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected override void InitializeEvents() => NativeCalls.MultilineEntryOnChanged(Handle, (entry, data) => { OnTextChanged(); }, IntPtr.Zero);
 
         /// <summary>
         /// Called when the <see cref="TextChanged"/> event is raised.
         /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
-        protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
+        protected virtual void OnTextChanged() => TextChanged?.Invoke();
     }
 }

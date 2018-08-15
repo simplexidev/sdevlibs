@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -20,10 +21,10 @@ namespace LibUISharp
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    Handle = NativeCalls.NewHorizontalBox();
+                    Handle = new SafeControlHandle(NativeCalls.NewHorizontalBox());
                     break;
                 case Orientation.Vertical:
-                    Handle = NativeCalls.NewVerticalBox();
+                    Handle = new SafeControlHandle(NativeCalls.NewVerticalBox());
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(orientation));
@@ -43,14 +44,14 @@ namespace LibUISharp
         {
             get
             {
-                isPadded = NativeCalls.BoxPadded(this);
+                isPadded = NativeCalls.BoxPadded(Handle);
                 return isPadded;
             }
             set
             {
                 if (isPadded != value)
                 {
-                    NativeCalls.BoxSetPadded(this, value);
+                    NativeCalls.BoxSetPadded(Handle, value);
                     isPadded = value;
                 }
             }
@@ -81,7 +82,7 @@ namespace LibUISharp
             public void Add(Control child, bool stretches)
             {
                 base.Add(child);
-                NativeCalls.BoxAppend(Owner, child, stretches);
+                NativeCalls.BoxAppend(Owner.Handle, child.Handle, stretches);
             }
 
             /// <summary>
@@ -100,7 +101,7 @@ namespace LibUISharp
             {
                 if (base.Remove(child))
                 {
-                    NativeCalls.BoxDelete(Owner, child.Index);
+                    NativeCalls.BoxDelete(Owner.Handle, child.Index);
                     return true;
                 }
                 return false;

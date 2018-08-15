@@ -1,6 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -19,7 +19,7 @@ namespace LibUISharp
         /// <param name="max">The maximum this <see cref="SpinBox"/> object's value can be.</param>
         public SpinBox(int min = 0, int max = 100)
         {
-            Handle = Libui.Call<Libui.uiNewSpinbox>()(min, max);
+            Handle = new SafeControlHandle(NativeCalls.NewSpinbox(min, max));
             MinimumValue = min;
             MaximumValue = max;
             InitializeEvents();
@@ -28,7 +28,7 @@ namespace LibUISharp
         /// <summary>
         /// Occurs when the <see cref="Value"/> property is changed.
         /// </summary>
-        public event EventHandler ValueChanged;
+        public event Action ValueChanged;
 
         /// <summary>
         /// Gets this <see cref="SpinBox"/> object's minimum value.
@@ -47,14 +47,14 @@ namespace LibUISharp
         {
             get
             {
-                value = Libui.Call<Libui.uiSpinboxValue>()(this);
+                value = NativeCalls.SpinboxValue(Handle);
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    Libui.Call<Libui.uiSpinboxSetValue>()(this, value);
+                    NativeCalls.SpinboxSetValue(Handle, value);
                     this.value = value;
                 }
             }
@@ -63,12 +63,11 @@ namespace LibUISharp
         /// <summary>
         /// Called when the <see cref="ValueChanged"/> event is raised.
         /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
-        protected virtual void OnValueChanged(EventArgs e) => ValueChanged?.Invoke(this, e);
+        protected virtual void OnValueChanged() => ValueChanged?.Invoke();
 
         /// <summary>
         /// Initializes this UI component.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiSpinboxOnChanged>()(this, (spinbox, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.SpinboxOnChanged(Handle, (slider, data) => { OnValueChanged(); }, IntPtr.Zero);
     }
 }

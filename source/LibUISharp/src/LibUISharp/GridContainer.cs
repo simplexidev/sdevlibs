@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -15,7 +16,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="GridContainer"/> class.
         /// </summary>
-        public GridContainer() => Handle = NativeCalls.NewGrid();
+        public GridContainer() => Handle = new SafeControlHandle(NativeCalls.NewGrid());
 
         /// <summary>
         /// Gets or sets a value indiating whether this <see cref="GridContainer"/> has interior padding or not.
@@ -24,14 +25,14 @@ namespace LibUISharp
         {
             get
             {
-                isPadded = NativeCalls.GridPadded(this);
+                isPadded = NativeCalls.GridPadded(Handle);
                 return isPadded;
             }
             set
             {
                 if (isPadded != value)
                 {
-                    NativeCalls.GridSetPadded(this, value);
+                    NativeCalls.GridSetPadded(Handle, value);
                     isPadded = value;
                 }
             }
@@ -88,7 +89,7 @@ namespace LibUISharp
             {
                 base.Add(child);
                 ToNativeAligns(alignment, out NativeAlignment halign, out NativeAlignment valign);
-                NativeCalls.GridAppend(Owner, child, x, y, width, height, hexpand, halign, vexpand, valign);
+                NativeCalls.GridAppend(Owner.Handle, child.Handle, x, y, width, height, hexpand, halign, vexpand, valign);
             }
 
             /// <summary>
@@ -125,7 +126,7 @@ namespace LibUISharp
             {
                 base.Insert(existing.Index, child);
                 ToNativeAligns(alignment, out NativeAlignment halign, out NativeAlignment valign);
-                NativeCalls.GridInsertAt(Owner, child, existing, relativeAlignment, width, height, hexpand, halign, vexpand, valign);
+                NativeCalls.GridInsertAt(Owner.Handle, child.Handle, existing.Handle, relativeAlignment, width, height, hexpand, halign, vexpand, valign);
             }
 
             /// <summary>

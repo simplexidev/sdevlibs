@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -21,7 +21,7 @@ namespace LibUISharp
         /// <summary>
         /// Occurs when the <see cref="DateTime"/> property is changed.
         /// </summary>
-        public event EventHandler DateTimeChanged;
+        public event Action DateTimeChanged;
 
         /// <summary>
         /// Gets or sets the selected date and time.
@@ -30,7 +30,7 @@ namespace LibUISharp
         {
             get
             {
-                Libui.Call<Libui.uiDateTimePickerTime>()(this, out UIDateTime time);
+                NativeCalls.DateTimePickerTime(Handle, out UIDateTime time);
                 dateTime = UIDateTime.ToDateTime(time);
                 return dateTime;
             }
@@ -38,7 +38,7 @@ namespace LibUISharp
             {
                 if (dateTime != value)
                 {
-                    Libui.Call<Libui.uiDateTimePickerSetTime>()(this, UIDateTime.FromDateTime(value));
+                    NativeCalls.DateTimePickerSetTime(Handle, UIDateTime.FromDateTime(value));
                     dateTime = value;
                 }
             }
@@ -47,12 +47,12 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiDateTimePickerOnChanged>()(this, (d, data) => { OnDateTimeChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.DateTimePickerOnChanged(Handle, (d, data) => { OnDateTimeChanged(); }, IntPtr.Zero);
 
         /// <summary>
         /// Called when the <see cref="DateTimeChanged"/> event is raised.
         /// </summary>
-        protected virtual void OnDateTimeChanged(EventArgs e) => DateTimeChanged?.Invoke(this, e);
+        protected virtual void OnDateTimeChanged() => DateTimeChanged?.Invoke();
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ namespace LibUISharp
         /// </summary>
         public DatePicker() : base()
         {
-            Handle = Libui.Call<Libui.uiNewDatePicker>()();
+            Handle = new SafeControlHandle(NativeCalls.NewDatePicker());
             InitializeEvents();
         }
 
@@ -95,7 +95,7 @@ namespace LibUISharp
         /// </summary>
         public TimePicker() : base()
         {
-            Handle = Libui.Call<Libui.uiNewTimePicker>()();
+            Handle = new SafeControlHandle(NativeCalls.NewTimePicker());
             InitializeEvents();
         }
 
@@ -125,7 +125,7 @@ namespace LibUISharp
         /// </summary>
         public DateTimePicker() : base()
         {
-            Handle = Libui.Call<Libui.uiNewDateTimePicker>()();
+            Handle = new SafeControlHandle(NativeCalls.NewDateTimePicker());
             InitializeEvents();
         }
 
@@ -161,8 +161,7 @@ namespace LibUISharp
     }
 
     [NativeType("tm")]
-    [Serializable]
-    [StructLayout(Libui.StructLayout)]
+    [StructLayout(LayoutKind.Sequential)]
     internal class UIDateTime
     {
 #pragma warning disable IDE0032 // Use auto property

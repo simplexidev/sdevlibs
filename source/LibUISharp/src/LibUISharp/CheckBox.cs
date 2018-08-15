@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -18,7 +19,7 @@ namespace LibUISharp
         /// <param name="text">The text specified by the <see cref="CheckBox"/>.</param>
         public CheckBox(string text)
         {
-            Handle = NativeCalls.NewCheckbox(text);
+            Handle = new SafeControlHandle(NativeCalls.NewCheckbox(text));
             this.text = text;
             InitializeEvents();
         }
@@ -36,14 +37,14 @@ namespace LibUISharp
         {
             get
             {
-                text = NativeCalls.CheckboxText(this);
+                text = NativeCalls.CheckboxText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    NativeCalls.CheckboxSetText(this, value);
+                    NativeCalls.CheckboxSetText(Handle, value);
                     text = value;
                 }
             }
@@ -56,14 +57,14 @@ namespace LibUISharp
         {
             get
             {
-                @checked = NativeCalls.CheckboxChecked(this);
+                @checked = NativeCalls.CheckboxChecked(Handle);
                 return @checked;
             }
             set
             {
                 if (@checked != value)
                 {
-                    NativeCalls.CheckboxSetChecked(this, value);
+                    NativeCalls.CheckboxSetChecked(Handle, value);
                     @checked = value;
                 }
             }
@@ -77,6 +78,6 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.CheckboxOnToggled(this, (checkbox, data) => { OnToggled(); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.CheckboxOnToggled(Handle, (checkbox, data) => { OnToggled(); }, IntPtr.Zero);
     }
 }

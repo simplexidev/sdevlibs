@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -14,7 +15,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="FormContainer"/> class.
         /// </summary>
-        public FormContainer() => Handle = NativeCalls.NewForm();
+        public FormContainer() => Handle = new SafeControlHandle(NativeCalls.NewForm());
 
         /// <summary>
         /// Gets or sets a value indiating whether this <see cref="FormContainer"/> has interior padding or not.
@@ -23,14 +24,14 @@ namespace LibUISharp
         {
             get
             {
-                isPadded = NativeCalls.FormPadded(this);
+                isPadded = NativeCalls.FormPadded(Handle);
                 return isPadded;
             }
             set
             {
                 if (isPadded != value)
                 {
-                    NativeCalls.FormSetPadded(this, value);
+                    NativeCalls.FormSetPadded(Handle, value);
                     isPadded = value;
                 }
             }
@@ -62,7 +63,7 @@ namespace LibUISharp
             public void Add(string label, Control child, bool stretches = false)
             {
                 base.Add(child);
-                NativeCalls.FormAppend(Owner, label, child, stretches);
+                NativeCalls.FormAppend(Owner.Handle, label, child.Handle, stretches);
             }
 
             /// <summary>
@@ -81,7 +82,7 @@ namespace LibUISharp
             {
                 if (base.Remove(child))
                 {
-                    NativeCalls.FormDelete(Owner, child.Index);
+                    NativeCalls.FormDelete(Owner.Handle, child.Index);
                     return true;
                 }
                 return false;

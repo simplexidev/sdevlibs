@@ -29,7 +29,7 @@ namespace LibUISharp
         {
             if (w == null) w = Application.MainWindow;
 
-            path = NativeCalls.SaveFile(w);
+            path = NativeCalls.SaveFile(w.Handle);
             if (string.IsNullOrEmpty(path))
                 return false;
             else
@@ -80,7 +80,7 @@ namespace LibUISharp
         {
             if (w == null) w = Application.MainWindow;
 
-            path = NativeCalls.OpenFile(w);
+            path = NativeCalls.OpenFile(w.Handle);
             if (string.IsNullOrEmpty(path))
                 return false;
             else
@@ -127,9 +127,9 @@ namespace LibUISharp
             if (w == null) w = Application.MainWindow;
 
             if (isError)
-                NativeCalls.MsgBoxError(w, title, description);
+                NativeCalls.MsgBoxError(w.Handle, title, description);
             else
-                NativeCalls.MsgBox(w, title, description);
+                NativeCalls.MsgBox(w.Handle, title, description);
         }
     }
 }

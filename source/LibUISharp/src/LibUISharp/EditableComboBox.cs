@@ -1,6 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
-using static LibUISharp.Internal.Libraries;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -17,14 +17,14 @@ namespace LibUISharp
         /// </summary>
         public EditableComboBox() : base()
         {
-            Handle = Libui.Call<Libui.uiNewEditableCombobox>()();
+            Handle = new SafeControlHandle(NativeCalls.NewEditableCombobox());
             InitializeEvents();
         }
 
         /// <summary>
         /// Occurs when the <see cref="Text"/> property is changed.
         /// </summary>
-        public event EventHandler<TextChangedEventArgs> TextChanged;
+        public event Action TextChanged;
 
         /// <summary>
         /// Gets or sets the text of this <see cref="EditableComboBox"/>.
@@ -33,14 +33,14 @@ namespace LibUISharp
         {
             get
             {
-                text = Libui.Call<Libui.uiEditableComboboxText>()(this);
+                text = NativeCalls.EditableComboboxText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    Libui.Call<Libui.uiEditableComboboxSetText>()(this, value);
+                    NativeCalls.EditableComboboxSetText(Handle, value);
                     text = value;
                 }
             }
@@ -50,7 +50,7 @@ namespace LibUISharp
         /// Adds a drop-down item to this <see cref="EditableComboBox"/>.
         /// </summary>
         /// <param name="item">The item to add to this control.</param>
-        public void Add(string item) => Libui.Call<Libui.uiEditableComboboxAppend>()(this, item);
+        public void Add(string item) => NativeCalls.EditableComboboxAppend(Handle, item);
 
         /// <summary>
         /// Adds drop-down items to this <see cref="EditableComboBox"/>.
@@ -67,12 +67,11 @@ namespace LibUISharp
         /// <summary>
         /// Called when the <see cref="TextChanged"/> event is raised.
         /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, new TextChangedEventArgs(Text));
+        protected virtual void OnTextChanged() => TextChanged?.Invoke();
 
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.Call<Libui.uiEditableComboboxOnChanged>()(this, (box, data) => { OnTextChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.EditableComboboxOnChanged(Handle, (box, data) => { OnTextChanged(); }, IntPtr.Zero);
     }
 }

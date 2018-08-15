@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -15,7 +16,7 @@ namespace LibUISharp
         /// <param name="name">The specified name.</param>
         public Menu(string name)
         {
-            Handle = NativeCalls.NewMenu(name);
+            Handle = new SafeControlHandle(NativeCalls.NewMenu(name));
             Name = name;
         }
 
@@ -48,7 +49,7 @@ namespace LibUISharp
             /// <param name="click">The action invoked when the child is clicked.</param>
             public void Add(string name, Action<IntPtr> click = null)
             {
-                MenuItem item = new MenuItem(NativeCalls.MenuAppendItem(Owner, name), name);
+                MenuItem item = new MenuItem(NativeCalls.MenuAppendItem(Owner.Handle, name), name);
                 if (click != null)
                 {
                     item.Clicked += (data) =>
@@ -67,7 +68,7 @@ namespace LibUISharp
             /// <param name="click">The action invoked when the child is clicked.</param>
             public void AddCheckable(string name, Action<IntPtr> click = null)
             {
-                CheckableMenuItem item = new CheckableMenuItem(NativeCalls.MenuAppendCheckItem(Owner, name), name);
+                CheckableMenuItem item = new CheckableMenuItem(NativeCalls.MenuAppendCheckItem(Owner.Handle, name), name);
                 if (click != null)
                 {
                     item.Clicked += (data) =>
@@ -85,7 +86,7 @@ namespace LibUISharp
             /// <param name="click">The action invoked when the child is clicked.</param>
             public void AddPreferences(Action<IntPtr> click = null)
             {
-                PreferencesMenuItem item = new PreferencesMenuItem(NativeCalls.MenuAppendPreferencesItem(Owner));
+                PreferencesMenuItem item = new PreferencesMenuItem(NativeCalls.MenuAppendPreferencesItem(Owner.Handle));
                 if (click != null)
                 {
                     item.Clicked += (data) =>
@@ -103,7 +104,7 @@ namespace LibUISharp
             /// <param name="click">The action invoked when the child is clicked.</param>
             public void AddAbout(Action<IntPtr> click = null)
             {
-                AboutMenuItem item = new AboutMenuItem(NativeCalls.MenuAppendAboutItem(Owner));
+                AboutMenuItem item = new AboutMenuItem(NativeCalls.MenuAppendAboutItem(Owner.Handle));
                 if (click != null)
                 {
                     item.Clicked += (data) =>
@@ -120,14 +121,14 @@ namespace LibUISharp
             /// </summary>
             public void AddQuit()
             {
-                QuitMenuItem item = new QuitMenuItem(NativeCalls.MenuAppendQuitItem(Owner));
+                QuitMenuItem item = new QuitMenuItem(NativeCalls.MenuAppendQuitItem(Owner.Handle));
                 base.Add(item);
             }
 
             /// <summary>
             /// Adds a separator to the end of the <see cref="MenuItemList"/>.
             /// </summary>
-            public void AddSeparator() => NativeCalls.MenuAppendSeparator(Owner);
+            public void AddSeparator() => NativeCalls.MenuAppendSeparator(Owner.Handle);
 
             /// <summary>
             /// <see cref="MenuItemList"/> does not support this method, and will throw a <see cref="NotSupportedException"/>.
@@ -157,9 +158,9 @@ namespace LibUISharp
         /// Initializes a new instance of a <see cref="MenuItemBase"/> class from the specified handle.
         /// </summary>
         /// <param name="handle">The specified handle.</param>
-        protected MenuItemBase(IntPtr handle)
+        internal MenuItemBase(IntPtr handle)
         {
-            Handle = handle;
+            Handle = new SafeControlHandle(handle);
             InitializeEvents();
         }
 
@@ -190,7 +191,7 @@ namespace LibUISharp
         {
             if (!enabled)
             {
-                NativeCalls.MenuItemEnable(this);
+                NativeCalls.MenuItemEnable(Handle);
                 enabled = true;
             }
         }
@@ -202,7 +203,7 @@ namespace LibUISharp
         {
             if (enabled)
             {
-                NativeCalls.MenuItemDisable(this);
+                NativeCalls.MenuItemDisable(Handle);
                 enabled = false;
             }
         }
@@ -210,7 +211,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected override void InitializeEvents() => NativeCalls.MenuItemOnClicked(this, (child, window, data) => { OnClicked(window); }, IntPtr.Zero);
+        protected override void InitializeEvents() => NativeCalls.MenuItemOnClicked(Handle, (child, window, data) => { OnClicked(window); }, IntPtr.Zero);
 
         /// <summary>
         /// Called when the <see cref="Clicked"/> event is raised.
@@ -256,12 +257,12 @@ namespace LibUISharp
         /// </summary>
         public bool Checked
         {
-            get => @checked = NativeCalls.MenuItemChecked(this);
+            get => @checked = NativeCalls.MenuItemChecked(Handle);
             set
             {
                 if (@checked != value)
                 {
-                    NativeCalls.MenuItemSetChecked(this, value);
+                    NativeCalls.MenuItemSetChecked(Handle, value);
                     @checked = value;
                 }
             }

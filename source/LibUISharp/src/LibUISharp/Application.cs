@@ -21,8 +21,6 @@ namespace LibUISharp
         /// </summary>
         public Application()
         {
-            // An application does not have a handle, so we just generate a random number for tracking in the componentCache.
-            Handle = new IntPtr((long)HashHelper.GenerateSecureSeed());
             lock (_lock)
             {
                 if (initialized)
@@ -120,16 +118,17 @@ namespace LibUISharp
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <param name="disposing">Whether or not this control is disposing.</param>
+        /// <param name="disposing">Whether or not this <see cref="Application"/> is disposing.</param>
         protected override void Dispose(bool disposing)
         {
+            if (disposed) return;
             if (disposing)
             {
-                if (!disposed)
+                if (initialized)
                     NativeCalls.UnInit();
-                disposed = true;
-                base.Dispose(disposing);
             }
+            disposed = true;
+            base.Dispose(disposing);
         }
     }
 

@@ -1,5 +1,5 @@
-using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -12,7 +12,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="TabContainer"/> class.
         /// </summary>
-        public TabContainer() => Handle = NativeCalls.NewTab();
+        public TabContainer() => Handle = new SafeControlHandle(NativeCalls.NewTab());
 
         /// <summary>
         /// Represents a collection of child <see cref="TabPage"/> objects inside of a <see cref="TabContainer"/>.
@@ -32,7 +32,7 @@ namespace LibUISharp
             public override void Add(TabPage child)
             {
                 base.Add(child);
-                NativeCalls.TabAppend(Owner, child.Name, child);
+                NativeCalls.TabAppend(Owner.Handle, child.Name, child.Handle);
                 child.DelayRender();
             }
 
@@ -44,7 +44,7 @@ namespace LibUISharp
             public override void Insert(int index, TabPage child)
             {
                 base.Insert(index, child);
-                NativeCalls.TabInsertAt(Owner, child.Name, index, child);
+                NativeCalls.TabInsertAt(Owner.Handle, child.Name, index, child.Handle);
                 child.DelayRender();
             }
 
@@ -57,7 +57,7 @@ namespace LibUISharp
             {
                 if (base.Remove(child))
                 {
-                    NativeCalls.TabDelete(Owner, child.Index);
+                    NativeCalls.TabDelete(Owner.Handle, child.Index);
                     return true;
                 }
                 return false;
@@ -118,9 +118,9 @@ namespace LibUISharp
         {
             get
             {
-                if (Parent != null && Parent != IntPtr.Zero)
+                if (Parent.Handle != null)
                 {
-                    isMargined = NativeCalls.TabMargined(Parent, Index);
+                    isMargined = NativeCalls.TabMargined(Parent.Handle, Index);
                     initialized = true;
                 }
                 return isMargined;
@@ -129,8 +129,8 @@ namespace LibUISharp
             {
                 if (isMargined != value)
                 {
-                    if (Parent != null && Parent != IntPtr.Zero)
-                        NativeCalls.TabSetMargined(Parent, Index, value);
+                    if (Parent.Handle != null)
+                        NativeCalls.TabSetMargined(Parent.Handle, Index, value);
                     isMargined = value;
                 }
             }
@@ -142,7 +142,7 @@ namespace LibUISharp
         protected internal override void DelayRender()
         {
             if (!initialized && isMargined)
-                NativeCalls.TabSetMargined(Parent, Index, isMargined);
+                NativeCalls.TabSetMargined(Parent.Handle, Index, isMargined);
         }
     }
 }
