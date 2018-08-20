@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -17,7 +16,7 @@ namespace LibUISharp
         /// </summary>
         public EditableComboBox() : base()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewEditableCombobox());
+            Handle = NativeCalls.NewEditableCombobox();
             InitializeEvents();
         }
 

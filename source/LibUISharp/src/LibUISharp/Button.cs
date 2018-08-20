@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -18,7 +17,7 @@ namespace LibUISharp
         /// <param name="text">The text to be displayed by this button.</param>
         public Button(string text)
         {
-            Handle = new SafeControlHandle(NativeCalls.NewButton(text));
+            Handle = NativeCalls.NewButton(text);
             this.text = text;
             InitializeEvents();
         }

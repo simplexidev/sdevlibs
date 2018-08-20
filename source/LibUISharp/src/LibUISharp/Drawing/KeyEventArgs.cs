@@ -20,6 +20,23 @@ namespace LibUISharp.Drawing
 #pragma warning restore IDE0044 // Add readonly modifier
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="KeyEventArgs"/> class.
+        /// </summary>
+        /// <param name="key">The key that was pressed.</param>
+        /// <param name="extension">The extension key that was pressed.</param>
+        /// <param name="modifier">The single modifier that was pressed</param>
+        /// <param name="modifiers">The multiple modifier keys that were pressed.</param>
+        /// <param name="up">Whether the key was released or not.</param>
+        public KeyEventArgs(char key, ExtensionKey extension, ModifierKey modifier, ModifierKey modifiers, bool up)
+        {
+            this.key = key;
+            this.extension = extension;
+            this.modifier = modifier;
+            this.modifiers = modifiers;
+            this.up = up;
+        }
+
+        /// <summary>
         /// Gets the key that was presseed as a string.
         /// </summary>
         public char Key => key;
@@ -43,22 +60,5 @@ namespace LibUISharp.Drawing
         /// Gets a value indicating if the key was released.
         /// </summary>
         public bool Up => up;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="KeyEventArgs"/> class.
-        /// </summary>
-        /// <param name="key">The key that was pressed.</param>
-        /// <param name="extension">The extension key that was pressed.</param>
-        /// <param name="modifier">The single modifier that was pressed</param>
-        /// <param name="modifiers">The multiple modifier keys that were pressed.</param>
-        /// <param name="up">Whether the key was released or not.</param>
-        public KeyEventArgs(char key, ExtensionKey extension, ModifierKey modifier, ModifierKey modifiers, bool up)
-        {
-            this.key = key;
-            this.extension = extension;
-            this.modifier = modifier;
-            this.modifiers = modifiers;
-            this.up = up;
-        }
     }
 }

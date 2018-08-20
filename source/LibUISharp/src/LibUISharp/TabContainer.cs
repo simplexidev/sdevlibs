@@ -1,5 +1,4 @@
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -12,7 +11,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="TabContainer"/> class.
         /// </summary>
-        public TabContainer() => Handle = new SafeControlHandle(NativeCalls.NewTab());
+        public TabContainer() => Handle = NativeCalls.NewTab();
 
         /// <summary>
         /// Represents a collection of child <see cref="TabPage"/> objects inside of a <see cref="TabContainer"/>.

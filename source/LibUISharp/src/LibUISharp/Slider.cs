@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -19,7 +18,7 @@ namespace LibUISharp
         /// <param name="max">The maximum this <see cref="Slider"/> object's value can be.</param>
         public Slider(int min = 0, int max = 100)
         {
-            Handle = new SafeControlHandle(NativeCalls.NewSlider(min, max));
+            Handle = NativeCalls.NewSlider(min, max);
             MinimumValue = min;
             MaximumValue = max;
             InitializeEvents();

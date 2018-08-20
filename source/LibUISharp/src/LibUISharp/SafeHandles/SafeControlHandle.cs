@@ -23,7 +23,7 @@ namespace LibUISharp.SafeHandles
         public UIntPtr DangerousGetControlHandle()
         {
             if (!IsInvalid)
-                return NativeCalls.ControlHandle(handle);
+                return NativeCalls.ControlHandle(this);
             else
                 return UIntPtr.Zero;
         }
@@ -38,7 +38,7 @@ namespace LibUISharp.SafeHandles
             bool released;
             try
             {
-                NativeCalls.ControlDestroy(handle);
+                NativeCalls.ControlDestroy(this);
                 handle = IntPtr.Zero;
                 released = true;
             }

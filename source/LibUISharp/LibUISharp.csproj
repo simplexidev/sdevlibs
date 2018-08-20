@@ -1,7 +1,7 @@
 ﻿<!--| Project:  LibUISharp.csproj                  |
     | Assembly: LibUISharp.dll                     |
     | Guid: {F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD} |-->
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\LibUISharp.props" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -26,21 +26,19 @@
   <ItemGroup>
     <Content Include="lib\libui.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>runtimes\win-x64\native</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="lib\libui.so.0">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>runtimes\linux-x64\native</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="lib\libui.A.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>runtimes\osx-x64\native</PackagePath>
       <Pack>true</Pack>
     </Content>
   </ItemGroup>
-  <ItemGroup> <!-- These files are ones that need finished before this PR is merged. -->
+  <ItemGroup>
+    <!-- These files are ones that need finished before this PR is merged. -->
     <None Include="src\.todo\LibUISharp\Drawing\*.cs" />
     <None Include="src\.todo\LibUISharp\Internal\NM\Libui\*.cs" />
   </ItemGroup>

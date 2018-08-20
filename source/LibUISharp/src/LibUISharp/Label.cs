@@ -1,5 +1,4 @@
 ﻿using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -17,7 +16,7 @@ namespace LibUISharp
         /// <param name="text">The specified text for this <see cref="Label"/>.</param>
         public Label(string text)
         {
-            Handle = new SafeControlHandle(ativeCalls.NewLabel(text));
+            Handle = NativeCalls.NewLabel(text);
             this.text = text;
         }
 

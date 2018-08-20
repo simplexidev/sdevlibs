@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -21,10 +20,10 @@ namespace LibUISharp
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    Handle = new SafeControlHandle(NativeCalls.NewHorizontalBox());
+                    Handle = NativeCalls.NewHorizontalBox();
                     break;
                 case Orientation.Vertical:
-                    Handle = new SafeControlHandle(NativeCalls.NewVerticalBox());
+                    Handle = NativeCalls.NewVerticalBox();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(orientation));

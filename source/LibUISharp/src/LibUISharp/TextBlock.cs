@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -20,9 +19,9 @@ namespace LibUISharp
         public TextBlock(bool wordWrap = true)
         {
             if (wordWrap)
-                Handle = new SafeControlHandle(NativeCalls.NewMultilineEntry());
+                Handle = NativeCalls.NewMultilineEntry();
             else
-                Handle = new SafeControlHandle(NativeCalls.NewNonWrappingMultilineEntry());
+                Handle = NativeCalls.NewNonWrappingMultilineEntry();
             WordWrap = wordWrap;
             InitializeEvents();
         }

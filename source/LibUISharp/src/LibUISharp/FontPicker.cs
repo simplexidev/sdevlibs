@@ -1,7 +1,6 @@
 ﻿using System;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -19,7 +18,7 @@ namespace LibUISharp
         /// </summary>
         public FontPicker()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewFontButton());
+            Handle = NativeCalls.NewFontButton();
             InitializeEvents();
         }
 

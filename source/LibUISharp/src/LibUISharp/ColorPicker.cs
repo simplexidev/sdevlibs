@@ -1,7 +1,6 @@
 ﻿using System;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -18,7 +17,7 @@ namespace LibUISharp
         /// </summary>
         public ColorPicker()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewColorButton());
+            Handle = NativeCalls.NewColorButton();
             color = Color.Empty;
             InitializeEvents();
         }

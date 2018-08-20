@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -19,7 +18,7 @@ namespace LibUISharp
         /// <param name="text">The text specified by the <see cref="CheckBox"/>.</param>
         public CheckBox(string text)
         {
-            Handle = new SafeControlHandle(NativeCalls.NewCheckbox(text));
+            Handle = NativeCalls.NewCheckbox(text);
             this.text = text;
             InitializeEvents();
         }

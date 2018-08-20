@@ -16,7 +16,7 @@ namespace LibUISharp
         /// <param name="name">The specified name.</param>
         public Menu(string name)
         {
-            Handle = new SafeControlHandle(NativeCalls.NewMenu(name));
+            Handle = NativeCalls.NewMenu(name);
             Name = name;
         }
 
@@ -158,9 +158,9 @@ namespace LibUISharp
         /// Initializes a new instance of a <see cref="MenuItemBase"/> class from the specified handle.
         /// </summary>
         /// <param name="handle">The specified handle.</param>
-        internal MenuItemBase(IntPtr handle)
+        internal MenuItemBase(SafeControlHandle handle)
         {
-            Handle = new SafeControlHandle(handle);
+            Handle = handle;
             InitializeEvents();
         }
 
@@ -230,7 +230,7 @@ namespace LibUISharp
         /// </summary>
         /// <param name="handle">The specified handle.</param>
         /// <param name="name">The menu child's name.</param>
-        internal MenuItem(IntPtr handle, string name) : base(handle) => Name = name;
+        internal MenuItem(SafeControlHandle handle, string name) : base(handle) => Name = name;
 
         /// <summary>
         /// Gets this menu child's name.
@@ -250,7 +250,7 @@ namespace LibUISharp
         /// </summary>
         /// <param name="handle">The specified handle.</param>
         /// <param name="name">The menu child's name.</param>
-        internal CheckableMenuItem(IntPtr handle, string name) : base(handle) => Name = name;
+        internal CheckableMenuItem(SafeControlHandle handle, string name) : base(handle) => Name = name;
 
         /// <summary>
         /// Gets or sets the state of this <see cref="CheckableMenuItem"/>.
@@ -283,7 +283,7 @@ namespace LibUISharp
         /// Initializes a new instance of a <see cref="QuitMenuItem"/> class from the specified handle.
         /// </summary>
         /// <param name="handle">The specified handle.</param>
-        internal QuitMenuItem(IntPtr handle) : base(handle) { }
+        internal QuitMenuItem(SafeControlHandle handle) : base(handle) { }
 
         /// <summary>
         /// Initializes this UI component's events.
@@ -306,7 +306,7 @@ namespace LibUISharp
         /// Initializes a new instance of a <see cref="PreferencesMenuItem"/> class from the specified handle.
         /// </summary>
         /// <param name="handle">The specified handle.</param>
-        internal PreferencesMenuItem(IntPtr handle) : base(handle) { }
+        internal PreferencesMenuItem(SafeControlHandle handle) : base(handle) { }
     }
 
     /// <summary>
@@ -314,6 +314,6 @@ namespace LibUISharp
     /// </summary>
     public sealed class AboutMenuItem : MenuItemBase
     {
-        internal AboutMenuItem(IntPtr handle) : base(handle) { }
+        internal AboutMenuItem(SafeControlHandle handle) : base(handle) { }
     }
 }

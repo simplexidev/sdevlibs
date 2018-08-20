@@ -65,15 +65,15 @@ namespace ControlGallery
             hPanel.Children.Add(groupContainer, true);
             groupContainer.Child = vPanel;
 
-            spinBox.ValueChanged += (sender, args) =>
+            spinBox.ValueChanged += () =>
             {
                 int value = spinBox.Value;
                 slider.Value = value;
                 progressBar.Value = value;
             };
 
-            slider.ValueChanged += (sender, args) =>
-            {
+            slider.ValueChanged += () =>
+                {
                 int value = slider.Value;
                 spinBox.Value = value;
                 progressBar.Value = value;
@@ -140,7 +140,7 @@ namespace ControlGallery
 
             vPanel2.Children.Add(gridFile);
 
-            buttonOpenFile.Click += (sender, args) =>
+            buttonOpenFile.Click += () =>
             {
                 if (Window.ShowOpenFileDialog(null, out string path))
                     textboxOpenFile.Text = path;
@@ -148,7 +148,7 @@ namespace ControlGallery
                     textboxOpenFile.Text = "(null)";
             };
 
-            buttonSaveFile.Click += (sender, args) =>
+            buttonSaveFile.Click += () =>
             {
                 if (Window.ShowSaveFileDialog(null, out string path))
                     textboxSaveFile.Text = path;
@@ -156,8 +156,8 @@ namespace ControlGallery
                     textboxSaveFile.Text = "(null)";
             };
 
-            buttonMessage.Click += (sender, args) => { Window.ShowMessageBox(null, "This is a normal message box.", "More detailed information can be shown here."); };
-            buttonMessageErr.Click += (sender, args) => { Window.ShowMessageBox(null, "This message box describes an error.", "More detailed information can be shown here.", true); };
+            buttonMessage.Click += () => { Window.ShowMessageBox(null, "This is a normal message box.", "More detailed information can be shown here."); };
+            buttonMessageErr.Click += () => { Window.ShowMessageBox(null, "This message box describes an error.", "More detailed information can be shown here.", true); };
 
             gridFile.Children.Add(buttonOpenFile, 0, 0, 1, 1, 0, 0, Alignment.Fill);
             gridFile.Children.Add(textboxOpenFile, 1, 0, 1, 1, 1, 0, Alignment.Fill);

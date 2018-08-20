@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -84,7 +83,7 @@ namespace LibUISharp
         /// </summary>
         public TextBox() : base()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewEntry());
+            Handle = NativeCalls.NewEntry();
             InitializeEvents();
         }
     }
@@ -99,7 +98,7 @@ namespace LibUISharp
         /// </summary>
         public PasswordBox() : base()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewPasswordEntry());
+            Handle = NativeCalls.NewPasswordEntry();
             InitializeEvents();
         }
     }
@@ -114,7 +113,7 @@ namespace LibUISharp
         /// </summary>
         public SearchBox() : base()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewSearchEntry());
+            Handle = NativeCalls.NewSearchEntry();
             InitializeEvents();
         }
     }

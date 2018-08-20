@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -17,7 +16,7 @@ namespace LibUISharp
         /// </summary>
         public RadioButtonList()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewRadioButtons());
+            Handle = NativeCalls.NewRadioButtons();
             InitializeEvents();
         }
 

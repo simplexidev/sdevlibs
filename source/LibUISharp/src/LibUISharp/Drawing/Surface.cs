@@ -6,6 +6,7 @@ using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
+    //TODO: Split into SurfaceBase, Surface, and ScrollableSurface.
     /// <summary>
     /// Represents a drawable surface.
     /// </summary>
@@ -58,7 +59,7 @@ namespace LibUISharp.Drawing
             {
                 if (size != value)
                 {
-                    NativeCalls.AreaSetSize(this, value.Width, value.Height);
+                    NativeCalls.AreaSetSize(Handle, value.Width, value.Height);
                     size = value;
                 }
             }
@@ -80,7 +81,7 @@ namespace LibUISharp.Drawing
         public void QueueRedrawAll()
         {
             Thread.Sleep(200);
-            NativeCalls.AreaQueueRedrawAll(this);
+            NativeCalls.AreaQueueRedrawAll(Handle);
         }
 
         /// <summary>
@@ -90,13 +91,13 @@ namespace LibUISharp.Drawing
         /// <param name="y">The y-coordinate.</param>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public void ScrollTo(double x, double y, double width, double height) => NativeCalls.AreaScrollTo(this, x, y, width, height);
+        public void ScrollTo(double x, double y, double width, double height) => NativeCalls.AreaScrollTo(Handle, x, y, width, height);
 
-        //TODO: This needs documentation.
-        public void BeginUserWindowMove() => NativeCalls.AreaBeginUserWindowMove(this);
+        //TODO: Documentation.
+        public void BeginUserWindowMove() => NativeCalls.AreaBeginUserWindowMove(Handle);
 
-        //TODO: This needs documentation.
-        public void BeginUserWindowResize(WindowEdge edge) => NativeCalls.AreaBeginUserWindowResize(this, edge);
+        //TODO: Documentation.
+        public void BeginUserWindowResize(WindowEdge edge) => NativeCalls.AreaBeginUserWindowResize(Handle, edge);
     }
 
     /// <summary>

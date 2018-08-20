@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -65,7 +64,7 @@ namespace LibUISharp
         /// </summary>
         public DatePicker() : base()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewDatePicker());
+            Handle = NativeCalls.NewDatePicker();
             InitializeEvents();
         }
 
@@ -95,7 +94,7 @@ namespace LibUISharp
         /// </summary>
         public TimePicker() : base()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewTimePicker());
+            Handle = NativeCalls.NewTimePicker();
             InitializeEvents();
         }
 
@@ -125,7 +124,7 @@ namespace LibUISharp
         /// </summary>
         public DateTimePicker() : base()
         {
-            Handle = new SafeControlHandle(NativeCalls.NewDateTimePicker());
+            Handle = NativeCalls.NewDateTimePicker();
             InitializeEvents();
         }
 

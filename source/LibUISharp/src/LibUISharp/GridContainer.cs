@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -16,7 +15,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="GridContainer"/> class.
         /// </summary>
-        public GridContainer() => Handle = new SafeControlHandle(NativeCalls.NewGrid());
+        public GridContainer() => Handle = NativeCalls.NewGrid();
 
         /// <summary>
         /// Gets or sets a value indiating whether this <see cref="GridContainer"/> has interior padding or not.

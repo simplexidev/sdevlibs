@@ -2,7 +2,6 @@
 using System.Runtime.InteropServices;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -27,7 +26,7 @@ namespace LibUISharp
         /// <param name="hasMenu">Whether or not the window will have a menu.</param>
         public Window(string title = "", int width = 600, int height = 400, bool hasMenu = false)
         {
-            Handle = new SafeControlHandle(NativeCalls.NewWindow(title, width, height, hasMenu));
+            Handle = NativeCalls.NewWindow(title, width, height, hasMenu);
 
             this.title = title;
             Console.Title = title;

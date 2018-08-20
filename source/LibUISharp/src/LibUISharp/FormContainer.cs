@@ -1,6 +1,5 @@
 ﻿using System;
 using LibUISharp.Internal;
-using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -15,7 +14,7 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="FormContainer"/> class.
         /// </summary>
-        public FormContainer() => Handle = new SafeControlHandle(NativeCalls.NewForm());
+        public FormContainer() => Handle = NativeCalls.NewForm();
 
         /// <summary>
         /// Gets or sets a value indiating whether this <see cref="FormContainer"/> has interior padding or not.

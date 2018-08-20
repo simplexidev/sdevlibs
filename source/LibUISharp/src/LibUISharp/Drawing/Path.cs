@@ -1,5 +1,4 @@
-﻿using System;
-using LibUISharp.Internal;
+﻿using LibUISharp.Internal;
 using LibUISharp.SafeHandles;
 
 namespace LibUISharp.Drawing
@@ -10,8 +9,6 @@ namespace LibUISharp.Drawing
     [NativeType("uiDrawPath")]
     public class Path : UIComponent<SafePathHandle>
     {
-        private bool disposed = false;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Path"/> class with the specified <see cref="FillMode"/>.
         /// </summary>
