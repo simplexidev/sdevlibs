@@ -1,8 +1,11 @@
-﻿namespace LibUISharp.Drawing
+﻿using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies whether text is left-aligned, right-aligned, or centered.
     /// </summary>
+    [NativeType("uiDrawTextAlign")]
     public enum TextAlignment : long
     {
         /// <summary>

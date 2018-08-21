@@ -1,18 +1,24 @@
-﻿using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a control that indicates the progress of an operation.
     /// </summary>
+    [NativeType("uiProgressBar")]
     public class ProgressBar : Control
     {
-        private int value;
+        private int value = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgressBar"/> class.
         /// </summary>
-        public ProgressBar() => Handle = Libui.uiNewProgressBar();
+        public ProgressBar(int startValue = 0)
+        {
+            Handle = NativeCalls.NewProgressBar();
+            if (value != startValue)
+                Value = value;
+        }
 
         /// <summary>
         /// Gets or sets the current value of this <see cref="ProgressBar"/>.
@@ -21,14 +27,14 @@ namespace LibUISharp
         {
             get
             {
-                value = Libui.uiProgressBarValue(this);
+                value = NativeCalls.ProgressBarValue(Handle);
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    Libui.uiProgressBarSetValue(this, value);
+                    NativeCalls.ProgressBarSetValue(Handle, value);
                     this.value = value;
                 }
             }

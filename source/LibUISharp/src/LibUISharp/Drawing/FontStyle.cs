@@ -1,8 +1,11 @@
-﻿namespace LibUISharp.Drawing
+﻿using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies the style of a font as normal, italic or oblique.
     /// </summary>
+    [NativeType("uiTextItalic")]
     public enum FontStyle : long
     {
         /// <summary>

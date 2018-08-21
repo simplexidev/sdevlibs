@@ -1,4 +1,5 @@
 ﻿using System;
+using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
@@ -6,6 +7,7 @@ namespace LibUISharp.Drawing
     /// Represents a modifier key on a keyboard.
     /// </summary>
     [Flags]
+    [NativeType("uiModifier")]
     public enum ModifierKey : long
     {
         /// <summary>

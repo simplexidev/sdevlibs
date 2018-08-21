@@ -1,35 +1,33 @@
-﻿using LibUISharp.Native;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using static LibUISharp.Native.NativeMethods;
+using System.Runtime.InteropServices;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
     /// <summary>
-    /// Enacpsulates an application with a user-interface.
+    /// Encapsulates an application with a user-interface.
     /// </summary>
     public sealed class Application : UIComponent
     {
         private static object _lock = new object();
-        private static bool created = false;
-        private static Libui.uiInitOptions Options = new Libui.uiInitOptions() { Size = UIntPtr.Zero };
-        private bool disposed = false;
+        private static bool initialized = false;
+        private static StartupOptions Options = new StartupOptions();
         private static readonly Queue<Action> queue = new Queue<Action>();
+        private bool disposed = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Application"/> class.
         /// </summary>
         public Application()
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             lock (_lock)
             {
-                if (created)
-                    throw new InvalidOperationException("Cannot create more than one Application.");
+                if (initialized)
+                    throw new InvalidOperationException("You cannot have more than one instance of the Application class at once.");
                 Current = this;
-                created = true;
+                initialized = true;
                 InitializeComponent();
                 InitializeEvents();
             }
@@ -38,7 +36,7 @@ namespace LibUISharp
         /// <summary>
         /// Occurs just before an application shuts down.
         /// </summary>
-        public event EventHandler<CancelEventArgs> Exiting;
+        public event Func<bool, bool> Exiting;
 
         /// <summary>
         /// Gets the current instance of this <see cref="Application"/>.
@@ -54,6 +52,7 @@ namespace LibUISharp
         /// <returns>0 if successful, else returns -1.</returns>
         public int Run(Window window)
         {
+            if (window.IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(window);
             MainWindow = window;
             return Run(() => { window.Show(); });
         }
@@ -63,7 +62,7 @@ namespace LibUISharp
             try
             {
                 QueueMain(action);
-                Libui.uiMain();
+                NativeCalls.Main();
             }
             catch (Exception)
             {
@@ -78,12 +77,8 @@ namespace LibUISharp
         /// <param name="action">The <see cref="Action"/> to run.</param>
         public static void QueueMain(Action action)
         {
-            /*lock (_lock)
-            {
-                Libui.uiQueueMain(data => { action?.Invoke(); }, IntPtr.Zero);
-            }*/
             queue.Enqueue(action);
-            Libui.uiQueueMain(data =>
+            NativeCalls.QueueMain(data =>
             {
                 lock (_lock)
                 {
@@ -93,62 +88,74 @@ namespace LibUISharp
             }, new IntPtr(queue.Count));
         }
 
-        private void Steps() => Libui.uiMainSteps();
+        private void Steps() => NativeCalls.MainSteps();
 
-        private bool Step(bool wait) => Libui.uiMainStep(wait);
+        private bool Step(bool wait) => NativeCalls.MainStep(wait);
 
         /// <summary>
-        /// Shut down this application.
+        /// Shuts down this application.
         /// </summary>
-        public void Shutdown() => Libui.uiQuit();
+        public void Shutdown() => NativeCalls.Quit();
 
         /// <summary>
         /// Initializes this UI component.
         /// </summary>
         protected sealed override void InitializeComponent()
         {
-            string error = Libui.uiInit(ref Options);
+            string error = NativeCalls.Init(ref Options);
 
             if (!string.IsNullOrEmpty(error))
             {
                 Console.WriteLine(error);
-                Libui.uiFreeInitError(error);
+                NativeCalls.FreeInitError(error);
                 throw new UIException(error);
             }
-
-            // This must be possible on Linux and macOS.
-#if !DEBUG
-            if (PlatformHelper.IsWinNT)
-            {
-                IntPtr ptr = WinAPI.GetConsoleWindow();
-                WinAPI.ShowWindow(ptr, 0); // 0 = SW_HIDE, 4 = SW_SHOWNOACTIVATE
-            }
-#endif
         }
 
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiOnShouldQuit(data =>
-            {
-                CancelEventArgs args = new CancelEventArgs();
-                Exiting?.Invoke(this, args);
-                return !args.Cancel;
-            }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.OnShouldQuit(data => { return Exiting.Invoke(true); }, IntPtr.Zero);
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <param name="disposing">Whether or not this control is disposing.</param>
+        /// <param name="disposing">Whether or not this <see cref="Application"/> is disposing.</param>
         protected override void Dispose(bool disposing)
         {
+            if (disposed) return;
             if (disposing)
             {
-                if (!disposed)
-                    Libui.uiUnInit();
-                disposed = true;
-                base.Dispose(disposing);
+                if (initialized)
+                    NativeCalls.UnInit();
             }
+            disposed = true;
+            base.Dispose(disposing);
         }
+    }
+
+    [NativeType("uiInitOptions")]
+    [StructLayout(LayoutKind.Sequential)]
+    internal class StartupOptions : IEquatable<StartupOptions>
+    {
+        private UIntPtr size;
+
+        public StartupOptions() : this(0) { }
+        public StartupOptions(uint size) => Size = size;
+        public StartupOptions(UIntPtr size) => this.size = size;
+
+        public uint Size
+        {
+            get => (uint)size;
+            private set => size = new UIntPtr(value);
+        }
+
+        public bool Equals(StartupOptions options) => size == options.size;
+
+        public override bool Equals(object obj) => (obj is StartupOptions) && Equals((StartupOptions)obj);
+
+        public override int GetHashCode() => unchecked(HashHelper.GenerateHash(size));
+
+        public override string ToString() => size.ToString();
     }
 }

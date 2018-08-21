@@ -1,9 +1,12 @@
-﻿namespace LibUISharp.Drawing
+﻿using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Identifies the underline style of text.
     /// </summary>
-    public enum UnderlineStyle
+    [NativeType("uiUnderline")]
+    public enum UnderlineStyle : long
     {
         /// <summary>
         /// No underline.

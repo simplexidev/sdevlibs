@@ -1,8 +1,11 @@
-﻿namespace LibUISharp.Drawing
+﻿using LibUISharp.Internal;
+
+namespace LibUISharp.Drawing
 {
     /// <summary>
     /// Specifies the edge of a <see cref="Window"/> object.
     /// </summary>
+    [NativeType("uiWindowResizeEdge")]
     public enum WindowEdge : long
     {
         /// <summary>

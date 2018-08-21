@@ -1,11 +1,13 @@
 ﻿using System;
-using static LibUISharp.Native.NativeMethods;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a basic button control with text.
     /// </summary>
+    [NativeType("uiButton")]
     public class Button : Control
     {
         private string text;
@@ -16,7 +18,7 @@ namespace LibUISharp
         /// <param name="text">The text to be displayed by this button.</param>
         public Button(string text)
         {
-            Handle = Libui.uiNewButton(text);
+            Handle = NativeCalls.NewButton(text);
             this.text = text;
             InitializeEvents();
         }
@@ -24,7 +26,7 @@ namespace LibUISharp
         /// <summary>
         /// Occurs when the button is clicked.
         /// </summary>
-        public event EventHandler Click;
+        public event Action Click;
 
         /// <summary>
         /// Gets or sets the text within this button.
@@ -33,28 +35,31 @@ namespace LibUISharp
         {
             get
             {
-                text = Libui.uiButtonText(this);
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                text = NativeCalls.ButtonText(Handle);
                 return text;
             }
             set
             {
-                if (text != value)
-                {
-                    Libui.uiButtonSetText(this, value);
-                    text = value;
-                }
+                if (text == value) return;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.ButtonSetText(Handle, value);
+                text = value;
             }
         }
 
         /// <summary>
-        /// Initializes this UI component's events.
-        /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiButtonOnClicked(this, (button, data) => { OnClick(EventArgs.Empty); }, IntPtr.Zero);
-
-        /// <summary>
         /// Raises the <see cref="Click"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnClick(EventArgs e) => Click?.Invoke(this, e);
+        protected virtual void OnClick() => Click?.Invoke();
+
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
+        protected sealed override void InitializeEvents()
+        {
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.ButtonOnClicked(Handle, (button, data) => { OnClick(); }, IntPtr.Zero);
+        }
     }
 }

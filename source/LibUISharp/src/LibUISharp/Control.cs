@@ -1,15 +1,15 @@
-﻿using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
     /// <summary>
-    /// Defines the base class for controls, which are <see cref="UIComponent"/> objects with visual representation.
+    /// Defines the base class for controls, which are <see cref="UIComponent{T}"/> objects with visual representation.
     /// </summary>
-    public abstract class Control : UIComponent
+    [NativeType("uiControl")]
+    public abstract class Control : UIComponent<SafeControlHandle>
     {
         private bool enabled, visible;
-        private bool disposed = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -37,7 +37,11 @@ namespace LibUISharp
         /// </summary>
         public virtual bool Enabled
         {
-            get => Libui.uiControlEnabled(this);
+            get
+            {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                return NativeCalls.ControlEnabled(Handle);
+            }
             set
             {
                 if (enabled == value) return;
@@ -45,13 +49,17 @@ namespace LibUISharp
                 else Disable();
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the control and all its child controls are displayed.
         /// </summary>
         public virtual bool Visible
         {
-            get => Libui.uiControlVisible(this);
+            get
+            {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                return NativeCalls.ControlVisible(Handle);
+            }
             set
             {
                 if (visible == value) return;
@@ -67,9 +75,8 @@ namespace LibUISharp
         {
             get
             {
-                if (Handle != IntPtr.Zero)
-                    return Libui.uiControlToplevel(Handle);
-                return false;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                return NativeCalls.ControlTopLevel(Handle);
             }
         }
 
@@ -80,7 +87,8 @@ namespace LibUISharp
         {
             if (!enabled)
             {
-                Libui.uiControlEnable(this);
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.ControlEnable(Handle);
                 enabled = true;
             }
         }
@@ -92,7 +100,8 @@ namespace LibUISharp
         {
             if (enabled)
             {
-                Libui.uiControlDisable(this);
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.ControlDisable(Handle);
                 enabled = false;
             }
         }
@@ -104,7 +113,8 @@ namespace LibUISharp
         {
             if (!visible)
             {
-                Libui.uiControlShow(this);
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.ControlShow(Handle);
                 visible = true;
             }
         }
@@ -116,7 +126,8 @@ namespace LibUISharp
         {
             if (visible)
             {
-                Libui.uiControlHide(this);
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.ControlHide(Handle);
                 visible = false;
             }
         }
@@ -125,20 +136,5 @@ namespace LibUISharp
         /// Performs pre-rendering operations.
         /// </summary>
         protected internal virtual void DelayRender() { }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        /// <param name="disposing">Whether or not this control is disposing.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing && Handle != IntPtr.Zero)
-                    Libui.uiControlDestroy(this);
-                disposed = true;
-                base.Dispose(disposing);
-            }
-        }
     }
 }

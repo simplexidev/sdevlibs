@@ -1,14 +1,26 @@
 ﻿using System;
-using static LibUISharp.Native.NativeMethods;
+using System.Runtime.InteropServices;
+using LibUISharp.Internal;
 
 namespace LibUISharp.Drawing
 {
+    //TODO: ToString() overrides.
     /// <summary>
     /// Defines a text font.
     /// </summary>
+    [NativeType("uiFontDescriptor")]
+    [StructLayout(LayoutKind.Sequential)]
     public class Font : IEquatable<Font>
     {
-        internal Libui.uiFontDescriptor Native;
+#pragma warning disable IDE0032 // Use auto property
+#pragma warning disable IDE0044 // Add readonly modifier
+        private string family;
+        private double size;
+        private FontWeight weight;
+        private FontStyle style;
+        private FontStretch stretch;
+#pragma warning restore IDE0044 // Add readonly modifier
+#pragma warning restore IDE0032 // Use auto property
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Font"/> structure
@@ -18,39 +30,39 @@ namespace LibUISharp.Drawing
         /// <param name="weight">The font weight.</param>
         /// <param name="style">The style of the font.</param>
         /// <param name="stretch">The width of the font.</param>
-        public Font(string family, double size, FontWeight weight = FontWeight.Normal, FontStyle style = FontStyle.Normal, FontStretch stretch = FontStretch.Normal) => Native = new Libui.uiFontDescriptor()
+        public Font(string family, double size, FontWeight weight = FontWeight.Normal, FontStyle style = FontStyle.Normal, FontStretch stretch = FontStretch.Normal)
         {
-            Family = family,
-            Size = size,
-            Weight = weight,
-            Style = style,
-            Stretch = stretch
-        };
+            Family = family;
+            Size = size;
+            Weight = weight;
+            Style = style;
+            Stretch = stretch;
+        }
 
         /// <summary>
         /// Gets the font family of this <see cref="Font"/>.
         /// </summary>
-        public string Family => Native.Family;
+        public string Family { get; }
 
         /// <summary>
         /// Gets the size of this <see cref="Font"/>.
         /// </summary>
-        public double Size => Native.Size;
+        public double Size { get; }
 
         /// <summary>
         /// Gets the weight of this <see cref="Font"/>.
         /// </summary>
-        public FontWeight Weight => Native.Weight;
+        public FontWeight Weight { get; }
 
         /// <summary>
         /// Gets the style of this <see cref="Font"/>.
         /// </summary>
-        public FontStyle Style => Native.Style;
+        public FontStyle Style { get; }
 
         /// <summary>
         /// Gets the stretch (width) of this <see cref="Font"/>.
         /// </summary>
-        public FontStretch Stretch => Native.Stretch;
+        public FontStretch Stretch { get; }
 
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
@@ -75,13 +87,7 @@ namespace LibUISharp.Drawing
         /// Returns the hash code for this instance.
         /// </summary>
         /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
-        public override int GetHashCode() => unchecked(this.GetHashCode(Family, Size, Weight, Style, Stretch));
-
-        /// <summary>
-        /// Converts this font to a human-readable string.
-        /// </summary>
-        /// <returns>A string that represents this point.</returns>
-        public override string ToString() => $"[{Family}: {Size}]";
+        public override int GetHashCode() => unchecked(HashHelper.GenerateHash(Family, Size, Weight, Style, Stretch));
 
         /// <summary>
         /// Tests whether two specified <see cref="Font"/> structures are equivalent.

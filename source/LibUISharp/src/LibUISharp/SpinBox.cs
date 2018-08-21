@@ -1,32 +1,34 @@
 ﻿using System;
-using static LibUISharp.Native.NativeMethods;
+using LibUISharp.Internal;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a spin box (also known as an up-down control) that displays numeric values.
     /// </summary>
+    [NativeType("uiSpinbox")]
     public class SpinBox : Control
     {
-        private int value;
+        private int value = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpinBox"/> class with the specified minimum and maximum values.
         /// </summary>
         /// <param name="min">The minimum this <see cref="SpinBox"/> object's value can be.</param>
         /// <param name="max">The maximum this <see cref="SpinBox"/> object's value can be.</param>
-        public SpinBox(int min, int max)
+        public SpinBox(int min = 0, int max = 100, int startValue = 0)
         {
-            Handle = Libui.uiNewSpinbox(min, max);
+            Handle = NativeCalls.NewSlider(min, max);
             MinimumValue = min;
             MaximumValue = max;
+            Value = value;
             InitializeEvents();
         }
 
         /// <summary>
         /// Occurs when the <see cref="Value"/> property is changed.
         /// </summary>
-        public event EventHandler ValueChanged;
+        public event Action ValueChanged;
 
         /// <summary>
         /// Gets this <see cref="SpinBox"/> object's minimum value.
@@ -45,14 +47,14 @@ namespace LibUISharp
         {
             get
             {
-                value = Libui.uiSpinboxValue(this);
+                value = NativeCalls.SpinboxValue(Handle);
                 return value;
             }
             set
             {
                 if (this.value != value)
                 {
-                    Libui.uiSpinboxSetValue(this, value);
+                    NativeCalls.SpinboxSetValue(Handle, value);
                     this.value = value;
                 }
             }
@@ -61,12 +63,11 @@ namespace LibUISharp
         /// <summary>
         /// Called when the <see cref="ValueChanged"/> event is raised.
         /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
-        protected virtual void OnValueChanged(EventArgs e) => ValueChanged?.Invoke(this, e);
+        protected virtual void OnValueChanged() => ValueChanged?.Invoke();
 
         /// <summary>
         /// Initializes this UI component.
         /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiSpinboxOnChanged(this, (spinbox, data) => { OnValueChanged(EventArgs.Empty); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents() => NativeCalls.SpinboxOnChanged(Handle, (slider, data) => { OnValueChanged(); }, IntPtr.Zero);
     }
 }

@@ -1,12 +1,14 @@
-﻿using LibUISharp.Drawing;
-using System;
-using static LibUISharp.Native.NativeMethods;
+﻿using System;
+using LibUISharp.Drawing;
+using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
     /// <summary>
     /// A button that allows a user to select a font.
     /// </summary>
+    [NativeType("uiFontButton")]
     public class FontPicker : Control
     {
         private Font font;
@@ -17,15 +19,15 @@ namespace LibUISharp
         /// </summary>
         public FontPicker()
         {
-            Handle = Libui.uiNewFontButton();
+            Handle = NativeCalls.NewFontButton();
             InitializeEvents();
         }
 
         /// <summary>
         /// Occurs when the <see cref="Font"/> property is changed.
         /// </summary>
-        public event EventHandler FontChanged;
-        
+        public event Action FontChanged;
+
         /// <summary>
         /// Gets the currently selected font.
         /// </summary>
@@ -33,21 +35,25 @@ namespace LibUISharp
         {
             get
             {
-                Libui.uiFontButtonFont(this, out font.Native);
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.FontButtonFont(Handle, out font);
                 return font;
             }
         }
 
         /// <summary>
-        /// Initializes this UI component's events.
-        /// </summary>
-        protected sealed override void InitializeEvents() => Libui.uiFontButtonOnChanged(this, (button, data) => { OnFontChanged(EventArgs.Empty); }, IntPtr.Zero);
-
-        /// <summary>
         /// Raises the <see cref="FontChanged"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnFontChanged(EventArgs e) => FontChanged?.Invoke(this, e);
+        protected virtual void OnFontChanged() => FontChanged?.Invoke();
+
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
+        protected sealed override void InitializeEvents()
+        {
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.FontButtonOnChanged(Handle, (button, data) => { OnFontChanged(); }, IntPtr.Zero);
+        }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -55,19 +61,17 @@ namespace LibUISharp
         /// <param name="disposing">Whether or not this control is disposing.</param>
         protected override void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed) return;
+            if (disposing)
             {
-                if (disposing && Handle != IntPtr.Zero)
+                if (font != null)
                 {
-                    if (Font != null)
-                    {
-                        Libui.uiFreeFontButtonFont(font.Native);
-                        font = null;
-                    }
+                    NativeCalls.FreeFontButtonFont(font);
+                    font = null;
                 }
-                disposed = true;
-                base.Dispose(disposing);
             }
+            disposed = true;
+            base.Dispose(disposing);
         }
     }
 }

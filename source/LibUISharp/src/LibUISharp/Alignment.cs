@@ -1,9 +1,11 @@
-﻿namespace LibUISharp
+﻿using LibUISharp.Internal;
+
+namespace LibUISharp
 {
     /// <summary>
     /// Specifies how content is positioned in a container.
     /// </summary>
-    public enum Alignment
+    public enum Alignment : int
     {
         /// <summary>
         /// The contents fills the container.
@@ -66,7 +68,7 @@
         BottomLeft = 11,
 
         /// <summary>
-        /// The contents align toward the bottom-left of the container.
+        /// The contents align toward the bottom-center of the container.
         /// </summary>
         BottomCenter = 12,
 
@@ -74,5 +76,14 @@
         /// The contents align toward the bottom-right of the container.
         /// </summary>
         BottomRight = 13
+    }
+
+    [NativeType("uiAlign")]
+    internal enum NativeAlignment : long
+    {
+        Fill,
+        Start,
+        Center,
+        End
     }
 }

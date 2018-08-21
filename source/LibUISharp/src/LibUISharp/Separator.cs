@@ -1,11 +1,12 @@
 ﻿using System;
-using static LibUISharp.Native.NativeMethods;
+using LibUISharp.Internal;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a control that is used to separate user-interface (UI) content.
     /// </summary>
+    [NativeType("uiSeparator")]
     public class Separator : Control
     {
         /// <summary>
@@ -17,10 +18,10 @@ namespace LibUISharp
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    Handle = Libui.uiNewHorizontalSeparator();
+                    Handle = NativeCalls.NewHorizontalSeparator();
                     break;
                 case Orientation.Vertical:
-                    Handle = Libui.uiNewVerticalSeparator();
+                    Handle = NativeCalls.NewVerticalSeparator();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(orientation));

@@ -5,13 +5,15 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp", "source\LibUISharp\LibUISharp.csproj", "{F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Demos.ControlGallery", "demos\LibUISharp.Demos.ControlGallery\LibUISharp.Demos.ControlGallery.csproj", "{5C62872C-16E9-4997-97BF-E455E417089E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlGallery", "demos\ControlGallery\ControlGallery.csproj", "{5C62872C-16E9-4997-97BF-E455E417089E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Demos.SimpleWindow", "demos\LibUISharp.Demos.SimpleWindow\LibUISharp.Demos.SimpleWindow.csproj", "{B929A697-638D-447C-B413-7E61F6B5B1F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWindow", "demos\SimpleWindow\SimpleWindow.csproj", "{B929A697-638D-447C-B413-7E61F6B5B1F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Demos.Histogram", "demos\LibUISharp.Demos.Histogram\LibUISharp.Demos.Histogram.csproj", "{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Histogram", "demos\Histogram\Histogram.csproj", "{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Demos.SimpleWindowWithMenu", "demos\LibUISharp.Demos.SimpleWindowWithMenu\LibUISharp.Demos.SimpleWindowWithMenu.csproj", "{3930D1F8-F9FA-48A0-8759-C1B45728F924}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demos", "demos", "{5777C606-D412-44C5-9E0C-9661F97D54DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{57D7CD6F-A0DB-4FB5-B6AF-EC0B39B52C6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,13 +37,15 @@ Global
 		{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3930D1F8-F9FA-48A0-8759-C1B45728F924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3930D1F8-F9FA-48A0-8759-C1B45728F924}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3930D1F8-F9FA-48A0-8759-C1B45728F924}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3930D1F8-F9FA-48A0-8759-C1B45728F924}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F11F9B51-1A65-4D95-AAF2-5C1F61BE77BD} = {57D7CD6F-A0DB-4FB5-B6AF-EC0B39B52C6E}
+		{5C62872C-16E9-4997-97BF-E455E417089E} = {5777C606-D412-44C5-9E0C-9661F97D54DE}
+		{B929A697-638D-447C-B413-7E61F6B5B1F7} = {5777C606-D412-44C5-9E0C-9661F97D54DE}
+		{E5DC1587-E591-48BE-BB83-A0DA7A8BFA99} = {5777C606-D412-44C5-9E0C-9661F97D54DE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {546F6D43-5444-6678-6373-536C6E50726A}

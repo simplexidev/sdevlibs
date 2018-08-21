@@ -1,10 +1,11 @@
-﻿using static LibUISharp.Native.NativeMethods;
+﻿using LibUISharp.Internal;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Represents a standard label, which contains and shows text.
     /// </summary>
+    [NativeType("uiLabel")]
     public class Label : Control
     {
         private string text;
@@ -15,7 +16,7 @@ namespace LibUISharp
         /// <param name="text">The specified text for this <see cref="Label"/>.</param>
         public Label(string text)
         {
-            Handle = Libui.uiNewLabel(text);
+            Handle = NativeCalls.NewLabel(text);
             this.text = text;
         }
 
@@ -26,14 +27,14 @@ namespace LibUISharp
         {
             get
             {
-                text = Libui.uiLabelText(this);
+                text = NativeCalls.LabelText(Handle);
                 return text;
             }
             set
             {
                 if (text != value)
                 {
-                    Libui.uiLabelSetText(this, value);
+                    NativeCalls.LabelSetText(Handle, value);
                     text = value;
                 }
             }
