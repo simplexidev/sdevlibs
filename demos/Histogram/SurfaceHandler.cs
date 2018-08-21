@@ -4,7 +4,7 @@ using LibUISharp.Drawing;
 
 namespace Histogram
 {
-    public class SurfaceHandler : SurfaceEventHandler
+    public class HistogramSurfaceHandler : SurfaceHandler
     {
         private const int pointRadius = 5;
         private const int xoffLeft = 20;
@@ -26,7 +26,7 @@ namespace Histogram
 
         private int _currentPoint = -1;
 
-        public SurfaceHandler(ColorPicker colorPicker, List<SpinBox> spinBoxes)
+        public HistogramSurfaceHandler(ColorPicker colorPicker, List<SpinBox> spinBoxes)
         {
             this.colorPicker = colorPicker;
             spinBoxList = spinBoxes;

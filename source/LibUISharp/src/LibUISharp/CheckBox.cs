@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -10,16 +11,18 @@ namespace LibUISharp
     public class CheckBox : Control
     {
         private string text;
-        private bool @checked;
+        private bool @checked = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckBox"/> class with the specified text.
         /// </summary>
         /// <param name="text">The text specified by the <see cref="CheckBox"/>.</param>
-        public CheckBox(string text)
+        /// <param name="checked">The state of the <see cref="CheckBox"/>.</param>
+        public CheckBox(string text, bool @checked = false)
         {
             Handle = NativeCalls.NewCheckbox(text);
-            this.text = text;
+            Text = text;
+            Checked = @checked;
             InitializeEvents();
         }
 
@@ -36,16 +39,16 @@ namespace LibUISharp
         {
             get
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 text = NativeCalls.CheckboxText(Handle);
                 return text;
             }
             set
             {
-                if (text != value)
-                {
-                    NativeCalls.CheckboxSetText(Handle, value);
-                    text = value;
-                }
+                if (text == value) return;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.CheckboxSetText(Handle, value);
+                text = value;
             }
         }
 
@@ -56,16 +59,16 @@ namespace LibUISharp
         {
             get
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 @checked = NativeCalls.CheckboxChecked(Handle);
                 return @checked;
             }
             set
             {
-                if (@checked != value)
-                {
-                    NativeCalls.CheckboxSetChecked(Handle, value);
-                    @checked = value;
-                }
+                if (@checked == value) return;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.CheckboxSetChecked(Handle, value);
+                @checked = value;
             }
         }
 
@@ -77,6 +80,10 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.CheckboxOnToggled(Handle, (checkbox, data) => { OnToggled(); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents()
+        {
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.CheckboxOnToggled(Handle, (checkbox, data) => { OnToggled(); }, IntPtr.Zero);
+        }
     }
 }

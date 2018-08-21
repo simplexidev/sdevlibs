@@ -4,25 +4,24 @@ namespace ControlGallery
 {
     public sealed class BasicControlsTab : TabPage
     {
-        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { IsPadded = true };
-        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { IsPadded = true };
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical, true);
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal, true);
         private Button button = new Button("Button");
-        private CheckBox checkBox = new CheckBox("CheckBox");
+        private CheckBox checkBox = new CheckBox("CheckBox", true);
         private Label label = new Label("This is a Label. Right now, labels can only span one line.");
         private Separator hSeparator = new Separator(Orientation.Horizontal);
-        private GroupContainer groupContainer = new GroupContainer("Entries") { IsMargined = true };
-        private FormContainer form = new FormContainer { IsPadded = true };
+        private GroupContainer groupContainer = new GroupContainer("Entries", true);
+        private FormContainer form = new FormContainer(true);
         private TextBox textBox = new TextBox();
         private PasswordBox passwordBox = new PasswordBox();
         private SearchBox searchBox = new SearchBox();
         private TextBlock textBlock = new TextBlock();
-        private TextBlock noWordWrapTextBlock = new TextBlock(false);
+        private TextBlock noWordWrapTextBlock = new TextBlock(null, false);
 
-        public BasicControlsTab() : base("Basic Controls") => InitializeComponent();
+        public BasicControlsTab() : base("Basic Controls", true) => InitializeComponent();
 
         protected override void InitializeComponent()
         {
-            IsMargined = true;
             Child = vPanel;
 
             vPanel.Children.Add(hPanel);
@@ -42,24 +41,23 @@ namespace ControlGallery
 
     public sealed class NumbersTab : TabPage
     {
-        private StackContainer hPanel = new StackContainer(Orientation.Horizontal) { IsPadded = true };
-        private GroupContainer groupContainer = new GroupContainer("Numbers") { IsMargined = true };
-        private StackContainer vPanel = new StackContainer(Orientation.Vertical) { IsPadded = true };
+        private StackContainer hPanel = new StackContainer(Orientation.Horizontal, true);
+        private GroupContainer groupContainer = new GroupContainer("Numbers", true);
+        private StackContainer vPanel = new StackContainer(Orientation.Vertical, true);
         private SpinBox spinBox = new SpinBox(0, 100);
         private Slider slider = new Slider(0, 100);
         private ProgressBar progressBar = new ProgressBar();
-        private ProgressBar iProgressBar = new ProgressBar() { Value = -1 };
-        private GroupContainer groupBox2 = new GroupContainer("Lists") { IsMargined = true };
-        private StackContainer vPanel2 = new StackContainer(Orientation.Vertical) { IsPadded = true };
-        private ComboBox comboBox = new ComboBox();
-        private EditableComboBox editableComboBox = new EditableComboBox();
-        private RadioButtonList radioButtonList = new RadioButtonList();
+        private ProgressBar iProgressBar = new ProgressBar(-1);
+        private GroupContainer groupBox2 = new GroupContainer("Lists", true);
+        private StackContainer vPanel2 = new StackContainer(Orientation.Vertical, true);
+        private ComboBox comboBox = new ComboBox(new[] { "ComboBoxItem1", "ComboBoxItem2", "ComboBoxItem3" });
+        private EditableComboBox editableComboBox = new EditableComboBox(new[] { "EditableItem1", "EditableItem2", "EditableItem3" });
+        private RadioButtonList radioButtonList = new RadioButtonList(new[] {"RadioButton1", "RadioButton2", "RadioButton3"});
 
-        public NumbersTab() : base("Numbers and Lists") => InitializeComponent();
+        public NumbersTab() : base("Numbers and Lists", true) => InitializeComponent();
 
         protected override void InitializeComponent()
         {
-            IsMargined = true;
             Child = hPanel;
 
             hPanel.Children.Add(groupContainer, true);
@@ -87,10 +85,6 @@ namespace ControlGallery
             hPanel.Children.Add(groupBox2, true);
 
             groupBox2.Child = vPanel2;
-
-            comboBox.Add("Combobox Item 1", "Combobox Item 2", "Combobox Item 3");
-            editableComboBox.Add("Editable Item 1", "Editable Item 2", "Editable Item 3");
-            radioButtonList.Add("Radio Button 1", "Radio Button 2", "Radio Button 3");
 
             vPanel2.Children.Add(comboBox);
             vPanel2.Children.Add(editableComboBox);
@@ -120,11 +114,10 @@ namespace ControlGallery
         private Button buttonMessage = new Button("Message Box");
         private Button buttonMessageErr = new Button("Message Box (Error)");
 
-        public DataChoosersTab() : base("Data Choosers") => InitializeComponent();
+        public DataChoosersTab() : base("Data Choosers", true) => InitializeComponent();
 
         protected override void InitializeComponent()
         {
-            IsMargined = true;
             Child = hPanel;
 
             hPanel.Children.Add(vPanel);

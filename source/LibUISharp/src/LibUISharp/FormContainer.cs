@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -9,12 +10,16 @@ namespace LibUISharp
     [NativeType("uiForm")]
     public class FormContainer : MultiContainer<FormContainer, FormContainer.ControlList, Control>
     {
-        private bool isPadded;
+        private bool isPadded = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormContainer"/> class.
         /// </summary>
-        public FormContainer() => Handle = NativeCalls.NewForm();
+        public FormContainer(bool isPadded = false)
+        {
+            Handle = NativeCalls.NewForm();
+            IsPadded = isPadded;
+        }
 
         /// <summary>
         /// Gets or sets a value indiating whether this <see cref="FormContainer"/> has interior padding or not.
@@ -23,6 +28,7 @@ namespace LibUISharp
         {
             get
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 isPadded = NativeCalls.FormPadded(Handle);
                 return isPadded;
             }

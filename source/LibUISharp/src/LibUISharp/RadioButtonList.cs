@@ -9,14 +9,16 @@ namespace LibUISharp
     [NativeType("uiRadioButtons")]
     public class RadioButtonList : Control
     {
-        private int index;
+        private int index = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RadioButtonList"/> class.
         /// </summary>
-        public RadioButtonList()
+        public RadioButtonList(string[] items = null, int startIndex = 0)
         {
             Handle = NativeCalls.NewRadioButtons();
+            Add(items);
+            SelectedIndex = startIndex;
             InitializeEvents();
         }
 

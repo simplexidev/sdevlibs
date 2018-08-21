@@ -16,13 +16,15 @@ namespace LibUISharp
         /// Initializes a new instance of the <see cref="TextBlock"/> class.
         /// </summary>
         /// <param name="wordWrap">Whether or not the lines of text are wrapped to fit within the <see cref="TextBlock"/> sides.</param>
-        public TextBlock(bool wordWrap = true)
+        public TextBlock(string[] text = null, bool wordWrap = true)
         {
             if (wordWrap)
                 Handle = NativeCalls.NewMultilineEntry();
             else
                 Handle = NativeCalls.NewNonWrappingMultilineEntry();
             WordWrap = wordWrap;
+            if (text != null && text.Length > 0)
+                Append(text);
             InitializeEvents();
         }
 

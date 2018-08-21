@@ -150,27 +150,27 @@ namespace LibUISharp.Drawing
         private IntPtr dragBroken;
         private IntPtr keyEvent;
 
-        public Action<IntPtr, IntPtr, DrawEventArgs> Draw
+        public NativeCalls.AreaHandlerDrawCallback Draw
         {
             set => draw = Marshal.GetFunctionPointerForDelegate(value);
         }
 
-        public Action<IntPtr, IntPtr, MouseEventArgs> MouseEvent
+        public NativeCalls.AreaHandlerMouseEventCallback MouseEvent
         {
             set => mouseEvent = Marshal.GetFunctionPointerForDelegate(value);
         }
 
-        public Action< IntPtr, IntPtr, bool> MouseCrossed
+        public NativeCalls.AreaHandlerMouseCrossedCallback MouseCrossed
         {
             set => mouseCrossed = Marshal.GetFunctionPointerForDelegate(value);
         }
 
-        public Action<IntPtr, IntPtr> DragBroken
+        public NativeCalls.AreaHandlerDragBrokenCallback DragBroken
         {
             set => dragBroken = Marshal.GetFunctionPointerForDelegate(value);
         }
 
-        public Func<IntPtr, IntPtr, KeyEventArgs, bool> KeyEvent
+        public NativeCalls.AreaHandlerKeyEventCallback KeyEvent
         {
             set => keyEvent = Marshal.GetFunctionPointerForDelegate(value);
         }

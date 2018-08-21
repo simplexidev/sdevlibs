@@ -8,12 +8,17 @@ namespace LibUISharp
     [NativeType("uiProgressBar")]
     public class ProgressBar : Control
     {
-        private int value;
+        private int value = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgressBar"/> class.
         /// </summary>
-        public ProgressBar() => Handle = NativeCalls.NewProgressBar();
+        public ProgressBar(int startValue = 0)
+        {
+            Handle = NativeCalls.NewProgressBar();
+            if (value != startValue)
+                Value = value;
+        }
 
         /// <summary>
         /// Gets or sets the current value of this <see cref="ProgressBar"/>.

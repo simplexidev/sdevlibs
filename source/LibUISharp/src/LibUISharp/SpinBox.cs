@@ -9,18 +9,19 @@ namespace LibUISharp
     [NativeType("uiSpinbox")]
     public class SpinBox : Control
     {
-        private int value;
+        private int value = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpinBox"/> class with the specified minimum and maximum values.
         /// </summary>
         /// <param name="min">The minimum this <see cref="SpinBox"/> object's value can be.</param>
         /// <param name="max">The maximum this <see cref="SpinBox"/> object's value can be.</param>
-        public SpinBox(int min = 0, int max = 100)
+        public SpinBox(int min = 0, int max = 100, int startValue = 0)
         {
-            Handle = NativeCalls.NewSpinbox(min, max);
+            Handle = NativeCalls.NewSlider(min, max);
             MinimumValue = min;
             MaximumValue = max;
+            Value = value;
             InitializeEvents();
         }
 

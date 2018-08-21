@@ -62,9 +62,12 @@ namespace LibUISharp
             internal set
             {
                 handle = value;
-                componentCache.Add(handle, this);
+                if (!componentCache.ContainsKey(value))
+                    componentCache.Add(handle, this);
             }
         }
+
+        internal bool IsInvalid => Handle.IsInvalid || Handle.IsClosed;
 
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
@@ -106,7 +109,7 @@ namespace LibUISharp
             if (disposed) return;
             if (disposing)
             {
-                if (handle != null)
+                if (!IsInvalid)
                 {
                     componentCache.Remove(handle);
                     handle.Dispose();

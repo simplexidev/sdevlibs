@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -10,7 +11,7 @@ namespace LibUISharp
     [NativeType("uiDateTimePicker")]
     public abstract class DateTimePickerBase : Control
     {
-        private DateTime dateTime;
+        private DateTime? dateTime = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimePickerBase"/> class.
@@ -29,24 +30,28 @@ namespace LibUISharp
         {
             get
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 NativeCalls.DateTimePickerTime(Handle, out UIDateTime time);
                 dateTime = UIDateTime.ToDateTime(time);
-                return dateTime;
+                return (DateTime)dateTime;
             }
             set
             {
-                if (dateTime != value)
-                {
-                    NativeCalls.DateTimePickerSetTime(Handle, UIDateTime.FromDateTime(value));
-                    dateTime = value;
-                }
+                if (dateTime == value) return;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.DateTimePickerSetTime(Handle, UIDateTime.FromDateTime(value));
+                dateTime = value;
             }
         }
 
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.DateTimePickerOnChanged(Handle, (d, data) => { OnDateTimeChanged(); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents()
+        {
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.DateTimePickerOnChanged(Handle, (d, data) => { OnDateTimeChanged(); }, IntPtr.Zero);
+        }
 
         /// <summary>
         /// Called when the <see cref="DateTimeChanged"/> event is raised.
@@ -62,16 +67,24 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="DatePicker"/> class.
         /// </summary>
-        public DatePicker() : base()
+        public DatePicker(int? year = null, int? month = null, int? day = null) : base()
         {
             Handle = NativeCalls.NewDatePicker();
+            DateTime dt = DateTime.Now;
+            if (year != null)
+                dt = new DateTime((int)year, dt.Month, dt.Day);
+            if (month != null)
+                dt = new DateTime(dt.Year, (int)month, dt.Day);
+            if (day != null)
+                dt = new DateTime(dt.Year, dt.Month, (int)day);
+            DateTime = dt;
             InitializeEvents();
         }
 
         /// <summary>
-        /// Gets the day component from <see cref="DateTime"/>.
+        /// Gets the year component from <see cref="DateTime"/>.
         /// </summary>
-        public int Day => DateTime.Day;
+        public int Year => DateTime.Year;
 
         /// <summary>
         /// Gets the month component from <see cref="DateTime"/>.
@@ -79,9 +92,9 @@ namespace LibUISharp
         public int Month => DateTime.Month;
 
         /// <summary>
-        /// Gets the year component from <see cref="DateTime"/>.
+        /// Gets the day component from <see cref="DateTime"/>.
         /// </summary>
-        public int Year => DateTime.Year;
+        public int Day => DateTime.Day;
     }
 
     /// <summary>
@@ -92,9 +105,17 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="TimePicker"/> class.
         /// </summary>
-        public TimePicker() : base()
+        public TimePicker(int? hour = null, int? minute = null, int? second = null) : base()
         {
             Handle = NativeCalls.NewTimePicker();
+            DateTime dt = DateTime.Now;
+            if (hour != null)
+                dt = new DateTime(dt.Year, dt.Month, dt.Day, (int)hour, dt.Minute, dt.Second);
+            if (minute != null)
+                dt = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, (int)minute, dt.Second);
+            if (second != null)
+                dt = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, (int)second);
+            DateTime = dt;
             InitializeEvents();
         }
 
@@ -122,16 +143,30 @@ namespace LibUISharp
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimePicker"/> class.
         /// </summary>
-        public DateTimePicker() : base()
+        public DateTimePicker(int? year = null, int? month = null, int? day = null, int? hour = null, int? minute = null, int? second = null) : base()
         {
             Handle = NativeCalls.NewDateTimePicker();
+            DateTime dt = DateTime.Now;
+            if (year != null)
+                dt = new DateTime((int)year, dt.Month, dt.Day);
+            if (month != null)
+                dt = new DateTime(dt.Year, (int)month, dt.Day);
+            if (day != null)
+                dt = new DateTime(dt.Year, dt.Month, (int)day);
+            if (hour != null)
+                dt = new DateTime(dt.Year, dt.Month, dt.Day, (int)hour, dt.Minute, dt.Second);
+            if (minute != null)
+                dt = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, (int)minute, dt.Second);
+            if (second != null)
+                dt = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, (int)second);
+            DateTime = dt;
             InitializeEvents();
         }
 
         /// <summary>
-        /// Gets the day component from <see cref="DateTime"/>.
+        /// Gets the year component from <see cref="DateTime"/>.
         /// </summary>
-        public int Day => DateTime.Day;
+        public int Year => DateTime.Year;
 
         /// <summary>
         /// Gets the month component from <see cref="DateTime"/>.
@@ -139,9 +174,9 @@ namespace LibUISharp
         public int Month => DateTime.Month;
 
         /// <summary>
-        /// Gets the year component from <see cref="DateTime"/>.
+        /// Gets the day component from <see cref="DateTime"/>.
         /// </summary>
-        public int Year => DateTime.Year;
+        public int Day => DateTime.Day;
 
         /// <summary>
         /// Gets the hour component from <see cref="DateTime"/>.

@@ -202,6 +202,11 @@ namespace LibUISharp.Internal
         internal static void DrawMatrixTransformPoint(Matrix matrix, out double x, out double y) => Call<uiDrawMatrixTransformPoint>()(matrix, out x, out y);
         internal static void DrawMatrixTransformSize(Matrix matrix, out double x, out double y) => Call<uiDrawMatrixTransformSize>()(matrix, out x, out y);
 
+        internal static void DrawTransform(SafeControlHandle context, Matrix matrix) => Call<uiDrawTransform>()(context, matrix);
+        internal static void DrawClip(SafeControlHandle context, SafePathHandle path) => Call<uiDrawClip>()(context, path);
+        internal static void DrawSave(SafeControlHandle context) => Call<uiDrawSave>()(context);
+        internal static void DrawRestore(SafeControlHandle context) => Call<uiDrawRestore>()(context);
+
         //TODO: All missing functions.
 
         internal static void FontButtonFont(SafeControlHandle b, out Font desc) => Call<uiFontButtonFont>()(b, out desc);

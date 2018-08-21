@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using LibUISharp.Internal;
 
 namespace LibUISharp
@@ -9,18 +10,21 @@ namespace LibUISharp
     [NativeType("uiSlider")]
     public class Slider : Control
     {
-        private int value;
+        private int value = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Slider"/> class with the specified minimum and maximum values.
         /// </summary>
         /// <param name="min">The minimum this <see cref="Slider"/> object's value can be.</param>
         /// <param name="max">The maximum this <see cref="Slider"/> object's value can be.</param>
-        public Slider(int min = 0, int max = 100)
+        public Slider(int min = 0, int max = 100, int startValue = 0)
         {
             Handle = NativeCalls.NewSlider(min, max);
+            Thread.Sleep(100);
             MinimumValue = min;
             MaximumValue = max;
+            if (value != startValue)
+                Value = startValue;
             InitializeEvents();
         }
 

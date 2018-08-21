@@ -37,7 +37,11 @@ namespace LibUISharp
         /// </summary>
         public virtual bool Enabled
         {
-            get => NativeCalls.ControlEnabled(Handle);
+            get
+            {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                return NativeCalls.ControlEnabled(Handle);
+            }
             set
             {
                 if (enabled == value) return;
@@ -51,7 +55,11 @@ namespace LibUISharp
         /// </summary>
         public virtual bool Visible
         {
-            get => NativeCalls.ControlVisible(Handle);
+            get
+            {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                return NativeCalls.ControlVisible(Handle);
+            }
             set
             {
                 if (visible == value) return;
@@ -67,9 +75,8 @@ namespace LibUISharp
         {
             get
             {
-                if (!Handle.IsInvalid)
-                    return NativeCalls.ControlTopLevel(Handle);
-                return false;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                return NativeCalls.ControlTopLevel(Handle);
             }
         }
 
@@ -80,6 +87,7 @@ namespace LibUISharp
         {
             if (!enabled)
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 NativeCalls.ControlEnable(Handle);
                 enabled = true;
             }
@@ -92,6 +100,7 @@ namespace LibUISharp
         {
             if (enabled)
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 NativeCalls.ControlDisable(Handle);
                 enabled = false;
             }
@@ -104,6 +113,7 @@ namespace LibUISharp
         {
             if (!visible)
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 NativeCalls.ControlShow(Handle);
                 visible = true;
             }
@@ -116,6 +126,7 @@ namespace LibUISharp
         {
             if (visible)
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 NativeCalls.ControlHide(Handle);
                 visible = false;
             }

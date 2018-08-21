@@ -10,13 +10,19 @@ namespace LibUISharp
     {
         private Control child;
         private string title;
-        private bool isMargined;
+        private bool isMargined = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupContainer"/> class with the specified title.
         /// </summary>
         /// <param name="title">The title of this <see cref="GroupContainer"/>.</param>
-        public GroupContainer(string title) => Handle = NativeCalls.NewGroup(title);
+        public GroupContainer(string title, bool isMargined = false)
+        {
+            Handle = NativeCalls.NewGroup(title);
+            this.title = title;
+            IsMargined = isMargined;
+        }
+
 
         /// <summary>
         /// Gets or sets the title for this <see cref="GroupContainer"/> control.

@@ -1,6 +1,7 @@
 ﻿using System;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -34,20 +35,25 @@ namespace LibUISharp
         {
             get
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 NativeCalls.FontButtonFont(Handle, out font);
                 return font;
             }
         }
 
         /// <summary>
-        /// Initializes this UI component's events.
-        /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.FontButtonOnChanged(Handle, (button, data) => { OnFontChanged(); }, IntPtr.Zero);
-
-        /// <summary>
         /// Raises the <see cref="FontChanged"/> event.
         /// </summary>
         protected virtual void OnFontChanged() => FontChanged?.Invoke();
+
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
+        protected sealed override void InitializeEvents()
+        {
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.FontButtonOnChanged(Handle, (button, data) => { OnFontChanged(); }, IntPtr.Zero);
+        }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

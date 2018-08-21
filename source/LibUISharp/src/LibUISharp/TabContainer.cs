@@ -71,13 +71,17 @@ namespace LibUISharp
     {
         private Control child;
         private bool initialized = false;
-        private bool isMargined;
+        private bool isMargined = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabPage"/> class with the specified name.
         /// </summary>
         /// <param name="name">The name for this <see cref="TabPage"/>.</param>
-        public TabPage(string name) => Name = name;
+        public TabPage(string name, bool isMArgined = false)
+        {
+            Name = name;
+            IsMargined = isMargined;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabPage"/> class with the specified name and child <see cref="Control"/>.
@@ -103,10 +107,7 @@ namespace LibUISharp
             set
             {
                 if (child != value)
-                {
                     child = value;
-                    Handle = child.Handle;
-                }
             }
         }
 

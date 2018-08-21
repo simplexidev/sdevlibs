@@ -15,7 +15,7 @@ namespace LibUISharp
         /// Initializes a new instance of the <see cref="StackContainer"/> class with the specified orientation.
         /// </summary>
         /// <param name="orientation">The orientation controls are placed in the <see cref="StackContainer"/>.</param>
-        public StackContainer(Orientation orientation)
+        public StackContainer(Orientation orientation, bool isPadded = false)
         {
             switch (orientation)
             {
@@ -29,6 +29,7 @@ namespace LibUISharp
                     throw new ArgumentOutOfRangeException(nameof(orientation));
             }
             Orientation = orientation;
+            IsPadded = isPadded;
         }
 
         /// <summary>

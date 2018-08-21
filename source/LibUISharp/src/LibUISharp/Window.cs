@@ -12,7 +12,7 @@ namespace LibUISharp
     public partial class Window : SingleContainer<Window, Control>
     {
         private Control child;
-        private bool isMargined, fullscreen, borderless;
+        private bool isMargined, fullscreen, borderless = false;
         private Size size;
         private string title;
 
@@ -24,7 +24,7 @@ namespace LibUISharp
         /// <param name="width">The width of the window.</param>
         /// <param name="height">The height of the window.</param>
         /// <param name="hasMenu">Whether or not the window will have a menu.</param>
-        public Window(string title = "", int width = 600, int height = 400, bool hasMenu = false)
+        public Window(string title = "", int width = 600, int height = 400, bool hasMenu = false, bool isMargined = false, bool fullscreen = false, bool borderless = false)
         {
             Handle = NativeCalls.NewWindow(title, width, height, hasMenu);
 
@@ -32,7 +32,9 @@ namespace LibUISharp
             Console.Title = title;
             size = new Size(width, height);
             HasMenu = hasMenu;
-
+            IsMargined = isMargined;
+            Fullscreen = fullscreen;
+            Borderless = borderless;
             InitializeEvents();
         }
 
@@ -43,7 +45,7 @@ namespace LibUISharp
         /// <param name="title">The title at the top of the window.</param>
         /// <param name="size">The size of the window.</param>
         /// <param name="hasMenu">Whether or not the window will have a menu.</param>
-        public Window(string title, Size size, bool hasMenu = false) : this(title, size.Width, size.Height, hasMenu) { }
+        public Window(string title, Size size, bool hasMenu = false, bool isMargined = false, bool fullscreen = false, bool borderless = false) : this(title, size.Width, size.Height, hasMenu, isMargined, fullscreen, borderless) { }
 
         /// <summary>
         /// Occurs when the window is closing.

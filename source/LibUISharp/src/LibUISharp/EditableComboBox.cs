@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -9,14 +10,18 @@ namespace LibUISharp
     [NativeType("uiEditableCombobox")]
     public class EditableComboBox : Control
     {
-        private string text;
+        private string text = null;
 
         /// <summary>
         /// Initalizes a new instance of the <see cref="ComboBox"/> class.
         /// </summary>
-        public EditableComboBox() : base()
+        public EditableComboBox(string[] items = null, string startText = null) : base()
         {
             Handle = NativeCalls.NewEditableCombobox();
+            if (items != null && items.Length > 0)
+                Add(items);
+            if (startText == null)
+                Text = startText;
             InitializeEvents();
         }
 
@@ -32,16 +37,16 @@ namespace LibUISharp
         {
             get
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 text = NativeCalls.EditableComboboxText(Handle);
                 return text;
             }
             set
             {
-                if (text != value)
-                {
-                    NativeCalls.EditableComboboxSetText(Handle, value);
-                    text = value;
-                }
+                if (text == value) return;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.EditableComboboxSetText(Handle, value);
+                text = value;
             }
         }
 
@@ -71,6 +76,10 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.EditableComboboxOnChanged(Handle, (box, data) => { OnTextChanged(); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents()
+        {
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.EditableComboboxOnChanged(Handle, (box, data) => { OnTextChanged(); }, IntPtr.Zero);
+        }
     }
 }

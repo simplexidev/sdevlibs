@@ -32,7 +32,7 @@ namespace LibUISharp.Drawing
         /// <param name="path">The path to draw.</param>
         /// <param name="brush">The brush to use to draw the path.</param>
         public void Fill(Path path, Brush brush) => NativeCalls.DrawFill(Surface.Handle, path.Handle, ref brush);
-        /*
+
         /// <summary>
         /// Clips a <see cref="Path"/> from this <see cref="Context"/>.
         /// </summary>
@@ -55,6 +55,7 @@ namespace LibUISharp.Drawing
         /// <param name="matrix"></param>
         public void Transform(Matrix matrix) => NativeCalls.DrawTransform(Surface.Handle, matrix);
 
+        /*
         /// <summary>
         /// Draws a <see cref="TextLayout"/> at the given location in this <see cref="Context"/>.
         /// </summary>

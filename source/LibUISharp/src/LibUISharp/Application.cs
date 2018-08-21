@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -51,6 +52,7 @@ namespace LibUISharp
         /// <returns>0 if successful, else returns -1.</returns>
         public int Run(Window window)
         {
+            if (window.IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(window);
             MainWindow = window;
             return Run(() => { window.Show(); });
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -9,14 +10,17 @@ namespace LibUISharp
     [NativeType("uiCombobox")]
     public class ComboBox : Control
     {
-        private int index = -1;
+        private int index = 0;
 
         /// <summary>
         /// Initalizes a new instance of the <see cref="ComboBox"/> class.
         /// </summary>
-        public ComboBox()
+        public ComboBox(string[] items = null, int startIndex = 0)
         {
             Handle = NativeCalls.NewCombobox();
+            if (items != null && items.Length > 0)
+                Add(items);
+            SelectedIndex = startIndex;
             InitializeEvents();
         }
 
@@ -32,16 +36,16 @@ namespace LibUISharp
         {
             get
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 index = NativeCalls.ComboboxSelected(Handle);
                 return index;
             }
             set
             {
-                if (index != value)
-                {
-                    NativeCalls.ComboboxSetSelected(Handle, value);
-                    index = value;
-                }
+                if (index == value) return;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.ComboboxSetSelected(Handle, value);
+                index = value;
             }
         }
 
@@ -49,7 +53,11 @@ namespace LibUISharp
         /// Adds a drop-down item to this <see cref="ComboBox"/>.
         /// </summary>
         /// <param name="item">The item to add to this control.</param>
-        public void Add(string item) => NativeCalls.ComboboxAppend(Handle, item);
+        public void Add(string item)
+        {
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.ComboboxAppend(Handle, item);
+        }
 
         /// <summary>
         /// Adds drop-down items to this <see cref="ComboBox"/>.
@@ -71,6 +79,11 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.ComboboxOnSelected(Handle, (c, data) => { OnSelected(); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents()
+        {
+
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.ComboboxOnSelected(Handle, (c, data) => { OnSelected(); }, IntPtr.Zero);
+        }
     }
 }

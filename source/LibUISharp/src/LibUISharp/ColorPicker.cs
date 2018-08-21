@@ -1,6 +1,7 @@
 ﻿using System;
 using LibUISharp.Drawing;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -10,15 +11,17 @@ namespace LibUISharp
     [NativeType("uiColorButton")]
     public class ColorPicker : Control
     {
-        private Color color;
+        private Color? color = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorPicker"/> class.
         /// </summary>
-        public ColorPicker()
+        /// <param name="color">The color of the <see cref="ColorPicker"/>.</param>
+        public ColorPicker(Color? color = null)
         {
             Handle = NativeCalls.NewColorButton();
-            color = Color.Empty;
+            if (color != null)
+                Color = (Color)color;
             InitializeEvents();
         }
 
@@ -34,28 +37,31 @@ namespace LibUISharp
         {
             get
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 NativeCalls.ColorButtonColor(Handle, out double red, out double green, out double blue, out double alpha);
-                color = new Color(red, green, blue, alpha);
-                return color;
+                return new Color(red, green, blue, alpha);
             }
             set
             {
-                if (color != value)
-                {
-                    NativeCalls.ColorButtonSetColor(Handle, value.R, value.G, value.B, value.A);
-                    color = value;
-                }
+                if (color == value) return;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.ColorButtonSetColor(Handle, value.R, value.G, value.B, value.A);
+                color = value;
             }
         }
-
-        /// <summary>
-        /// Initializes this UI component's events.
-        /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.ColorButtonOnChanged(Handle, (button, data) => { OnColorChanged(); }, IntPtr.Zero);
 
         /// <summary>
         /// Raises the <see cref="ColorChanged"/> event.
         /// </summary>
         protected virtual void OnColorChanged() => ColorChanged?.Invoke();
+
+        /// <summary>
+        /// Initializes this UI component's events.
+        /// </summary>
+        protected sealed override void InitializeEvents()
+        {
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.ColorButtonOnChanged(Handle, (button, data) => { OnColorChanged(); }, IntPtr.Zero);
+        }
     }
 }

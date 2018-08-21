@@ -43,26 +43,26 @@ namespace LibUISharp
     /// The exception that is thrown when a <see cref="UIComponent{T}"/> object's handle is null or invalid.
     /// </summary>
     [Serializable]
-    public class UIHandleInvalidException<T> : UIException
+    public class UIComponentInvalidHandleException<T> : UIException
         where T : SafeHandleZeroIsInvalid
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UIHandleInvalidException"/> class.
         /// </summary>
-        public UIHandleInvalidException() { }
+        public UIComponentInvalidHandleException() { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UIHandleInvalidException"/> class with the specified error message.
         /// </summary>
         /// <param name="component">The component whose handle is invalid.</param>
-        public UIHandleInvalidException(UIComponent<T> component) : base() => Component = component;
+        public UIComponentInvalidHandleException(UIComponent<T> component) : base() => Component = component;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UIHandleInvalidException"/> class with the specified error message.
         /// </summary>
         /// <param name="component">The component whose handle is invalid.</param>
         /// <param name="message">The error message that specifies the reason for the exception.</param>
-        public UIHandleInvalidException(UIComponent<T> component, string message) : base(message) => Component = component;
+        public UIComponentInvalidHandleException(UIComponent<T> component, string message) : base(message) => Component = component;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UIHandleInvalidException"/> class with the specified error message
@@ -71,14 +71,14 @@ namespace LibUISharp
         /// <param name="component">The component whose handle is invalid.</param>
         /// <param name="message">The error message that specifies the reason for the exception.</param>
         /// <param name="inner">The exception that is the cause of the current exception.</param>
-        public UIHandleInvalidException(UIComponent<T> component, string message, Exception inner) : base(message, inner) => Component = component;
+        public UIComponentInvalidHandleException(UIComponent<T> component, string message, Exception inner) : base(message, inner) => Component = component;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UIHandleInvalidException"/> class with serialized data.
         /// </summary>
         /// <param name="serializationInfo">The <see cref="SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
         /// <param name="streamingContext">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
-        protected UIHandleInvalidException(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext) { }
+        protected UIComponentInvalidHandleException(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext) { }
 
         public UIComponent<T> Component { get; }
 

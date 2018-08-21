@@ -1,5 +1,6 @@
 ﻿using System;
 using LibUISharp.Internal;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -34,16 +35,16 @@ namespace LibUISharp
         {
             get
             {
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
                 text = NativeCalls.ButtonText(Handle);
                 return text;
             }
             set
             {
-                if (text != value)
-                {
-                    NativeCalls.ButtonSetText(Handle, value);
-                    text = value;
-                }
+                if (text == value) return;
+                if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+                NativeCalls.ButtonSetText(Handle, value);
+                text = value;
             }
         }
 
@@ -55,6 +56,10 @@ namespace LibUISharp
         /// <summary>
         /// Initializes this UI component's events.
         /// </summary>
-        protected sealed override void InitializeEvents() => NativeCalls.ButtonOnClicked(Handle, (button, data) => { OnClick(); }, IntPtr.Zero);
+        protected sealed override void InitializeEvents()
+        {
+            if (IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(this);
+            NativeCalls.ButtonOnClicked(Handle, (button, data) => { OnClick(); }, IntPtr.Zero);
+        }
     }
 }

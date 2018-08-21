@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using LibUISharp.SafeHandles;
 
 namespace LibUISharp
 {
@@ -154,7 +155,8 @@ namespace LibUISharp
             public virtual void Add(TChild child)
             {
                 if (child == null) throw new ArgumentNullException(nameof(child));
-                if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlListBase.");
+                if (child.IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(child);
+                // if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlListBase.");
                 if (Contains(child)) throw new InvalidOperationException("Cannot add the same control more than once.");
 
                 if (innerArray == null)
@@ -182,7 +184,7 @@ namespace LibUISharp
             {
                 if (index < 0 || index > size) throw new ArgumentOutOfRangeException(nameof(index));
                 if (child == null) throw new ArgumentNullException(nameof(child));
-                if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlListBase.");
+                // if (child.TopLevel) throw new ArgumentException("Cannot add a top-level control to a ControlListBase.");
                 if (Contains(child)) throw new InvalidOperationException("Cannot add the same control more than once.");
 
                 if (innerArray == null)
@@ -211,8 +213,9 @@ namespace LibUISharp
             /// <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the <see cref="ControlListBase"/>.</returns>
             public virtual bool Remove(TChild child)
             {
-                if (isReadOnly) throw new NotSupportedException("Cannot remove items while the collection is read-only.");
                 if (child == null) throw new ArgumentNullException(nameof(child));
+                if (child.IsInvalid) throw new UIComponentInvalidHandleException<SafeControlHandle>(child);
+                if (isReadOnly) throw new NotSupportedException("Cannot remove items while the collection is read-only.");
                 if (!Contains(child)) return false;
 
                 int index = IndexOf(child);
@@ -253,7 +256,7 @@ namespace LibUISharp
             /// <returns>true if item is found in the <see cref="ControlListBase"/>; otherwise, false.</returns>
             public bool Contains(TChild child)
             {
-                if (innerArray == null || child == null)
+                if (innerArray == null || child == null || child.IsInvalid)
                     return false;
 
                 for (int i = 0; i < size; i++)
@@ -272,11 +275,8 @@ namespace LibUISharp
             /// <param name="index">The zero-based index in <paramref name="array"/> at which copying begins.</param>
             public void CopyTo(Array array, int index)
             {
-                if (innerArray == null)
-                    return;
-                if ((array != null) && (array.Rank != 1))
-                    throw new ArgumentException("array must be 1-dimensional.", nameof(array));
-
+                if (innerArray == null) return;
+                if ((array != null) && (array.Rank != 1)) throw new ArgumentException("array must be 1-dimensional.", nameof(array));
                 Array.Copy(innerArray, 0, array, index, size);
             }
 
@@ -345,7 +345,7 @@ namespace LibUISharp
 
             object IList.this[int index]
             {
-                get => (object)this[index];
+                get => this[index];
                 set => throw new NotSupportedException();
             }
             TChild IList<TChild>.this[int index]

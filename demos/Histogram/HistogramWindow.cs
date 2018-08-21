@@ -30,14 +30,14 @@ namespace Histogram
                 spinBoxList.Add(spinBox);
             }
 
-            colorPicker.ColorChanged += (sender, args) => { histogramSurface.QueueRedrawAll(); };
+            colorPicker.ColorChanged += () => { histogramSurface.QueueRedrawAll(); };
 
             vPanel.Children.Add(colorPicker);
 
-            histogramSurface = new Surface(new SurfaceHandler(colorPicker, spinBoxList));
+            histogramSurface = new Surface(new HistogramSurfaceHandler(colorPicker, spinBoxList));
             hPanel.Children.Add(histogramSurface, true);
         }
 
-        private void SpinBoxOnValueChanged(object sender, EventArgs eventArgs) => histogramSurface.QueueRedrawAll();
+        private void SpinBoxOnValueChanged() => histogramSurface.QueueRedrawAll();
     }
 }

@@ -10,12 +10,18 @@ namespace LibUISharp
     [NativeType("uiGrid")]
     public class GridContainer : MultiContainer<GridContainer, GridContainer.ControlList, Control>
     {
-        private bool isPadded;
+        private bool isPadded = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GridContainer"/> class.
         /// </summary>
-        public GridContainer() => Handle = NativeCalls.NewGrid();
+        public GridContainer(bool isPadded = false)
+        {
+            Handle = NativeCalls.NewGrid();
+            if (isPadded)
+                IsPadded = true;
+        }
+
 
         /// <summary>
         /// Gets or sets a value indiating whether this <see cref="GridContainer"/> has interior padding or not.
