@@ -61,3 +61,5 @@ dotnet build LibUISharp.sln
 Contributing is as easy as filing an issue, fixing a bug, or suggesting a new feature.
 
 Although the document is a work in progress, please see the [CONTRIBUTING.md](https://github.com/tom-corwin/LibUISharp/blob/master/CONTRIBUTING.md) file for more information on contributing.
+
+For all a list of all contributors with some stats about their contributons, see the [Contributors](https://github.com/tom-corwin/LibUISharp/graphs/contributors) page.
