@@ -1,0 +1,16 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ FileName:             Directory.build.targets
+~ Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <_VersionBase>0.1.0</_VersionBase>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory).msbuild/GenerateLibUISharpVersion.targets" />
+  <Import Project="$(MSBuildThisFileDirectory).msbuild/DefaultItems.targets" />
+  <Import Project="$(MSBuildThisFileDirectory).msbuild/CodeAnalysis.targets" />
+
+</Project>
