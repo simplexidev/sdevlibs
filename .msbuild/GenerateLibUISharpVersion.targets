@@ -1,0 +1,64 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ FileName:             GenerateLibUISharpVersion.targets
+~ Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <UsingTask TaskName="BuildVersionGenerator"  TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <IsAutoBuild ParameterType="System.Boolean" Required="true" />
+      <VersionInput ParameterType="System.String" Required="true" />
+      <DotGitPath ParameterType="System.String" Required="true" />
+      <BuildVersion ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          string timestamp = DateTime.Now.ToString("yyMMdd");
+          bool hasGitFolder = Directory.Exists(DotGitPath);
+          /* if (hasGitFolder)
+          {
+              string[] gitFetchHead = File.ReadAllLines(Path.Combine(DotGitPath, "FETCH_HEAD"));
+              string commitID = gitFetchHead[0].Substring(0, 7);
+
+              if (!IsAutoBuild)
+                  BuildVersion = $"{VersionInput}-local-{timestamp}-{commitID}";
+              else
+              {
+                  if (gitFetchHead[0].Contains(@"branch 'release/v"))
+                      BuildVersion = $"{VersionInput}+{timestamp}-{commitID}";
+                  else if (gitFetchHead[0].Contains(@"branch pull/"))
+                  {
+                      string prNumberStr = gitFetchHead[0].Remove(0, 40).TrimStart('\t').Remove(0, 13);
+                      int prNumber = int.Parse(prNumberStr.Substring(0, prNumberStr.IndexOf('/')));
+                      BuildVersion = $"{VersionInput}-build-{timestamp}-{commitID}-pr{prNumber}";
+                  }
+                  else
+                      BuildVersion = $"{VersionInput}-build-{timestamp}-{commitID}";
+              }
+          }
+          else */
+              BuildVersion = $"{VersionInput}-local-{timestamp}";
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
+  <Target Name="GenerateLibUISharpVersion">
+    <BuildVersionGenerator IsAutoBuild="$(_IsAutoBuild)" DotGitPath="$(LibUISharpRepoPath).git" VersionInput="$(_VersionBase)">
+      <Output TaskParameter="BuildVersion" PropertyName="GeneratedBuildVersion" />
+    </BuildVersionGenerator>
+    <Message Text="Old Version: '$(Version)'" Importance="High" />
+    <PropertyGroup>
+      <Version>$(GeneratedBuildVersion)</Version>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+      <PackageVersion>$(GeneratedBuildVersion)</PackageVersion>
+    </PropertyGroup>
+    <Message Text="New Version: '$(Version)'" Importance="High" />
+  </Target>
+
+</Project>
