@@ -1,0 +1,35 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* FileName:             LibUISharp.Native.Libui.csproj
+* Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="16.0" InitialTargets="GenerateLibUISharpVersion" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);LIBUISHARP_NATIVE_LIBUI</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="lib\linux-x64\libui.so">
+			<PackagePath>runtimes\linux-x64\libui.so</PackagePath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>true</Pack>
+		</Content>
+		<!--
+		<Content Include="lib\freebsd-x64\libui.so.2">
+			<PackagePath>runtimes\freebsd-x64\libui.so</PackagePath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>true</Pack>
+		</Content>
+		-->
+		<Content Include="lib\osx-x64\libui.dylib">
+			<PackagePath>runtimes\osx-x64\libui.dylib</PackagePath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>true</Pack>
+		</Content>
+		<Content Include="lib\win-x64\libui.dll">
+			<PackagePath>runtimes\win-x64\libui.dll</PackagePath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>true</Pack>
+		</Content>
+	</ItemGroup>
+</Project>
