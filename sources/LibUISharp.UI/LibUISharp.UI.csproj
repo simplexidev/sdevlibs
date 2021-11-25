@@ -1,0 +1,15 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* FileName:             LibUISharp.UI.csproj
+* Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="16.0" InitialTargets="GenerateLibUISharpVersion" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);LIBUISHARP_UI</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\LibUISharp.Core\LibUISharp.Core.csproj" />
+		<ProjectReference Include="..\LibUIsharp.Native.Libui\LibUISharp.Native.Libui.csproj" />
+	</ItemGroup>
+</Project>
