@@ -5,7 +5,7 @@
 
 using System;
 
-namespace LibuISharp
+namespace LibUISharp
 {
 
     /// <summary>
@@ -23,7 +23,6 @@ namespace LibuISharp
         /// </summary>
         /// <param name="exceptionHandler">The action to be invoked in the event of an exception.</param>
         /// <returns><c>true</c> if properly disposed; otherwise, <c>false</c>.</returns>
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         bool SafeDispose(Action<Exception> exceptionHandler = null)
         {
             if (this == null)

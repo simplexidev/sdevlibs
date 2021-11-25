@@ -32,4 +32,7 @@
 			<Pack>true</Pack>
 		</Content>
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\LibUISharp.Core\LibUISharp.Core.csproj" />
+	</ItemGroup>
 </Project>
