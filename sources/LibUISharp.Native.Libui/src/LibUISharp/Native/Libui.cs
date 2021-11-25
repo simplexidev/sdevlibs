@@ -1,4 +1,4 @@
-using LibUISharp.Internal;
+using LibUISharp.Runtime;
 using LibUISharp.Runtime.InteropServices;
 
 using System;
@@ -12,6 +12,8 @@ namespace LibUISharp.Native
 #if USE_NATIVECALLGENERATION
     [NativeAssembly("libui", NativeAssemblyPlatforms.Windows | NativeAssemblyPlatforms.MacOS | NativeAssemblyPlatforms.Linux | NativeAssemblyPlatforms.FreeBSD)]
 #endif
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:Do not prefix enum values with type name", Justification = "<Pending>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal static unsafe
 #if USE_NATIVECALLGENERATOR
         partial
@@ -19,7 +21,7 @@ namespace LibUISharp.Native
         class Libui
     {
 #if !USE_NATIVECALLGENERATOR
-        private static readonly NativeAssembly __assembly__ = new NativeAssembly(Platform.IsWindows ? "libui.dll" : Platform.IsMacOS ? "libui.dylib" : Platform.IsLinux ? "libui.so" : Platform.IsFreeBSD ? "libui.so.2" : throw new PlatformNotSupportedException());
+        private static readonly NativeAssembly __assembly__ = new(Platform.IsWindows ? "libui.dll" : Platform.IsMacOS ? "libui.dylib" : Platform.IsLinux ? "libui.so" : Platform.IsFreeBSD ? "libui.so.2" : throw new PlatformNotSupportedException());
 #endif
 
         public const double uiPi = 3.14159265358979323846264338327950288419716939937510582097494459;

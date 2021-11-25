@@ -4,6 +4,7 @@
 ***********************************************************************************************************************/
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LibUISharp
 {
@@ -18,11 +19,13 @@ namespace LibUISharp
         /// </summary>
         bool IsDisposed { get; }
 
+
         /// <summary>
         /// Safely performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources, invoking the specified action in the event of an exception.
         /// </summary>
         /// <param name="exceptionHandler">The action to be invoked in the event of an exception.</param>
         /// <returns><c>true</c> if properly disposed; otherwise, <c>false</c>.</returns>
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         bool SafeDispose(Action<Exception> exceptionHandler = null)
         {
             if (this == null)

@@ -6,7 +6,7 @@
 using System;
 using System.IO;
 
-using LibUISharp.Internal;
+using LibUISharp.Runtime;
 
 namespace LibUISharp.Runtime.InteropServices
 {
@@ -38,8 +38,8 @@ namespace LibUISharp.Runtime.InteropServices
         /// <returns>The operating system handle for the shared library.</returns>
         public void* LoadAssembly(string name, NativeAssemblyResolver pathResolver)
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("Parameter must not be null or empty.", nameof(name));
+            ArgumentNullException.ThrowIfNull(name, nameof(name));
+            ArgumentNullException.ThrowIfNull(pathResolver, nameof(pathResolver));
 
             void* ret = null;
 
@@ -56,10 +56,7 @@ namespace LibUISharp.Runtime.InteropServices
                 }
             }
 
-            if (ret is null)
-                throw new FileNotFoundException("Could not find or load the native library: " + name);
-
-            return ret;
+            return ret is not null ? ret : throw new FileNotFoundException("Could not find or load the native library: " + name);
         }
 
         /// <summary>
@@ -82,9 +79,7 @@ namespace LibUISharp.Runtime.InteropServices
                     break;
             }
 
-            if (ret is null || (IntPtr)ret == IntPtr.Zero)
-                throw new FileNotFoundException($"Could not find or load the native library from any name: [ {string.Join(", ", names)} ]");
-            return ret;
+            return ret is not null ? ret : throw new FileNotFoundException($"Could not find or load the native library from any name: [ {string.Join(", ", names)} ]");
         }
 
         /// <summary>
@@ -95,9 +90,9 @@ namespace LibUISharp.Runtime.InteropServices
         /// <returns>A pointer to the loaded function.</returns>
         public void* LoadFunctionPointer(void* handle, string functionName)
         {
-            if (string.IsNullOrEmpty(functionName))
-                throw new ArgumentException("Parameter must not be null or empty.", nameof(functionName));
-            return CoreLoadFunctionPointer(handle, functionName);
+            return !string.IsNullOrEmpty(functionName)
+                ? CoreLoadFunctionPointer(handle, functionName)
+                : throw new ArgumentException("Parameter must not be null or empty.", nameof(functionName));
         }
 
         /// <summary>
@@ -106,9 +101,9 @@ namespace LibUISharp.Runtime.InteropServices
         /// <param name="handle">The handle of the open shared library.</param>
         public bool FreeNativeLibrary(void* handle)
         {
-            if (handle is null || (IntPtr)handle == IntPtr.Zero)
-                throw new ArgumentException("Parameter must not be zero.", nameof(handle));
-            return CoreFreeNativeLibrary(handle);
+            return handle is not null
+                ? CoreFreeNativeLibrary(handle)
+                : throw new ArgumentException("Parameter must not be zero.", nameof(handle));
         }
 
         /// <summary>

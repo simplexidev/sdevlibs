@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using LibUISharp.Internal;
+using LibUISharp.Runtime;
 
 namespace LibUISharp.Runtime.InteropServices
 {
@@ -36,9 +36,8 @@ namespace LibUISharp.Runtime.InteropServices
 
             if (defaultContext != null)
             {
-                List<string> allRIDs = new List<string>();
-                allRIDs.Add(Platform.RuntimeID);
-                AddFallbacks(ref allRIDs, Platform.RuntimeID, defaultContext.RuntimeGraph);
+                List<string> allRIDs = new() { Platform.RuntimeID };
+                _ = AddFallbacks(ref allRIDs, Platform.RuntimeID, defaultContext.RuntimeGraph);
 
                 foreach (string rid in allRIDs)
                 {

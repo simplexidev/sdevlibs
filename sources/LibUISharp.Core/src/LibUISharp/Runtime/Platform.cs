@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace LibUISharp.Internal
+namespace LibUISharp.Runtime
 {
     /// <summary>
     /// Provides static members providing information about the current running platform.
@@ -102,7 +102,7 @@ namespace LibUISharp.Internal
         {
             get
             {
-                List<string> retVal = new List<string>();
+                List<string> retVal = new();
                 foreach (RuntimeFallbacks fallbacks in DependencyContext.Default.RuntimeGraph)
                     if (fallbacks.Runtime == RuntimeID)
                         retVal.AddRange(fallbacks.Fallbacks);

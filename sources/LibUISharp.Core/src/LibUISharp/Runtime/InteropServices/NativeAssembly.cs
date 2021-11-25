@@ -16,7 +16,7 @@ namespace LibUISharp.Runtime.InteropServices
     /// Represents a native shared library opened by the operating system.
     /// This type can be used to load native function pointers by name.
     /// </summary>
-    public sealed unsafe class NativeAssembly : DisposableBase, IDisposable, IDisposableEx
+    public sealed unsafe class NativeAssembly : DisposableBase, IDisposableEx
     {
         private readonly NativeAssemblyLoader _loader;
 
@@ -86,9 +86,9 @@ namespace LibUISharp.Runtime.InteropServices
         public T LoadFuncPtr<T>(string name)
         {
             IntPtr functionPtr = (IntPtr)_loader.LoadFunctionPointer(Handle, name);
-            if (functionPtr == IntPtr.Zero)
-                throw new InvalidOperationException($"No function was found with the name {name}.");
-            return Marshal.GetDelegateForFunctionPointer<T>(functionPtr);
+            return functionPtr != IntPtr.Zero
+                ? Marshal.GetDelegateForFunctionPointer<T>(functionPtr)
+                : throw new InvalidOperationException($"No function was found with the name {name}.");
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace LibUISharp.Runtime.InteropServices
         /// </summary>
         /// <param name="name">The name of the native export.</param>
         /// <returns>A function pointer for the given name, or 0 if no function with that name exists.</returns>
-        public IntPtr LoadFuncPtr(string name) => (IntPtr)(_loader.LoadFunctionPointer(Handle, name));
+        public IntPtr LoadFuncPtr(string name) => (IntPtr)_loader.LoadFunctionPointer(Handle, name);
 
         /// <summary>
         /// Loads a function pointer with the given name.
