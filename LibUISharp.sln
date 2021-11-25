@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Native.Libui", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.UI", "sources\LibUISharp.UI\LibUISharp.UI.csproj", "{86D1310D-BDC2-443F-9698-E274A8FFFC59}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.CodeAnalysis.NativeCallGenerator", "sources\LibUISharp.CodeAnalysis.NativeCallGenerator\LibUISharp.CodeAnalysis.NativeCallGenerator.csproj", "{2C4C8254-2812-42B3-AF52-ED0782996859}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{86D1310D-BDC2-443F-9698-E274A8FFFC59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86D1310D-BDC2-443F-9698-E274A8FFFC59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86D1310D-BDC2-443F-9698-E274A8FFFC59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C4C8254-2812-42B3-AF52-ED0782996859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C4C8254-2812-42B3-AF52-ED0782996859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C4C8254-2812-42B3-AF52-ED0782996859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C4C8254-2812-42B3-AF52-ED0782996859}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,16 +4,16 @@ using LibUISharp.Runtime.InteropServices;
 using System;
 using System.Runtime.InteropServices;
 #if USE_NATIVECALLGENERATION
-using LibUISharp.CodeAnalysis.NativeCallGeneration;
+using LibUISharp.CodeAnalysis;
 #endif
 
 namespace LibUISharp.Native
 {
 #if USE_NATIVECALLGENERATION
-    [NativeAssembly("libui", NativeAssemblyPlatforms.Windows | NativeAssemblyPlatforms.MacOS | NativeAssemblyPlatforms.Linux | NativeAssemblyPlatforms.FreeBSD)]
+    [NativeAssembly("libui", NativeAssemblyFormats.Any, CallConvention = NativeCallConvention.Cdecl)]
 #endif
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:Do not prefix enum values with type name", Justification = "<Pending>")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:Do not prefix enum values with type name", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal static unsafe
 #if USE_NATIVECALLGENERATOR
         partial
