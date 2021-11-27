@@ -10,8 +10,5 @@ namespace LibUISharp.Runtime.InteropServices
     public interface INativeComponent : IComponent
     {
         unsafe void* Handle { get; }
-
-        void InitializeHandle();
-        void DisposeHandle();
     }
 }

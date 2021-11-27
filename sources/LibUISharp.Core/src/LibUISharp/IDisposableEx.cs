@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace LibUISharp
 {
-
     /// <summary>
     /// Provides added functionality on top of the <see cref="IDisposable"/> interface.
     /// </summary>
@@ -19,6 +18,15 @@ namespace LibUISharp
         /// </summary>
         bool IsDisposed { get; }
 
+        /// <summary>
+        /// Occurs when an object is disposing.
+        /// </summary>
+        public event EventHandler<Disposable, EventArgs> Disposing;
+
+        /// <summary>
+        /// Occurs when an object is disposed.
+        /// </summary>
+        public event EventHandler<Disposable, EventArgs> Disposed;
 
         /// <summary>
         /// Safely performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources, invoking the specified action in the event of an exception.
@@ -56,5 +64,15 @@ namespace LibUISharp
         /// Performs tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         void ReleaseUnmanagedResources() { }
+
+        /// <summary>
+        /// Raises the <see cref="Disposing"/> event.
+        /// </summary>
+        void OnDisposing() { }
+
+        /// <summary>
+        /// Raises the <see cref="Disposed"/> event.
+        /// </summary>
+        void OnDisposed() { }
     }
 }

@@ -3,8 +3,6 @@
  * Copyright/License:   https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
 ***********************************************************************************************************************/
 
-using System;
-
 namespace LibUISharp
 {
     /// <summary>

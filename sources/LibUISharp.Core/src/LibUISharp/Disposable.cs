@@ -1,35 +1,65 @@
 /***********************************************************************************************************************
- * FileName:            Disposable.cs
+ * FileName:            DisposableBase.cs
  * Copyright/License:   https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
 ***********************************************************************************************************************/
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LibUISharp
 {
     /// <summary>
-    /// Represents a simple disposable object.
+    /// Provides a base implementation for extended disposable types.
     /// </summary>
-    public sealed class Disposable : DisposableBase, IDisposableEx
+    [SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Pending>")]
+    public abstract class Disposable : IDisposableEx
     {
-        private readonly Action releaseManagedResources;
-        private readonly Action releaseUnmanagedResources;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Disposable"/> class.
         /// </summary>
-        /// <param name="managedAction">The action to invoke during the disposal of managed resources.</param>
-        /// <param name="unmanagedAction">The action to invoke during the disposal of unmanaged resources.</param>
-        public Disposable(Action managedAction = null, Action unmanagedAction = null) : base()
+        protected Disposable() => IsDisposed = false;
+
+        /// <summary>
+        /// Trys to free resources and perform other cleanup operations before being reclaimed by garbage collection.
+        /// </summary>
+        ~Disposable() => Dispose(false);
+
+        /// <inheritdoc/>
+        public event EventHandler<Disposable, EventArgs> Disposing;
+
+        /// <inheritdoc/>
+        public event EventHandler<Disposable, EventArgs> Disposed;
+
+        /// <inheritdoc/>
+        public virtual bool IsDisposed { get; protected set; }
+
+        /// <inheritdoc/>
+        public void Dispose()
         {
-            releaseManagedResources = managedAction ?? (() => { });
-            releaseUnmanagedResources = unmanagedAction ?? (() => { });
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <inheritdoc/>
-        protected override void ReleaseManagedResources() => releaseManagedResources?.Invoke();
+        protected virtual void OnDisposing() => Disposing?.Invoke(this, EventArgs.Empty);
 
         /// <inheritdoc/>
-        protected override void ReleaseUnmanagedResources() => releaseUnmanagedResources?.Invoke();
+        protected virtual void OnDisposed() => Disposed?.Invoke(this, EventArgs.Empty);
+
+        /// <inheritdoc/>
+        protected virtual void ReleaseManagedResources() { }
+
+        /// <inheritdoc/>
+        protected virtual void ReleaseUnmanagedResources() { }
+
+        private void Dispose(bool disposing)
+        {
+            OnDisposing();
+            if (disposing)
+                ReleaseManagedResources();
+            ReleaseUnmanagedResources();
+            IsDisposed = true;
+            OnDisposed();
+        }
     }
 }

@@ -3,10 +3,10 @@
  * Copyright/License:   https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
 ***********************************************************************************************************************/
 
+using LibUISharp.ComponentModel;
+
 using System;
 using System.Runtime.InteropServices;
-
-using LibUISharp.Runtime;
 
 namespace LibUISharp.Runtime.InteropServices
 {
@@ -16,7 +16,7 @@ namespace LibUISharp.Runtime.InteropServices
     /// Represents a native shared library opened by the operating system.
     /// This type can be used to load native function pointers by name.
     /// </summary>
-    public sealed unsafe class NativeAssembly : DisposableBase, IDisposableEx
+    public sealed unsafe class NativeAssembly : Component, INativeComponent
     {
         private readonly NativeAssemblyLoader _loader;
 
