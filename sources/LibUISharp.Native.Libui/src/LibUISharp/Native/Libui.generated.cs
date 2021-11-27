@@ -27,17 +27,17 @@ namespace LibUISharp.Native
         public static partial UIntPtr uiControlHandle(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, UIntPtr>)__assembly__.LoadFuncPtr(nameof(uiControlHandle)))(c);
         public static partial uiControl* uiControlParent(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, uiControl*>)__assembly__.LoadFuncPtr(nameof(uiControlParent)))(c);
         public static partial void uiControlSetParent(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, void>)__assembly__.LoadFuncPtr(nameof(uiControlSetParent)))(c);
-        public static partial int uiControlToplevel(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, int>)__assembly__.LoadFuncPtr(nameof(uiControlToplevel)))(c);
-        public static partial int uiControlVisible(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, int>)__assembly__.LoadFuncPtr(nameof(uiControlVisible)))(c);
+        public static partial bool uiControlToplevel(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, bool>)__assembly__.LoadFuncPtr(nameof(uiControlToplevel)))(c);
+        public static partial bool uiControlVisible(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, bool>)__assembly__.LoadFuncPtr(nameof(uiControlVisible)))(c);
         public static partial void uiControlShow(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, void>)__assembly__.LoadFuncPtr(nameof(uiControlShow)))(c);
         public static partial void uiControlHide(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, void>)__assembly__.LoadFuncPtr(nameof(uiControlHide)))(c);
-        public static partial int uiControlEnabled(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, int>)__assembly__.LoadFuncPtr(nameof(uiControlEnabled)))(c);
+        public static partial bool uiControlEnabled(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, bool>)__assembly__.LoadFuncPtr(nameof(uiControlEnabled)))(c);
         public static partial void uiControlEnable(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, void>)__assembly__.LoadFuncPtr(nameof(uiControlEnable)))(c);
         public static partial void uiControlDisable(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, void>)__assembly__.LoadFuncPtr(nameof(uiControlDisable)))(c);
         public static partial uiControl* uiAllocControl(uint* n, uint OSsig, uint typesig, sbyte* typenamestr) => ((delegate* unmanaged[Cdecl]<uint*, uint, uint, sbyte*, uiControl*>)__assembly__.LoadFuncPtr(nameof(uiAllocControl)))(n, OSsig, typesig, typenamestr);
         public static partial void uiFreeControl(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, void>)__assembly__.LoadFuncPtr(nameof(uiFreeControl)))(c);
         public static partial void uiControlVerifySetParent(uiControl* c1, uiControl* c2) => ((delegate* unmanaged[Cdecl]<uiControl*, uiControl*, void>)__assembly__.LoadFuncPtr(nameof(uiControlVerifySetParent)))(c1, c2);
-        public static partial int uiControlEnabledToUser(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, int>)__assembly__.LoadFuncPtr(nameof(uiControlEnabledToUser)))(c);
+        public static partial bool uiControlEnabledToUser(uiControl* c) => ((delegate* unmanaged[Cdecl]<uiControl*, bool>)__assembly__.LoadFuncPtr(nameof(uiControlEnabledToUser)))(c);
         public static partial void uiUserBugCannotSetParentOnToplevel(sbyte* type) => ((delegate* unmanaged[Cdecl]<sbyte*, void>)__assembly__.LoadFuncPtr(nameof(uiUserBugCannotSetParentOnToplevel)))(type);
 
         public static partial sbyte* uiWindowTitle(void* w) => ((delegate* unmanaged[Cdecl]<void*, sbyte*>)__assembly__.LoadFuncPtr(nameof(uiWindowTitle)))(w);

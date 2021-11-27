@@ -65,17 +65,17 @@ namespace LibUISharp.Native
         /*[NativeCall]*/ public static partial UIntPtr uiControlHandle(uiControl* c);
         /*[NativeCall]*/ public static partial uiControl* uiControlParent(uiControl* c);
         /*[NativeCall]*/ public static partial void uiControlSetParent(uiControl* c);
-        /*[NativeCall]*/ public static partial int uiControlToplevel(uiControl* c);
-        /*[NativeCall]*/ public static partial int uiControlVisible(uiControl* c);
+        /*[NativeCall]*/ public static partial bool uiControlToplevel(uiControl* c);
+        /*[NativeCall]*/ public static partial bool uiControlVisible(uiControl* c);
         /*[NativeCall]*/ public static partial void uiControlShow(uiControl* c);
         /*[NativeCall]*/ public static partial void uiControlHide(uiControl* c);
-        /*[NativeCall]*/ public static partial int uiControlEnabled(uiControl* c);
+        /*[NativeCall]*/ public static partial bool uiControlEnabled(uiControl* c);
         /*[NativeCall]*/ public static partial void uiControlEnable(uiControl* c);
         /*[NativeCall]*/ public static partial void uiControlDisable(uiControl* c);
         /*[NativeCall]*/ public static partial uiControl* uiAllocControl(uint* n, uint OSsig, uint typesig, sbyte* typenamestr);
         /*[NativeCall]*/ public static partial void uiFreeControl(uiControl* c);
         /*[NativeCall]*/ public static partial void uiControlVerifySetParent(uiControl* c1, uiControl* c2);
-        /*[NativeCall]*/ public static partial int uiControlEnabledToUser(uiControl* c);
+        /*[NativeCall]*/ public static partial bool uiControlEnabledToUser(uiControl* c);
         /*[NativeCall]*/ public static partial void uiUserBugCannotSetParentOnToplevel(sbyte* type);
 
         /*[NativeCall]*/ public static partial sbyte* uiWindowTitle(void* w);
