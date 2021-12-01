@@ -1,14 +1,13 @@
 ﻿/***********************************************************************************************************************
- * FileName:            INativeComponent.cs
+ * FileName:            INotifyPropertyChange.cs
  * Copyright/License:   https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
 ***********************************************************************************************************************/
 
-using LibUISharp.ComponentModel;
-
-namespace LibUISharp.Runtime.InteropServices
+namespace LibUISharp.ComponentModel
 {
-    public interface INativeComponent : IComponent
+    public interface INotifyPropertyChange
     {
-        unsafe void* Handle { get; }
+        event EventHandler<Component, PropertyChangeEventArgs> PropertyChanging;
+        event EventHandler<Component, PropertyChangeEventArgs> PropertyChanged;
     }
 }

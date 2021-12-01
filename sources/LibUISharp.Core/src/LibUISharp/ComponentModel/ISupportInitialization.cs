@@ -1,14 +1,16 @@
 ﻿/***********************************************************************************************************************
- * FileName:            INativeComponent`1.cs
+ * FileName:            ISupportInitialization.cs
  * Copyright/License:   https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
 ***********************************************************************************************************************/
 
-using LibUISharp.ComponentModel;
+using System;
 
-namespace LibUISharp.Runtime.InteropServices
+namespace LibUISharp.ComponentModel
 {
-    public interface INativeComponent<T> : IComponent where T : unmanaged
+    public interface ISupportInitialization
     {
-        unsafe T* Handle { get; }
+        event EventHandler<Component, EventArgs> Initializing;
+        event EventHandler<Component, EventArgs> Initialized;
+        bool IsInitialized { get; }
     }
 }

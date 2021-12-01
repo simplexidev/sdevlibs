@@ -14,7 +14,11 @@ namespace LibUISharp.ComponentModel
     {
         private bool isInitialized;
 
-        protected Component() { }
+        protected Component() : base()
+        {
+            StartInitialization();
+            isInitialized = false;
+        }
 
         /// <inheritdoc/>
         public bool IsInitialized
@@ -55,10 +59,14 @@ namespace LibUISharp.ComponentModel
         public event EventHandler<Component, EventArgs> Initialized;
 
         /// <inheritdoc/>
-        public virtual void StartInitialization() => Initializing(this, EventArgs.Empty);
+        protected virtual void StartInitialization() => OnInitializing();
 
         /// <inheritdoc/>
-        public virtual void EndInitialization() => Initialized?.Invoke(this, EventArgs.Empty);
+        protected virtual void EndInitialization()
+        {
+            IsInitialized = true;
+            OnInitialized();
+        }
 
         /// <inheritdoc/>
         protected override void ReleaseManagedResources() => isInitialized = false;

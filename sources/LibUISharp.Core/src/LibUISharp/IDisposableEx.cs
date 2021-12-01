@@ -54,25 +54,5 @@ namespace LibUISharp
                 return false;
             }
         }
-
-        /// <summary>
-        /// Performs tasks associated with freeing, releasing, or resetting managed resources.
-        /// </summary>
-        void ReleaseManagedResources() { }
-
-        /// <summary>
-        /// Performs tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        void ReleaseUnmanagedResources() { }
-
-        /// <summary>
-        /// Raises the <see cref="Disposing"/> event.
-        /// </summary>
-        void OnDisposing() { }
-
-        /// <summary>
-        /// Raises the <see cref="Disposed"/> event.
-        /// </summary>
-        void OnDisposed() { }
     }
 }

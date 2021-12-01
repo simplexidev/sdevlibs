@@ -5,5 +5,5 @@
 
 namespace LibUISharp.ComponentModel
 {
-    public interface IComponent : IDisposableEx, INotifyPropertyChange<Component>, ISupportInitialization<Component> { }
+    public interface IComponent : IDisposableEx, INotifyPropertyChange, ISupportInitialization { }
 }
