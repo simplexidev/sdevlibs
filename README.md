@@ -15,19 +15,17 @@ LibUISharp is a library containing bindings for [andlabs/libui][andlabs.libui.Li
 
 [![Repo.Issues.Open.Badge]][Repo.Issues.Open.Link]
 [![Repo.Issues.Closed.Badge]][Repo.Issues.Closed.Link]
-[![Repo.Issues.HelpWanted.Badge]][Repo.Issues.HelpWanted.Link]
 [![Repo.Issues.GoodFirstIssue.Badge]][Repo.Issues.GoodFirstIssue.Link]
 
 Contributing is as easy as filing an issue, fixing a bug, or suggesting a new feature. For more information about
 contributing to this project, see the [CONTRIBUTING.md][Repo.Contributing.Link] file.
 
+Please hold off on submitting pull requests until #39 is merged. If you would like to prepare that pull request anyways, please use the branch `feature/internal/new-infrastructre`.
+
 ## Project Status
 
 [![Codacy.Badge]][Codacy.Link]
 [![Dependabot.Badge]][Dependabot.Link]
-
-This repository was recently unarchived and I am currently in the process of moving code from the `TCDFx.UI` library in
-[tom-corwin/tcdfx][tomcorwin.tcdfx.Link].
 
 LibUISharp should still be considered a work-in-progress and should not be used in a production environment. The API is
 subject to change at anytime due to the [API remodeling in libui][andlabs.libui.remodel.Link].
