@@ -1,25 +1,28 @@
 using System;
 
-using LibUISharp.ComponentModel;
 using LibUISharp.Native;
 using LibUISharp.Runtime.InteropServices;
 
 namespace LibUISharp.UI
 {
-    public unsafe class Control : Component
+    /// <summary>
+    /// Defines a base class for controls, which are <see cref="NativeComponent"/> objects with visual representation.
+    /// </summary>
+    public unsafe class Control : NativeComponent
     {
         private Control parent;
         private bool visible;
-        private bool enabled;
+        private bool enabled = true;
 
-        protected Control() : base()
-        {
-            enabled = true;
-            visible = this is not Window;
-        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Control"/> class.
+        /// </summary>
+        /// <inheritdoc/>
+        protected Control(params object[] initArgs) : base(initArgs) { }
 
-        public void* ControlHandle { get; protected set; }
-
+        /// <summary>
+        /// Gets or sets the parent container of the control.
+        /// </summary>
         public Control Parent
         {
             get => parent;
@@ -29,12 +32,16 @@ namespace LibUISharp.UI
                 if (parent == value) return;
                 OnPropertyChanging(nameof(Parent));
                 //TODO: Parameters might be backwards.
-                Libui.uiControlVerifySetParent(ControlHandle, value.ControlHandle);
-                Libui.uiControlSetParent(value.ControlHandle);
+                Libui.uiControlVerifySetParent(Handle, value.Handle);
+                Libui.uiControlSetParent(value.Handle);
                 parent = value;
                 OnPropertyChanged(nameof(Parent));
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control can respond to interaction.
+        /// </summary>
         public virtual bool Enabled
         {
             get => enabled;
@@ -44,13 +51,17 @@ namespace LibUISharp.UI
                 if (enabled == value) return;
                 OnPropertyChanging(nameof(Enabled));
                 if (value)
-                    Libui.uiControlEnable(ControlHandle);
+                    Libui.uiControlEnable(Handle);
                 else
-                    Libui.uiControlDisable(ControlHandle);
+                    Libui.uiControlDisable(Handle);
                 enabled = value;
                 OnPropertyChanged(nameof(Enabled));
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control and all its child controls are displayed.
+        /// </summary>
         public virtual bool Visible
         {
             get => visible;
@@ -60,26 +71,42 @@ namespace LibUISharp.UI
                 if (visible == value) return;
                 OnPropertyChanging(nameof(Visible));
                 if (value)
-                    Libui.uiControlShow(ControlHandle);
+                    Libui.uiControlShow(Handle);
                 else
-                    Libui.uiControlHide(ControlHandle);
+                    Libui.uiControlHide(Handle);
                 visible = value;
                 OnPropertyChanged(nameof(Visible));
             }
         }
-        public bool TopLevel => Libui.uiControlToplevel(ControlHandle);
-        public bool EnabledToUser => Libui.uiControlEnabledToUser(ControlHandle);
+
+        /// <summary>
+        /// Determines whether this is a top-level <see cref="Control"/>.
+        /// </summary>
+        public bool TopLevel => Libui.uiControlToplevel(Handle);
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control can respond to user interaction.
+        /// </summary>
+        public bool EnabledToUser => Libui.uiControlEnabledToUser(Handle);
 
         public virtual void Show() => Visible = true;
         public virtual void Hide() => Visible = false;
         public virtual void Enable() => Enabled = true;
         public virtual void Disable() => Enabled = false;
 
-        protected override void ReleaseUnmanagedResources()
+        /// <inheritdoc/>
+        protected override void StartInitialization(params object[] args)
         {
-            if (ControlHandle is not null)
-                Libui.uiControlDestroy(ControlHandle);
-            base.ReleaseUnmanagedResources();
+            base.StartInitialization(args);
+            visible = this is not Window;
+        }
+
+        /// <inheritdoc/>
+        protected override void DestroyHandle()
+        {
+            if (Handle is not null)
+                Libui.uiControlDestroy(Handle);
+            base.DestroyHandle();
         }
     }
 }
