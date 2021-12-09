@@ -21,6 +21,10 @@
       <_Parameter1_IsLiteral>true</_Parameter1_IsLiteral>
     </AssemblyAttribute>
   </ItemGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+  </ItemGroup>
 
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
   

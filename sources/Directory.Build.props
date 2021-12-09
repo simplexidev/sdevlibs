@@ -12,6 +12,9 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <OutputType>Library</OutputType>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<IncludeSymbols>true</IncludeSymbols>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
@@ -23,7 +26,6 @@
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <Copyright>Copyright © 2017-2021 Thomas Corwin, et al. All Rights Reserved.</Copyright>
-    <RepositoryUrl>https://github.com/tom-corwin/libuisharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageId>$(MSBuildProjectName)</PackageId>
