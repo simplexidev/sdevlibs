@@ -4,14 +4,12 @@
 ***********************************************************************************************************************/
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LibUISharp
 {
     /// <summary>
     /// Provides a base implementation for extended disposable types.
     /// </summary>
-    [SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Pending>")]
     public abstract class Disposable : IDisposableEx
     {
         /// <summary>
@@ -52,7 +50,9 @@ namespace LibUISharp
         /// <inheritdoc/>
         protected virtual void ReleaseUnmanagedResources() { }
 
+#pragma warning disable CA1063 // Implement IDisposable Correctly
         private void Dispose(bool disposing)
+#pragma warning restore CA1063 // Implement IDisposable Correctly
         {
             OnDisposing();
             if (disposing)
@@ -61,5 +61,8 @@ namespace LibUISharp
             IsDisposed = true;
             OnDisposed();
         }
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+#pragma warning restore CA1063 // Implement IDisposable Correctly
+#pragma warning restore IDE0079 // Remove unnecessary suppression
     }
 }

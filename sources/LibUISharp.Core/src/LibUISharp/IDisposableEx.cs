@@ -4,7 +4,6 @@
 ***********************************************************************************************************************/
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LibUISharp
 {
@@ -33,7 +32,6 @@ namespace LibUISharp
         /// </summary>
         /// <param name="exceptionHandler">The action to be invoked in the event of an exception.</param>
         /// <returns><c>true</c> if properly disposed; otherwise, <c>false</c>.</returns>
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         bool SafeDispose(Action<Exception> exceptionHandler = null)
         {
             if (this == null)
@@ -48,7 +46,9 @@ namespace LibUISharp
             {
                 return true;
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 exceptionHandler?.Invoke(ex);
                 return false;

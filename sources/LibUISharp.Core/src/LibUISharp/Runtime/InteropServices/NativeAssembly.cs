@@ -3,9 +3,8 @@
  * Copyright/License:   https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
 ***********************************************************************************************************************/
 
-using LibUISharp.ComponentModel;
-
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace LibUISharp.Runtime.InteropServices
@@ -13,67 +12,53 @@ namespace LibUISharp.Runtime.InteropServices
     //NOTE:https://rdrr.io/rforge/rdyncall/man/dynload.html
     //NOTE:https://github.com/mellinoe/nativelibraryloader/pull/11
     /// <summary>
-    /// Represents a native shared library opened by the operating system.
-    /// This type can be used to load native function pointers by name.
+    /// Represents a native (shared) assembly.
     /// </summary>
-    public sealed unsafe class NativeAssembly : Component, INativeComponent
+    public sealed unsafe class NativeAssembly : NativeComponent
     {
-        private readonly NativeAssemblyLoader _loader;
+        private NativeAssemblyLoader asmLoader;
 
         /// <summary>
-        /// The operating system handle of the loaded library.
+        /// Initializes a new instance of the <see cref="NativeLibrary"/> class with the current platform's default <see cref="NativeAssemblyLoader"/>.
         /// </summary>
-        public void* Handle { get; }
-
-        /// <summary>
-        /// Constructs a new NativeLibrary using the platform's default library loader.
-        /// </summary>
-        /// <param name="name">The name of the library to load.</param>
+        /// <param name="name">The name of the assembly to load.</param>
         public NativeAssembly(string name) : this(name, NativeAssemblyLoader.Default, NativeAssemblyResolver.Default) { }
 
         /// <summary>
-        /// Constructs a new NativeLibrary using the platform's default library loader.
+        /// Initializes a new instance of the <see cref="NativeLibrary"/> class with the current platform's default <see cref="NativeAssemblyLoader"/>.
         /// </summary>
-        /// <param name="names">An ordered list of names to attempt to load.</param>
+        /// <param name="names">An ordered list of assembly names to attempt to load.</param>
         public NativeAssembly(string[] names) : this(names, NativeAssemblyLoader.Default, NativeAssemblyResolver.Default) { }
 
         /// <summary>
-        /// Constructs a new NativeLibrary using the specified library loader.
+        /// Initializes a new instance of the <see cref="NativeLibrary"/> class with the specified <see cref="NativeAssemblyLoader"/>.
         /// </summary>
-        /// <param name="name">The name of the library to load.</param>
-        /// <param name="loader">The loader used to open and close the library, and to load function pointers.</param>
+        /// <param name="name">The name of the assembly to load.</param>
+        /// <param name="loader">The loader used to open and close the assembly, and to load function pointers.</param>
         public NativeAssembly(string name, NativeAssemblyLoader loader) : this(name, loader, NativeAssemblyResolver.Default) { }
 
         /// <summary>
-        /// Constructs a new NativeLibrary using the specified library loader.
+        /// Initializes a new instance of the <see cref="NativeLibrary"/> class with the specified <see cref="NativeAssemblyLoader"/>.
         /// </summary>
-        /// <param name="names">An ordered list of names to attempt to load.</param>
-        /// <param name="loader">The loader used to open and close the library, and to load function pointers.</param>
+        /// <param name="names">An ordered list of assembly names to attempt to load.</param>
+        /// <param name="loader">The loader used to open and close the assembly, and to load function pointers.</param>
         public NativeAssembly(string[] names, NativeAssemblyLoader loader) : this(names, loader, NativeAssemblyResolver.Default) { }
 
         /// <summary>
-        /// Constructs a new NativeLibrary using the specified library loader.
+        /// Initializes a new instance of the <see cref="NativeLibrary"/> class with the specified <see cref="NativeAssemblyLoader"/>.
         /// </summary>
-        /// <param name="name">The name of the library to load.</param>
-        /// <param name="loader">The loader used to open and close the library, and to load function pointers.</param>
-        /// <param name="pathResolver">The path resolver, used to identify possible load targets for the library.</param>
-        public NativeAssembly(string name, NativeAssemblyLoader loader, NativeAssemblyResolver pathResolver)
-        {
-            _loader = loader;
-            Handle = _loader.LoadAssembly(name, pathResolver);
-        }
+        /// <param name="name">The name of the assembly to load.</param>
+        /// <param name="loader">The loader used to open and close the assembly, and to load function pointers.</param>
+        /// <param name="pathResolver">The path resolver, used to identify possible load targets for the assembly.</param>
+        public NativeAssembly(string name, NativeAssemblyLoader loader, NativeAssemblyResolver pathResolver) : base(name, loader, pathResolver) { }
 
         /// <summary>
-        /// Constructs a new NativeLibrary using the specified library loader.
+        /// Initializes a new instance of the <see cref="NativeLibrary"/> class with the specified <see cref="NativeAssemblyLoader"/>.
         /// </summary>
-        /// <param name="names">An ordered list of names to attempt to load.</param>
-        /// <param name="loader">The loader used to open and close the library, and to load function pointers.</param>
-        /// <param name="pathResolver">The path resolver, used to identify possible load targets for the library.</param>
-        public NativeAssembly(string[] names, NativeAssemblyLoader loader, NativeAssemblyResolver pathResolver)
-        {
-            _loader = loader;
-            Handle = _loader.LoadAssembly(names, pathResolver);
-        }
+        /// <param name="names">An ordered list of assembly names to attempt to load.</param>
+        /// <param name="loader">The loader used to open and close the assembly, and to load function pointers.</param>
+        /// <param name="pathResolver">The path resolver, used to identify possible load targets for the assembly.</param>
+        public NativeAssembly(string[] names, NativeAssemblyLoader loader, NativeAssemblyResolver pathResolver) : base(names, loader, pathResolver) { }
 
         /// <summary>
         /// Loads a function whose signature matches the given delegate type's signature.
@@ -85,7 +70,7 @@ namespace LibUISharp.Runtime.InteropServices
         /// is exported from the native library.</exception>
         public T LoadFuncPtr<T>(string name)
         {
-            IntPtr functionPtr = (IntPtr)_loader.LoadFunctionPointer(Handle, name);
+            IntPtr functionPtr = (IntPtr)asmLoader.LoadFunctionPointer(Handle, name);
             return functionPtr != IntPtr.Zero
                 ? Marshal.GetDelegateForFunctionPointer<T>(functionPtr)
                 : throw new InvalidOperationException($"No function was found with the name {name}.");
@@ -96,16 +81,38 @@ namespace LibUISharp.Runtime.InteropServices
         /// </summary>
         /// <param name="name">The name of the native export.</param>
         /// <returns>A function pointer for the given name, or 0 if no function with that name exists.</returns>
-        public IntPtr LoadFuncPtr(string name) => (IntPtr)_loader.LoadFunctionPointer(Handle, name);
+        public IntPtr LoadFuncPtr(string name) => (IntPtr)asmLoader.LoadFunctionPointer(Handle, name);
 
         /// <summary>
         /// Loads a function pointer with the given name.
         /// </summary>
         /// <param name="name">The name of the native export.</param>
         /// <returns>A function pointer for the given name, or 0 if no function with that name exists.</returns>
-        public void* LoadUnsafeFuncPtr(string name) => _loader.LoadFunctionPointer(Handle, name);
+        public void* LoadUnsafeFuncPtr(string name) => asmLoader.LoadFunctionPointer(Handle, name);
 
         /// <inheritdoc/>
-        protected override void ReleaseUnmanagedResources() => _loader.FreeNativeLibrary(Handle);
+        protected override void StartInitialization(params object[] args)
+        {
+            base.StartInitialization(args);
+            asmLoader = args.Length == 3
+                ? (NativeAssemblyLoader)args[1]
+                : (NativeAssemblyLoader)args.SkipLast(1).ToArray()[args.Length - 2];
+        }
+
+        /// <inheritdoc/>
+        protected override void CreateHandle(params object[] args)
+        {
+            Handle = args.Length == 3
+                ? asmLoader.LoadAssembly((string)args[0], (NativeAssemblyResolver)args[2])
+                : asmLoader.LoadAssembly((string[])args.SkipLast(2).ToArray(), (NativeAssemblyResolver)args[^1]);
+            base.CreateHandle(args);
+        }
+
+        /// <inheritdoc/>
+        protected override void DestroyHandle()
+        {
+            _ = asmLoader.FreeNativeLibrary(Handle);
+            base.DestroyHandle();
+        }
     }
 }

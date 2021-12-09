@@ -20,7 +20,7 @@ namespace LibUISharp.Runtime.InteropServices
         /// <summary>
         /// Returns an enumerator yielding potential native assembly load targets, in priority order.
         /// </summary>
-        /// <param name="name".The filename (without the file extension) of the native assembly to load.
+        /// <param name="name">The filename (without the file extension) of the native assembly to load.<param>
         /// <returns> An enumerator yielding potential native assembly load targets, in priority order.</returns>
         public abstract IEnumerable<string> EnumeratePotentialLoadTargets(string name);
     }
