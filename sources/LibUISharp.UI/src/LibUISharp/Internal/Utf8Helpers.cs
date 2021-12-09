@@ -6,23 +6,23 @@ using LibUISharp.Native;
 
 namespace LibUISharp.Internal
 {
-    public static unsafe class Utf8Helper
+    internal static unsafe class Utf8Helper
     {
-        internal static sbyte* GetUtf8Pointer(string str)
+        internal static byte* GetUtf8Pointer(string str)
         {
             if (string.IsNullOrEmpty(str))
             {
-                sbyte emptyStr = 0;
+                byte emptyStr = 0;
                 return &emptyStr;
             }
-            sbyte[] bytes = (sbyte[])(Array)Encoding.UTF8.GetBytes(str);
-            sbyte[] retVal = new sbyte[bytes.Length + 1];
+            byte[] bytes = Encoding.UTF8.GetBytes(str);
+            byte[] retVal = new byte[bytes.Length + 1];
             bytes.CopyTo(retVal, 0);
             retVal[bytes.Length] = 0;
-            fixed (sbyte* retValPtr = retVal) { return retValPtr; }
+            fixed (byte* retValPtr = retVal) { return retValPtr; }
         }
 
-        internal static string GetUtf16String(sbyte* ptr)
+        internal static string GetUtf16String(byte* ptr)
         {
             if (ptr is null || ptr == IntPtr.Zero.ToPointer()) return string.Empty;
             int len;
