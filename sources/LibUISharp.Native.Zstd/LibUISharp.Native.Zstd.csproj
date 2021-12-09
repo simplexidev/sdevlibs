@@ -1,0 +1,38 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* FileName:             LibUISharp.Native.Zstd.csproj
+* Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="16.0" InitialTargets="GenerateLibUISharpVersion" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);LIBUISHARP_NATIVE_ZSTD</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="lib\linux-x64\zstd.so">
+			<PackagePath>runtimes\linux-x64\zstd.so</PackagePath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>true</Pack>
+		</Content>
+		<!--
+		<Content Include="lib\freebsd-x64\zstd.so.2">
+			<PackagePath>runtimes\freebsd-x64\zstd.so</PackagePath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>true</Pack>
+		</Content>
+		-->
+		<Content Include="lib\osx-x64\zstd.dylib">
+			<PackagePath>runtimes\osx-x64\zstd.dylib</PackagePath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>true</Pack>
+		</Content>
+		<Content Include="lib\win-x64\zstd.dll">
+			<PackagePath>runtimes\win-x64\zstd.dll</PackagePath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>true</Pack>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\LibUISharp.Core\LibUISharp.Core.csproj" />
+	</ItemGroup>
+</Project>
