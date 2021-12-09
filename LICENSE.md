@@ -2,7 +2,7 @@
 
 ## Copyright Notice(s)
 
-Copyright &copy; 2017 Thomas Corwin
+Copyright &copy; 2017-2021 Thomas Corwin
 
 ## License (MIT)
 
@@ -24,4 +24,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 ## Third-Party Notices
 
 For third-party license terms and copyrights, please refer to the
-[THIRD_PARTY_NOTICES.md](https://github.com/tom-corwin/LibUISharp/blob/master/THIRD_PARTY_NOTICES.md) file.
+[THIRD_PARTY_NOTICES.md](https://github.com/tom-corwin/libuisharp/blob/master/THIRD_PARTY_NOTICES.md) file.
