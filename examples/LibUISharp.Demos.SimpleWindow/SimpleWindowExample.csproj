@@ -1,0 +1,11 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* FileName:             SimpleWindowExample.csproj
+* Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<ProjectReference Include="../../sources/LibUISharp.Core/LibUISharp.Core.csproj" />
+		<ProjectReference Include="../../sources/LibUISharp.Core/LibUISharp.UI.csproj" />
+	</ItemGroup>
+</Project>
