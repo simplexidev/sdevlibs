@@ -36,7 +36,9 @@ namespace LibUISharp.UI
                 QueueMain(action);
                 Libui.uiMain();
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 return -1;
             }
@@ -51,8 +53,8 @@ namespace LibUISharp.UI
 
         public static void Shutdown() => Libui.uiQuit();
 
-        private static void Steps() => Libui.uiMainSteps();
-        private static bool Step(bool wait) => Libui.uiMainStep(wait);
+        //TODO: private static void Steps() => Libui.uiMainSteps();
+        //TODO: private static bool Step(bool wait) => Libui.uiMainStep(wait);
 
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static bool OnShouldQuitFunc(IntPtr data)
