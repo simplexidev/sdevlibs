@@ -4,6 +4,7 @@
 ***********************************************************************************************************************/
 
 using System;
+using System.Collections.Generic;
 
 namespace LibUISharp.Runtime.InteropServices
 {
@@ -13,7 +14,8 @@ namespace LibUISharp.Runtime.InteropServices
     public abstract class NativeComponent : Disposable
     {
         private bool isInitialized;
-        private unsafe void* handle = null;
+        private IntPtr handle = IntPtr.Zero;
+        protected static readonly Dictionary<IntPtr, NativeComponent> cache = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeComponent"/> class.
@@ -61,15 +63,16 @@ namespace LibUISharp.Runtime.InteropServices
         /// <summary>
         /// The native handle for this <see cref="NativeComponent"/>.
         /// </summary>
-        public unsafe void* Handle
+        public IntPtr Handle
         {
             get => handle;
             protected set
             {
-                if (handle is not null) throw new Exception("Handle has already been created and cannot be recreated at this time. Dispose the NativeCmponent first, and try again.");
+                if (handle != IntPtr.Zero) throw new Exception("Handle has already been created and cannot be recreated at this time. Dispose the NativeCmponent first.");
                 if (handle == value) return;
                 OnPropertyChanging(nameof(Handle));
                 handle = value;
+                cache.Add(Handle, this);
                 OnPropertyChanged(nameof(Handle));
             }
         }
@@ -163,6 +166,7 @@ namespace LibUISharp.Runtime.InteropServices
         /// <inheritdoc/>
         protected override void ReleaseUnmanagedResources()
         {
+            cache.Remove(Handle);
             DestroyHandle();
             base.ReleaseUnmanagedResources();
         }

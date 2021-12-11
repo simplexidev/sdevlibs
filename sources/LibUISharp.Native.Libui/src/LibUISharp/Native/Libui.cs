@@ -29,7 +29,7 @@ namespace LibUISharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct uiInitOptions
         {
-            public uint* Size;
+            public UIntPtr Size;
         }
 
         /*TODO: [NativeCall]*/ public static partial byte* uiInit(uiInitOptions* options);
@@ -37,11 +37,11 @@ namespace LibUISharp.Native
         /*TODO: [NativeCall]*/ public static partial void uiFreeInitError(byte* err);
         /*TODO: [NativeCall]*/ public static partial void uiMain();
         /*TODO: [NativeCall]*/ public static partial void uiMainSteps();
-        /*TODO: [NativeCall]*/ public static partial int uiMainStep(int wait);
+        /*TODO: [NativeCall]*/ public static partial bool uiMainStep(bool wait);
         /*TODO: [NativeCall]*/ public static partial void uiQuit();
         /*TODO: [NativeCall]*/ public static partial void uiQueueMain(delegate* unmanaged[Cdecl]<IntPtr, void> f, IntPtr data);
         /*TODO: [NativeCall]*/ public static partial void uiTimer(int milliseconds, delegate* unmanaged[Cdecl]<IntPtr, int> f, IntPtr data);
-        /*TODO: [NativeCall]*/ public static partial void uiOnShouldQuit(delegate* unmanaged[Cdecl]<IntPtr, void> f, IntPtr data);
+        /*TODO: [NativeCall]*/ public static partial void uiOnShouldQuit(delegate* unmanaged[Cdecl]<IntPtr, bool> f, IntPtr data);
         /*TODO: [NativeCall]*/ public static partial void uiFreeText(byte* text);
 
         //// public struct uiControl { }
@@ -57,7 +57,7 @@ namespace LibUISharp.Native
         /*TODO: [NativeCall]*/ public static partial bool uiControlEnabled(IntPtr c);
         /*TODO: [NativeCall]*/ public static partial void uiControlEnable(IntPtr c);
         /*TODO: [NativeCall]*/ public static partial void uiControlDisable(IntPtr c);
-        //// [NativeCall] public static partial IntPtr uiAllocControl(uint* n, uint OSsig, uint typesig, IntPtr typenamestr);
+        //// [NativeCall] public static partial IntPtr uiAllocControl(UIntPtr n, uint OSsig, uint typesig, IntPtr typenamestr);
         //// [NativeCall] public static partial void uiFreeControl(IntPtr c);
         /*TODO: [NativeCall]*/ public static partial void uiControlVerifySetParent(IntPtr c1, IntPtr c2);
         /*TODO: [NativeCall]*/ public static partial bool uiControlEnabledToUser(IntPtr c);
@@ -69,7 +69,7 @@ namespace LibUISharp.Native
         /*TODO: [NativeCall]*/ public static partial void uiWindowSetContentSize(IntPtr w, int width, int height);
         /*TODO: [NativeCall]*/ public static partial int uiWindowFullscreen(IntPtr w);
         /*TODO: [NativeCall]*/ public static partial void uiWindowSetFullscreen(IntPtr w, bool fullscreen);
-        /*TODO: [NativeCall]*/ public static partial void uiWindowOnContentSizeChanged(IntPtr w, delegate* unmanaged[Cdecl]<IntPtr, IntPtr, bool> f, IntPtr data);
+        /*TODO: [NativeCall]*/ public static partial void uiWindowOnContentSizeChanged(IntPtr w, delegate* unmanaged[Cdecl]<IntPtr, void> f, IntPtr data);
         /*TODO: [NativeCall]*/ public static partial void uiWindowOnClosing(IntPtr w, delegate* unmanaged[Cdecl]<IntPtr, IntPtr, bool> f, IntPtr data);
         /*TODO: [NativeCall]*/ public static partial int uiWindowBorderless(IntPtr w);
         /*TODO: [NativeCall]*/ public static partial void uiWindowSetBorderless(IntPtr w, bool borderless);

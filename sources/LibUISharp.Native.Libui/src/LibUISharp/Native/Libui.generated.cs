@@ -27,7 +27,7 @@ namespace LibUISharp.Native
         public static partial void uiMainSteps() => ((delegate* unmanaged[Cdecl]<void>)__assembly__.LoadFuncPtr(nameof(uiMainSteps)))();
 
         //TODO: [GeneratedCode("LibUISharp.CodeAnalysis.NativeCallGenerator", "1.0.0")]
-        public static partial int uiMainStep(int wait) => ((delegate* unmanaged[Cdecl]<int, int>)__assembly__.LoadFuncPtr(nameof(uiMainStep)))(wait);
+        public static partial bool uiMainStep(bool wait) => ((delegate* unmanaged[Cdecl]<bool, bool>)__assembly__.LoadFuncPtr(nameof(uiMainStep)))(wait);
 
         //TODO: [GeneratedCode("LibUISharp.CodeAnalysis.NativeCallGenerator", "1.0.0")]
         public static partial void uiQuit() => ((delegate* unmanaged[Cdecl]<void>)__assembly__.LoadFuncPtr(nameof(uiQuit)))();
@@ -39,7 +39,7 @@ namespace LibUISharp.Native
         public static partial void uiTimer(int milliseconds, delegate* unmanaged[Cdecl]<IntPtr, int> f, IntPtr data) => ((delegate* unmanaged[Cdecl]<int, delegate* unmanaged[Cdecl]<IntPtr, int>, IntPtr, void>)__assembly__.LoadFuncPtr(nameof(uiTimer)))(milliseconds, f, data);
 
         //TODO: [GeneratedCode("LibUISharp.CodeAnalysis.NativeCallGenerator", "1.0.0")]
-        public static partial void uiOnShouldQuit(delegate* unmanaged[Cdecl]<IntPtr, void> f, IntPtr data) => ((delegate* unmanaged[Cdecl]<delegate* unmanaged[Cdecl]<IntPtr, void>, IntPtr, void>)__assembly__.LoadFuncPtr(nameof(uiOnShouldQuit)))(f, data);
+        public static partial void uiOnShouldQuit(delegate* unmanaged[Cdecl]<IntPtr, bool> f, IntPtr data) => ((delegate* unmanaged[Cdecl]<delegate* unmanaged[Cdecl]<IntPtr, bool>, IntPtr, void>)__assembly__.LoadFuncPtr(nameof(uiOnShouldQuit)))(f, data);
 
         //TODO: [GeneratedCode("LibUISharp.CodeAnalysis.NativeCallGenerator", "1.0.0")]
         public static partial void uiFreeText(byte* text) => ((delegate* unmanaged[Cdecl]<byte*, void>)__assembly__.LoadFuncPtr(nameof(uiFreeText)))(text);
@@ -111,7 +111,7 @@ namespace LibUISharp.Native
         public static partial void uiWindowSetFullscreen(IntPtr w, bool fullscreen) => ((delegate* unmanaged[Cdecl]<IntPtr, bool, void>)__assembly__.LoadFuncPtr(nameof(uiWindowSetFullscreen)))(w, fullscreen);
 
         //TODO: [GeneratedCode("LibUISharp.CodeAnalysis.NativeCallGenerator", "1.0.0")]
-        public static partial void uiWindowOnContentSizeChanged(IntPtr w, delegate* unmanaged[Cdecl]<IntPtr, IntPtr, bool> f, IntPtr data) => ((delegate* unmanaged[Cdecl]<IntPtr, delegate* unmanaged[Cdecl]<IntPtr, IntPtr, bool>, IntPtr, void>)__assembly__.LoadFuncPtr(nameof(uiWindowOnContentSizeChanged)))(w, f, data);
+        public static partial void uiWindowOnContentSizeChanged(IntPtr w, delegate* unmanaged[Cdecl]<IntPtr, void> f, IntPtr data) => ((delegate* unmanaged[Cdecl]<IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void>, IntPtr, void>)__assembly__.LoadFuncPtr(nameof(uiWindowOnContentSizeChanged)))(w, f, data);
 
         //TODO: [GeneratedCode("LibUISharp.CodeAnalysis.NativeCallGenerator", "1.0.0")]
         public static partial void uiWindowOnClosing(IntPtr w, delegate* unmanaged[Cdecl]<IntPtr, IntPtr, bool> f, IntPtr data) => ((delegate* unmanaged[Cdecl]<IntPtr, delegate* unmanaged[Cdecl]<IntPtr, IntPtr, bool>, IntPtr, void>)__assembly__.LoadFuncPtr(nameof(uiWindowOnClosing)))(w, f, data);

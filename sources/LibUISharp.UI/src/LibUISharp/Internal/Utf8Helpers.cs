@@ -22,7 +22,7 @@ namespace LibUISharp.Internal
             fixed (byte* retValPtr = retVal) { return retValPtr; }
         }
 
-        internal static string GetUtf16String(byte* ptr)
+        internal static string GetUtf16String(byte* ptr, bool isInitStr = true)
         {
             if (ptr is null || ptr == IntPtr.Zero.ToPointer()) return string.Empty;
             int len;
@@ -31,7 +31,10 @@ namespace LibUISharp.Internal
                 if (rawBytes[len] == 0) break;
             if (len == 0) return string.Empty;
             string retVal = Encoding.UTF8.GetString(rawBytes, 0, len);
-            Libui.uiFreeText(ptr);
+            if (isInitStr && (ptr is not null && ptr != IntPtr.Zero.ToPointer()))
+                LibUISharp.uiFreeInitError(ptr);
+            if (!isInitStr)
+                Libui.uiFreeText(ptr);
             return retVal;
         }
     }
