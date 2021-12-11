@@ -8,6 +8,9 @@ using System.Runtime.InteropServices;
 
 namespace LibUISharp.UI
 {
+    /// <summary>
+    /// Represents a window that makes up an application's user interface.
+    /// </summary>
     public unsafe class Window : Control
     {
         private string title;
@@ -15,14 +18,45 @@ namespace LibUISharp.UI
         private bool fullscreen, borderless, margined, hasMenu;
         private Control child;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// </summary>
+        /// <param name="title">The title to be displayed at the top of the window.</param>
+        /// <param name="hasMenu">Whether this form has a menu at the top or not.</param>
         public Window(string title, bool hasMenu = false) : this(title, 600, 400, hasMenu) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// </summary>
+        /// <param name="title">The title to be displayed at the top of the window.</param>
+        /// <param name="width">The width of the content size.</param>
+        /// <param name="height">The height of the content size.</param>
+        /// <param name="hasMenu">Whether this form has a menu at the top or not.</param>
         public Window(string title, int width, int height, bool hasMenu = false) : base(title, width, height, hasMenu) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// </summary>
+        /// <param name="title">The title to be displayed at the top of the window.</param>
+        /// <param name="contentSize">The content size of the window.</param>
+        /// <param name="hasMenu">Whether this form has a menu at the top or not.</param>
         public Window(string title, (int, int) contentSize, bool hasMenu = false) : this(title, contentSize.Item1, contentSize.Item2, hasMenu) { }
 
+        /// <summary>
+        /// Occurs when the window is closing.
+        /// </summary>
         public event EventHandler<Window, CancelEventArgs> Closing;
+
+        /// <summary>
+        /// Occurs when the content size of the window changes.
+        /// </summary>
         public event EventHandler<Window, EventArgs> SizeChanged;
 
         public bool HasMenu => hasMenu;
+
+        /// <summary>
+        /// Gets or sets the title of the window.
+        /// </summary>
         public string Title
         {
             get => title;
@@ -36,6 +70,10 @@ namespace LibUISharp.UI
                 OnPropertyChanged(nameof(Title));
             }
         }
+
+        /// <summary>
+        /// Gets or sets the content size of the window.
+        /// </summary>
         public (int, int) ContentSize
         {
             get => contentSize;
@@ -49,6 +87,10 @@ namespace LibUISharp.UI
                 OnPropertyChanged(nameof(ContentSize));
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value determining whether the window is fullscreen or not.
+        /// </summary>
         public bool Fullscreen
         {
             get => fullscreen;
@@ -62,6 +104,10 @@ namespace LibUISharp.UI
                 OnPropertyChanged(nameof(Fullscreen));
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value determining whether or nor the window is borderless.
+        /// </summary>
         public bool Borderless
         {
             get => borderless;
@@ -75,6 +121,10 @@ namespace LibUISharp.UI
                 OnPropertyChanged(nameof(Borderless));
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value determining whether or nor the window is margined.
+        /// </summary>
         public bool Margined
         {
             get => margined;
@@ -88,6 +138,10 @@ namespace LibUISharp.UI
                 OnPropertyChanged(nameof(Margined));
             }
         }
+
+        /// <summary>
+        /// Gets or sets the child control for this window.
+        /// </summary>
         public Control Child
         {
             get => child;
@@ -102,12 +156,16 @@ namespace LibUISharp.UI
             }
         }
 
+        /// <summary>
+        /// Closes and diposes the window.
+        /// </summary>
         public void Close()
         {
             Hide();
             Dispose();
         }
 
+        /// <inheritdoc/>
         protected override void StartInitialization(params object[] args)
         {
             base.StartInitialization(args);
@@ -115,12 +173,16 @@ namespace LibUISharp.UI
             contentSize = ((int)args[1], (int)args[2]);
             hasMenu = (bool)args[3];
         }
+
+        /// <inheritdoc/>
         protected override void CreateHandle(params object[] args)
         {
             ArgumentNullException.ThrowIfNull(args);
             Handle = Libui.uiNewWindow(Utf8Helper.GetUtf8Pointer((string)args[0]), (int)args[1], (int)args[2], (bool)args[3]);
             base.CreateHandle(args);
         }
+
+        /// <inheritdoc/>
         protected override void EndInitialization()
         {
             if (Handle == IntPtr.Zero)
@@ -129,6 +191,8 @@ namespace LibUISharp.UI
             Libui.uiWindowOnClosing(Handle, &OnClosingFunc, IntPtr.Zero);
             Libui.uiWindowOnContentSizeChanged(Handle, &OnSizeChangedFunc, IntPtr.Zero);
         }
+
+        /// <inheritdoc/>
         protected override void DestroyHandle()
         {
             if (child != null)
@@ -138,7 +202,16 @@ namespace LibUISharp.UI
             }
             base.DestroyHandle();
         }
+
+        /// <summary>
+        /// Raises the <see cref="Closing"/> event.
+        /// </summary>
+        /// <param name="e">The event data.</param>
         protected internal virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
+
+        /// <summary>
+        /// Raises the <see cref="SizeChanged"/> event.
+        /// </summary>
         protected internal virtual void OnSizeChanged() => SizeChanged?.Invoke(this, EventArgs.Empty);
 
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
