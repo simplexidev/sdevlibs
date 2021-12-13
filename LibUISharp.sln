@@ -11,6 +11,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.UI", "sources\Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.CodeAnalysis.NativeCallGenerator", "sources\LibUISharp.CodeAnalysis.NativeCallGenerator\LibUISharp.CodeAnalysis.NativeCallGenerator.csproj", "{2C4C8254-2812-42B3-AF52-ED0782996859}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.UI.Extras", "sources\LibUISharp.UI.Extras\LibUISharp.UI.Extras.csproj", "{5F123117-FB01-43F0-90C3-FA059E6EF02E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Native.Miniaudio", "sources\LibUISharp.Native.Miniaudio\LibUISharp.Native.Miniaudio.csproj", "{A38FFC16-3212-44B6-8C2B-B5290D0E6BDE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Audio", "sources\LibUISharp.Audio\LibUISharp.Audio.csproj", "{3FB3838C-86A2-4D80-A32E-2B06E0D502DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.Native.Zstd", "sources\LibUISharp.Native.Zstd\LibUISharp.Native.Zstd.csproj", "{51E3BDAE-632D-4C70-A6A4-F95D5D923D69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibUISharp.IO.Compression", "sources\LibUISharp.IO.Compression\LibUISharp.IO.Compression.csproj", "{C30B3A88-4974-4C0C-81B8-BB61DB3E3B7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +43,26 @@ Global
 		{2C4C8254-2812-42B3-AF52-ED0782996859}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4C8254-2812-42B3-AF52-ED0782996859}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C4C8254-2812-42B3-AF52-ED0782996859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F123117-FB01-43F0-90C3-FA059E6EF02E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F123117-FB01-43F0-90C3-FA059E6EF02E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F123117-FB01-43F0-90C3-FA059E6EF02E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F123117-FB01-43F0-90C3-FA059E6EF02E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A38FFC16-3212-44B6-8C2B-B5290D0E6BDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A38FFC16-3212-44B6-8C2B-B5290D0E6BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A38FFC16-3212-44B6-8C2B-B5290D0E6BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A38FFC16-3212-44B6-8C2B-B5290D0E6BDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FB3838C-86A2-4D80-A32E-2B06E0D502DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FB3838C-86A2-4D80-A32E-2B06E0D502DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FB3838C-86A2-4D80-A32E-2B06E0D502DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FB3838C-86A2-4D80-A32E-2B06E0D502DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51E3BDAE-632D-4C70-A6A4-F95D5D923D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E3BDAE-632D-4C70-A6A4-F95D5D923D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E3BDAE-632D-4C70-A6A4-F95D5D923D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E3BDAE-632D-4C70-A6A4-F95D5D923D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C30B3A88-4974-4C0C-81B8-BB61DB3E3B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30B3A88-4974-4C0C-81B8-BB61DB3E3B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30B3A88-4974-4C0C-81B8-BB61DB3E3B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C30B3A88-4974-4C0C-81B8-BB61DB3E3B7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
