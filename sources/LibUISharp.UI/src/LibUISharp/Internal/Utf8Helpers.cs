@@ -32,7 +32,7 @@ namespace LibUISharp.Internal
             if (len == 0) return string.Empty;
             string retVal = Encoding.UTF8.GetString(rawBytes, 0, len);
             if (isInitStr && (ptr is not null && ptr != IntPtr.Zero.ToPointer()))
-                LibUISharp.uiFreeInitError(ptr);
+                Libui.uiFreeInitError(ptr);
             if (!isInitStr)
                 Libui.uiFreeText(ptr);
             return retVal;

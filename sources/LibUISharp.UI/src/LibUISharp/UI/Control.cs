@@ -104,7 +104,7 @@ namespace LibUISharp.UI
         /// <inheritdoc/>
         protected override void DestroyHandle()
         {
-            if (Handle is not null)
+            if (Handle != IntPtr.Zero)
                 Libui.uiControlDestroy(Handle);
             base.DestroyHandle();
         }

@@ -8,7 +8,7 @@
 		<DefineConstants>$(DefineConstants);LIBUISHARP_NATIVE_LIBUI</DefineConstants>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
-	<ItemGroup>
+	<!--<ItemGroup>
 		<Content Include="lib\linux-x64\libui.so">
 			<PackagePath>runtimes\linux-x64\libui.so</PackagePath>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -29,12 +29,9 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<Pack>true</Pack>
 		</Content>
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Remove="src\LibUISharp\Native\Libui\**" />
-	</ItemGroup>
+	</ItemGroup>-->
 	<ItemGroup>
 		<ProjectReference Include="..\LibUISharp.Core\LibUISharp.Core.csproj" />
-		<ProjectReference Include="..\LibUISharp.CodeAnalysis.NativeCallGenerator\LibUISharp.CodeAnalysis.NativeCallGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+		<!--<ProjectReference Include="..\LibUISharp.CodeAnalysis.NativeCallGenerator\LibUISharp.CodeAnalysis.NativeCallGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />-->
 	</ItemGroup>
 </Project>

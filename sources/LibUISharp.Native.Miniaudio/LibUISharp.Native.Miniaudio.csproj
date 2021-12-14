@@ -8,19 +8,17 @@
 		<DefineConstants>$(DefineConstants);LIBUISHARP_NATIVE_MINIAUDIO</DefineConstants>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
-	<ItemGroup>
+	<!--<ItemGroup>
 		<Content Include="lib\linux-x64\miniaudio.so">
 			<PackagePath>runtimes\linux-x64\miniaudio.so</PackagePath>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<Pack>true</Pack>
 		</Content>
-		<!--
-		<Content Include="lib\freebsd-x64\miniaudio.so.2">
+		<Content Include="lib\linux-x64\miniaudio.so">
 			<PackagePath>runtimes\freebsd-x64\miniaudio.so</PackagePath>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<Pack>true</Pack>
 		</Content>
-		-->
 		<Content Include="lib\osx-x64\miniaudio.dylib">
 			<PackagePath>runtimes\osx-x64\miniaudio.dylib</PackagePath>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -31,8 +29,9 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<Pack>true</Pack>
 		</Content>
-	</ItemGroup>
+	</ItemGroup>-->
 	<ItemGroup>
-	  <ProjectReference Include="..\LibUISharp.Core\LibUISharp.Core.csproj" />
+		<ProjectReference Include="..\LibUISharp.Core\LibUISharp.Core.csproj" />
+		<!--<ProjectReference Include="..\LibUISharp.CodeAnalysis.NativeCallGenerator\LibUISharp.CodeAnalysis.NativeCallGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />-->
 	</ItemGroup>
 </Project>
