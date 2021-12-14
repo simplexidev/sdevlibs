@@ -9,7 +9,7 @@
     <LibUISharpProjectCategory>examples</LibUISharpProjectCategory>
   </PropertyGroup>
   
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('global.props', '$(MSBuildThisFileDirectory)../'))" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>

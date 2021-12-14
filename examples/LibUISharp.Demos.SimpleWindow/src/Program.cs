@@ -1,3 +1,3 @@
 ﻿using LibUISharp.UI;
 
-new Application().Run(new Window());
+Application.Run(new Window());
