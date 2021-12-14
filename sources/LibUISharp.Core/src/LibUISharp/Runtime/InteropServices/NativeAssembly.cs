@@ -70,7 +70,7 @@ namespace LibUISharp.Runtime.InteropServices
         /// is exported from the native library.</exception>
         public T LoadFuncPtr<T>(string name)
         {
-            IntPtr functionPtr = (IntPtr)asmLoader.LoadFunctionPointer(Handle, name);
+            IntPtr functionPtr = (IntPtr)asmLoader.LoadFunctionPointer(Handle.ToPointer(), name);
             return functionPtr != IntPtr.Zero
                 ? Marshal.GetDelegateForFunctionPointer<T>(functionPtr)
                 : throw new InvalidOperationException($"No function was found with the name {name}.");
@@ -81,14 +81,14 @@ namespace LibUISharp.Runtime.InteropServices
         /// </summary>
         /// <param name="name">The name of the native export.</param>
         /// <returns>A function pointer for the given name, or 0 if no function with that name exists.</returns>
-        public IntPtr LoadFuncPtr(string name) => (IntPtr)asmLoader.LoadFunctionPointer(Handle, name);
+        public IntPtr LoadFuncPtr(string name) => (IntPtr)asmLoader.LoadFunctionPointer(Handle.ToPointer(), name);
 
         /// <summary>
         /// Loads a function pointer with the given name.
         /// </summary>
         /// <param name="name">The name of the native export.</param>
         /// <returns>A function pointer for the given name, or 0 if no function with that name exists.</returns>
-        public void* LoadUnsafeFuncPtr(string name) => asmLoader.LoadFunctionPointer(Handle, name);
+        public void* LoadUnsafeFuncPtr(string name) => asmLoader.LoadFunctionPointer(Handle.ToPointer(), name);
 
         /// <inheritdoc/>
         protected override void StartInitialization(params object[] args)
@@ -102,16 +102,16 @@ namespace LibUISharp.Runtime.InteropServices
         /// <inheritdoc/>
         protected override void CreateHandle(params object[] args)
         {
-            Handle = args.Length == 3
+            Handle = (IntPtr)(args.Length == 3
                 ? asmLoader.LoadAssembly((string)args[0], (NativeAssemblyResolver)args[2])
-                : asmLoader.LoadAssembly((string[])args.SkipLast(2).ToArray(), (NativeAssemblyResolver)args[^1]);
+                : asmLoader.LoadAssembly((string[])args.SkipLast(2).ToArray(), (NativeAssemblyResolver)args[^1]));
             base.CreateHandle(args);
         }
 
         /// <inheritdoc/>
         protected override void DestroyHandle()
         {
-            _ = asmLoader.FreeNativeLibrary(Handle);
+            _ = asmLoader.FreeNativeLibrary((void*)Handle);
             base.DestroyHandle();
         }
     }

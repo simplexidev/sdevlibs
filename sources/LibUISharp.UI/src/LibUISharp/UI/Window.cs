@@ -23,6 +23,13 @@ namespace LibUISharp.UI
         /// </summary>
         /// <param name="title">The title to be displayed at the top of the window.</param>
         /// <param name="hasMenu">Whether this form has a menu at the top or not.</param>
+        public Window(bool hasMenu = false) : this("Window", 600, 400, hasMenu) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// </summary>
+        /// <param name="title">The title to be displayed at the top of the window.</param>
+        /// <param name="hasMenu">Whether this form has a menu at the top or not.</param>
         public Window(string title, bool hasMenu = false) : this(title, 600, 400, hasMenu) { }
 
         /// <summary>
@@ -224,7 +231,7 @@ namespace LibUISharp.UI
                 if (((Window)cache[window]) != Application.MainWindow)
                     ((Window)cache[window]).Close();
                 else
-                    Application.Current.Shutdown();
+                    Application.Shutdown();
             }
             return !args.Cancel;
         }

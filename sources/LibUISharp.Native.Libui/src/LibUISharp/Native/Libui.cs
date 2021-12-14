@@ -78,6 +78,7 @@ namespace LibUISharp.Native
         [NativeCall] public static partial void uiWindowSetMargined(IntPtr w, bool margined);
         [NativeCall] public static partial IntPtr uiNewWindow(byte* title, int width, int height, bool hasMenubar);
         
+        /*
         [NativeCall] public static partial byte* uiButtonText(IntPtr b);
         [NativeCall] public static partial void uiButtonSetText(IntPtr b, byte* text);
         [NativeCall] public static partial void uiButtonOnClicked(IntPtr b, delegate* unmanaged[Cdecl]<IntPtr, IntPtr, void> f, IntPtr data);
@@ -109,5 +110,6 @@ namespace LibUISharp.Native
         [NativeCall] public static partial byte* uiLabelText(IntPtr l);
         [NativeCall] public static partial void uiLabelSetText(IntPtr l, byte* text);
         [NativeCall] public static partial IntPtr uiNewLabel(byte* text);
+        */
     }
 }

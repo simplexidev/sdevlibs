@@ -87,8 +87,12 @@ namespace LibUISharp.UI
                     Console.WriteLine(errStr);
                     throw new Exception(errStr);
                 }
-                Libui.uiOnShouldQuit(&OnShouldQuitFunc, IntPtr.Zero);
             }
+        }
+
+        protected override void EndInitialization()
+        {
+                Libui.uiOnShouldQuit(&OnShouldQuitFunc, IntPtr.Zero);
         }
 
         protected override void ReleaseUnmanagedResources()
