@@ -74,7 +74,7 @@ stages:
 # LibUISharp.UI.Extras
 - template: ./.azp/stages/libuisharp.yml
   parameters:
-    projectId: 'UI'
+    projectId: 'UIExtras'
     projectName: 'LibUISharp.UI.Extras'
     dependsOn:
     - Build_Core
