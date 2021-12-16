@@ -18,8 +18,7 @@ parameters:
   type: string
   default: ''
   values:
-  - 'stable'
-  - 'preview'
+  - 'release'
   - 'build'
 
 steps:
@@ -34,9 +33,7 @@ steps:
     ${{ if ne(variables['Agent.OS'], 'Windows_NT') }}:
       packagesToPush: '$(Build.Repository.LocalPath)/build/${{ parameters.projectType }}/${{ parameters.projectName }}/Release/pkg/*.nupkg'
     nugetFeedType: 'external'
-    ${{ if eq(parameters['releaseType'], 'stable') }}:
+    ${{ if eq(parameters['releaseType'], 'release') }}:
       publishFeedCredentials: 'LibUISharpNuGetFeed'
-    ${{ if eq(parameters['releaseType'], 'preview') }}:
-      publishFeedCredentials: 'LibUISharpMyGetFeed'
     ${{ if eq(parameters['releaseType'], 'build') }}:
-      publishFeedCredentials: 'LibUISharpGitHubFeed'
+      publishFeedCredentials: 'LibUISharpMyGetFeed'
