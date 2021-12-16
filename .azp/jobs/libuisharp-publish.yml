@@ -1,0 +1,47 @@
+########################################################################################################################
+# FileName:             libuisharp-publish.yml
+# Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+########################################################################################################################
+
+parameters:
+- name: name
+  type: string
+  default: ''
+- name: displayName
+  type: string
+  default: ''
+- name: projectName
+  type: string
+  default: ''
+- name: projectType
+  type: string
+  default: 'sources'
+  values:
+  - 'sources'
+  #- 'examples'
+  #- 'tests'
+
+jobs:
+- job: '${{ parameters.name }}_Publish'
+  displayName: '${{ parameters.displayName }} (Publish)'
+  pool:
+    vmImage: 'windows-latest'
+  workspace:
+    clean: all
+  steps:
+  - template: ../steps/dotnet-install.yml
+  - template: ../steps/dotnet-build.yml
+    parameters:
+      projectName: '${{ parameters.projectName }}'
+      projectType: '${{ parameters.projectType }}'
+      configuration: 'Release'
+  - template: ../steps/nuget-push.yml
+    parameters:
+      projectName: '${{ parameters.projectName }}'
+      projectType: '${{ parameters.projectType }}'
+      ${{ if eq(contains(variables['Build.SourceBranchName'], 'release/v'), true) }}:
+        releaseType: 'stable'
+      ${{ if eq(contains(variables['Build.SourceBranchName'], 'release/preview/v'), true) }}:
+        releaseType: 'preview'
+      ${{ if eq(contains(variables['Build.SourceBranchName'], 'release/'), false) }}:
+        releaseType: 'build'

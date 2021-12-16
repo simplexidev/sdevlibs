@@ -1,0 +1,97 @@
+########################################################################################################################
+# FileName:             libuisharp.yml
+# Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+########################################################################################################################
+
+parameters:
+- name: projectId
+  type: string
+  default: ''
+- name: projectName
+  type: string
+  default: ''
+- name: projectType
+  type: string
+  default: 'sources'
+  values:
+  - 'sources'
+# - 'examples'
+# - 'tests'
+- name: dependsOn
+  type: object
+  default: []
+
+stages:
+
+- stage: 'Build_${{ parameters.projectId }}'
+  displayName: 'Build (${{ parameters.projectName }})'
+  dependsOn: ${{ parameters.dependsOn }}
+  jobs:
+  - template: ../jobs/libuisharp-build.yml
+    parameters:
+      name: 'Build_${{ parameters.projectId }}_Windows2019'
+      displayName: Build (${{ parameters.projectName }}) (Windows 2019)
+      projectName: ${{ parameters.projectName }}
+      projectType: ${{ parameters.projectType }}
+      pool:
+        vmImage: 'windows-2019'
+  - template: ../jobs/libuisharp-build.yml
+    parameters:
+      name: 'Build_${{ parameters.projectId }}_Windows2022'
+      displayName: Build (${{ parameters.projectName }}) (Windows 2022)
+      projectName: ${{ parameters.projectName }}
+      projectType: ${{ parameters.projectType }}
+      pool:
+        vmImage: 'windows-2022'
+  - template: ../jobs/libuisharp-build.yml
+    parameters:
+      name: 'Build_${{ parameters.projectId }}_Ubuntu1804'
+      displayName: Build (${{ parameters.projectName }}) (Ubuntu 18.04)
+      projectName: ${{ parameters.projectName }}
+      projectType: ${{ parameters.projectType }}
+      pool:
+        vmImage: 'ubuntu-18.04'
+  - template: ../jobs/libuisharp-build.yml
+    parameters:
+      name: 'Build_${{ parameters.projectId }}_Ubuntu2004'
+      displayName: Build (${{ parameters.projectName }}) (Ubuntu 20.04)
+      projectName: ${{ parameters.projectName }}
+      projectType: ${{ parameters.projectType }}
+      pool:
+        vmImage: 'ubuntu-20.04'
+  - template: ../jobs/libuisharp-build.yml
+    parameters:
+      name: 'Build_${{ parameters.projectId }}_macOS1014'
+      displayName: Build (${{ parameters.projectName }}) (macOS 10.14)
+      projectName: ${{ parameters.projectName }}
+      projectType: ${{ parameters.projectType }}
+      pool:
+        vmImage: 'macOS-10.14'
+  - template: ../jobs/libuisharp-build.yml
+    parameters:
+      name: 'Build_${{ parameters.projectId }}_macOS1015'
+      displayName: Build (${{ parameters.projectName }}) (macOS 10.15)
+      projectName: ${{ parameters.projectName }}
+      projectType: ${{ parameters.projectType }}
+      pool:
+        vmImage: 'macOS-10.15'
+  - template: ../jobs/libuisharp-build.yml
+    parameters:
+      name: 'Build_${{ parameters.projectId }}_macOS11'
+      displayName: Build (${{ parameters.projectName }}) (macOS 11)
+      projectName: ${{ parameters.projectName }}
+      projectType: ${{ parameters.projectType }}
+      pool:
+        vmImage: 'macOS-11'
+
+- stage: 'Publish_${{ parameters.projectId }}'
+  displayName: 'Publish (${{ parameters.projectName }})'
+  dependsOn:
+  - Build_${{ parameters.projectID }}
+  jobs:
+  - template: ../jobs/libuisharp-publish.yml
+    parameters:
+      name: 'Publish_${{ parameters.projectId }}_AnyOS'
+      displayName: Publish (${{ parameters.projectName }}) (Any OS)
+      projectName: ${{ parameters.projectName }}
+      projectType: ${{ parameters.projectType }}

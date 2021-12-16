@@ -1,0 +1,120 @@
+########################################################################################################################
+# FileName:             azp.yml
+# Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+########################################################################################################################
+
+name: $(Date:yyMMdd)$(Rev:rr)
+
+trigger:
+  batch: false
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - enhancement/*
+    - release/v*
+    - release/preview/v*
+  paths:
+    exclude:
+    - "*.md"
+    - ".gitignore"
+    - ".gitattributes"
+    - ".editorconfig"
+    - ".github/*"
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - enhancement/*
+  paths:
+    exclude:
+    - "*.md"
+    - ".gitignore"
+    - ".gitattributes"
+    - ".editorconfig"
+    - ".github/*"
+
+stages:
+
+# LibUISharp.Core
+- template: ./.azp/stages/libuisharp.yml
+  parameters:
+    projectId: 'Core'
+    projectName: 'LibUISharp.Core'
+
+# LibUISharp.CodeAnalysis.NativeCallGenerator
+#- template: ./.azp/stages/libuisharp.yml
+#  parameters:
+#    projectId: 'NativeCallGenerator'
+#    projectName: 'LibUISharp.CodeAnalysis.NativeCallGenerator'
+#    dependsOn:
+#    - Build_Core
+
+# LibUISharp.Native.Libui
+- template: ./.azp/stages/libuisharp.yml
+  parameters:
+    projectId: 'NativeLibui'
+    projectName: 'LibUISharp.Native.Libui'
+    dependsOn:
+    - Build_Core
+    #- Build_NativeCallGenerator
+    
+# LibUISharp.UI
+- template: ./.azp/stages/libuisharp.yml
+  parameters:
+    projectId: 'UI'
+    projectName: 'LibUISharp.UI'
+    dependsOn:
+    - Build_Core
+    - Build_NativeLibui
+    
+# LibUISharp.UI.Extras
+- template: ./.azp/stages/libuisharp.yml
+  parameters:
+    projectId: 'UI'
+    projectName: 'LibUISharp.UI.Extras'
+    dependsOn:
+    - Build_Core
+    - Build_NativeLibui
+    - Build_UI
+    
+# LibUISharp.Native.Miniaudio
+- template: ./.azp/stages/libuisharp.yml
+  parameters:
+    projectId: 'NativeMiniaudio'
+    projectName: 'LibUISharp.Native.Miniaudio'
+    dependsOn:
+    - Build_Core
+    #- Build_NativeCallGenerator
+    
+# LibUISharp.Audio
+- template: ./.azp/stages/libuisharp.yml
+  parameters:
+    projectId: 'Audio'
+    projectName: 'LibUISharp.Audio'
+    dependsOn:
+    - Build_Core
+    - Build_NativeMiniaudio
+    
+# LibUISharp.Native.Zstd
+- template: ./.azp/stages/libuisharp.yml
+  parameters:
+    projectId: 'NativeZstd'
+    projectName: 'LibUISharp.Native.Zstd'
+    dependsOn:
+    - Build_Core
+    #- Build_NativeCallGenerator
+    
+# LibUISharp.IO.Compression
+- template: ./.azp/stages/libuisharp.yml
+  parameters:
+    projectId: 'IOCompression'
+    projectName: 'LibUISharp.IO.Compression'
+    dependsOn:
+    - Build_Core
+    - Build_NativeZstd
