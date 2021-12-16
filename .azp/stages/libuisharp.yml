@@ -61,14 +61,6 @@ stages:
         vmImage: 'ubuntu-20.04'
   - template: ../jobs/libuisharp-build.yml
     parameters:
-      name: 'Build_${{ parameters.projectId }}_macOS1014'
-      displayName: Build (${{ parameters.projectName }}) (macOS 10.14)
-      projectName: ${{ parameters.projectName }}
-      projectType: ${{ parameters.projectType }}
-      pool:
-        vmImage: 'macOS-10.14'
-  - template: ../jobs/libuisharp-build.yml
-    parameters:
       name: 'Build_${{ parameters.projectId }}_macOS1015'
       displayName: Build (${{ parameters.projectName }}) (macOS 10.15)
       projectName: ${{ parameters.projectName }}
