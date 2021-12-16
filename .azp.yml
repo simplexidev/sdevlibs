@@ -10,9 +10,10 @@ trigger:
   branches:
     include:
     - main
+    - enhancement/*
     - feature/*
     - hotfix/*
-    - enhancement/*
+    - internal/*
     - release/v*
     - release/preview/v*
   paths:
@@ -28,9 +29,12 @@ pr:
   branches:
     include:
     - main
+    - enhancement/*
     - feature/*
     - hotfix/*
-    - enhancement/*
+    - internal/*
+    - release/v*
+    - release/preview/v*
   paths:
     exclude:
     - "*.md"
