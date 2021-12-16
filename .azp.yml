@@ -3,17 +3,13 @@
 # Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
 ########################################################################################################################
 
-name: $(Date:yyMMdd)$(Rev:rr)
+name: $(Date:yyMMdd)$(Rev:.rr)
 
 trigger:
   batch: false
   branches:
     include:
     - main
-    - enhancement/*
-    - feature/*
-    - hotfix/*
-    - internal/*
     - release/v*
     - release/preview/v*
   paths:
@@ -33,8 +29,6 @@ pr:
     - feature/*
     - hotfix/*
     - internal/*
-    - release/v*
-    - release/preview/v*
   paths:
     exclude:
     - "*.md"

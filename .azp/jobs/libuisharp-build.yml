@@ -31,7 +31,7 @@ jobs:
   workspace:
     clean: all
   steps:
-  - template: ../steps/dotnet-install.yml
+  - template: ../steps/install-dotnet-sdk.yml
   - template: ../steps/dotnet-build.yml
     parameters:
       projectName: '${{ parameters.projectName }}'
@@ -44,7 +44,7 @@ jobs:
   workspace:
     clean: all
   steps:
-  - template: ../steps/dotnet-install.yml
+  - template: ../steps/install-dotnet-sdk.yml
   - template: ../steps/dotnet-build.yml
     parameters:
       projectName: '${{ parameters.projectName }}'
