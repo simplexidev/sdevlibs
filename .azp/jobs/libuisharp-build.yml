@@ -38,7 +38,7 @@ jobs:
       projectType: '${{ parameters.projectType }}'
       configuration: 'Debug'
 
-- job: '${{ parameters.jobNamePrefix }}_Release'
+- job: '${{ parameters.name }}_Release'
   displayName: '${{ parameters.displayName }} (Release)'
   pool: ${{ parameters.pool }}
   workspace:

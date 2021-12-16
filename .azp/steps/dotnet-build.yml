@@ -29,7 +29,7 @@ steps:
   inputs:
     command: 'build'
     ${{ if eq(variables['Agent.OS'], 'Windows_NT') }}:
-      projects: '$(Build.Repository.LocalPath)\${{ parameters.projectCategory }}\${{ parameters.projectName }}\${{ parameters.projectName }}.csproj'
+      projects: '$(Build.Repository.LocalPath)\${{ parameters.projectType }}\${{ parameters.projectName }}\${{ parameters.projectName }}.csproj'
     ${{ if ne(variables['Agent.OS'], 'Windows_NT') }}:
-      projects: '$(Build.Repository.LocalPath)/${{ parameters.projectCategory }}/${{ parameters.projectName }}/${{ parameters.projectName }}.csproj'
+      projects: '$(Build.Repository.LocalPath)/${{ parameters.projectType }}/${{ parameters.projectName }}/${{ parameters.projectName }}.csproj'
     arguments: '--nologo --force -c Release -p:_IsAutoBuild=true'
