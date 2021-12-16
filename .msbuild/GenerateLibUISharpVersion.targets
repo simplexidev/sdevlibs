@@ -19,7 +19,7 @@
         <![CDATA[
           string timestamp = DateTime.Now.ToString("yyMMdd");
           bool hasGitFolder = Directory.Exists(DotGitPath);
-          /* if (hasGitFolder)
+          if (hasGitFolder)
           {
               string[] gitFetchHead = File.ReadAllLines(Path.Combine(DotGitPath, "FETCH_HEAD"));
               string commitID = gitFetchHead[0].Substring(0, 7);
@@ -40,7 +40,7 @@
                       BuildVersion = $"{VersionInput}-build-{timestamp}-{commitID}";
               }
           }
-          else */
+          else
               BuildVersion = $"{VersionInput}-local-{timestamp}";
         ]]>
       </Code>
