@@ -1,77 +1,75 @@
-<small>**This README is being rewritten, and may contain outdated, inaccurate, and/or be missing information.**</small>
+[![GitHubWatchers.Image]][GitHubWatchers.Link]
+[![GitHubForks.Image]][GitHubForks.Link]
+[![GitHubStars.Image]][GitHubStars.Link]
+[![Gitter.Image]][Gitter.Link]
 
-[![Repo.Size.Badge]][Repo.Link]
-[![Repo.TopLang.Badge]][Repo.Link]
-[![Repo.Contributors.Badge]][Repo.Contributors.Link]
-[![Gitter.Badge]][Gitter.Link]
+***NOTICE**: This project is going to soon be renamed. See discussion #41 for more information.*
+
+***NOTICE**: This project is in early alpha, and is still a work-in-progress. This software should not be considered
+stable, nor used in a stable production environment.*
 
 # LibUISharp
 
-<!--TODO: Add 1-2 paragraphs summarizing LibUISharp. -->
- 
-LibUISharp is a library containing bindings for [andlabs/libui][andlabs.libui.Link].
+<!--TODO: Add a proper summary of what this project is, and what API it provides. -->
+
+LibUISharp, or *LibUI#*, is a collection of API to help create cross polatform graphical
+applications using .NET 6.
+
+This project is a work-in-progress, and some of the underlying native API is still in alpha.
 
 ## Contributing
 
-[![Repo.Issues.Open.Badge]][Repo.Issues.Open.Link]
-[![Repo.Issues.Closed.Badge]][Repo.Issues.Closed.Link]
-[![Repo.Issues.HelpWanted.Badge]][Repo.Issues.HelpWanted.Link]
-[![Repo.Issues.GoodFirstIssue.Badge]][Repo.Issues.GoodFirstIssue.Link]
+[![GitHubOpenIssues.Image]][GitHubOpenIssues.Link]
+[![GitHubClosedIssues.Image]][GitHubClosedIssues.Link]  
+[![GitHubOpenPulls.Image]][GitHubOpenPulls.Link]
+[![GitHubMergedPulls.Image]][GitHubMergedPulls.Link]
+[![GitHubClosedPulls.Image]][GitHubClosedPulls.Link]
 
-Contributing is as easy as filing an issue, fixing a bug, or suggesting a new feature. For more information about
-contributing to this project, see the [CONTRIBUTING.md][Repo.Contributing.Link] file.
+Contributing is as easy as filing an issue, fixing a bug, starting a discussion, or suggesting a new feature. For more
+information about contributing to this project, see the [CONTRIBUTING.md][CONTRIBUTINGmd] file.
 
 ## Project Status
 
 [![Codacy.Badge]][Codacy.Link]
 [![Dependabot.Badge]][Dependabot.Link]
 
-This repository was recently unarchived and I am currently in the process of moving code from the `TCDFx.UI` library in
-[tom-corwin/tcdfx][tomcorwin.tcdfx.Link].
+As mentioned above, this project is not stable and should not be used in a production environment.
 
-LibUISharp should still be considered a work-in-progress and should not be used in a production environment. The API is
-subject to change at anytime due to the [API remodeling in libui][andlabs.libui.remodel.Link].
+<!--TODO: Mention libui being alpha -->
 
 ### Build Status
 
-We use [Azure Pipelines][AzurePipelines.Link] for our CI builds. Although we currently only run builds on the following
-platforms, LibUISharp can be built and used on any [platform supported by .NET Core 3.0][DotNetCore.SupportedOS.Link].
+We currently use [Azure DevOps][Build.Link] for our automated build process. While we only build for a few platforms, our packages
+*should* be able to be used on any platform [supported by .NET 6][NET6SupportedOS].
 
-| <big><sub>Platform</sub>&nbsp;<sup>Configuration</sup></big> | Debug                                            | Release                                            |
-| :----------------------------------------------------------- | -----------------------------------------------: | -------------------------------------------------: |
-| **Windows 8.1 (x86)**                                        | [![Build.Windows81x86.Debug.Badge]][Build.Link]  | [![Build.Windows81x86.Release.Badge]][Build.Link]  |
-| **Windows 8.1 (x64)**                                        | [![Build.Windows81x64.Debug.Badge]][Build.Link]  | [![Build.Windows81x64.Release.Badge]][Build.Link]  |
-| **Windows 10 (x86)**                                         | [![Build.Windows10x86.Debug.Badge]][Build.Link]  | [![Build.Windows10x86.Release.Badge]][Build.Link]  |
-| **Windows 10 (x64)**                                         | [![Build.Windows10x64.Debug.Badge]][Build.Link]  | [![Build.Windows10x64.Release.Badge]][Build.Link]  |
-| **Ubuntu 16.04 (x64)**                                       | [![Build.Ubuntu1604x64.Debug.Badge]][Build.Link] | [![Build.Ubuntu1604x64.Release.Badge]][Build.Link] |
-| **Ubuntu 18.04 (x64)**                                       | [![Build.Ubuntu1804x64.Debug.Badge]][Build.Link] | [![Build.Ubuntu1804x64.Release.Badge]][Build.Link] |
-| **macOS 10.13 (x64)**                                        | [![Build.macOS1013x64.Debug.Badge]][Build.Link]  | [![Build.macOS1013x64.Release.Badge]][Build.Link]  |
-| **macOS 10.14 (x64)**                                        | [![Build.macOS1014x64.Debug.Badge]][Build.Link]  | [![Build.macOS1014x64.Release.Badge]][Build.Link]  |
+| Package                               | Status                                                                                                                                                                                                                                             |
+| :------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LibUISharp.Audio                      | [![Build.Audio.Windows2019]][Build.Link]<br/>[![Build.Audio.Windows2022]][Build.Link]<br/>[![Build.Audio.Ubuntu1804]][Build.Link]<br/>[![Build.Audio.Ubuntu2004]][Build.Link]<br/>[![Build.Audio.macOS1015]][Build.Link]<br/>[![Build.Audio.macOS11]][Build.Link]                                                                                                                         |
+| LibUISharp.Build.Annotations          | [![Build.BuildAnnotations.Windows2019]][Build.Link]<br/>[![Build.BuildAnnotations.Windows2022]][Build.Link]<br/>[![Build.BuildAnnotations.Ubuntu1804]][Build.Link]<br/>[![Build.BuildAnnotations.Ubuntu2004]][Build.Link]<br/>[![Build.BuildAnnotations.macOS1015]][Build.Link]<br/>[![Build.BuildAnnotations.macOS11]][Build.Link]                                                 |
+| LibUISharp.Build.NativeCallGenerator  | [![Build.BuildNativeCallGenerator.Windows2019]][Build.Link]<br/>[![Build.BuildNativeCallGenerator.Windows2022]][Build.Link]<br/>[![Build.BuildNativeCallGenerator.Ubuntu1804]][Build.Link]<br/>[![Build.BuildNativeCallGenerator.Ubuntu2004]][Build.Link]<br/>[![Build.BuildNativeCallGenerator.macOS1015]][Build.Link]<br/>[![Build.BuildNativeCallGenerator.macOS11]][Build.Link] |
+| LibUISharp.Core                       | [![Build.Core.Windows2019]][Build.Link]<br/>[![Build.Core.Windows2022]][Build.Link]<br/>[![Build.Core.Ubuntu1804]][Build.Link]<br/>[![Build.Core.Ubuntu2004]][Build.Link]<br/>[![Build.Core.macOS1015]][Build.Link]<br/>[![Build.Core.macOS11]][Build.Link] |
+| LibUISharp.IO.Compression             | [![Build.IOCompression.Windows2019]][Build.Link]<br/>[![Build.IOCompression.Windows2022]][Build.Link]<br/>[![Build.IOCompression.Ubuntu1804]][Build.Link]<br/>[![Build.IOCompression.Ubuntu2004]][Build.Link]<br/>[![Build.IOCompression.macOS1015]][Build.Link]<br/>[![Build.IOCompression.macOS11]][Build.Link] |
+| LibUISharp.Native.Libui               | [![Build.NativeLibui.Windows2019]][Build.Link]<br/>[![Build.NativeLibui.Windows2022]][Build.Link]<br/>[![Build.NativeLibui.Ubuntu1804]][Build.Link]<br/>[![Build.NativeLibui.Ubuntu2004]][Build.Link]<br/>[![Build.NativeLibui.macOS1015]][Build.Link]<br/>[![Build.NativeLibui.macOS11]][Build.Link] |
+| LibUISharp.Native.Miniaudio           | [![Build.NativeMiniaudio.Windows2019]][Build.Link]<br/>[![Build.NativeMiniaudio.Windows2022]][Build.Link]<br/>[![Build.NativeMiniaudio.Ubuntu1804]][Build.Link]<br/>[![Build.NativeMiniaudio.Ubuntu2004]][Build.Link]<br/>[![Build.NativeMiniaudio.macOS1015]][Build.Link]<br/>[![Build.NativeMiniaudio.macOS11]][Build.Link] |
+| LibUISharp.Native.Zstd                | [![Build.NativeZstd.Windows2019]][Build.Link]<br/>[![Build.NativeZstd.Windows2022]][Build.Link]<br/>[![Build.NativeZstd.Ubuntu1804]][Build.Link]<br/>[![Build.NativeZstd.Ubuntu2004]][Build.Link]<br/>[![Build.NativeZstd.macOS1015]][Build.Link]<br/>[![Build.NativeZstd.macOS11]][Build.Link] |
+| LibUISharp.UI                         | [![Build.UI.Windows2019]][Build.Link]<br/>[![Build.UI.Windows2022]][Build.Link]<br/>[![Build.UI.Ubuntu1804]][Build.Link]<br/>[![Build.UI.Ubuntu2004]][Build.Link]<br/>[![Build.UI.macOS1015]][Build.Link]<br/>[![Build.UI.macOS11]][Build.Link] |
+| LibUISharp.UI.Extras                  | [![Build.UIExtras.Windows2019]][Build.Link]<br/>[![Build.UIExtras.Windows2022]][Build.Link]<br/>[![Build.UIExtras.Ubuntu1804]][Build.Link]<br/>[![Build.UIExtras.Ubuntu2004]][Build.Link]<br/>[![Build.UIExtras.macOS1015]][Build.Link]<br/>[![Build.UIExtras.macOS11]][Build.Link] |
 
-### Current Packages
+### Current Releases
 
-Stable and preview packages will be released onto NuGet (when they are released).
+Stable and preview packages are published on [NuGet][NuGetorg]. Our CI builds are published to [MyGet][MyGetorg].
 
-CI builds are are published to [GitHub][Repo.Packages].
-
-<!--TODO: Package Badges/Links -->
+<!--TODO: Table of release badges (stable, preview, other) -->
 
 ## Using LibUISharp Packages
 
 For examples, see the `examples\` directory.
 
-### Runtime Prerequisites
-
-| Operating System | Prerequisites                                  |
-| :--------------- | :----------------------------------------------|
-| Windows 7/8.1/10 | Microsoft .NET Core 3.0 Runtime                |
-| Linux            | Microsoft .NET Core 3.0 Runtime<br/>GTK+ 3.10+ |
-| macOS            | Microsoft .NET Core 3.0 Runtime                |
-
 ### Utilizing Pre-Built Packages
 
 While following these instructions:
 
+  * Replace `{YourProject}` with the the name of your project file.  
   * Replace `{PackageName}` with the package you want to use.  
   * Replace `{PackageVersion}` with the version of the package.
 
@@ -80,69 +78,108 @@ While following these instructions:
 Run the following command in a command-line interface:
 
 ```
-dotnet add {YourProject} package LibUISharp -v 1.0.0-build-{BuildNumber} -s https://nuget.pkg.github.com/tom-corwin/index.json
+dotnet add {YourProject} package {PackageName} -v {PackageName}
 ```
 
 ### Building From Source
 
-You can build the packages just by installing the prerequisites and running a single. Use the steps below to get started!
-
-#### Build Prerequisites
-
-| Operating System | Prerequisites               |
-| :--------------- | :---------------------------|
-| Windows 7/8.1/10 | Microsoft .NET Core 3.0 SDK |
-| Linux            | Microsoft .NET Core 3.0 SDK |
-| macOS            | Microsoft .NET Core 3.0 SDK |
-
-#### Build Using a CLI
-
-Run the following command in a command-line interface in the root directory of this repository:
+You can build the packages by installing the [.NET 6 SDK][NET6Sdk] and using the following command in the root of the repository:
 
 ```
-dotnet build dirs.proj
+dotnet build libuisharp.sln
 ```
 
-[Repo.Size.Badge]: https://img.shields.io/github/repo-size/tom-corwin/libuisharp.svg?color=grey&label=Size&logo=github
-[Repo.Link]: https://github.com/tom-corwin/libuisharp
-[Repo.TopLang.Badge]: https://img.shields.io/github/languages/top/tom-corwin/libuisharp.svg?color=grey&label=C%23&logo=github
-[Repo.Contributors.Badge]: https://img.shields.io/github/contributors/tom-corwin/libuisharp.svg?color=grey&label=Contributors&logo=github
-[Repo.Contributors.Link]: https://github.com/tom-corwin/libuisharp/graphs/contributors
-[Repo.Issues.Open.Badge]: https://img.shields.io/github/issues-raw/tom-corwin/libuisharp.svg?color=grey&label=Open%20Issues&logo=github
-[Repo.Issues.Open.Link]: https://github.com/tom-corwin/libuisharp/issues?&q=is%3Aissue+is%3Aopen
-[Repo.Issues.Closed.Badge]: https://img.shields.io/github/issues-closed-raw/tom-corwin/libuisharp.svg?color=grey&label=Closed%20Issues&logo=github
-[Repo.Issues.Closed.Link]: https://github.com/tom-corwin/libuisharp/issues?&q=is%3Aissue+is%3Aclosed
-[Repo.Issues.HelpWanted.Badge]: https://img.shields.io/github/issues-raw/tom-corwin/libuisharp/HelpWanted.svg?color=grey&label=Help%20Wanted%20Issues&logo=github
-[Repo.Issues.HelpWanted.Link]: https://github.com/tom-corwin/libuisharp/issues?q=is%3Aissue+is%3Aopen+label%3A%22HelpWanted%22
-[Repo.Issues.GoodFirstIssue.Badge]: https://img.shields.io/github/issues-raw/tom-corwin/libuisharp/GoodFirstIssue.svg?color=grey&label=Good%20First%20Issues&logo=github
-[Repo.Issues.GoodFirstIssue.Link]: https://github.com/tom-corwin/libuisharp/issues?q=is%3Aissue+is%3Aopen+label%3A%22GoodFirstIssue%22
-[Repo.Contributing.Link]: https://github.com/tom-corwin/libuisharp/blob/CONTRIBUTING.md
-[Repo.Packages]: https://github.com/tom-corwin/libuisharp/packages
+[LibUISharp]: https://github.com/tom-corwin/libuisharp
+[CONTRIBUTINGmd]: https://github.com/tom-corwin/libuisharp/blob/main/CONTRIBUTING.md
+[Gitter.Image]: https://img.shields.io/gitter/room/tom-corwin/libuisharp.svg?label=Chat&logo=gitter
+[Gitter.Link]: https://gitter.im/tom-corwin/libuisharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+[GitHubWatchers.Image]: https://badgen.net/github/watchers/tom-corwin/libuisharp?label=Watchers&icon=github&color=black
+[GitHubWatchers.Link]: https://github.com/tom-corwin/libuisharp/watchers
+[GitHubForks.Image]: https://badgen.net/github/forks/tom-corwin/libuisharp?label=Forks&icon=github&color=black
+[GitHubForks.Link]: https://github.com/tom-corwin/libuisharp/network/members
+[GitHubStars.Image]: https://badgen.net/github/stars/tom-corwin/libuisharp?label=Stars&icon=github&color=black
+[GitHubStars.Link]: https://github.com/tom-corwin/libuisharp/stargazers
+[GitHubOpenIssues.Image]: https://badgen.net/github/open-issues/tom-corwin/libuisharp?label=Open%20Issues&icon=github&color=green
+[GitHubOpenIssues.Link]: https://github.com/tom-corwin/libuisharp/issues?q=is%3Aissue+is%3Aopen
+[GitHubClosedIssues.Image]: https://badgen.net/github/closed-issues/tom-corwin/libuisharp?label=Open%20Issues&icon=github&color=red
+[GitHubClosedIssues.Link]: https://github.com/tom-corwin/libuisharp/issues?q=is%3Aissue+is%3Aclosed
+[GitHubOpenPulls.Image]: https://badgen.net/github/open-prs/tom-corwin/libuisharp?label=Open%20PRs&icon=github&color=green
+[GitHubOpenPulls.Link]: https://github.com/tom-corwin/libuisharp/pulls?q=is%3Apr+is%3Aopen
+[GitHubMergedPulls.Image]: https://badgen.net/github/merged-prs/tom-corwin/libuisharp?label=Merged%20PRs&icon=github&color=purple
+[GitHubMergedPulls.Link]: https://github.com/tom-corwin/libuisharp/pulls?q=is%3Apr+is%3Amerged
+[GitHubClosedPulls.Image]: https://badgen.net/github/closed-prs/tom-corwin/libuisharp?label=Closed%20PRs&icon=github&color=red
+[GitHubClosedPulls.Link]: https://github.com/tom-corwin/libuisharp/pulls?q=is%3Apr+is%3Aclosed
+[GitHubRepoSize.Image]: https://img.shields.io/github/repo-size/tom-corwin/libuisharp?color=black&label=Size&logo=github&style=flat-square
+[GitHubDiscussions.Image]: https://img.shields.io/github/discussions/tom-corwin/libuisharp?color=black&label=Discussions&logo=github
+[GitHubDiscussions.Link]: https://github.com/tom-corwin/libuisharp/discussions
+[GitHubLanguages.Image]: https://img.shields.io/github/languages/count/tom-corwin/libuisharp?color=black&label=Languages&logo=github&style=flat-square
+[GitHubSponsors.Image]: https://img.shields.io/github/sponsors/tom-corwin?color=black&label=Sponsors&logo=github&style=flat-square
 [Codacy.Badge]: https://img.shields.io/codacy/grade/2140aa3a23a848a28391aa3c778b9526/master.svg?label=Codacy+Grade&logo=codacy
 [Codacy.Link]: https://www.codacy.com/app/tom-corwin/libuisharp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tom-corwin/libuisharp&amp;utm_campaign=Badge_Grade
 [Dependabot.Badge]: https://badgen.net/dependabot/tom-corwin/libuisharp?icon=dependabot
 [Dependabot.Link]: https://api.dependabot.com/badges/status?host=github&repo=tom-corwin/libuisharp
-[Gitter.Badge]: https://img.shields.io/gitter/room/tom-corwin/libuisharp.svg?label=Chat&logo=gitter
-[Gitter.Link]: https://gitter.im/tom-corwin/libuisharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
-[tomcorwin.tcdfx.Link]: https://github.com/tom-corwin/tcdfx
-[andlabs.libui.Link]: https://github.com/andlabs/libui
-[andlabs.libui.remodel.Link]: https://github.com/andlabs/libui/tree/remodel
-[AzurePipelines.Link]: https://azure.microsoft.com/en-us/services/devops/pipelines/
-[DotNetCore.SupportedOS.Link]: https://github.com/dotnet/core/blob/master/release-notes/3.0/3.0-supported-os.md
-[Build.Link]: https://dev.azure.com/tom-corwin/libuisharp/_build/latest?definitionId=15&branchName=master
-[Build.Windows81x86.Debug.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Windows81x86_Debug
-[Build.Windows81x86.Release.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Windows81x86_Release
-[Build.Windows81x64.Debug.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Windows81x64_Debug
-[Build.Windows81x64.Release.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Windows81x64_Release
-[Build.Windows10x86.Debug.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Windows10x86_Debug
-[Build.Windows10x86.Release.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Windows10x86_Release
-[Build.Windows10x64.Debug.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Windows10x64_Debug
-[Build.Windows10x64.Release.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Windows10x64_Release
-[Build.Ubuntu1604x64.Debug.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Ubuntu1604x64_Debug
-[Build.Ubuntu1604x64.Release.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Ubuntu1604x64_Release
-[Build.Ubuntu1804x64.Debug.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Ubuntu1804x64_Debug
-[Build.Ubuntu1804x64.Release.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=Ubuntu1804x64_Release
-[Build.macOS1013x64.Debug.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=macOS1013x64_Debug
-[Build.macOS1013x64.Release.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=macOS1013x64_Release
-[Build.macOS1014x64.Debug.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=macOS1014x64_Debug
-[Build.macOS1014x64.Release.Badge]: https://dev.azure.com/tom-corwin/libuisharp/_apis/build/status/libuisharp?branchName=master&jobName=macOS1014x64_Release
+[NET6SupportedOS]: https://github.com/dotnet/core/blob/main/release-notes/6.0/supported-os.md
+[NET6Sdk]: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+[NuGetorg]: https://nuget.org
+[MyGetorg]: https://myget.org
+[Build.Link]: https://dev.azure.com/libuisharp/libuisharp/_build?definitionId=1
+[Build.Audio.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Audio&jobName=Build_Audio_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.Audio.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Audio&jobName=Build_Audio_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.Audio.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Audio&jobName=Build_Audio_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.Audio.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Audio&jobName=Build_Audio_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.Audio.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Audio&jobName=Build_Audio_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.Audio.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Audio&jobName=Build_Audio_macOS11&label=macOS%2011&logo=apple&logoColor=white
+[Build.BuildAnnotations.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildAnnotations&jobName=Build_BuildAnnotations_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.BuildAnnotations.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildAnnotations&jobName=Build_BuildAnnotations_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.BuildAnnotations.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildAnnotations&jobName=Build_BuildAnnotations_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.BuildAnnotations.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildAnnotations&jobName=Build_BuildAnnotations_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.BuildAnnotations.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildAnnotations&jobName=Build_BuildAnnotations_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.BuildAnnotations.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildAnnotations&jobName=Build_BuildAnnotations_macOS11&label=macOS%2011&logo=apple&logoColor=white
+[Build.BuildNativeCallGenerator.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildNativeCallGenerator&jobName=Build_BuildNativeCallGenerator_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.BuildNativeCallGenerator.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildNativeCallGenerator&jobName=Build_BuildNativeCallGenerator_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.BuildNativeCallGenerator.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildNativeCallGenerator&jobName=Build_BuildNativeCallGenerator_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.BuildNativeCallGenerator.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildNativeCallGenerator&jobName=Build_BuildNativeCallGenerator_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.BuildNativeCallGenerator.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildNativeCallGenerator&jobName=Build_BuildNativeCallGenerator_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.BuildNativeCallGenerator.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_BuildNativeCallGenerator&jobName=Build_BuildNativeCallGenerator_macOS11&label=macOS%2011&logo=apple&logoColor=white
+[Build.Core.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Core&jobName=Build_Core_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.Core.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Core&jobName=Build_Core_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.Core.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Core&jobName=Build_Core_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.Core.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Core&jobName=Build_Core_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.Core.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Core&jobName=Build_Core_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.Core.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_Core&jobName=Build_Core_macOS11&label=macOS%2011&logo=apple&logoColor=white
+[Build.IOCompression.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_IOCompression&jobName=Build_IOCompression_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.IOCompression.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_IOCompression&jobName=Build_IOCompression_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.IOCompression.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_IOCompression&jobName=Build_IOCompression_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.IOCompression.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_IOCompression&jobName=Build_IOCompression_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.IOCompression.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_IOCompression&jobName=Build_IOCompression_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.IOCompression.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_IOCompression&jobName=Build_IOCompression_macOS11&label=macOS%2011&logo=apple&logoColor=white
+[Build.NativeLibui.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeLibui&jobName=Build_NativeLibui_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.NativeLibui.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeLibui&jobName=Build_NativeLibui_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.NativeLibui.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeLibui&jobName=Build_NativeLibui_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.NativeLibui.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeLibui&jobName=Build_NativeLibui_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.NativeLibui.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeLibui&jobName=Build_NativeLibui_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.NativeLibui.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeLibui&jobName=Build_NativeLibui_macOS11&label=macOS%2011&logo=apple&logoColor=white
+[Build.NativeMiniaudio.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeMiniaudio&jobName=Build_NativeMiniaudio_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.NativeMiniaudio.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeMiniaudio&jobName=Build_NativeMiniaudio_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.NativeMiniaudio.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeMiniaudio&jobName=Build_NativeMiniaudio_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.NativeMiniaudio.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeMiniaudio&jobName=Build_NativeMiniaudio_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.NativeMiniaudio.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeMiniaudio&jobName=Build_NativeMiniaudio_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.NativeMiniaudio.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeMiniaudio&jobName=Build_NativeMiniaudio_macOS11&label=macOS%2011&logo=apple&logoColor=white
+[Build.NativeZstd.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeZstd&jobName=Build_NativeZstd_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.NativeZstd.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeZstd&jobName=Build_NativeZstd_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.NativeZstd.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeZstd&jobName=Build_NativeZstd_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.NativeZstd.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeZstd&jobName=Build_NativeZstd_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.NativeZstd.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeZstd&jobName=Build_NativeZstd_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.NativeZstd.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_NativeZstd&jobName=Build_NativeZstd_macOS11&label=macOS%2011&logo=apple&logoColor=white
+[Build.UI.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UI&jobName=Build_UI_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.UI.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UI&jobName=Build_UI_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.UI.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UI&jobName=Build_UI_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.UI.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UI&jobName=Build_UI_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.UI.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UI&jobName=Build_UI_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.UI.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UI&jobName=Build_UI_macOS11&label=macOS%2011&logo=apple&logoColor=white
+[Build.UIExtras.Windows2019]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UIExtras&jobName=Build_UIExtras_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.UIExtras.Windows2022]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UIExtras&jobName=Build_UIExtras_Windows2022&label=Windows%202022&logo=windows&logoColor=white
+[Build.UIExtras.Ubuntu1804]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UIExtras&jobName=Build_UIExtras_Ubuntu1804&label=Ubuntu%2018.04&logo=ubuntu&logoColor=white
+[Build.UIExtras.Ubuntu2004]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UIExtras&jobName=Build_UIExtras_Ubuntu2004&label=Ubuntu%2020.04&logo=ubuntu&logoColor=white
+[Build.UIExtras.macOS1015]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UIExtras&jobName=Build_UIExtras_macOS1015&label=macOS%2010.15&logo=apple&logoColor=white
+[Build.UIExtras.macOS11]: https://img.shields.io/azure-devops/build/libuisharp/be4f542d-f3e2-4d7f-a73e-59ec30ed86db/1/main?stageName=Build_UIExtras&jobName=Build_UIExtras_macOS11&label=macOS%2011&logo=apple&logoColor=white
