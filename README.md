@@ -28,6 +28,8 @@ This project is a work-in-progress, and some of the underlying native API is sti
 Contributing is as easy as filing an issue, fixing a bug, starting a discussion, or suggesting a new feature. For more
 information about contributing to this project, see the [CONTRIBUTING.md][CONTRIBUTINGmd] file.
 
+Please hold off on submitting pull requests until #39 is merged. If you would like to prepare that pull request anyways, please use the branch `feature/internal/new-infrastructre`.
+
 ## Project Status
 
 [![Codacy.Badge]][Codacy.Link]
