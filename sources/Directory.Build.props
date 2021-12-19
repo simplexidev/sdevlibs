@@ -32,7 +32,7 @@
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
   </PropertyGroup>
 
-  <PropertyGroup Condition="('$(_IsAutoBuild)|$(Configuration)' == 'true|Release')">
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageOutputPath>$(LibUISharpProjectBuildPkgPath)</PackageOutputPath>
   </PropertyGroup>

@@ -6,7 +6,8 @@
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_IsAutoBuild Condition="'$(_IsAutoBuild)' == ''">false</_IsAutoBuild>
+    <_CIBuildNumber Condition="'$(_CIBuildNumber)' == ''"></_CIBuildNumber>
+    <_GitBranch Condition="'$(_GitBranch)' == ''"></_GitBranch>
   </PropertyGroup>
   
   <Import Project="$(MSBuildThisFileDirectory).msbuild/BuildPaths.props" />
