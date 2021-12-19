@@ -10,7 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace LibUISharp.CodeAnalysis
+namespace LibUISharp.Build
 {
     //TODO: Get information about the attributes (i.e. property values) and use the values for generation.
     //TODO: Only generate methods if marked with NativeCallAttribute.

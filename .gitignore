@@ -48,7 +48,9 @@ test-results/
 # Misc. Files
 ##############################
 ## Build Directories
-[Bb]uild/
+build/
+!sources/LibUISharp.Build.Annotations/src/LibUISharp/Build/
+!sources/LibUISharp.Build.NativeCallGenerator/src/LibUISharp/Build/
 [Bb]in/
 [Oo]bj/
 [Dd]ebug/

@@ -1,17 +1,10 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* FileName:             LibUISharp.CodeAnalysis.NativeCallGenerator.csproj
+* FileName:             LibUISharp.Build.Annotations.csproj
 * Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="16.0" InitialTargets="GenerateLibUISharpVersion" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<DefineConstants>$(DefineConstants);LIBUISHARP_CODEANALYSIS_NATIVECALLGENERATOR</DefineConstants>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DefineConstants>$(DefineConstants);LIBUISHARP_BUILD_ANNOTATIONS</DefineConstants>
 	</PropertyGroup>
-	<ItemGroup>
-		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\LibUISharp.Core\LibUISharp.Core.csproj"/>
-	</ItemGroup>
 </Project>
