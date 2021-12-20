@@ -1,3 +1,5 @@
+***This project will be renamed from `libuisharp` to `sdfx` once pull request #39 is merged. It will contain the renamed files, as well as the new API for .NET 6.***
+
 <small>**This README is being rewritten, and may contain outdated, inaccurate, and/or be missing information.**</small>
 
 [![Repo.Size.Badge]][Repo.Link]
