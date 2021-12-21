@@ -1,6 +1,6 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * FileName:             PlatformExample.csproj
-* Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+* Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
@@ -8,6 +8,6 @@
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="../../sources/LibUISharp.Core/LibUISharp.Core.csproj" />
+		<ProjectReference Include="../../sources/SimplexiDev.Core/SimplexiDev.Core.csproj" />
 	</ItemGroup>
 </Project>

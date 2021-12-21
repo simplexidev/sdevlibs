@@ -48,9 +48,11 @@ test-results/
 # Misc. Files
 ##############################
 ## Build Directories
-build/
-!sources/LibUISharp.Build.Annotations/src/LibUISharp/Build/
-!sources/LibUISharp.Build.NativeCallGenerator/src/LibUISharp/Build/
+
+build/!sources/SimplexiDev.Build.Annotations/
+!sources/SimplexiDev.Build.Annotations/src/SimplexiDev/Build/
+!sources/SimplexiDev.Build.NativeCallGenerator/
+!sources/SimplexiDev.Build.NativeCallGenerator/src/SimplexiDev/Build/
 [Bb]in/
 [Oo]bj/
 [Dd]ebug/

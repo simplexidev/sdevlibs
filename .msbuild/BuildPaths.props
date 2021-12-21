@@ -1,28 +1,28 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~ FileName:             BuildPaths.props
-~ Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+~ Copyright/License:    https://github.com/simplexidev/sdfx/blob/master/LICENSE.md
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <LibUISharpRepoPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), global.json)).\</LibUISharpRepoPath>
-    <LibUISharpProjectBasePath>$(LibUISharpRepoPath)$(LibUISharpProjectCategory)\</LibUISharpProjectBasePath>
-    <LibUISharpProjectPath>$(LibUISharpProjectBasePath)$(MSBuildProjectName)</LibUISharpProjectPath>
+    <SDFxRepoPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), global.json)).\</SDFxRepoPath>
+    <SDFxProjectBasePath>$(SDFxRepoPath)$(SDFxProjectType)\</SDFxProjectBasePath>
+    <SDFxProjectPath>$(SDFxProjectBasePath)$(MSBuildProjectName)</SDFxProjectPath>
   </PropertyGroup>
 
   <PropertyGroup>
-    <LibUISharpBaseBuildPath>$(LibUISharpRepoPath)build\</LibUISharpBaseBuildPath>
-    <LibUISharpProjectCategoryBuildPath>$(LibUISharpBaseBuildPath)$(LibUISharpProjectCategory)\</LibUISharpProjectCategoryBuildPath>
-    <LibUISharpProjectBuildPath>$(LibUISharpProjectCategoryBuildPath)$(MSBuildProjectName)\$(Configuration)\</LibUISharpProjectBuildPath>
-    <LibUISharpProjectBuildBinPath>$(LibUISharpProjectBuildPath)bin\</LibUISharpProjectBuildBinPath>
-    <LibUISharpProjectBuildObjPath>$(LibUISharpProjectBuildPath)obj\</LibUISharpProjectBuildObjPath>
-    <LibUISharpProjectBuildDocPath>$(LibUISharpProjectBuildPath)doc\</LibUISharpProjectBuildDocPath>
-    <LibUISharpProjectBuildPkgPath>$(LibUISharpProjectBuildPath)pkg\</LibUISharpProjectBuildPkgPath>
+    <SDFxBaseBuildPath>$(SDFxRepoPath)build\</SDFxBaseBuildPath>
+    <SDFxProjectTypeBuildPath>$(SDFxBaseBuildPath)$(SDFxProjectType)\</SDFxProjectTypeBuildPath>
+    <SDFxProjectBuildPath>$(SDFxProjectTypeBuildPath)$(MSBuildProjectName)\$(Configuration)\</SDFxProjectBuildPath>
+    <SDFxProjectBuildBinPath>$(SDFxProjectBuildPath)bin\</SDFxProjectBuildBinPath>
+    <SDFxProjectBuildObjPath>$(SDFxProjectBuildPath)obj\</SDFxProjectBuildObjPath>
+    <SDFxProjectBuildDocPath>$(SDFxProjectBuildPath)doc\</SDFxProjectBuildDocPath>
+    <SDFxProjectBuildPkgPath>$(SDFxProjectBuildPath)pkg\</SDFxProjectBuildPkgPath>
 
-    <BaseOutputPath>$(LibUISharpProjectBuildBinPath)</BaseOutputPath>
+    <BaseOutputPath>$(SDFxProjectBuildBinPath)</BaseOutputPath>
     <OutputPath>$(BaseOutputPath)</OutputPath>
-    <BaseIntermediateOutputPath>$(LibUISharpProjectBuildObjPath)</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>$(SDFxProjectBuildObjPath)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
   </PropertyGroup>
 

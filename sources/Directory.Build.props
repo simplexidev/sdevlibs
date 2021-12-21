@@ -1,12 +1,12 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * FileName:             Directory.Build.props
-* Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+* Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <LibUISharpProjectCategory>sources</LibUISharpProjectCategory>
+    <SDFxProjectType>sources</SDFxProjectType>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,11 +21,11 @@
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <DocumentationFile>$(LibUISharpProjectBuildDocPath)$(MSBuildProjectName).xml</DocumentationFile>
+    <DocumentationFile>$(SDFxProjectBuildDocPath)$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <Copyright>Copyright © 2017-2021 Thomas Corwin, et al. All Rights Reserved.</Copyright>
+    <Copyright>Copyright © 2017-2022 Thomas Corwin, et al. All Rights Reserved.</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageId>$(MSBuildProjectName)</PackageId>
@@ -34,7 +34,7 @@
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageOutputPath>$(LibUISharpProjectBuildPkgPath)</PackageOutputPath>
+    <PackageOutputPath>$(SDFxProjectBuildPkgPath)</PackageOutputPath>
   </PropertyGroup>
   
 </Project>

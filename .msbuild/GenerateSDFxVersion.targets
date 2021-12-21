@@ -1,0 +1,47 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ FileName:             GenerateSDFxVersion.targets
+* Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <UsingTask TaskName="SDFxVersionGenerator"  TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+        <VersionInput ParameterType="System.String" Required="true" />
+        <CIBuildNumber ParameterType="System.String" Required="false" />
+		<GitBranch ParameterType="System.String" Required="false" />
+        <VersionOutput ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+		  if (!string.IsNullOrEmpty(CIBuildNumber) && !string.IsNullOrEmpty(GitBranch))
+		  {
+		      if (!GitBranch.Contains("refs/pull/"))
+			      VersionOutput = $"{VersionInput}-build.{CIBuildNumber}";
+		      else
+				  VersionOutput = $"{VersionInput}-build.{CIBuildNumber}.pr{GitBranch.Split('/')[2]}";
+		  }
+		  else
+		      VersionOutput = $"{VersionInput}-local.{DateTime.Now.ToString("yyMMdd")}";
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
+  <Target Name="GenerateSDFxVersion">
+    <SDFxVersionGenerator VersionInput="$(SDFxVersionPrefix)" CIBuildNumber="$(_CIBuildNumber)" GitBranch="$(_GitBranch)">
+      <Output TaskParameter="VersionOutput" PropertyName="GeneratedSDFxVersion" />
+    </SDFxVersionGenerator>
+    <PropertyGroup>
+      <Version>$(GeneratedSDFxVersion)</Version>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+      <PackageVersion>$(GeneratedBuildVersion)</PackageVersion>
+    </PropertyGroup>
+    <Message Text="Generated Build Version: '$(Version)'" Importance="High" />
+  </Target>
+
+</Project>

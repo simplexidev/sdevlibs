@@ -1,5 +1,5 @@
 using System;
-using LibUISharp.Runtime;
+using SimplexiDev.Runtime;
 
 Console.WriteLine($"Is 32-Bit: {Platform.Is32Bit}");
 Console.WriteLine($"Is 64-Bit: {Platform.Is64Bit}");
