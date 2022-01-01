@@ -43,7 +43,7 @@
         <Optimize>true</Optimize>
         <DebugSymbols>false</DebugSymbols>
         <DebugType>embedded</DebugType>
-		  <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+		<DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
       </PropertyGroup>
     </When>
   </Choose>

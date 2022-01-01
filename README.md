@@ -3,8 +3,8 @@
 [![GitHubStars.Image]][GitHubStars.Link]
 [![Gitter.Image]][Gitter.Link]
 
-***NOTICE**: This project was just renamed from `LibUISharp` to `sdfx`.
-***NOTICE**: This project is still a work-in-progress, and should not be used in a prduction environment.*  
+***NOTICE**: This project was just renamed from `LibUISharp` to `sdfx`.*  
+***NOTICE**: This project is still a work-in-progress, and should not be used in a production environment.*  
 ***NOTICE**: The native dependency ['andlabs/libui'](https://github.com/andlabs.libui) is early-alpha software, and as such is unstable.*
 
 # SimplexiDev Framework

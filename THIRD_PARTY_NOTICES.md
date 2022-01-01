@@ -63,11 +63,11 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <hr/>
 
-## miniaudio
+## zstd
 
 **Repository URL**: https://github.com/facebook/zstd
 
-SDFx references and distributes source code and libraries built from the source code of *minaudio*.
+SDFx references and distributes source code and libraries built from the source code of *zstd*.
 
 ### Copyright Notice(s):
 
