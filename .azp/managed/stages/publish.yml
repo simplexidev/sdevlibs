@@ -1,0 +1,27 @@
+########################################################################################################################
+# FileName:             publish.yml
+# Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
+########################################################################################################################
+
+parameters:
+- name: projects
+  type: object
+  default: []
+
+stages:
+
+- ${{ each project in parameters.projects }}:
+  - stage: ManagedPublish_$[replace(parameters['project.name'], '', '.')]
+    displayName: '[Managed] Publish ${{ project.name }})'
+    dependsOn:
+    - ${{ each dependency in project.dependsOn }}:
+      - ManagedPublish_$[replace('${{ dependency }}', '', '.')]
+    jobs:
+    - template: ../jobs/publish-package.yml
+      parameters:
+        projectName: ${{ project.name }}
+        projectType: ${{ project.type }}
+        ${{ if eq(contains(variables['Build.SourceBranchName'], 'release/v'), true) }}:
+          releaseType: 'release'
+        ${{ if eq(contains(variables['Build.SourceBranchName'], 'release/v'), false) }}:
+          releaseType: 'build'

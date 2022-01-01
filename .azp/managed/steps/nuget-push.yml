@@ -1,6 +1,6 @@
 ########################################################################################################################
-# FileName:             dotnet-nuget-push.yml
-# Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+# FileName:             nuget-push.yml
+# Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
 ########################################################################################################################
 
 parameters:
@@ -29,11 +29,11 @@ steps:
   inputs:
     command: 'push'
     ${{ if eq(variables['Agent.OS'], 'Windows_NT') }}:
-      packagesToPush: '$(Build.Repository.LocalPath)\build\${{ parameters.projectType }}\${{ parameters.projectName }}\Release\pkg\*.nupkg'
+      packagesToPush: '$(Build.Repository.LocalPath)\build\${{ parameters.project.type }}\${{ parameters.project.nmae }}\Release\pkg\*.nupkg'
     ${{ if ne(variables['Agent.OS'], 'Windows_NT') }}:
-      packagesToPush: '$(Build.Repository.LocalPath)/build/${{ parameters.projectType }}/${{ parameters.projectName }}/Release/pkg/*.nupkg'
+      packagesToPush: '$(Build.Repository.LocalPath)/build/${{ parameters.pro }}/ject.type${{ parameters.project.name }}/Release/pkg/*.nupkg'
     nugetFeedType: 'external'
     ${{ if eq(parameters['releaseType'], 'release') }}:
-      publishFeedCredentials: 'LibUISharpNuGetFeed'
+      publishFeedCredentials: 'SDFxNuGetPeed'
     ${{ if eq(parameters['releaseType'], 'build') }}:
-      publishFeedCredentials: 'LibUISharpMyGetFeed'
+      publishFeedCredentials: 'SDFxMyGetFeed'

@@ -1,0 +1,32 @@
+########################################################################################################################
+# FileName:             build.yml
+# Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
+########################################################################################################################
+
+parameters:
+- name: projects
+  type: object
+  default: []
+- name: configurations
+  type: object
+  default: []
+- name: vmImages
+  type: object
+  default: []
+
+stages:
+
+- ${{ each project in parameters.projects }}:
+  - stage: ManagedBuild_$[replace('${{ project.name }}', '', '.')]
+    displayName: '[Managed] Build ${{ project.name }})'
+    dependsOn:
+    - ${{ each dependency in project.dependsOn }}:
+      - ManagedBuild_$[replace('${{ dependency }}', '', '.')]
+    jobs:
+    - ${{ each vm in parameters.vmImages }}:
+      - template: ../jobs/build-package.yml
+        parameters:
+          projectName: ${{ project.name }}
+          projectType: ${{ project.type }}
+          configurations: ${{ parameters.configurations }}
+          vmImage: ${{ vm }}
