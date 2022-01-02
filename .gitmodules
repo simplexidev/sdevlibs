@@ -10,3 +10,6 @@
 	path = external/miniaudio
 	url = https://github.com/simplexidev/miniaudio
 	branch = sdfx/main
+[submodule "external/sdfx-ci"]
+	path = external/sdfx-ci
+	url = https://github.com/simplexidev/sdfx-ci
