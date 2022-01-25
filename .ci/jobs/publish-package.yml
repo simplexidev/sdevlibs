@@ -24,7 +24,7 @@ jobs:
     clean: all
   steps:
   - template: ../steps/install-dotnet-sdk.yml
-  #TODO: Eventually download build artifacts instead of rebuilding, since we obviously did that to get this far in the pipeline.
+  #TODO: Eventually download build artifacts instead of rebuilding, since we already did that to get this far in the pipeline.
   - template: ../steps/dotnet-build.yml
     parameters:
       projectName: '${{ parameters.projectName }}'
