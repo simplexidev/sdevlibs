@@ -8,7 +8,7 @@ using System;
 namespace SimplexiDev
 {
     /// <summary>
-    /// Provides a base implementation for extended disposable types.
+    /// Provides a base implementation for extended disposable types, providing an implementation for the <see cref="IDisposable"/> interface.
     /// </summary>
     public abstract class Disposable : IDisposableEx
     {
