@@ -1,0 +1,13 @@
+########################################################################################################################
+# FileName:             install-dotnet-sdk.yml
+# Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+########################################################################################################################
+
+steps:
+- task: UseDotNet@2
+  name: 'InstallDotNetSDK'
+  displayName: 'Install .NET SDK'
+  continueOnError: false
+  inputs:
+    packageType: sdk
+    useGlobalJson: true

@@ -1,0 +1,29 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ FileName:             BuildPaths.props
+~ Copyright/License:    https://github.com/simplexidev/sdfx/blob/master/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <SDFxRepoPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), global.json)).\</SDFxRepoPath>
+    <SDFxProjectBasePath>$(SDFxRepoPath)$(SDFxProjectType)\</SDFxProjectBasePath>
+    <SDFxProjectPath>$(SDFxProjectBasePath)$(MSBuildProjectName)</SDFxProjectPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SDFxBaseBuildPath>$(SDFxRepoPath)build\</SDFxBaseBuildPath>
+    <SDFxProjectTypeBuildPath>$(SDFxBaseBuildPath)$(SDFxProjectType)\</SDFxProjectTypeBuildPath>
+    <SDFxProjectBuildPath>$(SDFxProjectTypeBuildPath)$(MSBuildProjectName)\$(Configuration)\</SDFxProjectBuildPath>
+    <SDFxProjectBuildBinPath>$(SDFxProjectBuildPath)bin\</SDFxProjectBuildBinPath>
+    <SDFxProjectBuildObjPath>$(SDFxProjectBuildPath)obj\</SDFxProjectBuildObjPath>
+    <SDFxProjectBuildDocPath>$(SDFxProjectBuildPath)doc\</SDFxProjectBuildDocPath>
+    <SDFxProjectBuildPkgPath>$(SDFxProjectBuildPath)pkg\</SDFxProjectBuildPkgPath>
+
+    <BaseOutputPath>$(SDFxProjectBuildBinPath)</BaseOutputPath>
+    <OutputPath>$(BaseOutputPath)</OutputPath>
+    <BaseIntermediateOutputPath>$(SDFxProjectBuildObjPath)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+  </PropertyGroup>
+
+</Project>

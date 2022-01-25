@@ -1,0 +1,40 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* FileName:             Directory.Build.props
+* Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <SDFxProjectType>sources</SDFxProjectType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Library</OutputType>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<IncludeSymbols>true</IncludeSymbols>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DocumentationFile>$(SDFxProjectBuildDocPath)$(MSBuildProjectName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <Copyright>Copyright © 2017-2022 Thomas Corwin, et al. All Rights Reserved.</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageId>$(MSBuildProjectName)</PackageId>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageOutputPath>$(SDFxProjectBuildPkgPath)</PackageOutputPath>
+  </PropertyGroup>
+  
+</Project>

@@ -1,0 +1,15 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* FileName:             SimplexiDev.UI.Extras.csproj
+* Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/main/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="16.0" InitialTargets="GenerateSDFxVersion" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);SIMPLEXIDEV_UI_EXTRAS</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\SimplexiDev.Core\SimplexiDev.Core.csproj" />
+		<ProjectReference Include="..\SimplexiDev.Native.Libui\SimplexiDev.Native.Libui.csproj" />
+		<ProjectReference Include="..\SimplexiDev.UI\SimplexiDev.UI.csproj" />
+	</ItemGroup>
+</Project>

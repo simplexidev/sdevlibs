@@ -1,0 +1,39 @@
+########################################################################################################################
+# FileName:             dotnet-nuget-push.yml
+# Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+########################################################################################################################
+
+parameters:
+- name: projectName
+  type: string
+  default: ''
+- name: projectType
+  type: string
+  default: 'sources'
+  values:
+  - 'sources'
+  #- 'examples'
+  #- 'tests'
+- name: releaseType
+  type: string
+  default: ''
+  values:
+  - 'release'
+  - 'build'
+
+steps:
+- task: NuGetCommand@2
+  name: 'NuGetPush'
+  displayName: 'Publish Package (via `nuget push`)'
+  continueOnError: false
+  inputs:
+    command: 'push'
+    ${{ if eq(variables['Agent.OS'], 'Windows_NT') }}:
+      packagesToPush: '$(Build.Repository.LocalPath)\build\${{ parameters.projectType }}\${{ parameters.projectName }}\Release\pkg\*.nupkg'
+    ${{ if ne(variables['Agent.OS'], 'Windows_NT') }}:
+      packagesToPush: '$(Build.Repository.LocalPath)/build/${{ parameters.projectType }}/${{ parameters.projectName }}/Release/pkg/*.nupkg'
+    nugetFeedType: 'external'
+    ${{ if eq(parameters['releaseType'], 'release') }}:
+      publishFeedCredentials: 'LibUISharpNuGetFeed'
+    ${{ if eq(parameters['releaseType'], 'build') }}:
+      publishFeedCredentials: 'LibUISharpMyGetFeed'

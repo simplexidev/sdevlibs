@@ -1,0 +1,51 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* FileName:             Directory.Build.props
+* Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <_CIBuildNumber Condition="'$(_CIBuildNumber)' == ''"></_CIBuildNumber>
+    <_GitBranch Condition="'$(_GitBranch)' == ''"></_GitBranch>
+  </PropertyGroup>
+  
+  <Import Project="$(MSBuildThisFileDirectory).msbuild/BuildPaths.props" />
+
+  <!-- See here: https://github.com/dotnet/sdk/blob/cd25d6bbfc2aac61cc790c511900427ac64fdaa8/src/Tasks/Microsoft.NET.Build.Tasks/build/Microsoft.NET.TargetFrameworkInference.targets#L167-L174 -->
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>10.0</LangVersion>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform>Any CPU</Platform>
+    <NeutralLanguage>en</NeutralLanguage>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>SDFX;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="'$(Configuration)' == 'Debug'">
+      <PropertyGroup>
+        <Optimize>false</Optimize>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(Configuration)' == 'Release'">
+      <PropertyGroup>
+        <Optimize>true</Optimize>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>embedded</DebugType>
+		<DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+      </PropertyGroup>
+    </When>
+  </Choose>
+
+</Project>
