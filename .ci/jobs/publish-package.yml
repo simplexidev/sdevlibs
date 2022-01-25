@@ -1,15 +1,9 @@
 ########################################################################################################################
-# FileName:             build-libuisharp-project.yml
-# Copyright/License:    https://github.com/tom-corwin/libuisharp/blob/master/LICENSE.md
+# FileName:             publish-package.yml
+# Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
 ########################################################################################################################
 
 parameters:
-- name: name
-  type: string
-  default: ''
-- name: displayName
-  type: string
-  default: ''
 - name: projectName
   type: string
   default: ''
@@ -20,33 +14,27 @@ parameters:
   - 'sources'
   #- 'examples'
   #- 'tests'
-- name: pool
-  type: object
-  default: {}
 
 jobs:
-- job: '${{ parameters.name }}_Debug'
-  displayName: '${{ parameters.displayName }} (Debug)'
-  pool: ${{ parameters.pool }}
+- job: ManagedPublish_$[replace(parameters['projectName'], '.', '')]
+  displayName: '[Managed] Publish ${{ parameters.projectName }})'
+  pool:
+    vmImage: 'windows-latest'
   workspace:
     clean: all
   steps:
   - template: ../steps/install-dotnet-sdk.yml
-  - template: ../steps/dotnet-build.yml
-    parameters:
-      projectName: '${{ parameters.projectName }}'
-      projectType: '${{ parameters.projectType }}'
-      configuration: 'Debug'
-
-- job: '${{ parameters.name }}_Release'
-  displayName: '${{ parameters.displayName }} (Release)'
-  pool: ${{ parameters.pool }}
-  workspace:
-    clean: all
-  steps:
-  - template: ../steps/install-dotnet-sdk.yml
+  #TODO: Eventually download build artifacts instead of rebuilding, since we already did that to get this far in the pipeline.
   - template: ../steps/dotnet-build.yml
     parameters:
       projectName: '${{ parameters.projectName }}'
       projectType: '${{ parameters.projectType }}'
       configuration: 'Release'
+  - template: ../steps/nuget-push.yml
+    parameters:
+      projectName: '${{ parameters.projectName }}'
+      projectType: '${{ parameters.projectType }}'
+      ${{ if eq(contains(variables['Build.SourceBranchName'], 'release/v'), true) }}:
+        releaseType: 'release'
+      ${{ if eq(contains(variables['Build.SourceBranchName'], 'release/v'), false) }}:
+        releaseType: 'build'

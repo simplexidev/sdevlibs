@@ -1,4 +1,4 @@
-﻿/***********************************************************************************************************************
+/***********************************************************************************************************************
  * FileName:            Application.cs
  * Copyright/License:   https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
 ***********************************************************************************************************************/
@@ -97,7 +97,7 @@ namespace SimplexiDev.UI
 
         protected override void EndInitialization()
         {
-                Libui.uiOnShouldQuit(&OnShouldQuitFunc, IntPtr.Zero);
+            Libui.uiOnShouldQuit(&OnShouldQuitFunc, IntPtr.Zero);
         }
 
         protected override void ReleaseUnmanagedResources()

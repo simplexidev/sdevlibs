@@ -1,7 +1,3 @@
-[submodule "external/libui"]
-	path = external/libui
-	url = https://github.com/simplexidev/libui
-	branch = sdfx/main
 [submodule "external/zstd"]
 	path = external/zstd
 	url = https://github.com/simplexidev/zstd
@@ -10,3 +6,7 @@
 	path = external/miniaudio
 	url = https://github.com/simplexidev/miniaudio
 	branch = sdfx/main
+[submodule "external/libui-ng"]
+	path = external/libui-ng
+	branch = sdfx/main
+	url = https://github.com/simplexidev/libui-ng

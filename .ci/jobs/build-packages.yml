@@ -1,0 +1,40 @@
+########################################################################################################################
+# FileName:             build-package.yml
+# Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
+########################################################################################################################
+
+parameters:
+
+- name: projectName
+  type: string
+  default: ''
+- name: projectType
+  type: string
+  default: 'sources'
+  values:
+  - 'sources'
+  #- 'examples'
+  #- 'tests'
+- name: configurations
+  type: object
+  default: []
+- name: vmImage
+  type: string
+  default: ''
+
+jobs:
+
+- ${{ each configuration in parameters.configurations }}:
+  - job: ManagedBuild_$[replace(parameters['projectName'], '.', '')]_$[replace(replace(parameters['vmImage'], '-', ''), '.', '')]_${{ configuration }}
+    displayName: '[Managed] Build ${{ parameters.projectName }} (${{ parameters.vmImage }}|${{ configuration }})'
+    pool:
+      vmImage: ${{ parameters.vmImage }}
+    workspace:
+      clean: all
+    steps:
+    - template: ../steps/install-dotnet-sdk.yml
+    - template: ../steps/dotnet-build.yml
+      parameters:
+        projectName: '${{ parameters.projectName }}'
+        projectType: '${{ parameters.projectType }}'
+        configuration: '${{ configuration }}'

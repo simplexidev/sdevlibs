@@ -1,0 +1,28 @@
+########################################################################################################################
+# FileName:             dotnet-build.yml
+# Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
+########################################################################################################################
+
+parameters:
+- name: project
+  type: object
+  default: []
+- name: configuration
+  type: string
+  default: ''
+  values:
+  - 'Debug'
+  - 'Release'
+
+steps:
+- task: DotNetCoreCLI@2
+  name: 'BuildManagedProject'
+  displayName: 'Build Managed Project'
+  continueOnError: false
+  inputs:
+    command: 'build'
+    ${{ if eq(variables['Agent.OS'], 'Windows_NT') }}:
+      projects: '$(Build.Repository.LocalPath)\${{ parameters.project.type }}\${{ parameters.project.name }}\${{ parameters.project.name }}.csproj'
+    ${{ if ne(variables['Agent.OS'], 'Windows_NT') }}:
+      projects: '$(Build.Repository.LocalPath)/${{ parameters.project.type }}/${{ parameters.project.name }}/${{ parameters.project.name }}.csproj'
+    arguments: '--nologo --force -c Release -p:_CIBuildNumber=$(Build.BuildNumber) -p:_GitBranch=$(Build.SourceBranch) -p:Configuration=${{ parameters.configuration }}'
