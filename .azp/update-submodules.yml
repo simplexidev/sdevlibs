@@ -1,0 +1,34 @@
+########################################################################################################################
+# FileName:             update-submodules.yml
+# Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
+########################################################################################################################
+
+# Build Number
+####################################################################################################
+name: $(Date:yyMMdd)$(Rev:rr)
+
+# Commit Trigger
+####################################################################################################
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily Submodule Update
+  branches:
+    include:
+    - main
+trigger: none
+pr: none
+
+# Pipeline Variables
+####################################################################################################
+variables:
+  submodules:
+  - 'libui-ng'
+  - 'miniaudio'
+  - 'zstd'
+
+# Workflow Definition
+####################################################################################################
+stages:
+- template: ./update-submodules/stages/update.yml
+  parameters:
+    submodules: $(submodules)
