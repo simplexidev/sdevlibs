@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <SDFxBaseBuildPath>$(SDFxRepoPath)build\</SDFxBaseBuildPath>
+    <SDFxBaseBuildPath>$(SDFxRepoPath).build\</SDFxBaseBuildPath>
     <SDFxProjectTypeBuildPath>$(SDFxBaseBuildPath)$(SDFxProjectType)\</SDFxProjectTypeBuildPath>
     <SDFxProjectBuildPath>$(SDFxProjectTypeBuildPath)$(MSBuildProjectName)\$(Configuration)\</SDFxProjectBuildPath>
     <SDFxProjectBuildBinPath>$(SDFxProjectBuildPath)bin\</SDFxProjectBuildBinPath>
