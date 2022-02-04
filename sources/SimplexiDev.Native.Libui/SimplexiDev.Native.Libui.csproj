@@ -1,4 +1,4 @@
-﻿<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * FileName:             SimplexiDev.Native.Libui.csproj
 * Copyright/License:    https://github.com/simplexidev/sdfx/blob/main/LICENSE.md
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -27,7 +27,5 @@
 	</ItemGroup>-->
 	<ItemGroup>
 		<ProjectReference Include="..\SimplexiDev.Core\SimplexiDev.Core.csproj" />
-		<ProjectReference Include="..\SimplexiDev.Build.Annotations\SimplexiDev.Build.Annotations.csproj"/>
-		<!--<ProjectReference Include="..\SimplexiDev.Build.NativeCallGenerator\SimplexiDev.Build.NativeCallGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />-->
 	</ItemGroup>
 </Project>
