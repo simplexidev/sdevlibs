@@ -9,8 +9,8 @@
     <SDFxVersionPrefix>0.5.0</SDFxVersionPrefix>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory).msbuild/GenerateSDFxVersion.targets" />
-  <Import Project="$(MSBuildThisFileDirectory).msbuild/DefaultItems.targets" />
-  <Import Project="$(MSBuildThisFileDirectory).msbuild/CodeAnalysis.targets" />
+  <Import Project="$(MSBuildThisFileDirectory).msbuild/targets/GenerateSDFxVersion.targets" />
+  <Import Project="$(MSBuildThisFileDirectory).msbuild/targets/DefaultItems.targets" />
+  <Import Project="$(MSBuildThisFileDirectory).msbuild/targets/CodeAnalysis.targets" />
 
 </Project>
