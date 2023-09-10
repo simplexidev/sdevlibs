@@ -2,7 +2,7 @@
 
 ## Copyright Notice(s)
 
-Copyright &copy; 2017-2022 Thomas Corwin
+Copyright &copy; 2017-2023 Thomas Corwin
 
 ## License (MIT)
 
@@ -24,4 +24,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 ## Third-Party Notices
 
 For third-party license terms and copyrights, please refer to the
-[THIRD_PARTY_NOTICES.md](https://github.com/simplexidev/sdfx/blob/master/THIRD_PARTY_NOTICES.md) file.
+[THIRD_PARTY_NOTICES.md](https://github.com/simplexidev/sdevlibs/blob/main/THIRD_PARTY_NOTICES.md) file.
